@@ -140,7 +140,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		}
 
 		Assert.assertEquals(
-			modelAdditionCounters.size(), expectedModelAdditionCountersSize);
+			expectedModelAdditionCountersSize, modelAdditionCounters.size());
 	}
 
 	protected abstract PortletDataHandler createPortletDataHandler();
