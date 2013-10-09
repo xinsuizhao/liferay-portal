@@ -17,13 +17,10 @@ package com.liferay.portal.upgrade.v6_0_12;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -66,38 +63,6 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected void updatePermissions(
-			String name, boolean community, boolean guest)
-		throws Exception {
-
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			updatePermissions_6(name, community, guest);
-		}
-		else {
-			updatePermissions_1to5(name, community, guest);
-		}
-	}
-
-	protected void updatePermissions_1to5(
-			String name, boolean community, boolean guest)
-		throws Exception {
-
-		if (community) {
-			PermissionLocalServiceUtil.setContainerResourcePermissions(
-				name, RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
-			PermissionLocalServiceUtil.setContainerResourcePermissions(
-				name, RoleConstants.ORGANIZATION_USER, ActionKeys.VIEW);
-		}
-
-		if (guest) {
-			PermissionLocalServiceUtil.setContainerResourcePermissions(
-				name, RoleConstants.GUEST, ActionKeys.VIEW);
-		}
-
-		PermissionLocalServiceUtil.setContainerResourcePermissions(
-			name, RoleConstants.OWNER, ActionKeys.VIEW);
-	}
-
-	protected void updatePermissions_6(
 			String name, boolean community, boolean guest)
 		throws Exception {
 
