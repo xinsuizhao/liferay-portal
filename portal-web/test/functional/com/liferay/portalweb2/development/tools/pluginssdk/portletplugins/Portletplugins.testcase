@@ -60,7 +60,7 @@
 	</command>
 
 	<command name="CalendarPortletSmoke" priority="5">
-		<var name="appName" value="Enterprise Calendar" />
+		<var name="appName" value="Calendar" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
@@ -408,7 +408,7 @@
 	</command>
 
 	<command name="MarketplacePortletSmoke" priority="5">
-		<var name="appName" value="Marketplace Portlet" />
+		<var name="appName" value="Marketplace" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="App Manager" />
@@ -596,8 +596,6 @@
 	</command>
 
 	<command name="ReportsPortletSmoke" priority="5">
-		<var name="appName" value="Reports" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 		</execute>
@@ -615,7 +613,11 @@
 		</execute>
 
 		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
+			<var name="appName" value="Reports" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="Jasper" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -623,7 +625,11 @@
 		</execute>
 
 		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
+			<var name="appName" value="Reports" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="Jasper" />
 		</execute>
 	</command>
 
