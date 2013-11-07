@@ -158,6 +158,10 @@ public interface DL {
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception;
 
+	public FileVersion getLatestFileVersion(
+			FileEntry fileEntry, boolean trusted)
+		throws PortalException, SystemException;
+
 	public String[] getMediaGalleryMimeTypes(
 		PortletPreferences portletPreferences, PortletRequest portletRequest);
 

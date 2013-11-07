@@ -48,6 +48,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -717,6 +719,22 @@ public class DLImpl implements DL {
 
 		return getImagePreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay);
+	}
+
+	@Override
+	public FileVersion getLatestFileVersion(
+			FileEntry fileEntry, boolean trusted)
+		throws PortalException, SystemException {
+
+		if (fileEntry instanceof LiferayFileEntry) {
+			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+			return new LiferayFileVersion(
+				liferayFileEntry.getDLFileEntry().getLatestFileVersion(
+					trusted));
+		}
+
+		return fileEntry.getLatestFileVersion();
 	}
 
 	@Override

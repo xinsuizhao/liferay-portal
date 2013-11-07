@@ -370,7 +370,7 @@ public class FileEntryStagedModelDataHandler
 			}
 			else {
 				FileVersion latestExistingFileVersion =
-					existingFileEntry.getLatestFileVersion();
+					DLUtil.getLatestFileVersion(existingFileEntry, true);
 
 				boolean indexEnabled = serviceContext.isIndexingEnabled();
 
