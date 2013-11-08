@@ -237,7 +237,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			category.getGroupId(), category.getCategoryId());
 
 		for (MBCategory curCategory : categories) {
-			if (includeTrashedEntries || !curCategory.isInTrash()) {
+			if (includeTrashedEntries || !curCategory.isInTrashExplicitly()) {
 				deleteCategory(curCategory, includeTrashedEntries);
 			}
 		}
@@ -545,14 +545,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		TrashEntry trashEntry = category.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(MBCategory.class, categoryId)) {
+		if (category.isInTrashExplicitly()) {
 			restoreCategoryFromTrash(userId, categoryId);
 		}
 		else {
 
 			// Category
+
+			TrashEntry trashEntry = category.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

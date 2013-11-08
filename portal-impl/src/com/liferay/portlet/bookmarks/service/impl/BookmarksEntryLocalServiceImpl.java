@@ -161,7 +161,7 @@ public class BookmarksEntryLocalServiceImpl
 			groupId, folderId);
 
 		for (BookmarksEntry entry : entries) {
-			if (includeTrashedEntries || !entry.isInTrash()) {
+			if (includeTrashedEntries || !entry.isInTrashExplicitly()) {
 				bookmarksEntryLocalService.deleteEntry(entry);
 			}
 		}
@@ -361,14 +361,14 @@ public class BookmarksEntryLocalServiceImpl
 
 		BookmarksEntry entry = getBookmarksEntry(entryId);
 
-		TrashEntry trashEntry = entry.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(BookmarksEntry.class, entryId)) {
+		if (entry.isInTrashExplicitly()) {
 			restoreEntryFromTrash(userId, entryId);
 		}
 		else {
 
 			// Entry
+
+			TrashEntry trashEntry = entry.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

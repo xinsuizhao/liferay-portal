@@ -690,7 +690,9 @@ public class DLFileEntryLocalServiceImpl
 				groupId, folderId, start, end);
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				if (includeTrashedEntries || !dlFileEntry.isInTrash()) {
+				if (includeTrashedEntries ||
+					!dlFileEntry.isInTrashExplicitly()) {
+
 					dlAppHelperLocalService.deleteFileEntry(
 						new LiferayFileEntry(dlFileEntry));
 

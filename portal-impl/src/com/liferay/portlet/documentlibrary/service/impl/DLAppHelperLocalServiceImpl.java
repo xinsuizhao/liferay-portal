@@ -426,7 +426,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				if (dlFileEntry.isInTrash()) {
+				if (dlFileEntry.isInTrashExplicitly()) {
 					continue;
 				}
 
@@ -521,7 +521,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFolder dlFolder = (DLFolder)object;
 
-				if (dlFolder.isInTrash()) {
+				if (dlFolder.isInTrashExplicitly()) {
 					continue;
 				}
 
@@ -642,9 +642,7 @@ public class DLAppHelperLocalServiceImpl
 
 		TrashEntry trashEntry = dlFileShortcut.getTrashEntry();
 
-		if (trashEntry.isTrashEntry(
-				DLFileShortcut.class, dlFileShortcut.getFileShortcutId())) {
-
+		if (dlFileShortcut.isInTrashExplicitly()) {
 			restoreFileShortcutFromTrash(userId, dlFileShortcut);
 		}
 		else {
@@ -1545,11 +1543,7 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		TrashEntry trashEntry = dlFileEntry.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(
-				DLFileEntry.class, dlFileEntry.getFileEntryId())) {
-
+		if (dlFileEntry.isInTrashExplicitly()) {
 			restoreFileEntryFromTrash(userId, fileEntry);
 
 			fileEntry = dlAppLocalService.moveFileEntry(
@@ -1563,6 +1557,8 @@ public class DLAppHelperLocalServiceImpl
 
 			return fileEntry;
 		}
+
+		TrashEntry trashEntry = dlFileEntry.getTrashEntry();
 
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionLocalService.getFileVersions(
@@ -1765,14 +1761,14 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
-		TrashEntry trashEntry = dlFolder.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(DLFolder.class, dlFolder.getFolderId())) {
+		if (dlFolder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folder);
 		}
 		else {
 
 			// Folder
+
+			TrashEntry trashEntry = dlFolder.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
