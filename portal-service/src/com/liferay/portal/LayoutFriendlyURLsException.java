@@ -14,7 +14,7 @@
 
 package com.liferay.portal;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.LocalizedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Sergio González
  */
-public class LayoutFriendlyURLsException extends PortalException {
+public class LayoutFriendlyURLsException extends LocalizedException {
 
 	public LayoutFriendlyURLsException() {
 		super();
