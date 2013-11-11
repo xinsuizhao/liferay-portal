@@ -729,9 +729,10 @@ public class DLImpl implements DL {
 		if (fileEntry instanceof LiferayFileEntry) {
 			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 
+			DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
 			return new LiferayFileVersion(
-				liferayFileEntry.getDLFileEntry().getLatestFileVersion(
-					trusted));
+				dlFileEntry.getLatestFileVersion(trusted));
 		}
 
 		return fileEntry.getLatestFileVersion();
