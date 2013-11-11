@@ -103,6 +103,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DLImpl implements DL {
 
+	public static FileVersion getLatestFileVersion(
+			FileEntry fileEntry, boolean trusted)
+		throws PortalException, SystemException {
+
+		if (fileEntry instanceof LiferayFileEntry) {
+			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+			DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
+			return new LiferayFileVersion(
+				dlFileEntry.getLatestFileVersion(trusted));
+		}
+
+		return fileEntry.getLatestFileVersion();
+	}
+
 	@Override
 	public void addPortletBreadcrumbEntries(
 			DLFileShortcut dlFileShortcut, HttpServletRequest request,
@@ -719,23 +735,6 @@ public class DLImpl implements DL {
 
 		return getImagePreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay);
-	}
-
-	@Override
-	public FileVersion getLatestFileVersion(
-			FileEntry fileEntry, boolean trusted)
-		throws PortalException, SystemException {
-
-		if (fileEntry instanceof LiferayFileEntry) {
-			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-			DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
-
-			return new LiferayFileVersion(
-				dlFileEntry.getLatestFileVersion(trusted));
-		}
-
-		return fileEntry.getLatestFileVersion();
 	}
 
 	@Override

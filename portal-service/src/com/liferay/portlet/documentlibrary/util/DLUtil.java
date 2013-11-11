@@ -241,13 +241,6 @@ public class DLUtil {
 		return getDL().getImagePreviewURL(fileEntry, themeDisplay);
 	}
 
-	public static FileVersion getLatestFileVersion(
-			FileEntry fileEntry, boolean trusted)
-		throws PortalException, SystemException {
-
-		return getDL().getLatestFileVersion(fileEntry, trusted);
-	}
-
 	public static String[] getMediaGalleryMimeTypes(
 		PortletPreferences portletPreferences, PortletRequest portletRequest) {
 
