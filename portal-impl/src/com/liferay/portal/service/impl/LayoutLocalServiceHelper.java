@@ -399,9 +399,8 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 						new LayoutFriendlyURLsException();
 				}
 
-				layoutFriendlyURLsException.addLayoutFriendlyURLException(
-					lfurle);
-				layoutFriendlyURLsException.addLocale(locale);
+				layoutFriendlyURLsException.addLocalizedException(
+					locale, lfurle);
 			}
 		}
 
