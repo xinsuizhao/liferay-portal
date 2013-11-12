@@ -4,7 +4,7 @@
 	</set-up>
 
 	<command name="CasWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="cas-web" />
+		<property name="web.plugins.includes" value="cas-web" />
 
 		<var name="appName" value="Central Authentication Service" />
 
@@ -26,7 +26,7 @@
 	</command>
 
 	<command name="DroolsWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="drools-web" />
+		<property name="web.plugins.includes" value="drools-web" />
 
 		<var name="appName" value="Drools" />
 
@@ -48,7 +48,7 @@
 	</command>
 
 	<command name="EhcacheClusterWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="ehcache-cluster-web" />
+		<property name="web.plugins.includes" value="ehcache-cluster-web" />
 
 		<var name="appName" value="Ehcache Cluster" />
 
@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="JasperReportsWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="jasperreports-web" />
+		<property name="web.plugins.includes" value="jasperreports-web" />
 
 		<var name="appName" value="JasperReports" />
 
@@ -92,7 +92,7 @@
 	</command>
 
 	<command name="KaleoWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="kaleo-web" />
+		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<var name="appName" value="Kaleo Workflow" />
 
@@ -114,7 +114,7 @@
 	</command>
 
 	<command name="ResourcesImporterWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resource-importer-web" />
 
 		<var name="appName" value="Resources Importer" />
 
@@ -136,7 +136,7 @@
 	</command>
 
 	<command name="ScriptingExecutorWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="scripting-executor--web" />
+		<property name="web.plugins.includes" value="scripting-executor--web" />
 
 		<var name="appName" value="Scripting Executor" />
 
@@ -158,7 +158,7 @@
 	</command>
 
 	<command name="ServerManagerWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="server-manager-web" />
+		<property name="web.plugins.includes" value="server-manager-web" />
 
 		<var name="appName" value="Remote IDE Connector" />
 
@@ -180,7 +180,7 @@
 	</command>
 
 	<command name="SyncWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="sync-web" />
+		<property name="web.plugins.includes" value="sync-web" />
 
 		<var name="appName" value="Sync" />
 
@@ -202,7 +202,7 @@
 	</command>
 
 	<command name="ThemeLoaderWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="theme-loader-web" />
+		<property name="web.plugins.includes" value="theme-loader-web" />
 
 		<var name="appName" value="Theme Loader" />
 
@@ -224,7 +224,7 @@
 	</command>
 
 	<command name="VLDAPWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="vldap-web" />
+		<property name="web.plugins.includes" value="vldap-web" />
 
 		<var name="appName" value="Virtual LDAP Server" />
 
