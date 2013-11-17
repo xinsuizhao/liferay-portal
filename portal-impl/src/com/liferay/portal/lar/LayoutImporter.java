@@ -572,7 +572,7 @@ public class LayoutImporter {
 				Document portletDocument = SAXReaderUtil.read(
 					portletDataContext.getZipEntryAsString(portletPath));
 
-				_permissionImporter.importRoles(
+				_permissionImporter.checkRoles(
 					layoutCache, companyId, groupId, userId,
 					portletDocument.getRootElement());
 			}

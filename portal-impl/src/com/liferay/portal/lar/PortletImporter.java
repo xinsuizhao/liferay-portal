@@ -455,7 +455,7 @@ public class PortletImporter {
 		// context
 
 		if (importPermissions) {
-			_permissionImporter.importRoles(
+			_permissionImporter.checkRoles(
 				layoutCache, layout.getCompanyId(), groupId, userId,
 				portletElement);
 
