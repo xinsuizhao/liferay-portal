@@ -1,6 +1,6 @@
 <definition>
 	<property name="portlet.plugins.includes" value="saml-portlet" />
-	
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
