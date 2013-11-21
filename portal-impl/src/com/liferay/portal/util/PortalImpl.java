@@ -4506,6 +4506,7 @@ public class PortalImpl implements Portal {
 				if (doAsGroupId <= 0) {
 					HttpServletRequest originalRequest =
 						getOriginalServletRequest(request);
+
 					doAsGroupId = ParamUtil.getLong(
 						originalRequest, "doAsGroupId");
 				}
