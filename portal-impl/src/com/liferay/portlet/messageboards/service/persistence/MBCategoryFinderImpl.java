@@ -247,6 +247,7 @@ public class MBCategoryFinderImpl
 
 				MBCategory category = new MBCategoryImpl();
 
+				category.setGroupId(group.getGroupId());
 				category.setCompanyId(group.getCompanyId());
 				category.setName(group.getDescriptiveName());
 				category.setDescription(group.getDescription());
