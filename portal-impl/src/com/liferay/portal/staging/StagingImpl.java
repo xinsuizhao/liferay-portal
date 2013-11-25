@@ -1775,6 +1775,10 @@ public class StagingImpl implements Staging {
 			long groupId, boolean privateLayout, Date lastPublishDate)
 		throws Exception {
 
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
+
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
