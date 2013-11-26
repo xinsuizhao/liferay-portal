@@ -436,6 +436,8 @@ AUI.add(
 							inputLocalized.selectFlag(initialLanguageId);
 						}
 
+						inputLocalized._onInputValueChange(event, input);
+
 						delete InputLocalized._registered[id];
 					}
 				},
