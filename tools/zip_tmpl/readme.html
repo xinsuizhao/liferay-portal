@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	"http://www.w3.org/TR/html4/loose.dtd">
+  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>Liferay Portal 6.2 Community Edition</title>
+	<title>Liferay Portal 6.2 Enterprise Edition</title>
 	<style type="text/css" media="screen">
 		body {
 			background: #EEF4F9;
@@ -24,7 +24,6 @@
 			clear: both;
 			display: block;
 			margin: 0 0 0.75em;
-
 		}
 
 		h1 {
@@ -64,7 +63,6 @@
 
 		hr {
 			border: 0 solid #BFBFBF;
-			border-width: 0 0 1px;
 			height: 0;
 		}
 
@@ -81,8 +79,7 @@
 		}
 
 		abbr {
-			border-bottom: 1px dotted #000;
-			border-bottom-color: inherit;
+			border-bottom: 1px dotted inherit;
 		}
 
 		img {
@@ -173,23 +170,12 @@
 			padding: 0;
 		}
 
-		.image-left {
-			float: left;
-			margin-right: 10px;
-		}
-
 		.image-right {
 			float: right;
 			margin-left: 10px;
 		}
 
-		.note {
-			font-family: 'Trebuche MS', Verdana, sans-serif;
-			font-style: italic;
-		}
-
-		hr,
-		.hr {
+		hr {
 			border-top: 1px solid #FFF;
 			border-bottom: 1px solid #BABEC2;
 			margin: 2em 0;
@@ -201,141 +187,120 @@
 
 <body>
 
-<div id="wrapper">
-	<div class="header">
-		<a href="http://www.liferay.com"><img src="http://cdn.www.liferay.com/osb-community-theme/images/custom/heading.png" alt="www.liferay.com"></a>
-	</div>
+	<div id="wrapper">
+		<div class="header">
+			<a href="http://www.liferay.com"><img src="https://cdn.lfrs.sl/www.liferay.com/osb-community-theme/images/custom/heading.png" alt="www.liferay.com"></a>
+		</div>
 
-	<h1 id="top">Liferay 6.2 Community Edition</h1>
+		<h1 id="top">Liferay Portal 6.2 Enterprise Edition</h1>
 
-	<p>
-		Thank you for choosing Liferay Portal. This release further expands Liferay's ability to be used in an extremely broad range of applications for web sites, portals, and collaboration services. Remember Liferay Portal is built by and for a very large open community. Be sure to participate by contributing back to the <a href="http://liferay.org">Liferay Community</a>.
-	</p>
+		<p>
+			Thank you for choosing an Enterprise Subscription to Liferay Portal 6.2 Enterprise Edition. This release further expands Liferay's ability to be used in an extremely broad range of applications for websites, portals, mobile applications and collaboration services.
+		</p>
 
-	<div class="contents">
-		<h3>Contents</h3>
+		<div class="contents">
+			<h3>Contents</h3>
 
-		<ol type="I">
-			<li>
-				<a href="#features">New Features</a>
-			</li>
-			<li>
-				<a href="#resources">Community Resources</a>
-
-				<ol>
-					<li>
-						<a href="#install">Installation and Documentation</a>
-					</li>
-					<li>
-						<a href="#collab">Liferay's Open Source Community</a>
-					</li>
-					<li>
-						<a href="#bugs">Bug Reporting</a>
-					</li>
-					<li>
-						<a href="#ideas">Have an Idea?</a>
-					</li>
-					<li>
-						<a href="#marketplace">Liferay Marketplace</a>
-					</li>
-				</ol>
-			</li>
-			<li>
-				<a href="#enterprise">Enterprise and Mission Critical Deployments</a>
-			</li>
-			<li>
-				<a href="#devteam">The Liferay Development Team</a>
-				<ol>
-					<li>
-						<a href="#communitycontrib">Community Contributors</a>
-					</li>
-				</ol>
-			</li>
-			<li>
-				<a href="#license">Licensing and Trademark</a>
-			</li>
-		</ol>
-	</div>
-
-	<hr/>
-
-	<h2 id="features">I. New Features</h2>
-
-	<p>
-		Liferay Portal 6.2 includes many new features targeting end users (power users), systems administrators and developers for enterprise deployments. Each area includes multiple features designed to support the most complex deployments. Liferay includes a web content management and document repository with multiple collaboration services all wrapped up in a portal framework. These features combine to allow Liferay to support an extremely broad range of use cases. See the full list of new features here on the <a href="http://www.liferay.com/community/wiki/-/wiki/Main/New+Features+in+Liferay+Portal+v6.2">Liferay 6.2 New Features Wiki Page</a>.
-	</p>
-
-	<h2 id="resources">II. Community Resources</h2>
-
-	<p>
-		Find information, participate in discussions and contribute back to the community at: <a href="http://liferay.org">Liferay.org</a>. Be sure to "Like" Liferay on <a href="https://www.facebook.com/liferay">Facebook</a> to collaborate with others and to find people in your field or specialty who are also using Liferay. Also be sure to "Follow" us and the community on <a href="https://twitter.com/#!/liferay">Twitter</a> which uses <a href="http://tweetray.com">TweetRay</a> to repost all tweets from the community who use the tag #Liferay.
-	</p>
-
-	<ol type="a">
-		<li id="install">
-			Documentation and Installation
-		</li>
-		<ol type="I">
-			<a href="http://www.liferay.com/documentation/"><img alt="Liferay Portal Administration Guide" class="image-right" src="http://www.manning.com/sezov/sezov_cover150.jpg" width="100"></a>
-
-			<li>
-				A <a href="http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/Quick%20Installation%20Instructions">quick installation																															guide</a> is available on the Liferay Wiki.
-			</li>
-			<li>
-				<a href="http://www.liferay.com/documentation">Official Documentation</a> for Liferay is available on liferay.com as well as from online publishers.
-			</li>
-			<li>
-				<a href="http://www.manning.com/sezov/">Liferay in Action</a> is available from Manning Publications and includes a definitive review of many Liferay features and capabilities.
-			</li>
-		</ol>
-		<li id="collab">
-			Liferay's Open Source Community
-		</li>
-		<ol type="I">
-			<li>
-				Go to <a href="http://liferay.org">liferay.org</a> to search for answers within the forums, to post answers for others, and to find online reference materials in the Wiki section.
-			</li>
-		</ol>
-		<li id="bugs">
-			Bug Reporting
-		</li>
-		<ol type="I">
-			<li>
-				While the Liferay Community cannot ensure all reported bugs will get fixed or receive a response right away, contributing bug information to Liferay supports everyone and is one of the most valuable ways you can contribute back to the Liferay Community. If you find a bug, please log as much information as possible into a new ticket at: <a href="http://issues.liferay.com">http://issues.liferay.com</a>.
-			</li>
-		</ol>
-		<li id="ideas">
-			Suggesting New Features
-		</li>
-		<ol type="I">
-			<li>
-				The Liferay open source project relies on its community for many of the evolutionary and revolutionary ideas that eventually find their way into a release. Liferay strongly believes in empowering the community not only to be able to create change through feature requests but also to feel responsible for socializing, recommending, and implementing their own and others' ideas. If you have a great idea for Liferay, check out the <a href="http://liferay.com/community/ideas">Feature Request Dashboard</a>, which provides an easy way to create, view, and recommend feature requests, and help steer the direction of Liferay!
-			</li>
-		</ol>
-		<li id="marketplace">
-			Liferay Marketplace
-		</li>
-		<ol type="I">
-			<li>
-                <a href="http://liferay.com/marketplace">The Liferay Marketplace</a> is an exciting new hub for sharing, browsing and downloading Liferay-compatible applications. As enterprises look for ways to build and enhance their existing platforms, developers and software vendors are searching for new avenues to reach this market. Marketplace leverages the entire Liferay ecosystem to release and share apps in a user-friendly, one-stop site. Browse the available apps, or visit the <a href="http://www.liferay.com/marketplace-help">developer resources pages</a> to learn how to build your own apps! 
-			</li>
-		</ol>
-	</ol>
-
-	<h2 id="enterprise">III. Enterprise and Mission Critical Deployments</h2>
-
-	<ol type="a">
-		<li>
-			Preparing for Production
-		</li>
-		<ol type="i">
-			<li>
-				Liferay can be used in a variety of mission critical deployments. While Liferay CE meets many of the most demanding requirements, the following should be considered and evaluated prior to deployment.
-			</li>
-			<ol>
+			<ol type="I">
 				<li>
-					Review the following <a href="http://www.liferay.com/documentation/additional-resources/whitepapers">white papers</a>:
+					<a href="#features">New Features</a>
 				</li>
+				<li>
+					<a href="#resources">Customer Resources</a>
+					<ol>
+						<li>
+							<a href="#install">Documentation and Installation</a>
+						</li>
+						<li>
+							<a href="#licensing">License Keys</a>
+						</li>
+						<li>
+							<a href="#lesa">Liferay Enterprise Support Application (LESA)</a>
+						</li>
+					</ol>
+				</li>
+				<li>
+					<a href="#enterprise">Enterprise and Mission Critical Deployments</a>
+				</li>
+				<li>
+					<a href="#license">Licensing and Trademark</a>
+				</li>
+			</ol>
+		</div>
+
+		<hr/>
+
+		<h2 id="features">I. New Features</h2>
+
+		<p>
+			Liferay Portal 6.2 contains a broad set of new features and capabilities. Liferay recommends that all users upgrade to this release so they can take full advantage of these important options. This release addresses several usability issues, provides enhancements to existing functionality, and gives developers an easier way to work with mobile clients. See a summary of new features here in the <a href="http://www.liferay.com/documentation/liferay-portal/6.2/release-notes">Liferay Portal 6.2 Release Notes</a>.
+		</p>
+
+		<p>
+			Additional documentation can be found within the <a href="http://www.liferay.com/documentation/liferay-portal/6.2/user-guide">Liferay 6.2 User Guide</a>.
+		</p>
+
+		<h2 id="resources">II. Customer Resources</h2>
+
+		<p>
+			The <a href="https://www.liferay.com/group/customer/home">Liferay Customer Portal</a> is the central location for access to Liferay software downloads, updates, patches, licenses, documentation and support for Liferay Customers. Customers will be provided access to the Customer Portal after purchase. To access the Customer Portal, login to Liferay.com and look for "Customer Portal" in the drop down menu under your user account name seen on the top right section of Liferay.com, or directly access from <a href="https://www.liferay.com/group/customer/home">here</a> .
+		</p>
+
+		<ol type="1">
+			<li id="install">
+				<strong>Documentation and Installation</strong>
+				<a href="https://www.liferay.com/documentation/">
+					<img alt="Liferay Portal Administration Guide" class="image-right" src="http://www.manning.com/sezov/sezov_cover150.jpg" width="100" />
+				</a>
+				<ol type="a">
+
+					<li>
+						A Getting Started Guide is available <a href="https://www.liferay.com/start">here</a>.
+					</li>
+					<li>
+						Training resources and schedules are available <a href="https://www.liferay.com/training">here.</a>
+					</li>
+					<li>
+						Liferay Marketplace resources and apps are available <a href="https://www.liferay.com/marketplace">here</a>.
+					</li>
+					<li>
+						<a href="https://www.liferay.com/documentation">Official Documentation</a> for Liferay is available on Liferay.com and is additionally available from online publishers.
+					</li>
+					<li>
+						<a href="https://www.manning.com/sezov/">Liferay in Action</a> is available from Manning Publications which includes a definitive overview of many Liferay features and capabilities.
+					</li>
+				</ol>
+			</li>
+			<li id="licensing">
+				<strong>License Keys</strong>
+					<p>An enterprise license key is required for Liferay Portal 6.2 Enterprise Edition. If you have not received or have a question about your license keys, please request your licenses through a LESA ticket or by emailing a request to: <a href="mailto:provisioning@liferay.com">provisioning@liferay.com</a>.</p>
+			</li>
+			<li id="lesa">
+				<strong>Liferay Enterprise Support Application (LESA)</strong>
+			<p>
+				<strong>LESA</strong> is your support lifecycle management console. LESA provides an exceptional user interface for simplifying the creation and management of support issues. Users can create, track and escalate issues through LESA's exceptional user interface. Its ability to issue multiple assignees also allows more people to work on a single ticket at the same time.
+			</p>
+				<ol type="a">
+					<li>
+						LESA can be accessed from the "Access Tickets" icon on the left in the Customer Portal or directly from <a href="https://www.liferay.com/group/customer/lesa">here.</a> Further documentation is available in the <a href="https://www.liferay.com/group/customer/policy/lesa">LESA User Guide</a>.
+					</li>
+					<li>
+						In order to access LESA, you must have a valid Liferay.com account with access to the Liferay Enterprise Support Application and Customer Portal. If you do not have a Liferay.com account please create one from the Registration link on the top right menu at Liferay.com. If you do not have access to the Customer Portal, or if you have issues accessing LESA or issues creating tickets within LESA, please email <a href="mailto:provisioning@liferay.com">provisioning@liferay.com</a>
+					</li>
+				</ol>
+			</li>
+
+		</ol>
+
+		<h2 id="enterprise">III. Enterprise and Mission Critical Deployments</h2>
+
+		<p>
+			Liferay can be used in a variety of the most demanding mission critical deployments. The following documents and services should be considered and evaluated prior to deployment.
+		</p>
+
+		<ol type="1">
+			<li>
+				<strong>Review the following <a href="http://www.liferay.com/documentation/additional-resources/whitepapers">whitepapers</a>:</strong>
 				<ol type="a">
 					<li>
 						Advanced Liferay Architecture: Clustering and High Availability
@@ -353,83 +318,37 @@
 						Identity Management in Liferay – Overview and Best Practices
 					</li>
 				</ol>
-				<li>
-					Request a review of Liferay's deployment services:
-				</li>
+			</li>
+			<li>
+				<strong>Liferay's deployment services</strong>.
+				<p>As Liferay Portal is used in an extremely broad range of use cases, Liferay Global Services provides professional services engagements for Liferay Portal EE to support many services such as installation, customization, application development, integration, lifecycle management and more. For additional information, contact <a href="mailto:sales@liferay.com">sales@liferay.com</a>. Liferay Global Services can also provide the following recommended services:</p>
 				<ol type="a">
 					<li>
-						Liferay Quickstart Program
+						<strong>Liferay Kick-Start Program</strong>
+							<p>The early phases of a project include such critical deliverables as information architecture design, capacity planning, high availability design, change management, and more. Unfortunately, many software deployments suffer from improper planning and architectural choices that occurred at the start of their projects. These early missteps can cause delays, increase project costs, and increase complexity for future maintenance and expansion. The <em>Liferay Kick-Start Program</em> allows you to leverage information architecture, strategy, and other technical best practices crafted by the architects and designers of the Liferay product. Customers who leverage these services have a much greater chance of enjoying reduced project costs, achieving project milestones, and reducing execution risk.</p>
 					</li>
+
 					<li>
-						Liferay GoLive Program
+						<strong>Liferay Go-Live Program</strong>
+							<p>Architectural complexities, scalability bottlenecks, and missteps in initial design decisions can jeopardize a successful launch and vastly complicate your solution's future support. While many of these scalability and performance issues are best addressed early in a project lifecycle, Liferay Global Services understands the time pressures faced by many of our clients and how these non-functional requirements are often delayed until shortly before launch. To help improve launch-time scalability and prevent performance issues, Liferay Global Services offers Enterprise Subscription customers the <em>Liferay Go-Live Program</em>.</p>
 					</li>
 				</ol>
-				<li>
-					Liferay Enterprise Support Program
-				</li>
-				<ol type="a">
-					<li>
-						Review <a href="http://www.liferay.com/products/liferay-portal/get-it-now">Liferay's Enterprise support program</a>, which provides access to LESA (online support system).
-					</li>
-				</ol>
-				<li>
-					Liferay Professional Support Program
-				</li>
-				<ol type="a">
-					<li>
-						As Liferay Portal is used in an extremely broad range of use cases, Liferay provides professional services engagements for Liferay Portal EE to support many services such as, installation, customization, application development, integration, life-cycle management and more. Find out more on <a href="http://liferay.com">liferay.com</a>.
-					</li>
-				</ol>
-			</ol>
+			</li>
 		</ol>
-	</ol>
+		<h2 id="license">IV. Licensing and Trademark</h2>
 
-	<h2 id="devteam">IV. The Liferay Development Team</h2>
+		<ol type="1">
+			<li>
+				Liferay Portal Enterprise Edition is licensed by Liferay and its affiliates. Your use of Liferay Portal 6.2 Enterprise Edition is subject to the terms and conditions of an agreement between you, and/or your company, and Liferay or its affiliates.
+			</li>
 
-	<p>
-		This release was produced by Liferay's worldwide <a href="https://www.liferay.com/community/liferay-projects/liferay-portal/overview">portal engineering team</a>, and involved many hours of development, testing, writing documentation, and working with the wider Liferay community of customers, partners, and open source developers. We are glad you have chosen to use Liferay, and hope that it meets or exceeds your expectations!
-	</p>
+			<li>
+				The Liferay Trademark includes the logo and name Liferay. Its use is governed by the Trademark policy posted at: <a href="http://liferay.com/trademark">Liferay.com/Trademark</a>. When using Liferay in any form, this policy should be reviewed to understand if your use requires permission from Liferay, Inc. For further questions, please contact <a href="mailto:Legal@liferay.com">Legal@liferay.com</a>.
+			</li>
+		</ol>
 
-	<ol type="a">
-		<li id="communitycontrib">
-			Community Contributors
-		</li>
-
-		<p>
-			In addition to Liferay's engineering staff, a special thanks goes to the many open source developers who volunteered their time and energy to help with the release, whether it was bugfixing, idea generation, documentation, translations, or other contribution that helped to improve this release. Check out the <a href="http://www.liferay.com/community/wiki/-/wiki/Main/Community+Contributor+Hall+of+Fame">Community Contributor Hall of Fame</a> and be sure to thank them if you run across them in the community!
-		</p>
-    </ol>
-
-	<h2 id="license">V. Licensing and Trademark</h2>
-
-	<ol type="a">
-		<li>
-			Liferay is licensed under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL)</a> which defines the conditions for its use and extension. The Liferay Community supports the use of this license to ensure the further advancement of this technology for the betterment of the entire community. We strongly recommend all members of the community who use or support Liferay deployments to contribute back to the community itself through any of the available programs at <a href="http://liferay.org">Liferay.org</a>. This can include everything from answering questions on the forums to contributing code to the community or Liferay Marketplace to purchasing Liferay EE. Each has a value that benefits the entire community.
-		</li>
-		<li>
-			The Liferay Trademark includes the logo and name Liferay. Its use is governed by the Trademark policy posted at: <a href="http://liferay.com/trademark">liferay.com/Trademark</a>. When using Liferay in any form, this policy should be reviewed to understand if your use requires permission from the Liferay community manager.
-		</li>
-		<li>
-			License Declaration:
-
-			<blockquote>
-				<p>
-					This library, Liferay Portal Community Edition, is free software ("Licensed Software"); you can redistribute it and/or modify it under the terms of the <a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License</a> as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
-				</p>
-
-				<p>
-					This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-				</p>
-
-				<p>
-					You should have received a copy of the <a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License</a> along with this library; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-				</p>
-			</blockquote>
-		</li>
-	</ol>
-
-	<a href="#top">Top</a>
-</div>
+		<a href="#top">Top</a>
+	</div>
 
 </body>
 
