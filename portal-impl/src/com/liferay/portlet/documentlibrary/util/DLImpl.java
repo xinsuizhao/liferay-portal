@@ -50,6 +50,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -1043,6 +1044,8 @@ public class DLImpl implements DL {
 
 		String fileEntryTitle = null;
 
+		Group group = null;
+
 		if (fileEntry != null) {
 			String extension = fileEntry.getExtension();
 
@@ -1055,9 +1058,12 @@ public class DLImpl implements DL {
 
 				fileEntryTitle += StringPool.PERIOD + extension;
 			}
-		}
 
-		Group group = themeDisplay.getScopeGroup();
+			group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+		}
+		else {
+			group = themeDisplay.getScopeGroup();
+		}
 
 		webDavURL.append(group.getFriendlyURL());
 		webDavURL.append("/document_library");
