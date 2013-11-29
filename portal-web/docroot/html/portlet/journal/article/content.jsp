@@ -470,6 +470,7 @@ if (Validator.isNotNull(content)) {
 					%>
 
 					<liferay-ddm:html
+						checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 						classPK="<%= ddmStructure.getStructureId() %>"
 						fields="<%= ddmFields %>"
