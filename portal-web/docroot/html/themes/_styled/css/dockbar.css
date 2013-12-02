@@ -573,7 +573,7 @@ $editLayoutPanelWidth: 460px;
 
 	/* ---------- Menus ---------- */
 
-	.dropdown-menu > li > a:focus > [class*="icon"] {
+	.dropdown-menu > li > a:focus > .nav-item-icon {
 		background-image: none;
 	}
 
