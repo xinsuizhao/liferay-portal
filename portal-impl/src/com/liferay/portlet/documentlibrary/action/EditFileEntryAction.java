@@ -811,8 +811,10 @@ public class EditFileEntryAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				if (uploadException != null) {
-					actionResponse.sendRedirect(
-						ParamUtil.getString(actionRequest, "backURL"));
+					String uploadServletErrorRedirect = ParamUtil.getString(
+						actionRequest, "uploadServletErrorRedirect");
+
+					actionResponse.sendRedirect(uploadServletErrorRedirect);
 				}
 
 				return;
