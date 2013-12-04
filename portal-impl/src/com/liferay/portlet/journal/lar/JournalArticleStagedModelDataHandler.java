@@ -154,13 +154,15 @@ public class JournalArticleStagedModelDataHandler
 		String articleResourceUuid = element.attributeValue(
 			"article-resource-uuid");
 
-		JournalArticleResource existingArticleResource = null;
-
 		JournalArticle existingArticle = null;
 
 		try {
-			existingArticle = getExistingArticle(
+			existingArticle = fetchExistingArticle(
 				articleResourceUuid, portletDataContext.getCompanyGroupId());
+
+			if (existingArticle == null) {
+				return;
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof SystemException) {
@@ -549,23 +551,11 @@ public class JournalArticleStagedModelDataHandler
 				"article-resource-uuid");
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				JournalArticleResource articleResource =
-					JournalArticleResourceLocalServiceUtil.
-						fetchJournalArticleResourceByUuidAndGroupId(
-							articleResourceUuid,
-							portletDataContext.getScopeGroupId());
-
 				serviceContext.setUuid(articleResourceUuid);
 				serviceContext.setAttribute("urlTitle", article.getUrlTitle());
 
-				JournalArticle existingArticle = null;
-
-				if (articleResource != null) {
-					existingArticle =
-						JournalArticleLocalServiceUtil.fetchLatestArticle(
-							articleResource.getResourcePrimKey(),
-							WorkflowConstants.STATUS_ANY, false);
-				}
+				JournalArticle existingArticle = fetchExistingArticle(
+					articleResourceUuid, portletDataContext.getScopeGroupId());
 
 				if (existingArticle == null) {
 					existingArticle =
@@ -660,7 +650,7 @@ public class JournalArticleStagedModelDataHandler
 		String articleResourceUuid = articleElement.attributeValue(
 			"article-resource-uuid");
 
-		JournalArticle existingArticle = getExistingArticle(
+		JournalArticle existingArticle = fetchExistingArticle(
 			articleResourceUuid, portletDataContext.getScopeGroupId());
 
 		if ((existingArticle == null) || !existingArticle.isInTrash()) {
@@ -719,7 +709,7 @@ public class JournalArticleStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 	}
 
-	protected JournalArticle getExistingArticle(
+	protected JournalArticle fetchExistingArticle(
 				String articleResourceUuid, long groupId)
 			throws Exception {
 
@@ -739,7 +729,7 @@ public class JournalArticleStagedModelDataHandler
 			return null;
 		}
 
-		return JournalArticleLocalServiceUtil.getLatestArticle(
+		return JournalArticleLocalServiceUtil.fetchLatestArticle(
 			existingArticleResource.getResourcePrimKey(),
 			WorkflowConstants.STATUS_ANY, false);
 	}
