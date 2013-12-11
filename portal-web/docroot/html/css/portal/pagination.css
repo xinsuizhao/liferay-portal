@@ -1,5 +1,3 @@
-@import "mixins";
-
 .aui {
 	.lfr-pagination {
 		&:after {
@@ -46,12 +44,6 @@
 
 		.lfr-pagination-delta-selector {
 			float: left;
-
-			@include respond-to(phone, tablet) {
-				.lfr-icon-menu-text {
-					display: none;
-				}
-			}
 		}
 
 		.pagination-content {
