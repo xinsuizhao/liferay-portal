@@ -287,13 +287,10 @@ AUI.add(
 						if (A.instanceOf(pagination, Liferay.Pagination)) {
 							var state = paginationData.state;
 
-							var rowsPerPage = state.rowsPerPage;
-							var total = state.total;
+							pagination.set('results', state.total);
+							pagination.set('total', instance._getTotalPages(state.total, state.rowsPerPage));
 
-							pagination.set('results', total);
-							pagination.set('total', instance._getTotalPages(total, rowsPerPage));
-
-							pagination.set('visible', !!(total && total > rowsPerPage));
+							pagination.set('visible', !!(state.total && state.total > state.rowsPerPage));
 
 							pagination.setState(state);
 						}
