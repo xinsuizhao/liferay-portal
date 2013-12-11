@@ -64,11 +64,6 @@ AUI.add(
 							);
 						},
 						validator: Lang.isObject
-					},
-
-					visible: {
-						setter: '_uiSetVisible',
-						validator: Lang.isBoolean
 					}
 				},
 
