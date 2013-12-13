@@ -79,10 +79,12 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompany() throws Exception {
 		Company company = addCompany();
 
+		String companyWebId = company.getWebId();
+
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 
 		for (String webId : PortalInstances.getWebIds()) {
-			Assert.assertNotEquals("test.com", webId);
+			Assert.assertNotEquals(companyWebId, webId);
 		}
 	}
 
@@ -278,11 +280,13 @@ public class CompanyLocalServiceTest {
 	}
 
 	protected Company addCompany() throws Exception {
-		Company company = CompanyLocalServiceUtil.addCompany(
-			"test.com", "test.com", "test.com", PropsValues.SHARD_DEFAULT_NAME,
-			false, 0, true);
+		String webId = ServiceTestUtil.randomString() + "test.com";
 
-		PortalInstances.initCompany(_mockServletContext, "test.com");
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, "test.com", PropsValues.SHARD_DEFAULT_NAME, false, 0,
+			true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
 
 		return company;
 	}
