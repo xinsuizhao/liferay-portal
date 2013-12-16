@@ -126,12 +126,15 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddandDeleteCompanyWithDocumentTypes() throws Exception {
+	public void testAddAndDeleteCompanyWithDLFileEntryTypes() throws Exception {
 		Company company = addCompany();
 
 		long companyId = company.getCompanyId();
 
 		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+
+		Group guestGroup = GroupLocalServiceUtil.getGroup(
+			companyId, GroupConstants.GUEST);
 
 		Group companyGroup = company.getGroup();
 
@@ -140,15 +143,12 @@ public class CompanyLocalServiceTest {
 				companyGroup.getGroupId(),
 				DLFileEntryTypeConstants.NAME_CONTRACT);
 
-		Group guestGroup = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.GUEST);
-
 		ServiceContext serviceContext = getServiceContext(companyId);
 
 		serviceContext.setAttribute(
 			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
-		serviceContext.setUserId(userId);
 		serviceContext.setScopeGroupId(guestGroup.getGroupId());
+		serviceContext.setUserId(userId);
 
 		DLAppLocalServiceUtil.addFileEntry(
 			userId, guestGroup.getGroupId(), 0, "test.xml", "text/xml",
@@ -158,7 +158,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddandDeleteCompanyWithLayoutSetPrototype()
+	public void testAddAndDeleteCompanyWithLayoutSetPrototype()
 		throws Exception {
 
 		Company company = addCompany();
@@ -192,7 +192,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddandDeleteCompanyWithParentGroup() throws Exception {
+	public void testAddAndDeleteCompanyWithParentGroup() throws Exception {
 		Company company = addCompany();
 
 		long companyId = company.getCompanyId();
