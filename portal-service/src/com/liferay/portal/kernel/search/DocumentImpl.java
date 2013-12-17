@@ -110,7 +110,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		addKeyword(name, _dateFormat.format(value));
+		addNumber(name, _dateFormat.format(value), Long.class);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class DocumentImpl implements Document {
 			dates[i] = _dateFormat.format(values[i]);
 		}
 
-		addKeyword(name, dates);
+		addNumber(name, dates, Long.class);
 	}
 
 	@Override
