@@ -1048,7 +1048,7 @@ if (themeDisplay.isStatePopUp()) {
 							}
 						);
 
-						refreshWindow.location.href = '<%= closeRedirect %>';
+						refreshWindow.location.href = '<%= HtmlUtil.escapeJS(closeRedirect) %>';
 					}
 					else {
 						dialog.detach(hideDialogSignature);
