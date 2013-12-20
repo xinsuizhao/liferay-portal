@@ -108,6 +108,7 @@ import com.liferay.portal.util.comparator.GroupIdComparator;
 import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
@@ -875,6 +876,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			socialActivityLocalService.deleteActivities(group.getGroupId());
 			socialActivitySettingLocalService.deleteActivitySettings(
 				group.getGroupId());
+
+			List<SocialRequest> requests =
+				socialRequestPersistence.findByCompanyId(group.getCompanyId());
+
+			for (SocialRequest request : requests) {
+				if ((request.getClassPK() == group.getGroupId()) &&
+					(request.getClassNameId() == PortalUtil.getClassNameId(
+						Group.class))) {
+
+					socialRequestLocalService.deleteRequest(request);
+				}
+			}
 
 			// Software catalog
 
