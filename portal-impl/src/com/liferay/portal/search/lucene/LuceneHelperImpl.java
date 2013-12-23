@@ -686,18 +686,17 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 				int maxPoolSize = threadPoolExecutor.getMaxPoolSize();
 
-				CountDownLatch checkInCountDownLatch = new CountDownLatch(
-					maxPoolSize);
+				CountDownLatch countDownLatch = new CountDownLatch(maxPoolSize);
 
 				ShutdownSyncJob shutdownSyncJob = new ShutdownSyncJob(
-					checkInCountDownLatch);
+					countDownLatch);
 
 				for (int i = 0; i < maxPoolSize; i++) {
 					threadPoolExecutor.submit(shutdownSyncJob);
 				}
 
 				try {
-					checkInCountDownLatch.await();
+					countDownLatch.await();
 				}
 				catch (InterruptedException ie) {
 					_log.error("Shutdown waiting interrupted", ie);
@@ -707,7 +706,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Cancelled appending indexing jobs : " + runnables);
+						"Cancelled appending indexing jobs: " + runnables);
 				}
 
 				searchWriteDestination.close(true);
