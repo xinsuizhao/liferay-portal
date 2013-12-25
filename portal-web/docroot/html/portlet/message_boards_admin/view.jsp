@@ -419,6 +419,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 				headerNames="thread,started-by,posts,views,last-post"
 				iteratorURL="<%= portletURL %>"
 				rowChecker="<%= new RowChecker(renderResponse) %>"
+				var="threadSearchContainer"
 			>
 				<liferay-ui:search-container-results>
 
@@ -431,11 +432,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 
-					searchContainer.setTotal(total);
+					threadSearchContainer.setTotal(total);
 
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, threadSearchContainer.getStart(), threadSearchContainer.getEnd());
 
-					searchContainer.setResults(results);
+					threadSearchContainer.setResults(results);
 					%>
 
 				</liferay-ui:search-container-results>
@@ -558,11 +559,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 				<br>
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "deleteThreads();" %>' value='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
+				<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteThreads();" %>' value='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "lockThreads();" %>' value="lock" />
+				<aui:button disabled="<%= true %>" name="lockThread" onClick='<%= renderResponse.getNamespace() + "lockThreads();" %>' value="lock" />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "unlockThreads();" %>' value="unlock" />
+				<aui:button disabled="<%= true %>" name="unlockThread" onClick='<%= renderResponse.getNamespace() + "unlockThreads();" %>' value="unlock" />
 
 				<div class="separator"><!-- --></div>
 
