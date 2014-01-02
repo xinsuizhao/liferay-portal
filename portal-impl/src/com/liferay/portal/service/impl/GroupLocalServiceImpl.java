@@ -25,6 +25,10 @@ import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -109,6 +113,8 @@ import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.social.model.SocialRequest;
+import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
+import com.liferay.portlet.social.service.persistence.SocialRequestActionableDynamicQuery;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
@@ -877,17 +883,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			socialActivitySettingLocalService.deleteActivitySettings(
 				group.getGroupId());
 
-			List<SocialRequest> requests =
-				socialRequestPersistence.findByCompanyId(group.getCompanyId());
-
-			for (SocialRequest request : requests) {
-				if ((request.getClassPK() == group.getGroupId()) &&
-					(request.getClassNameId() == PortalUtil.getClassNameId(
-						Group.class))) {
-
-					socialRequestLocalService.deleteRequest(request);
-				}
-			}
+			deleteRequests(group.getGroupId());
 
 			// Software catalog
 
@@ -3717,6 +3713,40 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 							group.getGroupId());
 			}*/
 		}
+	}
+
+	protected void deleteRequests(final long groupId)
+		throws PortalException, SystemException {
+
+		ActionableDynamicQuery socialRequestActionableDynamicQuery =
+			new SocialRequestActionableDynamicQuery() {
+
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					long classNameId = PortalUtil.getClassNameId(Group.class);
+
+					dynamicQuery.add(classNameIdProperty.eq(classNameId));
+
+					Property classPKProperty = PropertyFactoryUtil.forName(
+						"classPK");
+
+					dynamicQuery.add(classPKProperty.eq(groupId));
+				}
+
+				@Override
+				protected void performAction(Object object)
+					throws SystemException {
+
+					SocialRequestLocalServiceUtil.deleteRequest(
+						(SocialRequest)object);
+				}
+
+		};
+
+		socialRequestActionableDynamicQuery.performActions();
 	}
 
 	protected List<Group> doSearch(
