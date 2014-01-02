@@ -830,6 +830,10 @@ public class HttpImpl implements Http {
 				protocol = Http.HTTPS;
 			}
 
+			if (port == -1) {
+				port = urlObj.getPort();
+			}
+
 			urlObj = new URL(
 				protocol, urlObj.getHost(), port, urlObj.getFile());
 
