@@ -883,7 +883,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			socialActivitySettingLocalService.deleteActivitySettings(
 				group.getGroupId());
 
-			deleteRequests(group.getGroupId());
+			deleteSocialRequests(group.getGroupId());
 
 			// Software catalog
 
@@ -3715,10 +3715,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void deleteRequests(final long groupId)
+	protected void deleteSocialRequests(final long groupId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery socialRequestActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			new SocialRequestActionableDynamicQuery() {
 
 			@Override
@@ -3744,7 +3744,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		};
 
-		socialRequestActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 	}
 
 	protected List<Group> doSearch(
