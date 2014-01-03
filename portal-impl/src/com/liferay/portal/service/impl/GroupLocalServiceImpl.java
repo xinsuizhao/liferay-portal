@@ -3721,28 +3721,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		ActionableDynamicQuery socialRequestActionableDynamicQuery =
 			new SocialRequestActionableDynamicQuery() {
 
-				@Override
-				protected void addCriteria(DynamicQuery dynamicQuery) {
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-					long classNameId = PortalUtil.getClassNameId(Group.class);
+				long classNameId = PortalUtil.getClassNameId(Group.class);
 
-					dynamicQuery.add(classNameIdProperty.eq(classNameId));
+				dynamicQuery.add(classNameIdProperty.eq(classNameId));
 
-					Property classPKProperty = PropertyFactoryUtil.forName(
-						"classPK");
+				Property classPKProperty = PropertyFactoryUtil.forName(
+					"classPK");
 
-					dynamicQuery.add(classPKProperty.eq(groupId));
-				}
+				dynamicQuery.add(classPKProperty.eq(groupId));
+			}
 
-				@Override
-				protected void performAction(Object object)
-					throws SystemException {
-
-					SocialRequestLocalServiceUtil.deleteRequest(
-						(SocialRequest)object);
-				}
+			@Override
+			protected void performAction(Object object) throws SystemException {
+				SocialRequestLocalServiceUtil.deleteRequest(
+					(SocialRequest)object);
+			}
 
 		};
 
