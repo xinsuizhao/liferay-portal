@@ -976,13 +976,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "}: " + fileName);
 		}
 
-		if (portalSource && !className.equals("BaseServiceImpl") &&
-			className.endsWith("ServiceImpl") &&
-			newContent.contains("ServiceUtil.")) {
-
-			processErrorMessage(fileName, "ServiceUtil: " + fileName);
-		}
-
 		// LPS-34911
 
 		excluded = null;
