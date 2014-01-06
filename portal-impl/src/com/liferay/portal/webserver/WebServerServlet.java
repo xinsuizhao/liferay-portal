@@ -14,6 +14,7 @@
 
 package com.liferay.portal.webserver;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -550,7 +551,14 @@ public class WebServerServlet extends HttpServlet {
 			String imageIdToken = ParamUtil.getString(request, "img_id_token");
 
 			if (user == null) {
-				user = UserLocalServiceUtil.getUserByPortraitId(imageId);
+				try {
+					user = UserLocalServiceUtil.getUserByPortraitId(imageId);
+				}
+				catch (NoSuchUserException e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e);
+					}
+				}
 			}
 
 			if ((user != null) &&

@@ -92,6 +92,7 @@ public class UserConstants {
 		}
 
 		sb.append("_portrait?img_id=");
+		sb.append(portraitId);
 
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
@@ -100,7 +101,6 @@ public class UserConstants {
 			sb.append(DigesterUtil.digest(userUuid));
 		}
 
-		sb.append(portraitId);
 		sb.append("&t=");
 		sb.append(WebServerServletTokenUtil.getToken(portraitId));
 
