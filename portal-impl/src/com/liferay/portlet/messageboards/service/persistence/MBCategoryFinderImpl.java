@@ -248,7 +248,7 @@ public class MBCategoryFinderImpl
 				MBCategory category = new MBCategoryImpl();
 
 				category.setCompanyId(group.getCompanyId());
-				category.setName(group.getName());
+				category.setName(group.getDescriptiveName());
 				category.setDescription(group.getDescription());
 				category.setThreadCount(threadCount);
 				category.setMessageCount(messageCount);
