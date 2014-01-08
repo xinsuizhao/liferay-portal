@@ -25,40 +25,49 @@
 
 			<aui:script use="aui-base,event-outside">
 				A.one('#<%= id %>').delegate(
-					'click',
+					['click', 'keypress'],
 					function(event) {
-						var btnNavbar = event.currentTarget;
+						var charCode = event.charCode;
+						var eventType = event.type;
 
-						var navId = btnNavbar.attr('data-navId');
+						if ((eventType === 'click') || (eventType === 'keypress' && (charCode === 13 || charCode === 32))) {
+							var STR_OPEN = 'open';
 
-						var navbarCollapse = A.one('#' + navId + 'NavbarCollapse');
+							var btnNavbar = event.currentTarget;
 
-						if (navbarCollapse) {
-							var handle = Liferay.Data['<%= id %>Handle'];
+							var navId = btnNavbar.attr('data-navId');
 
-							if (navbarCollapse.hasClass('open') && handle) {
-								handle.detach();
+							var navbarCollapse = A.one('#' + navId + 'NavbarCollapse');
 
-								handle = null;
-							}
-							else {
-								handle = navbarCollapse.on(
-									'mousedownoutside',
-									function(event) {
-										if (!btnNavbar.contains(event.target)) {
-											Liferay.Data['<%= id %>Handle'] = null;
+							if (navbarCollapse) {
+								var handle = Liferay.Data['<%= id %>Handle'];
 
-											handle.detach();
+								if (navbarCollapse.hasClass(STR_OPEN) && handle) {
+									handle.detach();
 
-											navbarCollapse.removeClass('open');
+									handle = null;
+								}
+								else {
+									handle = navbarCollapse.on(
+										'mousedownoutside',
+										function(event) {
+											if (!btnNavbar.contains(event.target)) {
+												Liferay.Data['<%= id %>Handle'] = null;
+
+												handle.detach();
+
+												btnNavbar.removeClass(STR_OPEN);
+												navbarCollapse.removeClass(STR_OPEN);
+											}
 										}
-									}
-								);
+									);
+								}
+
+								btnNavbar.toggleClass(STR_OPEN);
+								navbarCollapse.toggleClass(STR_OPEN);
+
+								Liferay.Data['<%= id %>Handle'] = handle;
 							}
-
-							navbarCollapse.toggleClass('open');
-
-							Liferay.Data['<%= id %>Handle'] = handle;
 						}
 					},
 					'.btn-navbar'
