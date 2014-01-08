@@ -235,7 +235,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long getDDMStructureId(
-		long groupId, String structureId, boolean warning) {
+		long groupId, String structureId, boolean warn) {
 
 		if (Validator.isNull(structureId)) {
 			return 0;
@@ -244,12 +244,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		Long ddmStructureId = _ddmStructureIds.get(groupId + "#" + structureId);
 
 		if (ddmStructureId == null) {
-			if (warning) {
+			if (warn) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get the DDM structure ID for group " +
 							groupId + " and journal structure ID " +
-							structureId);
+								structureId);
 				}
 			}
 
