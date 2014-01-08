@@ -123,6 +123,7 @@ public abstract class BaseClusterExecutorImplTestCase
 	public static class SetPortalPortAdvice {
 
 		public static final int PORTAL_PORT = 80;
+
 		public static final int SECURE_PORTAL_PORT = 81;
 
 		@Around(
