@@ -188,11 +188,8 @@ AUI.add(
 					_createOptions: function(val) {
 						var instance = this;
 
-						var elements = instance.elements;
-
-						var publicOptions = [];
-
 						var privateOptions = [];
+						var publicOptions = [];
 
 						A.each(
 							val,
@@ -203,21 +200,22 @@ AUI.add(
 									value: Liferay.Util.escapeHTML(JSON.stringify(item))
 								};
 
+								var optionsArray = publicOptions;
+
 								if (item.privateLayout) {
-									privateOptions.push(
-										Lang.sub(instance.OPTION_TEMPLATE, values)
-									);
+									optionsArray = privateOptions;
 								}
-								else {
-									publicOptions.push(
-										Lang.sub(instance.OPTION_TEMPLATE, values)
-									);
-								}
+
+								optionsArray.push(
+									Lang.sub(instance.OPTION_TEMPLATE, values)
+								);
 							}
 						);
 
+						var optGroupTemplate = instance.OPT_GROUP_TEMPLATE;
+
 						var publicOptGroup = Lang.sub(
-							instance.OPT_GROUP_TEMPLATE,
+							optGroupTemplate,
 							{
 								label: Liferay.Language.get('public-pages'),
 								options: publicOptions.join(STR_EMPTY)
@@ -225,12 +223,14 @@ AUI.add(
 						);
 
 						var privateOptGroup = Lang.sub(
-							instance.OPT_GROUP_TEMPLATE,
+							optGroupTemplate,
 							{
 								label: Liferay.Language.get('private-pages'),
 								options: privateOptions.join(STR_EMPTY)
 							}
 						);
+
+						var elements = instance.elements;
 
 						elements.setContent(publicOptGroup + privateOptGroup);
 
