@@ -547,7 +547,6 @@ public class AssetCategoryLocalServiceImpl
 
 			if (Validator.isNotNull(key)) {
 				boolean addCategoryProperty = true;
-				boolean updateCategoryProperty = false;
 
 				AssetCategoryProperty oldCategoryProperty = null;
 
@@ -562,10 +561,21 @@ public class AssetCategoryLocalServiceImpl
 
 						addCategoryProperty = false;
 
-						if ((userId != oldCategoryProperty.getUserId()) ||
-							!value.equals(oldCategoryProperty.getValue())) {
+						if (userId != oldCategoryProperty.getUserId()) {
+							User user = userLocalService.getUser(userId);
 
-							updateCategoryProperty = true;
+							oldCategoryProperty.setUserId(userId);
+							oldCategoryProperty.setUserName(user.getFullName());
+
+							assetCategoryPropertyPersistence.update(
+								oldCategoryProperty);
+						}
+
+						if (!value.equals(oldCategoryProperty.getValue())) {
+							assetCategoryPropertyLocalService.
+								updateCategoryProperty(
+									oldCategoryProperty.getCategoryPropertyId(),
+									key, value);
 						}
 
 						iterator.remove();
@@ -577,21 +587,6 @@ public class AssetCategoryLocalServiceImpl
 				if (addCategoryProperty) {
 					assetCategoryPropertyLocalService.addCategoryProperty(
 						userId, categoryId, key, value);
-				}
-				else if (updateCategoryProperty) {
-					if (userId != oldCategoryProperty.getUserId()) {
-						User user = userLocalService.getUser(userId);
-
-						oldCategoryProperty.setUserId(userId);
-						oldCategoryProperty.setUserName(user.getFullName());
-
-						assetCategoryPropertyPersistence.update(
-							oldCategoryProperty);
-					}
-
-					assetCategoryPropertyLocalService.updateCategoryProperty(
-						oldCategoryProperty.getCategoryPropertyId(), key,
-						value);
 				}
 			}
 		}
