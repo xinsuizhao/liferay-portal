@@ -598,6 +598,37 @@ public class EditLayoutsAction extends PortletAction {
 		return colorSchemeId;
 	}
 
+	protected String getDefaultThemeSetting(
+		Layout layout, String key, String device, boolean inheritLookAndFeel) {
+
+		if (!inheritLookAndFeel) {
+			try {
+				Theme theme = null;
+
+				if (device.equals("regular")) {
+					theme = layout.getTheme();
+				}
+				else {
+					theme = layout.getWapTheme();
+				}
+
+				return theme.getSetting(key);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			return layoutSet.getThemeSetting(key, device);
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {
 		return ActionUtil.getGroup(portletRequest);
 	}
@@ -636,32 +667,7 @@ public class EditLayoutsAction extends PortletAction {
 			return value;
 		}
 
-		if (!inheritLookAndFeel) {
-			try {
-				Theme theme = null;
-
-				if (device.equals("regular")) {
-					theme = layout.getTheme();
-				}
-				else {
-					theme = layout.getWapTheme();
-				}
-
-				return theme.getSetting(key);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		try {
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			value = layoutSet.getThemeSetting(key, device);
-		}
-		catch (Exception e) {
-		}
-
-		return value;
+		return getDefaultThemeSetting(layout, key, device, inheritLookAndFeel);
 	}
 
 	protected void inheritMobileRuleGroups(
@@ -819,7 +825,8 @@ public class EditLayoutsAction extends PortletAction {
 				actionRequest, property, themeSetting.getValue());
 
 			if (!Validator.equals(
-					value, getThemeSetting(layout, key, device, false))) {
+					value,
+					getDefaultThemeSetting(layout, key, device, false))) {
 
 				typeSettingsProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
