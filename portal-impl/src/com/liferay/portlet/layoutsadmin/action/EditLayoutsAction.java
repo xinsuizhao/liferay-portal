@@ -623,6 +623,47 @@ public class EditLayoutsAction extends PortletAction {
 		return new byte[0];
 	}
 
+	protected String getThemeSetting(
+		Layout layout, String key, String device, boolean inheritLookAndFeel) {
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String value = typeSettingsProperties.getProperty(
+			ThemeSettingImpl.namespaceProperty(device, key));
+
+		if (value != null) {
+			return value;
+		}
+
+		if (!inheritLookAndFeel) {
+			try {
+				Theme theme = null;
+
+				if (device.equals("regular")) {
+					theme = layout.getTheme();
+				}
+				else {
+					theme = layout.getWapTheme();
+				}
+
+				return theme.getSetting(key);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			value = layoutSet.getThemeSetting(key, device);
+		}
+		catch (Exception e) {
+		}
+
+		return value;
+	}
+
 	protected void inheritMobileRuleGroups(
 			Layout layout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -767,8 +808,6 @@ public class EditLayoutsAction extends PortletAction {
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			groupId, privateLayout, layoutId);
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
 
@@ -780,7 +819,7 @@ public class EditLayoutsAction extends PortletAction {
 				actionRequest, property, themeSetting.getValue());
 
 			if (!Validator.equals(
-					value, layoutSet.getThemeSetting(key, device))) {
+					value, getThemeSetting(layout, key, device, false))) {
 
 				typeSettingsProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
