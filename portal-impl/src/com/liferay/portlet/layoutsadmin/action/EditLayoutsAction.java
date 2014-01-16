@@ -654,22 +654,6 @@ public class EditLayoutsAction extends PortletAction {
 		return new byte[0];
 	}
 
-	protected String getThemeSetting(
-		Layout layout, String key, String device, boolean inheritLookAndFeel) {
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		String value = typeSettingsProperties.getProperty(
-			ThemeSettingImpl.namespaceProperty(device, key));
-
-		if (value != null) {
-			return value;
-		}
-
-		return getDefaultThemeSetting(layout, key, device, inheritLookAndFeel);
-	}
-
 	protected void inheritMobileRuleGroups(
 			Layout layout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
