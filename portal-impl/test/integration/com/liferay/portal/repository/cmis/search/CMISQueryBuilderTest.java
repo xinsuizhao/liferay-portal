@@ -219,7 +219,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
-		assertQueryEquals("(CONTAINS('test AND multiple'))", cmisQuery);
+		assertQueryEquals("CONTAINS('(test multiple)')", cmisQuery);
 	}
 
 	@Test
