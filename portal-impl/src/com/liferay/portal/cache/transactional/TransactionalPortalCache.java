@@ -95,10 +95,11 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
 				TransactionalPortalCacheHelper.put(
-					_portalCache, key, (V)NULL_HOLDER);
+					_portalCache, key, (V)NULL_HOLDER, timeToLive);
 			}
 			else {
-				TransactionalPortalCacheHelper.put(_portalCache, key, value);
+				TransactionalPortalCacheHelper.put(
+					_portalCache, key, value, timeToLive);
 			}
 		}
 		else {
