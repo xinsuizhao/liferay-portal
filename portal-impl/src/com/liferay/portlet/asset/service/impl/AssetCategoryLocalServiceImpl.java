@@ -561,18 +561,19 @@ public class AssetCategoryLocalServiceImpl
 
 						addCategoryProperty = false;
 
-						if (userId != oldCategoryProperty.getUserId()) {
-							User user = userPersistence.findByPrimaryKey(
-								userId);
-
-							oldCategoryProperty.setUserId(userId);
-							oldCategoryProperty.setUserName(user.getFullName());
-
-							assetCategoryPropertyPersistence.update(
-								oldCategoryProperty);
-						}
-
 						if (!value.equals(oldCategoryProperty.getValue())) {
+
+							if (userId != oldCategoryProperty.getUserId()) {
+								User user = userPersistence.findByPrimaryKey(
+									userId);
+
+								oldCategoryProperty.setUserId(userId);
+								oldCategoryProperty.setUserName(user.getFullName());
+
+								assetCategoryPropertyPersistence.update(
+									oldCategoryProperty);
+							}
+
 							assetCategoryPropertyLocalService.
 								updateCategoryProperty(
 									oldCategoryProperty.getCategoryPropertyId(),
