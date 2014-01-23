@@ -123,6 +123,7 @@
 
 	.subscribe {
 		margin-bottom: 1.5em;
+		text-align: right;
 	}
 
 	.taglib-flags {
