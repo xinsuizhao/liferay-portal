@@ -562,13 +562,13 @@ public class AssetCategoryLocalServiceImpl
 						addCategoryProperty = false;
 
 						if (!value.equals(oldCategoryProperty.getValue())) {
-
 							if (userId != oldCategoryProperty.getUserId()) {
 								User user = userPersistence.findByPrimaryKey(
 									userId);
 
 								oldCategoryProperty.setUserId(userId);
-								oldCategoryProperty.setUserName(user.getFullName());
+								oldCategoryProperty.setUserName(
+									user.getFullName());
 
 								assetCategoryPropertyPersistence.update(
 									oldCategoryProperty);
