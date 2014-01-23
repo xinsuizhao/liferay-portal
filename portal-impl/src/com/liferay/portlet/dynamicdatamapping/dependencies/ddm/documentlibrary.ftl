@@ -38,6 +38,8 @@
 	</@>
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+
+	${fieldStructure.children}
 </@>
 
 <@aui.script>
