@@ -290,9 +290,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void format() throws Exception {
 		String[] excludes = new String[] {
-			"**\\.idea\\**", "**\\bin\\**", "**\\classes\\**",
-			"portal-impl\\**\\*.action", "portal-impl\\**\\*.function",
-			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase"
+			"**\\.bnd\\**", "**\\.idea\\**", "portal-impl\\**\\*.action",
+			"portal-impl\\**\\*.function", "portal-impl\\**\\*.macro",
+			"portal-impl\\**\\*.testcase"
 		};
 
 		String[] includes = new String[] {
@@ -797,7 +797,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			urlPatterns.add(locale);
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6 * urlPatterns.size());
 
 		for (String urlPattern : urlPatterns) {
 			sb.append("\t<servlet-mapping>\n");
@@ -833,7 +833,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		y = newContent.lastIndexOf("</url-pattern>", y) + 15;
 
-		sb = new StringBundler();
+		sb = new StringBundler(3 * urlPatterns.size() + 1);
 
 		sb.append("\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
 
