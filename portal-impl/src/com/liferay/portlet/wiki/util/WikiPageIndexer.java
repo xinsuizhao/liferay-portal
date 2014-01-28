@@ -77,21 +77,26 @@ public class WikiPageIndexer extends BaseIndexer {
 
 		WikiPage page = null;
 
-		if (obj instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)obj;
+		try {
+			if (obj instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-			page = WikiPageAttachmentsUtil.getPage(
-				dlFileEntry.getFileEntryId());
+				page = WikiPageAttachmentsUtil.getPage(
+					dlFileEntry.getFileEntryId());
 
-			document.addKeyword(
-				Field.CLASS_NAME_ID,
-				PortalUtil.getClassNameId(WikiPage.class.getName()));
-			document.addKeyword(Field.CLASS_PK, page.getResourcePrimKey());
+				document.addKeyword(
+					Field.CLASS_NAME_ID,
+					PortalUtil.getClassNameId(WikiPage.class.getName()));
+				document.addKeyword(Field.CLASS_PK, page.getResourcePrimKey());
+			}
+			else if (obj instanceof MBMessage) {
+				MBMessage message = (MBMessage)obj;
+
+				page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+			}
 		}
-		else if (obj instanceof MBMessage) {
-			MBMessage message = (MBMessage)obj;
-
-			page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+		catch (Exception e) {
+			return;
 		}
 
 		document.addKeyword(Field.NODE_ID, page.getNodeId());

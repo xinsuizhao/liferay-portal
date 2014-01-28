@@ -111,8 +111,15 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		MBMessage message = (MBMessage)obj;
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
-			message.getClassPK());
+		DLFileEntry dlFileEntry = null;
+
+		try {
+			dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+				message.getClassPK());
+		}
+		catch (Exception e) {
+			return;
+		}
 
 		document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 		document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
