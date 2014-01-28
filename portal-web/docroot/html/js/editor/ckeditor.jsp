@@ -196,7 +196,7 @@ if (!inlineEdit) {
 <%
 String textareaName = name;
 
-String modules = "node-core";
+String modules = "aui-node-base";
 
 if (inlineEdit && (inlineEditSaveURL != null)) {
 	textareaName = name + "_original";
