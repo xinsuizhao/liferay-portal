@@ -108,6 +108,51 @@ public class VerifyOracle extends VerifyProcess {
 		}
 	}
 
+	protected void convertColumnToClob(String tableName, String columnName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("select count(*) as numOfClobColumns from ");
+			sb.append("user_tab_columns where table_name = '");
+			sb.append(tableName.toUpperCase());
+			sb.append("' and column_name = '");
+			sb.append(columnName.toUpperCase());
+			sb.append("' and data_type = 'CLOB'");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				return;
+			}
+
+			int numOfClobColumns = rs.getInt("numOfClobColumns");
+
+			if (numOfClobColumns != 0) {
+				return;
+			}
+
+			runSQL("alter table " + tableName + " add temp CLOB");
+			runSQL("update " + tableName + " set temp = " + columnName);
+			runSQL("alter table " + tableName + " drop column " + columnName);
+			runSQL(
+				"alter table " + tableName + " rename column temp to " +
+					columnName);
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		DB db = DBFactoryUtil.getDB();
@@ -119,6 +164,8 @@ public class VerifyOracle extends VerifyProcess {
 		}
 
 		alterVarchar2Columns();
+
+		convertColumnToClob("ShoppingCart", "itemIds");
 	}
 
 	protected boolean isBetweenBuildNumbers(
