@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -120,11 +121,11 @@ public class VerifyOracle extends VerifyProcess {
 
 			StringBundler sb = new StringBundler(6);
 
-			sb.append("select count(*) as numOfClobColumns from ");
-			sb.append("user_tab_columns where table_name = '");
-			sb.append(tableName.toUpperCase());
+			sb.append("select count(*) from user_tab_columns where ");
+			sb.append("table_name = '");
+			sb.append(StringUtil.toUpperCase(tableName));
 			sb.append("' and column_name = '");
-			sb.append(columnName.toUpperCase());
+			sb.append(StringUtil.toUpperCase(columnName));
 			sb.append("' and data_type = 'CLOB'");
 
 			ps = con.prepareStatement(sb.toString());
@@ -135,18 +136,40 @@ public class VerifyOracle extends VerifyProcess {
 				return;
 			}
 
-			int numOfClobColumns = rs.getInt("numOfClobColumns");
+			int count = rs.getInt(1);
 
-			if (numOfClobColumns != 0) {
+			if (count > 0) {
 				return;
 			}
 
 			runSQL("alter table " + tableName + " add temp CLOB");
-			runSQL("update " + tableName + " set temp = " + columnName);
-			runSQL("alter table " + tableName + " drop column " + columnName);
-			runSQL(
-				"alter table " + tableName + " rename column temp to " +
-					columnName);
+
+			sb = new StringBundler(4);
+
+			sb.append("update ");
+			sb.append(tableName);
+			sb.append(" set temp = ");
+			sb.append(columnName);
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(4);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" drop column ");
+			sb.append(columnName);
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(4);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" rename column temp to ");
+			sb.append(columnName);
+
+			runSQL(sb.toString());
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
