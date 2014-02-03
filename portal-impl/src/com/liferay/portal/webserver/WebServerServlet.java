@@ -14,7 +14,6 @@
 
 package com.liferay.portal.webserver;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -554,7 +553,7 @@ public class WebServerServlet extends HttpServlet {
 				try {
 					user = UserLocalServiceUtil.getUserByPortraitId(imageId);
 				}
-				catch (NoSuchUserException e) {
+				catch (Exception e) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(e);
 					}
