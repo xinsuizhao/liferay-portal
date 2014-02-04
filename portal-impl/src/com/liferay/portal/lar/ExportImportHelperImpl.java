@@ -105,7 +105,7 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -915,49 +915,55 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				entityElement, FileEntry.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		String elementPath = entityElement.attributeValue("path");
 
-		for (Element referenceDataElement : referenceDataElements) {
-			String fileEntryUUID = referenceDataElement.attributeValue("uuid");
+		StagedModel entityStagedModel =
+			(StagedModel)portletDataContext.getZipEntryAsObject(
+				entityElement, elementPath);
 
-			if (fileEntryUUID == null) {
-				continue;
+		List<Element> referenceElements =
+			portletDataContext.getReferenceElements(
+				entityStagedModel, FileEntry.class);
+
+		for (Element referenceElement : referenceElements) {
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			Element referenceDataElement =
+				portletDataContext.getReferenceDataElement(
+					entityStagedModel, FileEntry.class, classPK);
+
+			String path = null;
+
+			if (referenceDataElement != null) {
+				path = referenceDataElement.attributeValue("path");
 			}
 
-			String path = referenceDataElement.attributeValue("path");
+			long groupId = GetterUtil.getLong(
+				referenceElement.attributeValue("group-id"));
+
+			if (Validator.isNull(path)) {
+				String className = referenceElement.attributeValue(
+					"class-name");
+
+				path = ExportImportPathUtil.getModelPath(
+					groupId, className, classPK);
+			}
 
 			if (!content.contains("[$dl-reference=" + path + "$]")) {
 				continue;
 			}
 
-			FileEntry fileEntry =
-				(FileEntry)portletDataContext.getZipEntryAsObject(path);
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, entityStagedModel, FileEntry.class,
+				classPK);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fileEntry);
+			String uuid = referenceElement.attributeValue("uuid");
 
-			Map<Long, Long> fileEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DLFileEntry.class);
+			FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
+				uuid, groupId);
 
-			long importedFileEntryId = MapUtil.getLong(
-				fileEntryIds, fileEntry.getFileEntryId(),
-				fileEntry.getFileEntryId());
-
-			FileEntry importedFileEntry = null;
-
-			try {
-				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
-					importedFileEntryId);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to reference " + path);
-				}
-
+			if (importedFileEntry == null) {
 				continue;
 			}
 
