@@ -189,6 +189,7 @@ public class VerifyOracle extends VerifyProcess {
 		alterVarchar2Columns();
 
 		convertColumnToClob("ShoppingCart", "itemIds");
+		convertColumnToClob("ShoppingOrder", "comments");
 	}
 
 	protected boolean isBetweenBuildNumbers(
