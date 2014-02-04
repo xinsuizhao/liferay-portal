@@ -2034,6 +2034,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				listenerElement.elementText("listener-class"));
 
 			if (listenerClass.equals(
+					PluginContextListener.class.getName()) ||
+				listenerClass.equals(
 					SecurePluginContextListener.class.getName())) {
 
 				continue;
@@ -2323,6 +2325,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				listenerElement.elementText("listener-class"));
 
 			if (listenerClass.equals(
+					PluginContextListener.class.getName()) ||
+				listenerClass.equals(
 					SerializableSessionAttributeListener.class.getName()) ||
 				listenerClass.equals(
 					SecurePluginContextListener.class.getName())) {
