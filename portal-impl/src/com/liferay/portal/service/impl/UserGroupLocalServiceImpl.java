@@ -858,8 +858,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			new String[] {PortletDataHandlerKeys.
-				LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_NAME});
+			new String[] {
+				PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_NAME
+			});
 		parameterMap.put(
 			PortletDataHandlerKeys.LOGO,
 			new String[] {Boolean.FALSE.toString()});
