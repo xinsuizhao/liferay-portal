@@ -583,14 +583,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			try {
 				if (exportReferencedContent) {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, entityStagedModel, entityElement,
-						fileEntry, FileEntry.class,
+						portletDataContext, entityStagedModel, fileEntry,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
 				else {
 					portletDataContext.addReferenceElement(
 						entityStagedModel, entityElement, fileEntry,
-						FileEntry.class,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 				}
 
@@ -923,7 +921,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		List<Element> referenceElements =
 			portletDataContext.getReferenceElements(
-				entityStagedModel, FileEntry.class);
+				entityStagedModel, DLFileEntry.class);
 
 		for (Element referenceElement : referenceElements) {
 			long classPK = GetterUtil.getLong(
@@ -931,7 +929,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			Element referenceDataElement =
 				portletDataContext.getReferenceDataElement(
-					entityStagedModel, FileEntry.class, classPK);
+					entityStagedModel, DLFileEntry.class, classPK);
 
 			String path = null;
 
@@ -955,7 +953,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, entityStagedModel, FileEntry.class,
+				portletDataContext, entityStagedModel, DLFileEntry.class,
 				classPK);
 
 			String uuid = referenceElement.attributeValue("uuid");
