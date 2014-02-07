@@ -15,6 +15,8 @@ AUI.add(
 		var MAP_HIDDEN_FIELD_ATTRS = {
 			checkbox: ['readOnly', 'required'],
 
+			separator: ['readOnly', 'required', 'predefinedValue', 'indexType'],
+
 			DEFAULT: ['readOnly']
 		};
 
@@ -827,7 +829,7 @@ AUI.add(
 					type: 'wcm-image'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.separator,
 					iconClass: 'icon-fb-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'
