@@ -2204,7 +2204,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (missing) {
 			referenceElement.addAttribute(
 				"referrer-class-name",
-				referrerClassedModel.getModelClassName());
+				ExportImportClassUtil.getModelClassName(referrerClassedModel));
 
 			if (referrerClassedModel instanceof PortletModel) {
 				Portlet portlet = (Portlet)referrerClassedModel;
@@ -2337,7 +2337,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("missing-reference[@class-name='");
-		sb.append(classedModel.getModelClassName());
+		sb.append(ExportImportClassUtil.getModelClassName(classedModel));
 		sb.append("' and @class-pk='");
 		sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
 		sb.append("']");
@@ -2474,7 +2474,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected String getReferenceKey(ClassedModel classedModel) {
-		String referenceKey = classedModel.getModelClassName();
+		String referenceKey = ExportImportClassUtil.getModelClassName(
+			classedModel);
 
 		return referenceKey.concat(StringPool.POUND).concat(
 			String.valueOf(classedModel.getPrimaryKeyObj()));
