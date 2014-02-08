@@ -56,14 +56,6 @@ for (int i = 0; i < organizations.size(); i++) {
 				String zipCode = address.getZip();
 				String city = address.getCity();
 
-				Region addressRegion = address.getRegion();
-
-				String regionName = addressRegion.getName();
-
-				Country addressCountry = address.getCountry();
-
-				String countryName = addressCountry.getName(locale);
-
 				String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 			%>
 
@@ -93,14 +85,6 @@ for (int i = 0; i < organizations.size(); i++) {
 
 				String zipCode = address.getZip();
 				String city = address.getCity();
-
-				Region addressRegion = address.getRegion();
-
-				String regionName = addressRegion.getName();
-
-				Country addressCountry = address.getCountry();
-
-				String countryName = addressCountry.getName(locale);
 
 				String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 			%>

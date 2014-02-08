@@ -41,13 +41,13 @@ if (classPK > 0) {
 		String zipCode = address.getZip();
 		String city = address.getCity();
 
-		Region addressRegion = address.getRegion();
+		Region region = address.getRegion();
 
-		String regionName = addressRegion.getName();
+		String regionName = region.getName();
 
-		Country addressCountry = address.getCountry();
+		Country country = address.getCountry();
 
-		String countryName = addressCountry.getName(locale);
+		String countryName = country.getName(locale);
 
 		String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 	%>
