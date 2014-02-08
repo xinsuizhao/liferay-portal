@@ -49,14 +49,14 @@ for (int i = 0; i < organizations.size(); i++) {
 
 			<%
 			for (Address address: organizationAddresses) {
+				String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
+
 				String street1 = address.getStreet1();
 				String street2 = address.getStreet2();
 				String street3 = address.getStreet3();
 
 				String zipCode = address.getZip();
 				String city = address.getCity();
-
-				String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">

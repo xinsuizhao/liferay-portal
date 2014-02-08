@@ -34,6 +34,8 @@ if (classPK > 0) {
 
 	<%
 	for (Address address: addresses) {
+		String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
+
 		String street1 = address.getStreet1();
 		String street2 = address.getStreet2();
 		String street3 = address.getStreet3();
@@ -48,8 +50,6 @@ if (classPK > 0) {
 		Country country = address.getCountry();
 
 		String countryName = country.getName(locale);
-
-		String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 	%>
 
 		<li class="<%= address.isPrimary() ? "primary" : "" %>">
