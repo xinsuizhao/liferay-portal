@@ -1013,8 +1013,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public Element getImportDataElement(StagedModel stagedModel) {
 		return getImportDataElement(
-			ExportImportClassedModelUtil.getClassSimpleName(stagedModel), "uuid",
-			stagedModel.getUuid());
+			ExportImportClassedModelUtil.getClassSimpleName(stagedModel),
+			"uuid", stagedModel.getUuid());
 	}
 
 	@Override
@@ -1043,8 +1043,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
 		return getImportDataElement(
-			ExportImportClassedModelUtil.getClassSimpleName(stagedModel), "path",
-			path);
+			ExportImportClassedModelUtil.getClassSimpleName(stagedModel),
+			"path", path);
 	}
 
 	@Override
@@ -2204,7 +2204,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (missing) {
 			referenceElement.addAttribute(
 				"referrer-class-name",
-				ExportImportClassedModelUtil.getClassName(referrerClassedModel));
+				ExportImportClassedModelUtil.getClassName(
+					referrerClassedModel));
 
 			if (referrerClassedModel instanceof PortletModel) {
 				Portlet portlet = (Portlet)referrerClassedModel;
