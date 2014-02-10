@@ -1108,12 +1108,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 
 				if (layout == null) {
-					layout = LayoutLocalServiceUtil.fetchLayout(
-						portletDataContext.getScopeGroupId(), privateLayout,
-						oldLayoutId);
-				}
-
-				if (layout == null) {
 					if (_log.isWarnEnabled()) {
 						StringBundler sb = new StringBundler(9);
 
