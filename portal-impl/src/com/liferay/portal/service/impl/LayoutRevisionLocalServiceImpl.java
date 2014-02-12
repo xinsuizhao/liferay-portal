@@ -460,6 +460,10 @@ public class LayoutRevisionLocalServiceImpl
 			StagingUtil.setRecentLayoutBranchId(
 				user, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(), layoutRevision.getLayoutBranchId());
+
+			StagingUtil.setRecentLayoutRevisionId(
+				user, layoutRevision.getLayoutSetBranchId(),
+				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
 		}
 		else {
 			if (_layoutRevisionId.get() > 0) {
