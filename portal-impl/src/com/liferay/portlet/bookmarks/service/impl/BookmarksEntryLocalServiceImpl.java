@@ -671,7 +671,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
 
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (Validator.isNull(layoutFullURL)) {
 			return;
 		}
 
