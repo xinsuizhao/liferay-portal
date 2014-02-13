@@ -1294,18 +1294,20 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return layoutURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
 				StringPool.SLASH + entry.getEntryId();
 		}
+		else {
+			long controlPanelPlid = PortalUtil.getControlPanelPlid(
+				serviceContext.getCompanyId());
 
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
-			serviceContext.getCompanyId());
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.BLOGS_ADMIN, controlPanelPlid,
+				PortletRequest.RENDER_PHASE);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.BLOGS_ADMIN, controlPanelPlid,
-			PortletRequest.RENDER_PHASE);
+			portletURL.setParameter("struts_action", "/blogs_admin/view_entry");
+			portletURL.setParameter(
+				"entryId", String.valueOf(entry.getEntryId()));
 
-		portletURL.setParameter("struts_action", "/blogs_admin/view_entry");
-		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-
-		return portletURL.toString();
+			return portletURL.toString();
+		}
 	}
 
 	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
