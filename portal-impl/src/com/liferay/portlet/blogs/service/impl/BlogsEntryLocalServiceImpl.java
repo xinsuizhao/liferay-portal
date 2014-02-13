@@ -52,7 +52,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.EntryContentException;
@@ -81,8 +80,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1277,39 +1274,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected String getEntryURL(
-			BlogsEntry entry, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		String layoutURL = getLayoutURL(
-			entry.getGroupId(), PortletKeys.BLOGS, serviceContext);
-
-		if (Validator.isNotNull(layoutURL)) {
-			return layoutURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
-				StringPool.SLASH + entry.getEntryId();
-		}
-		else {
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(
-				serviceContext.getCompanyId());
-
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.BLOGS_ADMIN, controlPanelPlid,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("struts_action", "/blogs_admin/view_entry");
-			portletURL.setParameter(
-				"entryId", String.valueOf(entry.getEntryId()));
-
-			return portletURL.toString();
-		}
-	}
-
 	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
 		throws SystemException {
 
@@ -1375,11 +1339,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected void notifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws SystemException {
+
+		if (!entry.isApproved()) {
+			return;
+		}
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
 
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (Validator.isNull(layoutFullURL)) {
 			return;
 		}
 
@@ -1408,6 +1376,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
+		String entryURL =
+			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
+				StringPool.SLASH + entry.getEntryId();
+
 		String fromName = BlogsUtil.getEmailFromName(
 			preferences, entry.getCompanyId());
 		String fromAddress = BlogsUtil.getEmailFromAddress(
@@ -1433,7 +1405,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
-			"[$BLOGS_ENTRY_URL$]", getEntryURL(entry, serviceContext));
+			"[$BLOGS_ENTRY_URL$]", entryURL);
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
