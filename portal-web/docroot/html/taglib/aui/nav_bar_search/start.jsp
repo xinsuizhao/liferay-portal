@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/nav_bar_search/init.jsp" %>
 
-<div class="collapse nav-collapse" id="<%= id %>NavbarSearchCollapse">
+<div class="collapse nav-collapse <%= searchResults ? "open" : StringPool.BLANK %>" id="<%= id %>NavbarSearchCollapse">
 	<div class="navbar-search <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(file) %>">
 			<liferay-ui:search-form
@@ -26,48 +26,70 @@
 		</c:if>
 
 		<aui:script use="aui-base,event-outside">
-			A.one('#<%= id %>NavbarBtn').on(
-				'click',
-				function(event) {
-					var btnNavbar = event.currentTarget;
+			var Util = Liferay.Util;
 
-					var navbar = btnNavbar.ancestor('.navbar');
+			var advancedSearchResults = <%= searchResults %>;
 
-					var navbarCollapse = A.one('#<%= id %>NavbarSearchCollapse');
+			var toggleSearchMenu = function(event) {
+				var btnNavbar = event.currentTarget;
 
-					var handle = Liferay.Data['<%= id %>Handle'];
+				var navbar = btnNavbar.ancestor('.navbar');
 
-					if (navbarCollapse.hasClass('open') && handle) {
-						handle.detach();
+				var navbarCollapse = A.one('#<%= id %>NavbarSearchCollapse');
 
-						handle = null;
-					}
-					else {
-						handle = navbarCollapse.on(
-							'mousedownoutside',
-							function(event) {
-								if (!btnNavbar.contains(event.target)) {
-									Liferay.Data['<%= id %>Handle'] = null;
+				var handle = Liferay.Data['<%= id %>Handle'];
 
-									handle.detach();
+				var navbarWillOpen = !navbarCollapse.hasClass('open');
 
-									navbarCollapse.removeClass('open');
+				if (advancedSearchResults) {
+					navbarWillOpen = true;
 
-									if (navbar) {
-										navbar.all('.btn-navbar, .nav').show();
-									}
+					advancedSearchResults = false;
+				}
+
+				if (!navbarWillOpen && handle) {
+					handle.detach();
+
+					handle = null;
+				}
+				else {
+					handle = navbarCollapse.on(
+						'mousedownoutside',
+						function(event) {
+							if (!btnNavbar.contains(event.target)) {
+								Liferay.Data['<%= id %>Handle'] = null;
+
+								handle.detach();
+
+								navbarCollapse.removeClass('open');
+
+								if (navbar) {
+									navbar.all('.btn-navbar, .nav').show();
 								}
 							}
-						);
-					}
-
-					navbarCollapse.toggleClass('open');
-
-					if (navbar) {
-						navbar.all('.btn-navbar, .nav').hide();
-					}
-
-					Liferay.Data['<%= id %>Handle'] = handle;
+						}
+					);
 				}
-			);
+
+				navbarCollapse.toggleClass('open', navbarWillOpen);
+
+				if (navbar && (Util.isPhone() || Util.isTablet())) {
+					navbar.all('.btn-navbar, .nav').hide();
+				}
+
+				Liferay.Data['<%= id %>Handle'] = handle;
+			};
+
+			var navbarButton = A.one('#<%= id %>NavbarBtn');
+
+			navbarButton.on('click', toggleSearchMenu);
+
+			if (advancedSearchResults) {
+				toggleSearchMenu(
+					{
+						currentTarget: navbarButton,
+						type: 'click'
+					}
+				);
+			}
 		</aui:script>
