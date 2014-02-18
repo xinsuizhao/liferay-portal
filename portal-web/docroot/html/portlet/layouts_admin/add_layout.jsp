@@ -229,7 +229,7 @@ else {
 					data: {
 						layoutId: <%= addedLayout.getLayoutId() %>,
 						parentLayoutId: <%= addedLayout.getParentLayoutId() %>,
-						title: A.Lang.String.escapeHTML('<%= navItem.getName() %>'),
+						title: '<%= navItem.getName() %>',
 						url: '<%= navItem.getURL() %>'
 					}
 				}
