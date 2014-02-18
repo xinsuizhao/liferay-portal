@@ -976,8 +976,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			workflowServiceContext = new ServiceContext();
 		}
 
-		workflowServiceContext.setAttribute("passwordUnencrypted",password1);
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
+		workflowServiceContext.setAttribute("passwordUnencrypted", password1);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -1617,7 +1617,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean autoPassword = ParamUtil.getBoolean(
 			serviceContext, "autoPassword");
 
-		String password = null;
+		String password = (String)serviceContext.getAttribute(
+			"passwordUnencrypted");
 
 		if (autoPassword) {
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
@@ -1658,11 +1659,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user.hasCompanyMx()) {
-			String mailPassword = (String)serviceContext.getAttribute(
-				"passwordUnencrypted");
-
 			mailService.addUser(
-				user.getCompanyId(), user.getUserId(), mailPassword,
+				user.getCompanyId(), user.getUserId(), password,
 				user.getFirstName(), user.getMiddleName(), user.getLastName(),
 				user.getEmailAddress());
 		}
@@ -4239,8 +4237,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			workflowServiceContext = new ServiceContext();
 		}
 
-		workflowServiceContext.setAttribute("passwordUnencrypted",password1);
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
+		workflowServiceContext.setAttribute("passwordUnencrypted", password1);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -4814,7 +4812,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		String passwordUnencrypted = (String)serviceContext.getAttribute(
-				"passwordUnencrypted");
+			"passwordUnencrypted");
 
 		if (Validator.isNotNull(passwordUnencrypted)) {
 			user.setPasswordUnencrypted(passwordUnencrypted);
