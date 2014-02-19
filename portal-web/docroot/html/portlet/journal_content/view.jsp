@@ -304,7 +304,6 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/journal/edit_article" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(latestArticle.getGroupId()) %>" />
 					<portlet:param name="articleId" value="<%= latestArticle.getArticleId() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(latestArticle.getVersion()) %>" />
