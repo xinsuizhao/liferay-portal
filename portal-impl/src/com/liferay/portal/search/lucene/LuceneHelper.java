@@ -82,6 +82,11 @@ public interface LuceneHelper {
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String[] values, boolean like);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #releaseSearcher(long, IndexSearcher)}
+	 */
+	@Deprecated
 	public void cleanUp(IndexSearcher indexSearcher);
 
 	public int countScoredFieldNames(Query query, String[] fieldNames);
@@ -107,6 +112,11 @@ public interface LuceneHelper {
 
 	public IndexSearcher getSearcher(long companyId) throws IOException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *				#getSearcher(long)}
+	 */
+	@Deprecated
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException;
 
