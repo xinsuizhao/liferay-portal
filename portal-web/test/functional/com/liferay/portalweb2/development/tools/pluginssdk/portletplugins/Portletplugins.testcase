@@ -636,11 +636,11 @@
 		</execute>
 
 		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="Reports" />
+			<var name="appName" value="Reports EE Portlet" />
 		</execute>
 
 		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="Jasper" />
+			<var name="appName" value="JasperReports EE Web" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -648,11 +648,11 @@
 		</execute>
 
 		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="Reports" />
+			<var name="appName" value="Reports EE Portlet" />
 		</execute>
 
 		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="Jasper" />
+			<var name="appName" value="JasperReports EE Web" />
 		</execute>
 	</command>
 
