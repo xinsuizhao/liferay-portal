@@ -45,8 +45,6 @@
 
 	var NEW_LINE = '\n';
 
-	var NEW_THREAD_URL = CKEDITOR.config.newThreadURL;
-
 	var REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
 
 	var REGEX_EM = /em$/i;
@@ -97,7 +95,16 @@
 
 	var TEMPLATE_IMAGE = '<img src="{image}">';
 
-	CKEDITOR.htmlDataProcessor.prototype = {
+	var emoticonImages;
+	var emoticonPath;
+	var emoticonSymbols;
+	var newThreadURL;
+
+	var BBCodeDataProcessor = function() {};
+
+	BBCodeDataProcessor.prototype = {
+		constructor: BBCodeDataProcessor,
+
 		toDataFormat: function(html, fixForBody ) {
 			var instance = this;
 
@@ -117,14 +124,10 @@
 
 			data = instance._bbcodeConverter.convert(data);
 
-			var emoticonImages = CKEDITOR.config.smiley_images;
-			var emoticonSymbols = CKEDITOR.config.smiley_symbols;
-			var imagePath = CKEDITOR.config.smiley_path;
-
 			var length = emoticonSymbols.length;
 
 			for (var i = 0; i < length; i++) {
-				var image = TEMPLATE_IMAGE.replace('{image}', imagePath + emoticonImages[i]);
+				var image = TEMPLATE_IMAGE.replace('{image}', emoticonPath + emoticonImages[i]);
 
 				var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
 
@@ -226,10 +229,10 @@
 			if (imagePath) {
 				var image = imagePath.substring(imagePath.lastIndexOf('/') + 1);
 
-				var imageIndex = instance._getImageIndex(CKEDITOR.config.smiley_images, image);
+				var imageIndex = instance._getImageIndex(emoticonImages, image);
 
 				if (imageIndex >= 0) {
-					emoticonSymbol = CKEDITOR.config.smiley_symbols[imageIndex];
+					emoticonSymbol = emoticonSymbols[imageIndex];
 				}
 			}
 
@@ -507,8 +510,8 @@
 
 			var decodedLink = decodeURIComponent(hrefAttribute);
 
-			if (decodedLink.indexOf(NEW_THREAD_URL) >= 0) {
-				hrefAttribute = NEW_THREAD_URL;
+			if (decodedLink.indexOf(newThreadURL) >= 0) {
+				hrefAttribute = newThreadURL;
 			}
 
 			var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
@@ -816,7 +819,14 @@
 			requires: ['htmlwriter'],
 
 			init: function(editor) {
-				editor.dataProcessor = new CKEDITOR.htmlDataProcessor(editor);
+				var editorConfig = editor.config;
+
+				emoticonImages = editorConfig.smiley_images;
+				emoticonPath = editorConfig.smiley_path;
+				emoticonSymbols = editorConfig.smiley_symbols;
+				newThreadURL = editorConfig.newThreadURL;
+
+				editor.dataProcessor = new BBCodeDataProcessor(editor);
 
 				editor.on(
 					'paste',
@@ -825,7 +835,7 @@
 
 						var htmlData = data.dataValue;
 
-						htmlData = CKEDITOR.htmlDataProcessor.prototype.toDataFormat(htmlData);
+						htmlData = editor.dataProcessor.toDataFormat(htmlData);
 
 						data.dataValue = htmlData;
 					},
