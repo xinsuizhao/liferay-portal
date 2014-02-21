@@ -527,7 +527,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	public IndexSearcher getSearcher(long companyId) throws IOException {
 		IndexAccessor indexAccessor = getIndexAccessor(companyId);
 
-		return indexAccessor.aquireIndexSearcher();
+		return indexAccessor.acquireIndexSearcher();
 	}
 
 	/**
