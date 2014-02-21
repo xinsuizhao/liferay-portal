@@ -243,7 +243,7 @@
 		</execute>
 	</command>
 
-	<command name="IPGeocoderPortletSmoke" priority="5">
+	<command name="IPGeocoderPortletSmoke" known-issues="LIFERAYQA-7593" priority="5">
 		<property name="portlet.plugins.includes" value="ip-geocoder-portlet" />
 
 		<var name="appName" value="IP Geocoder" />
@@ -577,7 +577,7 @@
 		</execute>
 	</command>
 
-	<command name="OpenSocialPortletSmoke" priority="5">
+	<command name="OpenSocialPortletSmoke" known-issues="LPS-28952" priority="5">
 		<property name="portlet.plugins.includes" value="opensocial-portlet" />
 
 		<var name="appName" value="OpenSocial Gadget" />

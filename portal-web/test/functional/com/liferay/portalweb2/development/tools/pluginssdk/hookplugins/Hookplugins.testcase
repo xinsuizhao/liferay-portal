@@ -113,7 +113,7 @@
 		</execute>
 	</command>
 
-	<command name="LocalizationJAHookSmoke" priority="5">
+	<command name="LocalizationJAHookSmoke" known-issues="LPS-42764" priority="5">
 		<property name="hook.plugins.includes" value="localization-ja-hook" />
 
 		<var name="appName" value="Japanese Localization" />
@@ -135,7 +135,7 @@
 		</execute>
 	</command>
 
-	<command name="LocalizationZHHookSmoke" priority="5">
+	<command name="LocalizationZHHookSmoke" known-issues="LPS-42764" priority="5">
 		<property name="hook.plugins.includes" value="localization-zh-hook" />
 
 		<var name="appName" value="Chinese Localization" />
