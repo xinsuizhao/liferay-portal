@@ -150,8 +150,8 @@ public class PortletResponseUtil {
 		throws IOException {
 
 		sendFile(
-			portletRequest, mimeResponse, fileName, inputStream, contentLength,
-			contentType, null);
+			portletRequest, mimeResponse, fileName, inputStream, 0, contentType,
+			null);
 	}
 
 	public static void sendFile(
