@@ -105,8 +105,6 @@ AUI.add(
 				_ioRequest: function(config) {
 					var instance = this;
 
-					config.data.p_auth = Liferay.authToken;
-
 					A.io.request(
 						themeDisplay.getPathMain() + '/portal/session_click',
 						config
