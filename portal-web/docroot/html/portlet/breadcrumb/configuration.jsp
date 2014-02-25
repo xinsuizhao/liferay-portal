@@ -36,6 +36,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					%>
 
 						<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />
+
 					<%
 					}
 					%>
