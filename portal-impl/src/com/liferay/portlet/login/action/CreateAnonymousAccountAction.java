@@ -235,8 +235,7 @@ public class CreateAnonymousAccountAction extends PortletAction {
 			serviceContext);
 
 		UserLocalServiceUtil.updateStatus(
-			user.getUserId(), WorkflowConstants.STATUS_INCOMPLETE,
-			new ServiceContext());
+			user.getUserId(), WorkflowConstants.STATUS_INCOMPLETE);
 
 		// Session messages
 
