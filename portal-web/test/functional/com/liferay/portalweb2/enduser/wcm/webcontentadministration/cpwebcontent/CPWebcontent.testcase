@@ -169,8 +169,9 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateName" value="${templateName}" />
 			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -180,6 +181,7 @@
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
 		</execute>
