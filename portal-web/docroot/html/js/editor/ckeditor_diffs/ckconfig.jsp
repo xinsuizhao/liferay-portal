@@ -184,7 +184,7 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		['Styles', 'FontSize']
 	];
 
-	on(
+	ckEditor.on(
 		'dialogDefinition',
 		function(event) {
 			var dialogDefinition = event.data.definition;
