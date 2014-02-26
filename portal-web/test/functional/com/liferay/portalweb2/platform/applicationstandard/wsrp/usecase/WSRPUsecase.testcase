@@ -12,11 +12,8 @@
 	</tear-down>
 
 	<command name="AddWSRPUnitConverter" priority="5">
-		<var name="consumerName" value="Consumer Demo" />
 		<var name="consumerPortletName" value="WSRP Unit Converter" />
 		<var name="consumerPortletType" value="Unit Converter" />
-		<var name="pageName" value="WSRP Page" />
-		<var name="producerName" value="Producer Demo" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="WSRP" />
@@ -24,7 +21,7 @@
 
 		<execute macro="WSRP#addProducerCP">
 			<var name="portletsAvailableSelect" value="${consumerPortletType}" />
-			<var name="producerName" value="${producerName}" />
+			<var name="producerName" value="Producer Demo" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -32,8 +29,8 @@
 		</execute>
 
 		<execute macro="WSRP#addConsumerCP">
-			<var name="consumerName" value="${consumerName}" />
-			<var name="producerName" value="${producerName}" />
+			<var name="consumerName" value="Consumer Demo" />
+			<var name="producerName" value="Producer Demo" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -41,7 +38,7 @@
 		</execute>
 
 		<execute macro="WSRP#addConsumerPortletCP">
-			<var name="consumerName" value="${consumerName}" />
+			<var name="consumerName" value="Consumer Demo" />
 			<var name="consumerPortletName" value="${consumerPortletName}" />
 			<var name="consumerPortletType" value="${consumerPortletType}" />
 		</execute>
@@ -53,11 +50,11 @@
 		<execute action="CPWSRPManageportlets#assertElementPresent" locator-key1="PORTLET_TABLE_DELETE" value1="Delete" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="WSRP Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="WSRP Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
