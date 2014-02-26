@@ -667,6 +667,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
+			<var name="addGlobalSite" value="true" />
+			<var name="addOtherSite" value="true" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="${siteName}" />
