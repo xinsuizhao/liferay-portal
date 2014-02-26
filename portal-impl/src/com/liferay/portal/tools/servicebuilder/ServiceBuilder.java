@@ -4255,7 +4255,7 @@ public class ServiceBuilder {
 						hints.get("max-length"), maxLength);
 				}
 
-				if (col.isLocalized()) {
+				if (col.isLocalized() && (maxLength < 4000)) {
 					maxLength = 4000;
 				}
 
