@@ -15,7 +15,10 @@
 package com.liferay.portal.kernel.search.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,7 +42,9 @@ public class SearchUtil {
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms)) {
+		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms) ||
+			!_HIGHLIGHT_ENABLED) {
+
 			return s;
 		}
 
@@ -112,6 +117,10 @@ public class SearchUtil {
 
 	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {
 		"[@HIGHLIGHT1@]", "[@HIGHLIGHT2@]"};
+
+	private static final boolean _HIGHLIGHT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED));
 
 	private static final String[] _HIGHLIGHTS = {
 		"<span class=\"highlight\">", "</span>"};
