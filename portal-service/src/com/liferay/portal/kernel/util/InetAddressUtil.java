@@ -34,6 +34,13 @@ public class InetAddressUtil {
 	}
 
 	public static InetAddress getLocalInetAddress() throws Exception {
+		if (Validator.isNotNull(_CLUSTER_NODE_LISTEN_ADDRESS)) {
+			InetAddress inetAddress = InetAddress.getByName(
+				_CLUSTER_NODE_LISTEN_ADDRESS);
+
+			return inetAddress;
+		}
+
 		Enumeration<NetworkInterface> enu1 =
 			NetworkInterface.getNetworkInterfaces();
 
@@ -61,6 +68,9 @@ public class InetAddressUtil {
 
 		return InetAddress.getByName("127.0.0.1");
 	}
+
+	private static final String _CLUSTER_NODE_LISTEN_ADDRESS =
+		GetterUtil.getString(PropsUtil.get("cluster.node.listen.address"));
 
 	private static class LocalHostNameHolder {
 
