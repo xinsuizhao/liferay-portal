@@ -107,9 +107,7 @@
 
 					String title = HtmlUtil.escape(summary.getTitle());
 
-					title = StringUtil.highlight(title, queryTerms);
-
-					row.addText(title);
+					row.addText(SearchUtil.highlight(title, queryTerms));
 
 					// Content
 

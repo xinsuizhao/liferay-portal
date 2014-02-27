@@ -52,7 +52,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 
 		<div class="entry-metadata">
 			<span class="entry-title">
-				<%= StringUtil.highlight(HtmlUtil.escape(title), queryTerms) %>
+				<%= SearchUtil.highlight(HtmlUtil.escape(title), queryTerms) %>
 
 				<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
 					<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
@@ -104,7 +104,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 			</c:if>
 
 			<span class="entry-description">
-				<%= StringUtil.highlight(HtmlUtil.escape(description), queryTerms) %>
+				<%= SearchUtil.highlight(HtmlUtil.escape(description), queryTerms) %>
 			</span>
 		</div>
 	</a>
@@ -132,7 +132,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 						</span>
 
 						<span class="body">
-							<%= StringUtil.highlight((Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getTitle(), queryTerms) %>
+							<%= SearchUtil.highlight((Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getTitle(), queryTerms) %>
 						</span>
 				</aui:a>
 			</div>
@@ -165,7 +165,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 					</span>
 
 					<span class="body">
-						<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
+						<%= SearchUtil.highlight(mbMessage.getSubject(), queryTerms) %>
 					</span>
 				</aui:a>
 			</div>
