@@ -188,6 +188,9 @@ public class VerifyOracle extends VerifyProcess {
 
 		alterVarchar2Columns();
 
+		convertColumnToClob("AssetEntry", "description");
+		convertColumnToClob("AssetEntry", "summary");
+		convertColumnToClob("JournalArticle", "description");
 		convertColumnToClob("ShoppingCart", "itemIds");
 		convertColumnToClob("ShoppingOrder", "comments");
 	}
