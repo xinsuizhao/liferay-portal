@@ -218,7 +218,8 @@ public class SubscriptionSender implements Serializable {
 					_classLoader = currentThread.getContextClassLoader();
 
 					MessageBusUtil.sendMessage(
-						DestinationNames.SUBSCRIPTION_SENDER, this);
+						DestinationNames.SUBSCRIPTION_SENDER,
+						SubscriptionSender.this);
 
 					return null;
 				}
