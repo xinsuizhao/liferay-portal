@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -34,6 +36,19 @@ public class InetAddressUtil {
 	}
 
 	public static InetAddress getLocalInetAddress() throws Exception {
+		String _CLUSTER_NODE_LISTEN_ADDRESS = null;
+
+		try {
+			_CLUSTER_NODE_LISTEN_ADDRESS =
+				GetterUtil.getString(
+					PropsUtil.get("cluster.node.listen.address"));
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
 		if (Validator.isNotNull(_CLUSTER_NODE_LISTEN_ADDRESS)) {
 			InetAddress inetAddress = InetAddress.getByName(
 				_CLUSTER_NODE_LISTEN_ADDRESS);
@@ -69,8 +84,7 @@ public class InetAddressUtil {
 		return InetAddress.getByName("127.0.0.1");
 	}
 
-	private static final String _CLUSTER_NODE_LISTEN_ADDRESS =
-		GetterUtil.getString(PropsUtil.get("cluster.node.listen.address"));
+	private static Log _log = LogFactoryUtil.getLog(InetAddressUtil.class);
 
 	private static class LocalHostNameHolder {
 
