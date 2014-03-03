@@ -132,7 +132,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 				<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
 			</c:if>
 
-			<%= SearchUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
+			<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 		</a>
 
 		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
@@ -149,7 +149,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 		<div class="asset-entry-content">
 			<c:if test="<%= Validator.isNotNull(entrySummary) %>">
 				<span class="asset-entry-summary">
-					<%= SearchUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
+					<%= StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
 				</span>
 			</c:if>
 

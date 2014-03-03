@@ -92,7 +92,6 @@ page import="com.liferay.portal.kernel.search.SearchResultUtil" %><%@
 page import="com.liferay.portal.kernel.search.Sort" %><%@
 page import="com.liferay.portal.kernel.search.SortFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.search.Summary" %><%@
-page import="com.liferay.portal.kernel.search.util.SearchUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BufferCacheServletResponse" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalMessages" %><%@
