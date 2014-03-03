@@ -97,5 +97,9 @@
 		<case locator-key1="ADD_APPLICATION_SEARCH_FIELD">
 			<execute function="Type#sendKeysApplicationSearch" />
 		</case>
+
+		<case locator-key1="ADD_CONTENT_SEARCH_FIELD">
+			<execute function="Type#sendKeys" />
+		</case>
 	</command>
 </definition>
