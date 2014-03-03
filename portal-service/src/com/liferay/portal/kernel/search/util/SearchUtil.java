@@ -15,10 +15,8 @@
 package com.liferay.portal.kernel.search.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.StringTokenizer;
@@ -61,12 +59,7 @@ public class SearchUtil {
 
 		Pattern pattern = Pattern.compile(sb.toString(), flags);
 
-		s = _highlight(
-			HtmlUtil.unescape(s), pattern, _ESCAPE_SAFE_HIGHLIGHTS[0],
-			_ESCAPE_SAFE_HIGHLIGHTS[1]);
-
-		return StringUtil.replace(
-			HtmlUtil.escape(s), _ESCAPE_SAFE_HIGHLIGHTS, _HIGHLIGHTS);
+		return _highlight(s, pattern, highlight1, highlight2);
 	}
 
 	private static String _highlight(
@@ -110,9 +103,6 @@ public class SearchUtil {
 
 		return sb.toString();
 	}
-
-	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {
-		"[@HIGHLIGHT1@]", "[@HIGHLIGHT2@]"};
 
 	private static final String[] _HIGHLIGHTS = {
 		"<span class=\"highlight\">", "</span>"};
