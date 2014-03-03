@@ -43,6 +43,10 @@ public class SearchUtil {
 			return s;
 		}
 
+		if (queryTerms.length == 0) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
 
 		for (int i = 0; i < queryTerms.length; i++) {
@@ -84,15 +88,12 @@ public class SearchUtil {
 			if (matcher.find()) {
 				StringBuffer hightlighted = new StringBuffer();
 
-				while (true) {
+				do {
 					matcher.appendReplacement(
-						hightlighted,
-						highlight1 + matcher.group() + highlight2);
-
-					if (!matcher.find()) {
-						break;
-					}
+						hightlighted, highlight1 + matcher.group() +
+						highlight2);
 				}
+				while (matcher.find());
 
 				matcher.appendTail(hightlighted);
 
