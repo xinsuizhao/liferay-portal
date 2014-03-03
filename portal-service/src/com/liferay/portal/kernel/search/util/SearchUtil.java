@@ -31,7 +31,8 @@ import java.util.regex.Pattern;
 public class SearchUtil {
 
 	public static String highlight(String s, String[] queryTerms) {
-		return highlight(s, queryTerms, _HIGHLIGHTS[0], _HIGHLIGHTS[1]);
+		return highlight(
+			s, queryTerms, "<span class=\"highlight\">", "</span>");
 	}
 
 	public static String highlight(
@@ -103,8 +104,5 @@ public class SearchUtil {
 
 		return sb.toString();
 	}
-
-	private static final String[] _HIGHLIGHTS = {
-		"<span class=\"highlight\">", "</span>"};
 
 }
