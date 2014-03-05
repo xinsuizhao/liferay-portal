@@ -112,6 +112,8 @@ public class HttpClientSPIAgentTest {
 
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_PORTLET, _portlet);
+
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@Test
