@@ -363,7 +363,7 @@
 						path: 'input_move_boxes_touch.js',
 						requires: [
 							'aui-base',
-							'handlebars',
+							'aui-template-deprecated',
 							'liferay-input-move-boxes',
 							'sortable'
 						]
