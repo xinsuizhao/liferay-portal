@@ -36,6 +36,7 @@
 
 					<var name="key_calendarName" value="${calendarName}" />
 
+					<execute action="PGCalendar#pause" locator1="5000" />
 					<execute action="PGCalendar#assertClick" locator-key1="OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />
 					<execute action="PGCalendar#assertTextEquals" locator-key1="OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
 				</then>
