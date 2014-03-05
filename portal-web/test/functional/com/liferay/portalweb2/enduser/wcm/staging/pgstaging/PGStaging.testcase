@@ -31,8 +31,8 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command name="ActivateDeactivateRemoteStaging" known-issues="LPS-44779" priority="5">
-		<property name="custom.properties" value="axis.servlet.hosts.allowed=$${line.separator}tunnel.servlet.hosts.allowed=$${line.separator}tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
+	<command name="ActivateDeactivateRemoteStaging" priority="5">
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp" />
 
@@ -166,8 +166,8 @@
 		</execute>
 	</command>
 
-	<command name="ActivateRemoteStaging" known-issues="LPS-44779" priority="5">
-		<property name="custom.properties" value="axis.servlet.hosts.allowed=$${line.separator}tunnel.servlet.hosts.allowed=$${line.separator}tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
+	<command name="ActivateRemoteStaging" priority="5">
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />
 
@@ -1051,8 +1051,8 @@
 		<execute action="BaseLiferay#pause" locator1="5000" />
 	</command>
 
-	<command name="PublishWCViaRemoteStaging" known-issues="LPS-44779" priority="5">
-		<property name="custom.properties" value="axis.servlet.hosts.allowed=$${line.separator}tunnel.servlet.hosts.allowed=$${line.separator}tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
+	<command name="PublishWCViaRemoteStaging" priority="5">
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="pageVersioningEnabled" value="true" />
@@ -1087,7 +1087,7 @@
 	</command>
 
 	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="5">
-		<property name="custom.properties" value="axis.servlet.hosts.allowed=$${line.separator}tunnel.servlet.hosts.allowed=$${line.separator}tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="pageVersioningEnabled" value="true" />
