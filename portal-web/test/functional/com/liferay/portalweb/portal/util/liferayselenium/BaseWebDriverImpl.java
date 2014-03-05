@@ -182,18 +182,6 @@ public abstract class BaseWebDriverImpl
 					continue;
 				}
 
-				// LPS-44710
-
-				if (javaScriptErrorValue.contains("b is null")) {
-					continue;
-				}
-
-				if (javaScriptErrorValue.contains(
-						"TypeError: Y.config.doc.defaultView is null")) {
-
-					continue;
-				}
-
 				throw new Exception(javaScriptErrorValue);
 			}
 		}
