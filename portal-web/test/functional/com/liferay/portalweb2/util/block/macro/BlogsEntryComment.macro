@@ -3,22 +3,25 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#pause" value1="1000" />
 
 		<var name="key_entryComment" value="${entryComment}" />
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="CPBlogsEntry#pause" value1="1000" />
 		<execute action="CPBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
 		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
 
+		<execute action="CPBlogsEntry#pause" value1="1000" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
 	</command>
 
 	<command name="addPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#pause" value1="1000" />
 
 		<if>
 			<condition action="PGBlogsEntry#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" />
@@ -31,6 +34,7 @@
 		</if>
 
 		<execute action="PGBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
+		<execute action="PGBlogsEntry#pause" value1="1000" />
 
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_SIGN_IN" />
@@ -47,12 +51,8 @@
 			</else>
 		</if>
 
+		<execute action="PGBlogsEntry#pause" value1="1000" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-
-		<var name="key_entryComment" value="${entryComment}" />
-
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
 	</command>
 
 	<command name="deleteCP">
