@@ -183,7 +183,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="5">
+	<command name="PublishWCWithPagesVariationViaRemoteStaging" known-issues="LPS-44779" priority="5">
 		<echo message="override" />
 	</command>
 
@@ -1945,7 +1945,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingOnlyApprovedPublishToLive" priority="5">
+	<command name="StagingOnlyApprovedPublishToLive" known-issues="LPS-44779" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoPG">
@@ -2398,7 +2398,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="StagingRemoteLiveWebContent" priority="5">
+	<command name="StagingRemoteLiveWebContent" known-issues="LPS-44779" priority="5">
 		<property name="custom.properties" value="axis.servlet.hosts.allowed=$${line.separator}tunnel.servlet.hosts.allowed=$${line.separator}tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp" />
