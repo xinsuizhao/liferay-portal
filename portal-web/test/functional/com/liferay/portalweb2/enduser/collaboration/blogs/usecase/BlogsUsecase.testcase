@@ -220,6 +220,10 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#gotoScheduledEditPG">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
