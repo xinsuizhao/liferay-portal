@@ -108,6 +108,10 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Category#addCategoryPropertyCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="propertiesKeyField" value="${propertiesKeyField}" />
@@ -153,6 +157,10 @@
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Category#addCategoryPropertyCP">
