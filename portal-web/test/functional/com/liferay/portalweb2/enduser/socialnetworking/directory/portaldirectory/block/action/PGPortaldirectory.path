@@ -62,17 +62,17 @@
 <!--BASIC_SEARCH-->
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//div[@class='advanced-search']/input</td>
+	<td>//div[@class='advanced-search']/input | //div[@class='form-search']/div/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>//div[@class='advanced-search']/button</td>
+	<td>//div[@class='advanced-search']/button | //div[@class='form-search']/div/button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//div[@class='advanced-search']/span</td>
+	<td>//div[@class='advanced-search']/span | //div[@class='form-search']/button</td>
 	<td></td>
 </tr>
 <tr>
