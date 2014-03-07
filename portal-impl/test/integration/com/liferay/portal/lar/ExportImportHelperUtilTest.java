@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -51,6 +51,8 @@ import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.zip.ZipReaderImpl;
+import com.liferay.portal.zip.ZipWriterImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -58,6 +60,7 @@ import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
@@ -116,14 +119,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
-		TestReaderWriter testReaderWriter = new TestReaderWriter();
+		_zipWriter = new TestZipWriter();
 
 		_portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
 				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
 				new HashMap<String, String[]>(),
 				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
-				testReaderWriter);
+				_zipWriter);
 
 		Element rootElement = SAXReaderUtil.createElement("root");
 
@@ -136,12 +139,16 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
 
+		_zipReader = new TestZipReader(
+			_zipWriter.getFile(), _zipWriter.getBinaryEntriesList(),
+			_zipWriter.getEntriesMap());
+
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
 				new HashMap<String, String[]>(),
 				new CurrentUserIdStrategy(TestPropsValues.getUser()),
-				testReaderWriter);
+				_zipReader);
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
@@ -157,6 +164,21 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		_referrerStagedModel = JournalTestUtil.addArticle(
 			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.randomString());
+
+		_referrerStagedModelElement =
+			_portletDataContextExport.getExportDataElement(
+				_referrerStagedModel);
+
+		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+			_referrerStagedModel);
+
+		_portletDataContextExport.addZipEntry(
+			referrerStagedModelPath, _referrerStagedModel);
+
+		_portletDataContextImport.setImportDataRootElement(rootElement);
+
+		_referrerStagedModelElement.addAttribute(
+			"path", referrerStagedModelPath);
 	}
 
 	@After
@@ -211,6 +233,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		List<String> urls = getURLs(content);
 
+		_zipWriter.clearPreviousEntries();
+
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			rootElement.element("entry"), content, true);
@@ -219,18 +243,15 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			Assert.assertFalse(content.contains(url));
 		}
 
-		TestReaderWriter testReaderWriter =
-			(TestReaderWriter)_portletDataContextExport.getZipWriter();
-
-		List<String> entries = testReaderWriter.getEntries();
+		List<String> entries = _zipReader.getTestEntries();
 
 		Assert.assertEquals(entries.size(), 1);
 
-		List<String> binaryEntries = testReaderWriter.getBinaryEntries();
+		List<String> binaryEntries = _zipReader.getBinaryEntries();
 
 		Assert.assertEquals(binaryEntries.size(), entries.size());
 
-		for (String entry : testReaderWriter.getEntries()) {
+		for (String entry : _zipReader.getTestEntries()) {
 			Assert.assertTrue(
 				content.contains("[$dl-reference=" + entry + "$]"));
 		};
@@ -382,38 +403,31 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testImportDLReferences() throws Exception {
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
-		Element entryElement = rootElement.element("entry");
-
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextExport, _referrerStagedModel,
+			_referrerStagedModelElement, content, true);
+
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			_portletDataContextImport, entryElement, content, true);
+			_portletDataContextImport, _referrerStagedModelElement, content,
+			true);
 
 		Assert.assertFalse(content.contains("[$dl-reference="));
 	}
 
 	@Test
 	public void testImportLayoutReferences() throws Exception {
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
-		Element entryElement = rootElement.element("entry");
-
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextExport, _referrerStagedModel,
+			_referrerStagedModelElement, content, true);
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			_portletDataContextExport, entryElement, content, true);
+			_portletDataContextImport, _referrerStagedModelElement, content,
+			true);
 
 		Assert.assertFalse(
 			content.contains("@data_handler_group_friendly_url@"));
@@ -615,83 +629,73 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;
+	private Element _referrerStagedModelElement;
 	private Group _stagingGroup;
 	private Layout _stagingPrivateLayout;
 	private Layout _stagingPublicLayout;
+	private TestZipReader _zipReader;
+	private TestZipWriter _zipWriter;
 
-	private class TestReaderWriter implements ZipReader, ZipWriter {
+	private class TestZipReader extends ZipReaderImpl {
 
-		@Override
-		public void addEntry(String name, byte[] bytes) {
-			_binaryEntries.add(name);
-		}
+		public TestZipReader(
+			File file, List<String> binaryEntries,
+			Map<String, String> entries) {
 
-		@Override
-		public void addEntry(String name, InputStream inputStream) {
-			_binaryEntries.add(name);
-		}
+			super(file);
 
-		@Override
-		public void addEntry(String name, String s) {
-			_entries.put(name, s);
-		}
+			_binaryEntries = binaryEntries;
 
-		@Override
-		public void addEntry(String name, StringBuilder sb) {
-			_entries.put(name, sb.toString());
-		}
-
-		@Override
-		public void close() {
-		}
-
-		@Override
-		public byte[] finish() {
-			return new byte[0];
+			_entries = entries;
 		}
 
 		public List<String> getBinaryEntries() {
 			return _binaryEntries;
 		}
 
-		@Override
-		public List<String> getEntries() {
+		public List<String> getTestEntries() {
 			return new ArrayList<String>(_entries.keySet());
-		}
-
-		@Override
-		public byte[] getEntryAsByteArray(String name) {
-			return null;
-		}
-
-		@Override
-		public InputStream getEntryAsInputStream(String name) {
-			return null;
-		}
-
-		@Override
-		public String getEntryAsString(String name) {
-			return _entries.get(name);
-		}
-
-		@Override
-		public List<String> getFolderEntries(String path) {
-			return null;
-		}
-
-		@Override
-		public File getFile() {
-			return null;
-		}
-
-		@Override
-		public String getPath() {
-			return StringPool.BLANK;
 		}
 
 		private List<String> _binaryEntries = new ArrayList<String>();
 		private Map<String, String> _entries = new HashMap<String, String>();
+	}
 
+	private class TestZipWriter extends ZipWriterImpl {
+
+		@Override
+		public void addEntry(String name, InputStream inputStream)
+			throws IOException {
+
+			super.addEntry(name, inputStream);
+
+			if (!name.contains(".xml")) {
+				_binaryEntries.add(name);
+			}
+		}
+
+		@Override
+		public void addEntry(String name, String s) throws IOException {
+			super.addEntry(name, s);
+			_entries.put(name, s);
+		}
+
+		public List<String> getBinaryEntriesList() {
+			return _binaryEntries;
+		}
+
+		public Map<String, String> getEntriesMap() {
+			return _entries;
+		}
+
+		public void clearPreviousEntries() {
+			_binaryEntries.clear();
+
+			_entries.clear();
+		}
+
+		private List<String> _binaryEntries = new ArrayList<String>();
+		private Map<String, String> _entries = new HashMap<String, String>();
 	}
 
 }
