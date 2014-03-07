@@ -392,7 +392,12 @@
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContent}" />
 		<execute action="PGBlogs#type" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContentEdit}" />
-		<execute action="PGBlogs#selectFrame" value1="relative=top" />
+		<execute action="PGBlogs#pause" value1="3000" />
+
+		<var name="key_portletName" value="Blogs" />
+
+		<execute action="PGBlogs#click" locator-key1="PORTLET_BODY" />
+		<execute action="PGBlogs#pause" value1="1000" />
 	</command>
 
 	<command name="editContentPG">
@@ -922,6 +927,9 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#pause" locator1="3000" />
+
 		<var name="entryViewCount" path="CPBlogsEntry" locator-key="ENTRY_STATS_VIEW_COUNT" />
 		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
 
@@ -939,6 +947,9 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#pause" locator1="3000" />
+
 		<var name="entryViewCount" value="${entryViewCount?increment()}" />
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
@@ -953,11 +964,17 @@
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#pause" locator1="3000" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#pause" locator1="3000" />
 
 		<var name="entryViewCount" path="PGBlogsEntry" locator-key="ENTRY_STATS_VIEW_COUNT" />
 		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
@@ -977,6 +994,9 @@
 		</execute>
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#pause" locator1="3000" />
 
 		<var name="entryViewCount" value="${entryViewCount?increment()}" />
 
