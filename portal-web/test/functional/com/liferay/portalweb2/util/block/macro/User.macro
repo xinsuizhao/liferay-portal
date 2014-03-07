@@ -15,7 +15,15 @@
 		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_ACTIVATE" value1="Activate" />
 		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="USER_TABLE_FIRST_NAME" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+			</then>
+		</if>
+
+		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="USER_TABLE_FIRST_NAME" />
 
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 
