@@ -157,7 +157,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveWebContentPG" priority="5">
+	<command name="ApproveWebContentPG" known-issues="LIFERAYQA-6795" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />
@@ -329,7 +329,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectWebContentPG" priority="5">
+	<command name="RejectWebContentPG" known-issues="LIFERAYQA-6795" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />
