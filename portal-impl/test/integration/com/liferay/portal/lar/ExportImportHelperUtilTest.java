@@ -243,7 +243,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			Assert.assertFalse(content.contains(url));
 		}
 
-		List<String> entries = _zipReader.getTestEntries();
+		List<String> entries = _zipReader.getEntries();
 
 		Assert.assertEquals(entries.size(), 1);
 
@@ -251,7 +251,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Assert.assertEquals(binaryEntries.size(), entries.size());
 
-		for (String entry : _zipReader.getTestEntries()) {
+		for (String entry : _zipReader.getEntries()) {
 			Assert.assertTrue(
 				content.contains("[$dl-reference=" + entry + "$]"));
 		};
@@ -409,7 +409,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			_referrerStagedModelElement, content, true);
-
 		content = ExportImportHelperUtil.replaceImportContentReferences(
 			_portletDataContextImport, _referrerStagedModelElement, content,
 			true);
@@ -653,12 +652,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			return _binaryEntries;
 		}
 
-		public List<String> getTestEntries() {
+		public List<String> getEntries() {
 			return new ArrayList<String>(_entries.keySet());
 		}
 
 		private List<String> _binaryEntries = new ArrayList<String>();
 		private Map<String, String> _entries = new HashMap<String, String>();
+
 	}
 
 	private class TestZipWriter extends ZipWriterImpl {
@@ -677,6 +677,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		@Override
 		public void addEntry(String name, String s) throws IOException {
 			super.addEntry(name, s);
+
 			_entries.put(name, s);
 		}
 
@@ -696,6 +697,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		private List<String> _binaryEntries = new ArrayList<String>();
 		private Map<String, String> _entries = new HashMap<String, String>();
+
 	}
 
 }
