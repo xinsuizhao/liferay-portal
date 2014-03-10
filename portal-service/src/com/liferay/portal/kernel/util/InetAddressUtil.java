@@ -36,10 +36,10 @@ public class InetAddressUtil {
 	}
 
 	public static InetAddress getLocalInetAddress() throws Exception {
-		String _CLUSTER_NODE_LISTEN_ADDRESS = null;
+		String clusterNodeListenAddress = null;
 
 		try {
-			_CLUSTER_NODE_LISTEN_ADDRESS =
+			clusterNodeListenAddress =
 				GetterUtil.getString(
 					PropsUtil.get("cluster.node.listen.address"));
 		}
@@ -49,9 +49,9 @@ public class InetAddressUtil {
 			}
 		}
 
-		if (Validator.isNotNull(_CLUSTER_NODE_LISTEN_ADDRESS)) {
+		if (Validator.isNotNull(clusterNodeListenAddress)) {
 			InetAddress inetAddress = InetAddress.getByName(
-				_CLUSTER_NODE_LISTEN_ADDRESS);
+				clusterNodeListenAddress);
 
 			return inetAddress;
 		}
