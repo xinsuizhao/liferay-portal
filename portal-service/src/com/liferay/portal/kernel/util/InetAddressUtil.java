@@ -36,12 +36,11 @@ public class InetAddressUtil {
 	}
 
 	public static InetAddress getLocalInetAddress() throws Exception {
-		String clusterNodeListenAddress = null;
+		String clusterNodeListenAddress = StringPool.BLANK;
 
 		try {
-			clusterNodeListenAddress =
-				GetterUtil.getString(
-					PropsUtil.get("cluster.node.listen.address"));
+			clusterNodeListenAddress = GetterUtil.getString(
+				PropsUtil.get("cluster.node.listen.address"));
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
