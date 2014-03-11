@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -37,8 +36,6 @@ public interface LayoutTemplate
 	public String getLayoutTemplateId();
 
 	public String getName();
-
-	public String getName(Locale locale);
 
 	public String getServletContextName();
 

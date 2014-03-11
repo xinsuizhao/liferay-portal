@@ -115,19 +115,12 @@ public class LayoutTemplateImpl
 
 	@Override
 	public String getName() {
-		return getName(LocaleUtil.getDefault());
-	}
-
-	@Override
-	public String getName(Locale locale) {
 		if (Validator.isNotNull(_name)) {
 			return _name;
 		}
 
-		String layoutTemplateId = StringUtil.replace(
+		return StringUtil.replace(
 			_layoutTemplateId, CharPool.UNDERLINE, CharPool.DASH);
-
-		return LanguageUtil.get(locale, "layout-template-" + layoutTemplateId);
 	}
 
 	@Override

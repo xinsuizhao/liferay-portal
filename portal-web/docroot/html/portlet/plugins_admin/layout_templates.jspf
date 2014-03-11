@@ -49,6 +49,8 @@ List resultRows = searchContainer.getResultRows();
 for (int i = 0; i < results.size(); i++) {
 	LayoutTemplate layoutTemplate = (LayoutTemplate)results.get(i);
 
+	String layoutTemplateName = layoutTemplate.getName();
+
 	PluginPackage pluginPackage = layoutTemplate.getPluginPackage();
 	PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), layoutTemplate.getLayoutTemplateId(), Plugin.TYPE_LAYOUT_TEMPLATE);
 
@@ -65,7 +67,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	rowURL.setParameter("pluginId", layoutTemplate.getLayoutTemplateId());
 	rowURL.setParameter("pluginType", Plugin.TYPE_LAYOUT_TEMPLATE);
-	rowURL.setParameter("title", layoutTemplate.getName());
+	rowURL.setParameter("title", layoutTemplateName);
 
 	// Name and thumbnail
 
@@ -81,7 +83,7 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append(layoutTemplate.getStaticResourcePath());
 	sb.append(HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()));
 	sb.append("\" style=\"margin-right: 10px\" />");
-	sb.append(HtmlUtil.escape(layoutTemplate.getName(locale)));
+	sb.append(HtmlUtil.escape(LanguageUtil.get(locale, "layout-template-" + layoutTemplateName, layoutTemplateName)));
 
 	if (showEditPluginHREF) {
 		sb.append("</a>");
