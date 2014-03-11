@@ -259,7 +259,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="PGBlogs#pause" locator1="120000" />
+		<execute action="PGBlogs#pause" locator1="135000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName2}" />
