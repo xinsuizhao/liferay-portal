@@ -202,22 +202,22 @@
 </tr>
 <tr>
 	<td>ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_EDIT_1</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[1]</td>
+	<td>//span/a/span[.='Edit'][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_EDIT_2</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[2]</td>
+	<td>//span/a/span[.='Edit'][2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_EDIT_3</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[3]</td>
+	<td>//span/a/span[.='Edit'][3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -227,37 +227,37 @@
 </tr>
 <tr>
 	<td>ENTRY_PERMISSIONS_1</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[1]</td>
+	<td>//span/a/span[.='Permissions'][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_PERMISSIONS_2</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[2]</td>
+	<td>//span/a/span[.='Permissions'][2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_PERMISSIONS_3</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[3]</td>
+	<td>//span/a/span[.='Permissions'][3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin']</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a/span[.='Move to the Recycle Bin']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN_1</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[1]</td>
+	<td>//span/a/span[.='Move to the Recycle Bin'][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN_2</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[2]</td>
+	<td>//span/a/span[.='Move to the Recycle Bin'][2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN_3</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[3]</td>
+	<td>//span/a/span[.='Move to the Recycle Bin'][3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -293,7 +293,7 @@
 </tr>
 <tr>
 	<td>DRAFT_ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 <tr>
@@ -319,7 +319,7 @@
 </tr>
 <tr>
 	<td>SCHEDULED_ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'scheduled') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'scheduled') and contains(.,'${key_entryTitle}')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 </tbody>
