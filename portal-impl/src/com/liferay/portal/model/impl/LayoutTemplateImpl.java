@@ -14,14 +14,12 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +31,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
