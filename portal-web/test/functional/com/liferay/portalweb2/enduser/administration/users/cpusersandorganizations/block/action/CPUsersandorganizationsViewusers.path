@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_SEARCH_ADVANCED_DIALOG</td>
+	<td>//div[contains(@id,'users_admin') and contains(@id,'user_searchadvanced')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
