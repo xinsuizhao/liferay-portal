@@ -458,8 +458,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		String importedContent =
 			ExportImportHelperUtil.replaceImportContentReferences(
-				_portletDataContextImport, _referrerStagedModel, entryElement,
-				content, true);
+				_portletDataContextImport, _referrerStagedModelElement, content,
+				true);
 
 		Assert.assertEquals(originalContent, importedContent);
 	}
