@@ -2455,10 +2455,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var name="dateRangeEndDate"><![CDATA[1/2]]></var>
-		<var name="dateRangeStartDate"><![CDATA[1/1]]></var>
-
 		<execute macro="Staging#setContentDateRange">
+			<var name="dateRangeEndDate"><![CDATA[1/2]]></var>
+			<var name="dateRangeStartDate"><![CDATA[1/1]]></var>
 			<var name="dateRangeEndDate" value="${dateRangeEndDate}" />
 			<var name="dateRangeStartDate" value="${dateRangeStartDate}" />
 		</execute>
