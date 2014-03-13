@@ -10,4 +10,14 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="DATE_RANGE_START_DATE">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+
+		<case locator-key1="DATE_RANGE_END_DATE">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+	</command>
 </definition>
