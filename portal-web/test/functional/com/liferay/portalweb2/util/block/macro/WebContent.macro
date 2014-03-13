@@ -689,6 +689,18 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Select existing web content or add some web content to be displayed in this portlet." />
 	</command>
 
+	<command name="viewDeletedWCViaLivePG">
+		<if>
+			<condition action="PGWebcontentdisplay#isElementPresent" locator-key1="TITLE_1" />
+			<then>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_ALERT_MESSAGE" value1="The selected web content no longer exists." />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#assertElementNotPresent" locator-key1="TITLE_1" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewEditWCViaWCD">
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="EDIT_WEB_CONTENT" />
