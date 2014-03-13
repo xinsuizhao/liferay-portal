@@ -640,9 +640,7 @@ public class LayoutExporter {
 		boolean exportLAR = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(), "exportLAR");
 
-		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout) &&
-			!layout.isTypeURL()) {
-
+		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout)) {
 			long layoutSetBranchId = MapUtil.getLong(
 				portletDataContext.getParameterMap(), "layoutSetBranchId");
 
