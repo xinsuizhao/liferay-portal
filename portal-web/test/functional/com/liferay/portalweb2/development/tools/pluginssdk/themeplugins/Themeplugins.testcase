@@ -5,7 +5,7 @@
 
 	<command name="WelcomeThemeSmoke" priority="5">
 		<property name="theme.plugins.includes" value="welcome-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Welcome" />
 
@@ -29,7 +29,7 @@
 	<command name="ZoeBrochureThemeSmoke" priority="5">
 		<property name="layouttpl.plugins.includes" value="1-3-1-columns-layouttpl" />
 		<property name="theme.plugins.includes" value="zoe-brochure-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Brochure" />
 
@@ -53,7 +53,7 @@
 	<command name="ZoeHealthcareThemeSmoke" priority="5">
 		<property name="portlet.plugins.includes" value="web-form-portlet" />
 		<property name="theme.plugins.includes" value="zoe-healthcare-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Healthcare" />
 
@@ -76,7 +76,7 @@
 
 	<command name="ZoePoliticalThemeSmoke" priority="5">
 		<property name="theme.plugins.includes" value="zoe-political-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Political" />
 
@@ -99,7 +99,7 @@
 
 	<command name="ZoeResortThemeSmoke" priority="5">
 		<property name="theme.plugins.includes" value="zoe-resort-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Resort" />
 
@@ -123,7 +123,7 @@
 	<command name="ZoeTechThemeSmoke" priority="5">
 		<property name="layouttpl.plugins.includes" value="1-3-1-columns-layouttpl" />
 		<property name="theme.plugins.includes" value="zoe-tech-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Tech" />
 
