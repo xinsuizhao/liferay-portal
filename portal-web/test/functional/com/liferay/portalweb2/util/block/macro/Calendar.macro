@@ -9,6 +9,14 @@
 			<then>
 				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_MENULIST_ARROW" />
 				<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+				<execute action="PGCalendar#pause" locator1="1000" />
+
+				<if>
+					<condition action="PGCalendarAddcalendar#isElementPresent" locator-key1="ADD_CALENDAR_IFRAME" />
+					<then>
+						<execute action="PGCalendarAddcalendar#selectFrame" locator-key1="ADD_CALENDAR_IFRAME" />
+					</then>
+				</if>
 
 				<execute action="PGCalendarAddcalendar#type" locator-key1="NAME_FIELD" value1="${calendarName}" />
 				<execute action="PGCalendarAddcalendar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
@@ -21,6 +29,14 @@
 				<then>
 					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 					<execute action="PGCalendar#assertClick" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+					<execute action="PGCalendar#pause" locator1="1000" />
+
+					<if>
+						<condition action="PGCalendarAddcalendar#isElementPresent" locator-key1="ADD_CALENDAR_IFRAME" />
+						<then>
+							<execute action="PGCalendarAddcalendar#selectFrame" locator-key1="ADD_CALENDAR_IFRAME" />
+						</then>
+					</if>
 
 					<execute action="PGCalendarAddcalendar#type" locator-key1="NAME_FIELD" value1="${calendarName}" />
 					<execute action="PGCalendarAddcalendar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
