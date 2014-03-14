@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>SUBCATEGORY_TABLE_CATEGORY</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/span[@class='category-title']</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/span[@class='category-title'] | //div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/strong[contains(.,'${key_subCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBCATEGORY_TABLE_CATEGORY_DESCRIPTION</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/div[@class='category-description']</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/div[@class='category-description'] | //div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a[contains(.,'${key_subCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

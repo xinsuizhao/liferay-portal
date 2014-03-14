@@ -26,6 +26,10 @@
 			<execute function="AssertTextEquals#assertText" />
 		</case>
 
+		<case locator-key1="SUBCATEGORY_TABLE_CATEGORY_DESCRIPTION">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
