@@ -452,11 +452,10 @@ public class JournalArticleLocalServiceImpl
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
-		String fullArticleURL = getFullArticleURL(
-			articleURL, groupId, folderId, articleId);
+		articleURL = buildArticleURL(articleURL, groupId, folderId, articleId);
 
 		sendEmail(
-			article, fullArticleURL, preferences, "requested", serviceContext);
+			article, articleURL, preferences, "requested", serviceContext);
 
 		// Workflow
 
@@ -926,13 +925,12 @@ public class JournalArticleLocalServiceImpl
 					article.getGroupId(), article.getArticleId(),
 					article.getVersion())) {
 
-				String fullArticleURL = getFullArticleURL(
+				articleURL = buildArticleURL(
 					articleURL, article.getGroupId(), article.getFolderId(),
 					article.getArticleId());
 
 				sendEmail(
-					article, fullArticleURL, preferences, "denied",
-						serviceContext);
+					article, articleURL, preferences, "denied", serviceContext);
 			}
 		}
 
@@ -4886,12 +4884,11 @@ public class JournalArticleLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
-			String fullArticleURL = getFullArticleURL(
+			articleURL = buildArticleURL(
 				articleURL, groupId, folderId, articleId);
 
 			sendEmail(
-				article, fullArticleURL, preferences, "requested",
-					serviceContext);
+				article, articleURL, preferences, "requested", serviceContext);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
@@ -5409,13 +5406,12 @@ public class JournalArticleLocalServiceImpl
 						ServiceContextUtil.getPortletPreferences(
 							serviceContext);
 
-					String fullArticleURL = getFullArticleURL(
+					articleURL = buildArticleURL(
 						articleURL, article.getGroupId(), article.getFolderId(),
 						article.getArticleId());
 
 					sendEmail(
-						article, fullArticleURL, preferences, msg,
-							serviceContext);
+						article, articleURL, preferences, msg, serviceContext);
 				}
 				catch (Exception e) {
 					_log.error(
@@ -6180,7 +6176,7 @@ public class JournalArticleLocalServiceImpl
 		return dateInterval;
 	}
 
-	protected String getFullArticleURL(
+	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
 		StringBundler sb = new StringBundler(13);
