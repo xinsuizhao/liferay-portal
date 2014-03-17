@@ -9,6 +9,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementPresent">
+		<case locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE_TOOLBAR">
+			<execute function="AssertElementPresent#pauseAssertVisible" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" />
