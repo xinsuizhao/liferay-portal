@@ -5532,6 +5532,28 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	protected String buildArticleURL(
+		String articleURL, long groupId, long folderId, String articleId) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(articleURL);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_groupId=");
+		sb.append(groupId);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_folderId=");
+		sb.append(folderId);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_articleId=");
+		sb.append(articleId);
+
+		return sb.toString();
+	}
+
 	protected void checkArticlesByDisplayDate(Date displayDate)
 		throws PortalException, SystemException {
 
@@ -6174,28 +6196,6 @@ public class JournalArticleLocalServiceImpl
 		dateInterval[1] = latestExpirationDate;
 
 		return dateInterval;
-	}
-
-	protected String buildArticleURL(
-		String articleURL, long groupId, long folderId, String articleId) {
-
-		StringBundler sb = new StringBundler(13);
-
-		sb.append(articleURL);
-		sb.append("&_");
-		sb.append(PortletKeys.JOURNAL);
-		sb.append("_groupId=");
-		sb.append(groupId);
-		sb.append("&_");
-		sb.append(PortletKeys.JOURNAL);
-		sb.append("_folderId=");
-		sb.append(folderId);
-		sb.append("&_");
-		sb.append(PortletKeys.JOURNAL);
-		sb.append("_articleId=");
-		sb.append(articleId);
-
-		return sb.toString();
 	}
 
 	protected String getUniqueUrlTitle(
