@@ -1,0 +1,28 @@
+<definition component-name="marketplace-plugins-kaleo-designer-portlet">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="KaleoDesignerPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="kaleo-designer-portlet" />
+		<property name="web.plugins.includes" value="kaleo-web" />
+
+		<var name="appName" value="Kaleo Designer" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+	</command>
+</definition>

@@ -1,0 +1,54 @@
+<definition component-name="marketplace-plugins-reports-portlet">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ReportsPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="reports-portlet" />
+		<property name="web.plugins.includes" value="jasperreports-web" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Reports Display" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="Reports EE Portlet" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="JasperReports EE Web" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="Reports EE Portlet" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="JasperReports EE Web" />
+		</execute>
+	</command>
+</definition>
