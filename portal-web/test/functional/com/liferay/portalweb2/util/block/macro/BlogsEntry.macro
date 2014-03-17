@@ -393,6 +393,8 @@
 		<var name="key_entryContent" value="${entryContent}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContent}" />
+		<execute action="PGBlogs#assertElementPresent" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE_TOOLBAR" />
+		<execute action="PGBlogs#pause" value1="1000" />
 		<execute action="PGBlogs#type" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContentEdit}" />
 		<execute action="PGBlogs#pause" value1="3000" />
 
