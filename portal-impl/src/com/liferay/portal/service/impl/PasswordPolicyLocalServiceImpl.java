@@ -466,7 +466,8 @@ public class PasswordPolicyLocalServiceImpl
 			if ((passwordPolicyId <= 0) ||
 				(passwordPolicy.getPasswordPolicyId() != passwordPolicyId)) {
 
-				throw new DuplicatePasswordPolicyException();
+				throw new DuplicatePasswordPolicyException(
+					"{passwordPolicyId=" + passwordPolicyId + "}");
 			}
 		}
 	}

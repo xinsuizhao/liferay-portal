@@ -1648,7 +1648,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			Role role = roleFinder.findByC_N(companyId, name);
 
 			if (role.getRoleId() != roleId) {
-				throw new DuplicateRoleException();
+				throw new DuplicateRoleException("{roleId=" + roleId + "}");
 			}
 		}
 		catch (NoSuchRoleException nsre) {

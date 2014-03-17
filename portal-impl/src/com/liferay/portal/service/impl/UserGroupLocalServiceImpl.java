@@ -941,7 +941,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			UserGroup userGroup = userGroupFinder.findByC_N(companyId, name);
 
 			if (userGroup.getUserGroupId() != userGroupId) {
-				throw new DuplicateUserGroupException();
+				throw new DuplicateUserGroupException(
+					"{userGroupId=" + userGroupId + "}");
 			}
 		}
 		catch (NoSuchUserGroupException nsuge) {
