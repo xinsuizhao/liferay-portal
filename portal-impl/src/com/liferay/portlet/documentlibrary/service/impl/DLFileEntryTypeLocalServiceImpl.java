@@ -672,7 +672,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			if (ddmStructure == null) {
 				throw new NoSuchMetadataSetException(
 					"No structure exists with ddmStructureId " +
-					ddmStructureId);
+						ddmStructureId);
 			}
 		}
 	}
