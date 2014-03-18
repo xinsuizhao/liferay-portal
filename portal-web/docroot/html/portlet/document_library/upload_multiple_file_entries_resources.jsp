@@ -77,12 +77,6 @@ if (fileEntryTypeId > 0) {
 }
 
 long assetClassPK = 0;
-
-String publishButtonLabel = "save";
-
-if (DLUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, folderId, fileEntryTypeId)) {
-	publishButtonLabel = "submit-for-publication";
-}
 %>
 
 <portlet:actionURL var="editMultipleFileEntriesURL">
@@ -258,6 +252,14 @@ if (DLUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, 
 	</aui:field-wrapper>
 
 	<span id="<portlet:namespace />selectedFileNameContainer"></span>
+
+	<%
+	String publishButtonLabel = "save";
+
+	if (DLUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, folderId, fileEntryTypeId)) {
+		publishButtonLabel = "submit-for-publication";
+	}
+	%>
 
 	<aui:button type="submit" value="<%= publishButtonLabel %>" />
 </aui:form>
