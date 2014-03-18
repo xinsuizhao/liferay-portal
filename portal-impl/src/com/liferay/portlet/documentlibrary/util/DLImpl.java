@@ -374,12 +374,12 @@ public class DLImpl implements DL {
 		sb.append(StringPool.SPACE);
 
 		for (Folder curFolder : folders) {
-			sb.append(StringPool.RAQUO_CHAR);
+			sb.append(StringPool.RAQUO);
 			sb.append(StringPool.SPACE);
 			sb.append(curFolder.getName());
 		}
 
-		sb.append(StringPool.RAQUO_CHAR);
+		sb.append(StringPool.RAQUO);
 		sb.append(StringPool.SPACE);
 		sb.append(folder.getName());
 
