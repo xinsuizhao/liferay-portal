@@ -127,11 +127,11 @@ public class LayoutRevisionLocalServiceImpl
 				serviceContext);
 		}
 		else {
+			updateMajor(layoutRevision);
+
 			updateStatus(
 				userId, layoutRevisionId, WorkflowConstants.STATUS_APPROVED,
 				serviceContext);
-
-			updateMajor(layoutRevision);
 		}
 
 		StagingUtil.setRecentLayoutRevisionId(
@@ -654,15 +654,13 @@ public class LayoutRevisionLocalServiceImpl
 	protected boolean isWorkflowEnabled(long plid)
 		throws PortalException, SystemException {
 
-		boolean workflowEnabled = true;
-
 		Layout layout = layoutLocalService.getLayout(plid);
 
 		if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
-			workflowEnabled = false;
+			return false;
 		}
 
-		return workflowEnabled;
+		return true;
 	}
 
 	protected LayoutRevision updateMajor(LayoutRevision layoutRevision)
