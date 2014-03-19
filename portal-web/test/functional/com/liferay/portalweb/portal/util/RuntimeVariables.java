@@ -183,6 +183,8 @@ public class RuntimeVariables {
 
 		String varValue = context.get(varName);
 
+		varValue = StringUtil.replace(varValue, "${line.separator}", "");
+
 		if (varValue.contains("${") && varValue.contains("}")) {
 			return false;
 		}
