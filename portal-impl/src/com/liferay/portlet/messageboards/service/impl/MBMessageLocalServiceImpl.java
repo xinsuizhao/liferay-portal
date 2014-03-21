@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -351,6 +352,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		// Resources
+
+		if (GetterUtil.getBoolean(
+				serviceContext.getAttribute("propagatePermissions"))) {
+
+			MBUtil.propagatePermissions(
+				message.getCompanyId(), groupId, parentMessageId,
+				serviceContext);
+		}
 
 		if (!message.isDiscussion()) {
 			if (user.isDefaultUser()) {
