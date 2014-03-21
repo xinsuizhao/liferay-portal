@@ -625,7 +625,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		else {
 			_references.add(referenceKey);
 
-			cleanupMissingReferences(classedModel);
+			cleanUpMissingReferences(classedModel);
 		}
 
 		return referenceElement;
@@ -716,7 +716,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public void cleanupMissingReferences(ClassedModel classedModel) {
+	public void cleanUpMissingReferences(ClassedModel classedModel) {
 		String referenceKey = getReferenceKey(classedModel);
 
 		if (_missingReferences.contains(referenceKey)) {

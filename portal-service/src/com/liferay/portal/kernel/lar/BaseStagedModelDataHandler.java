@@ -72,7 +72,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					stagedModel.getStagedModelType());
 			}
 
-			portletDataContext.cleanupMissingReferences(stagedModel);
+			portletDataContext.cleanUpMissingReferences(stagedModel);
 		}
 		catch (PortletDataException pde) {
 			throw pde;
