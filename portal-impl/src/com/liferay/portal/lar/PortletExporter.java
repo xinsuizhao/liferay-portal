@@ -657,6 +657,8 @@ public class PortletExporter {
 
 		portletDataContext.addPermissions(
 			AssetCategory.class, assetCategory.getCategoryId());
+
+		portletDataContext.cleanupMissingReferences(assetCategory);
 	}
 
 	protected void exportAssetCategory(
@@ -823,6 +825,8 @@ public class PortletExporter {
 
 		portletDataContext.addPermissions(
 			AssetVocabulary.class, assetVocabulary.getVocabularyId());
+
+		portletDataContext.cleanupMissingReferences(assetVocabulary);
 	}
 
 	protected void exportAssetVocabulary(

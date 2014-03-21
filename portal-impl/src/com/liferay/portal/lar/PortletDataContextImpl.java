@@ -625,14 +625,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		else {
 			_references.add(referenceKey);
 
-			if (_missingReferences.contains(referenceKey)) {
-				_missingReferences.remove(referenceKey);
-
-				Element missingReferenceElement = getMissingReferenceElement(
-					classedModel);
-
-				_missingReferencesElement.remove(missingReferenceElement);
-			}
+			cleanupMissingReferences(classedModel);
 		}
 
 		return referenceElement;
@@ -719,6 +712,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
+		}
+	}
+
+	@Override
+	public void cleanupMissingReferences(ClassedModel classedModel) {
+		String referenceKey = getReferenceKey(classedModel);
+
+		if (_missingReferences.contains(referenceKey)) {
+			_missingReferences.remove(referenceKey);
+
+			Element missingReferenceElement = getMissingReferenceElement(
+				classedModel);
+
+			_missingReferencesElement.remove(missingReferenceElement);
 		}
 	}
 
