@@ -36,6 +36,8 @@
 
 	<propertycopy from="testray.build.${testray.build.type}.name" name="testray.build.name" />
 
+	<propertycopy from="testray.product.${testray.product.type}.version" name="testray.product.version" />
+
 	<trycatch>
 		<try>
 			<taskdef
@@ -445,6 +447,8 @@ create database lportal2 character set utf8;</echo>
 					<property name="operating.system.version" value="${operating.system.version}" />
 					<property name="testray.build.name" value="${testray.build.name}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
+					<property name="testray.product.type" value="${testray.product.type}" />
+					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />
 				</properties>
 			]]>
