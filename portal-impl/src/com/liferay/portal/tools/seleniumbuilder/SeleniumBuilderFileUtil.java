@@ -61,13 +61,10 @@ public class SeleniumBuilderFileUtil {
 	public SeleniumBuilderFileUtil(String baseDirName, String projectDirName) {
 		_baseDirName = baseDirName;
 
-		_projectDirName = projectDirName;
-
 		Properties properties = new Properties();
 
 		try {
-			String content = FileUtil.read(
-				_projectDirName + "/test.properties");
+			String content = FileUtil.read(projectDirName + "/test.properties");
 
 			InputStream inputStream = new ByteArrayInputStream(
 				content.getBytes());
@@ -337,10 +334,6 @@ public class SeleniumBuilderFileUtil {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 
 		return fileName.substring(0, x);
-	}
-
-	public String getProjectDirName() {
-		return _projectDirName;
 	}
 
 	public String getReturnType(String name) {
