@@ -16,16 +16,23 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.util.AssetTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
@@ -72,6 +79,39 @@ public class PortletDataContextReferencesTest {
 		_bookmarksEntry = BookmarksTestUtil.addEntry(true);
 		_bookmarksFolder = BookmarksTestUtil.addFolder(
 			TestPropsValues.getGroupId(), ServiceTestUtil.randomString());
+	}
+
+	@Test
+	public void testCleanUpMissingReferences() throws Exception {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PortletKeys.ASSET_PUBLISHER);
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			TestPropsValues.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			TestPropsValues.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_portletDataContext.addReferenceElement(
+			portlet, _portletDataContext.getExportDataRootElement(),
+			assetCategory, PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements();
+
+		Assert.assertFalse(missingReferenceElements.isEmpty());
+
+		Assert.assertEquals(1, missingReferenceElements.size());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			_portletDataContext, assetCategory);
+
+		missingReferenceElements = missingReferencesElement.elements();
+
+		Assert.assertTrue(missingReferenceElements.isEmpty());
 	}
 
 	@Test
