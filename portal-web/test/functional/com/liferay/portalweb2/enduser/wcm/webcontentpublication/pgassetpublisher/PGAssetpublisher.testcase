@@ -53,7 +53,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBookmarkViaAP" known-issues="LIFERAYQA-6795" priority="4">
+	<command name="AddBookmarkViaAP" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
