@@ -1,7 +1,7 @@
 JIRA:
 
-	https://issues.liferay.com/browse/LPS-28486
-	https://issues.liferay.com/browse/LPS-28809
+	http://issues.liferay.com/browse/LPS-28486
+	http://issues.liferay.com/browse/LPS-28809
 	http://java.net/jira/browse/GLASSFISH-19008
 
 Source:
