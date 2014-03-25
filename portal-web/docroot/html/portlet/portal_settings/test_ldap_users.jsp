@@ -130,12 +130,7 @@ for (SearchResult searchResult : searchResults) {
 			<th>
 				<liferay-ui:message key="email-address" />
 			</th>
-			<th>
-				<liferay-ui:message key="first-name" />
-			</th>
-			<th>
-				<liferay-ui:message key="last-name" />
-			</th>
+			<%@ include file="/html/portlet/portal_settings/test_ldap_users_user_name_header.jspf" %>
 			<th>
 				<liferay-ui:message key="password" />
 			</th>
@@ -163,12 +158,7 @@ for (SearchResult searchResult : searchResults) {
 		<td>
 			<%= emailAddress %>
 		</td>
-		<td>
-			<%= firstName %>
-		</td>
-		<td>
-			<%= lastName %>
-		</td>
+		<%@ include file="/html/portlet/portal_settings/test_ldap_users_user_name_entry.jspf" %>
 		<td>
 			<c:if test="<%= Validator.isNotNull(password) %>">
 				********
