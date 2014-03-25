@@ -2955,12 +2955,13 @@ public class PortalImpl implements Portal {
 		throws PortalException, SystemException {
 
 		String layoutURL = getLayoutURL(layout, themeDisplay, doAsUser);
-		String portalURL = getPortalURL(layout, themeDisplay);
 
-		if (StringUtil.startsWith(layoutURL, portalURL)) {
+		if (HttpUtil.hasProtocol(layoutURL)) {
 			return layoutURL;
 		}
 		else {
+			String portalURL = getPortalURL(layout, themeDisplay);
+
 			return portalURL + layoutURL;
 		}
 	}
