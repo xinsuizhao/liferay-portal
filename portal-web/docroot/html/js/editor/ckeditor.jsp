@@ -250,6 +250,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		var editorNode = A.one('#<%= name %>');
 
 		editorNode.setAttribute('contenteditable', true);
+
 		editorNode.addClass('lfr-editable');
 
 		function getToolbarSet(toolbarSet) {
