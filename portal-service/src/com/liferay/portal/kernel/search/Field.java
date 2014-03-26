@@ -29,6 +29,8 @@ import java.util.Map;
  */
 public class Field implements Serializable {
 
+	public static final String ASSET_CATEGORY_ID = "assetCategoryId";
+
 	public static final String ASSET_CATEGORY_IDS = "assetCategoryIds";
 
 	/**
@@ -41,6 +43,10 @@ public class Field implements Serializable {
 	public static final String ASSET_TAG_IDS = "assetTagIds";
 
 	public static final String ASSET_TAG_NAMES = "assetTagNames";
+
+	public static final String ASSET_VOCABULARY_ID = "assetVocabularyId";
+
+	public static final String ASSET_VOCABULARY_IDS = "assetVocabularyIds";
 
 	public static final String CATEGORY_ID = "categoryId";
 
