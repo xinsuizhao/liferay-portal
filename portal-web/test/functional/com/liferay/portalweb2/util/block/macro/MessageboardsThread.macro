@@ -45,13 +45,6 @@
 
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<if>
-			<equals arg1="${threadAddTag}" arg2="true" />
-			<then>
-				<execute macro="MessageboardsThread#viewTagPG" />
-			</then>
-		</if>
 	</command>
 
 	<command name="addTagPG">
