@@ -24,7 +24,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWebContentPGViaAP" priority="5">
+	<command name="AddWebContentPGViaAP" known-issues="LIFERAYQA-6795" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC Webcontent Title" />
 
@@ -47,7 +47,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveAsDraftWebContentPGViaAP" priority="5">
+	<command name="SaveAsDraftWebContentPGViaAP" known-issues="LIFERAYQA-6795" priority="5">
 		<var name="saveAsDraft" value="true" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC Webcontent Title" />
