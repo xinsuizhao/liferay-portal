@@ -2662,7 +2662,7 @@ public class StringUtil {
 		String s, String begin, String end, Map<String, String> values) {
 
 		if (Validator.isBlank(s) || Validator.isBlank(begin) ||
-			Validator.isBlank(end) || MapUtil.isEmpty(values)) {
+			Validator.isBlank(end) || (values == null) || values.isEmpty()) {
 
 			return new StringBundler(s);
 		}
@@ -2704,7 +2704,7 @@ public class StringUtil {
 		String s, String begin, String end, Map<String, StringBundler> values) {
 
 		if (Validator.isBlank(s) || Validator.isBlank(begin) ||
-			Validator.isBlank(end) || MapUtil.isEmpty(values)) {
+			Validator.isBlank(end) || (values == null) || values.isEmpty()) {
 
 			return new StringBundler(s);
 		}
