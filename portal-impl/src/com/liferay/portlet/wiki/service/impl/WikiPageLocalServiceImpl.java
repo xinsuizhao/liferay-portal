@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
@@ -805,7 +806,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return pages.get(0);
 		}
 		else {
-			throw new NoSuchPageException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{nodeId=");
+			sb.append(nodeId);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append("}");
+
+			throw new NoSuchPageException(sb.toString());
 		}
 	}
 
@@ -845,7 +854,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			resourcePrimKey, status, preferApproved);
 
 		if (page == null) {
-			throw new NoSuchPageException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{resourcePrimKey=");
+			sb.append(resourcePrimKey);
+			sb.append(", status=");
+			sb.append(status);
+			sb.append("}");
+
+			throw new NoSuchPageException(sb.toString());
 		}
 
 		return page;
@@ -861,7 +878,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			resourcePrimKey, nodeId, status, preferApproved);
 
 		if (page == null) {
-			throw new NoSuchPageException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{resourcePrimKey=");
+			sb.append(resourcePrimKey);
+			sb.append(", nodeId=");
+			sb.append(nodeId);
+			sb.append(", status=");
+			sb.append(status);
+			sb.append("}");
+
+			throw new NoSuchPageException(sb.toString());
 		}
 
 		return page;
@@ -875,7 +902,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = fetchLatestPage(nodeId, title, status, preferApproved);
 
 		if (page == null) {
-			throw new NoSuchPageException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{nodeId=");
+			sb.append(nodeId);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append(", status=");
+			sb.append(status);
+			sb.append("}");
+
+			throw new NoSuchPageException(sb.toString());
 		}
 
 		return page;
@@ -961,7 +998,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return pages.get(0);
 		}
 		else {
-			throw new NoSuchPageException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{nodeId=");
+			sb.append(nodeId);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append("}");
+
+			throw new NoSuchPageException(sb.toString());
 		}
 	}
 
@@ -982,7 +1027,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return pages.get(0);
 		}
 		else {
-			throw new NoSuchPageException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{nodeId=");
+			sb.append(nodeId);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append(", head=");
+			sb.append(head);
+			sb.append("}");
+
+			throw new NoSuchPageException(sb.toString());
 		}
 	}
 
@@ -1991,7 +2046,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page = pages.get(0);
 		}
 		else {
-			throw new NoSuchPageException();
+			throw new NoSuchPageException(
+				"{resourcePrimKey=" + resourcePrimKey + "}");
 		}
 
 		return updateStatus(userId, page, status, serviceContext);

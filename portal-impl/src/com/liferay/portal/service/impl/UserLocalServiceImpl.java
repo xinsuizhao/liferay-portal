@@ -2755,7 +2755,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		List<User> users = userPersistence.findByUuid(uuid);
 
 		if (users.isEmpty()) {
-			throw new NoSuchUserException();
+			throw new NoSuchUserException("{uuid=" + uuid + "}");
 		}
 		else {
 			return users.get(0);
@@ -2778,7 +2778,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		List<User> users = userPersistence.findByUuid_C(uuid, companyId);
 
 		if (users.isEmpty()) {
-			throw new NoSuchUserException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{uuid=");
+			sb.append(uuid);
+			sb.append(", companyId=");
+			sb.append(companyId);
+			sb.append("}");
+
+			throw new NoSuchUserException(sb.toString());
 		}
 		else {
 			return users.get(0);
@@ -5175,7 +5183,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (ticket.isExpired() ||
 			(ticket.getType() != TicketConstants.TYPE_EMAIL_ADDRESS)) {
 
-			throw new NoSuchTicketException();
+			throw new NoSuchTicketException("{ticketKey=" + ticketKey + "}");
 		}
 
 		User user = userPersistence.findByPrimaryKey(ticket.getClassPK());
@@ -5962,7 +5970,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					organizationPersistence.fetchByPrimaryKey(organizationId);
 
 				if (organization == null) {
-					throw new NoSuchOrganizationException();
+					throw new NoSuchOrganizationException(
+						"{organizationId=" + organizationId + "}");
 				}
 			}
 		}
