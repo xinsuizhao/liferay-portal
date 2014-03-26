@@ -252,9 +252,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		int total = 0;
 
 		if (Validator.isNotNull(title)) {
-
 			categories = searchCategories(
-				new long[]{groupId}, title, new long[]{vocabularyId}, start,
+				new long[] {groupId}, title, new long[] {vocabularyId}, start,
 				end);
 			total = categories.size();
 		}
@@ -554,7 +553,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 					document.get(Field.ASSET_CATEGORY_ID));
 
 				AssetCategory category =
-						AssetCategoryLocalServiceUtil.getCategory(categoryId);
+					AssetCategoryLocalServiceUtil.getCategory(categoryId);
 
 				if (category == null) {
 					categories = null;

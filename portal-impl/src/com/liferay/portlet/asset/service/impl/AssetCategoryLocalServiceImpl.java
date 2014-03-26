@@ -434,7 +434,7 @@ public class AssetCategoryLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetCategory.class);
+			AssetCategory.class);
 
 		indexer.reindex(toCategoryId);
 
@@ -473,7 +473,7 @@ public class AssetCategoryLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetCategory.class);
+			AssetCategory.class);
 
 		indexer.reindex(category);
 
@@ -638,7 +638,7 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetCategory.class);
+			AssetCategory.class);
 
 		indexer.reindex(category);
 

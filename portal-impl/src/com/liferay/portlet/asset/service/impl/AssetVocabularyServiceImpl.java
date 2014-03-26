@@ -249,7 +249,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		int total = 0;
 
 		if (Validator.isNotNull(title)) {
-
 			vocabularies = searchVocabularies(groupId, title, start, end);
 			total = vocabularies.size();
 		}
@@ -380,7 +379,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		searchContext.setAttribute(Field.TITLE, title);
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 
 		QueryConfig queryConfig = new QueryConfig();
 
@@ -448,7 +447,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 					vocabularies = null;
 
 					long companyId = GetterUtil.getLong(
-							document.get(Field.COMPANY_ID));
+						document.get(Field.COMPANY_ID));
 
 					indexer.delete(companyId, document.getUID());
 				}

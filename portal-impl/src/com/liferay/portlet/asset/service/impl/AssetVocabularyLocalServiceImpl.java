@@ -154,7 +154,7 @@ public class AssetVocabularyLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetVocabulary.class);
+			AssetVocabulary.class);
 
 		indexer.reindex(vocabulary);
 
@@ -239,7 +239,7 @@ public class AssetVocabularyLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetVocabulary.class);
+			AssetVocabulary.class);
 
 		indexer.delete(vocabulary);
 	}
@@ -421,7 +421,7 @@ public class AssetVocabularyLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetVocabulary.class);
+			AssetVocabulary.class);
 
 		indexer.reindex(vocabulary);
 
