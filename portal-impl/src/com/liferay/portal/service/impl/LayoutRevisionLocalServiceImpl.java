@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutRevisionConstants;
@@ -118,11 +119,20 @@ public class LayoutRevisionLocalServiceImpl
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), layoutRevision.getGroupId(), user.getUserId(),
-			LayoutRevision.class.getName(),
-			layoutRevision.getLayoutRevisionId(), layoutRevision,
-			serviceContext);
+		if (isWorkflowEnabled(plid)) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), layoutRevision.getGroupId(),
+				user.getUserId(), LayoutRevision.class.getName(),
+				layoutRevision.getLayoutRevisionId(), layoutRevision,
+				serviceContext);
+		}
+		else {
+			updateStatus(
+				userId, layoutRevisionId, WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
+
+			updateMajor(layoutRevision);
+		}
 
 		StagingUtil.setRecentLayoutRevisionId(
 			user, layoutSetBranchId, plid,
@@ -510,17 +520,24 @@ public class LayoutRevisionLocalServiceImpl
 
 		boolean major = ParamUtil.getBoolean(serviceContext, "major");
 
-		if (major) {
+		if (major || !isWorkflowEnabled(layoutRevision.getPlid())) {
 			updateMajor(layoutRevision);
 		}
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			layoutRevision.getCompanyId(), layoutRevision.getGroupId(), userId,
-			LayoutRevision.class.getName(),
-			layoutRevision.getLayoutRevisionId(), layoutRevision,
-			serviceContext);
+		if (isWorkflowEnabled(layoutRevision.getPlid())) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				layoutRevision.getCompanyId(), layoutRevision.getGroupId(),
+				userId, LayoutRevision.class.getName(),
+				layoutRevision.getLayoutRevisionId(), layoutRevision,
+				serviceContext);
+		}
+		else {
+			updateStatus(
+				userId, layoutRevision.getLayoutRevisionId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
 
 		return layoutRevision;
 	}
@@ -561,6 +578,7 @@ public class LayoutRevisionLocalServiceImpl
 		}
 		else {
 			layoutRevision.setHead(false);
+			layoutRevision.setMajor(false);
 
 			List<LayoutRevision> layoutRevisions =
 				layoutRevisionPersistence.findByL_P_S(
@@ -631,6 +649,20 @@ public class LayoutRevisionLocalServiceImpl
 		}
 
 		return LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID;
+	}
+
+	protected boolean isWorkflowEnabled(long plid)
+		throws PortalException, SystemException {
+
+		boolean workflowEnabled = true;
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
+			workflowEnabled = false;
+		}
+
+		return workflowEnabled;
 	}
 
 	protected LayoutRevision updateMajor(LayoutRevision layoutRevision)
