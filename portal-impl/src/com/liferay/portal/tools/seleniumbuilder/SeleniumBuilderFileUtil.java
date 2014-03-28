@@ -1443,7 +1443,7 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		if (!locator.equals("") && !locator.startsWith("link=") &&
-			!locator.contains(".png")) {
+			!locator.startsWith("title=") && !locator.contains(".png")) {
 
 			try {
 				XPathFactory xPathFactory = XPathFactory.newInstance();
