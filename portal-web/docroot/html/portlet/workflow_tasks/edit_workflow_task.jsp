@@ -57,7 +57,7 @@ PortletURL editPortletURL = workflowHandler.getURLEdit(classPK, liferayPortletRe
 
 String viewFullContentURLString = null;
 
-if (assetRenderer.isPreviewInContext()) {
+if ((assetRenderer != null) && assetRenderer.isPreviewInContext()) {
 	viewFullContentURLString = assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null);
 }
 else {
