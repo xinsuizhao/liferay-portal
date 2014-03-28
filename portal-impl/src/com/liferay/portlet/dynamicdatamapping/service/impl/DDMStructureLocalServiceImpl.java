@@ -1503,7 +1503,7 @@ public class DDMStructureLocalServiceImpl
 
 			getChildrenStructureIds(
 				structureIds, structure.getGroupId(),
-				structure.getParentStructureId());
+				structure.getStructureId());
 		}
 	}
 
