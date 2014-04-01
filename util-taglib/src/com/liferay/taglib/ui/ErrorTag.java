@@ -68,9 +68,6 @@ public class ErrorTag extends TagSupport {
 
 					request.setAttribute(errorMarkerKey, errorMarkerValue);
 					request.setAttribute(
-						"liferay-ui:error:exception",
-						getException(portletRequest));
-					request.setAttribute(
 						"liferay-ui:error:focusField", _focusField);
 				}
 			}
@@ -104,7 +101,15 @@ public class ErrorTag extends TagSupport {
 			}
 
 			if (SessionErrors.contains(portletRequest, _key)) {
-				Object value = getException(portletRequest);
+				Object value = null;
+
+				if (_exception != null) {
+					value = SessionErrors.get(
+						portletRequest, _exception.getName());
+				}
+				else {
+					value = SessionErrors.get(portletRequest, _key);
+				}
 
 				PortalIncludeUtil.include(pageContext, getStartPage());
 
@@ -165,19 +170,6 @@ public class ErrorTag extends TagSupport {
 		else {
 			return _endPage;
 		}
-	}
-
-	protected Object getException(PortletRequest portletRequest) {
-		Object value = null;
-
-		if (_exception != null) {
-			value = SessionErrors.get(portletRequest, _exception.getName());
-		}
-		else {
-			value = SessionErrors.get(portletRequest, _key);
-		}
-
-		return value;
 	}
 
 	protected String getStartPage() {
