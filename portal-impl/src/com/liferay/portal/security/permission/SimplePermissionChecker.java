@@ -58,11 +58,6 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 	}
 
 	@Override
-	public boolean isContentReviewer(long companyId, long groupId) {
-		return signedIn;
-	}
-
-	@Override
 	public boolean isGroupAdmin(long groupId) {
 		return signedIn;
 	}
@@ -84,6 +79,11 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 
 	@Override
 	public boolean isOrganizationOwner(long organizationId) {
+		return signedIn;
+	}
+
+	@Override
+	public boolean isReviewer(long companyId, long groupId) {
 		return signedIn;
 	}
 

@@ -132,24 +132,6 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 	}
 
 	@Override
-	public boolean isContentReviewer(
-		PermissionChecker permissionChecker, Group group)
-
-		throws Exception {
-
-		Boolean value = _contentReviewers.get(group.getCompanyId());
-
-		if (value == null) {
-			value = Boolean.valueOf(
-				isContentReviewerImpl(permissionChecker, group));
-
-			_contentReviewers.put(group.getCompanyId(), value);
-		}
-
-		return value.booleanValue();
-	}
-
-	@Override
 	public boolean isGroupAdmin(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
@@ -237,33 +219,19 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return value.booleanValue();
 	}
 
-	protected boolean isContentReviewerImpl(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException, SystemException {
+	@Override
+	public boolean isReviewer(PermissionChecker permissionChecker, Group group)
+		throws Exception {
 
-		if (permissionChecker.isCompanyAdmin() ||
-			permissionChecker.isGroupAdmin(group.getGroupId())) {
+		Boolean value = _reviewers.get(group.getCompanyId());
 
-			return true;
+		if (value == null) {
+			value = Boolean.valueOf(isReviewerImpl(permissionChecker, group));
+
+			_reviewers.put(group.getCompanyId(), value);
 		}
 
-		if (group.isSite()) {
-			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					_userId, group.getGroupId(),
-					RoleConstants.SITE_CONTENT_REVIEWER, true)) {
-
-				return true;
-			}
-		}
-
-		if (RoleLocalServiceUtil.hasUserRole(
-				_userId, group.getCompanyId(),
-				RoleConstants.PORTAL_CONTENT_REVIEWER, true)) {
-
-			return true;
-		}
-
-		return false;
+		return value.booleanValue();
 	}
 
 	protected boolean isGroupAdminImpl(
@@ -458,7 +426,35 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return false;
 	}
 
-	private Map<Long, Boolean> _contentReviewers = new HashMap<Long, Boolean>();
+	protected boolean isReviewerImpl(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException, SystemException {
+
+		if (permissionChecker.isCompanyAdmin() ||
+			permissionChecker.isGroupAdmin(group.getGroupId())) {
+
+			return true;
+		}
+
+		if (group.isSite()) {
+			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					_userId, group.getGroupId(),
+					RoleConstants.SITE_CONTENT_REVIEWER, true)) {
+
+				return true;
+			}
+		}
+
+		if (RoleLocalServiceUtil.hasUserRole(
+				_userId, group.getCompanyId(),
+				RoleConstants.PORTAL_CONTENT_REVIEWER, true)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private Map<Long, Boolean> _groupAdmins = new HashMap<Long, Boolean>();
 	private Map<Long, Boolean> _groupOwners = new HashMap<Long, Boolean>();
 	private List<Group> _groups;
@@ -466,6 +462,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		new HashMap<Long, Boolean>();
 	private Map<Long, Boolean> _organizationOwners =
 		new HashMap<Long, Boolean>();
+	private Map<Long, Boolean> _reviewers = new HashMap<Long, Boolean>();
 	private long[] _roleIds;
 	private List<Role> _roles;
 	private List<Group> _userGroups;

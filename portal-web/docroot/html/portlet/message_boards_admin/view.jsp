@@ -196,7 +196,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					<%
 					int status = WorkflowConstants.STATUS_APPROVED;
 
-					if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+					if (permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
 						status = WorkflowConstants.STATUS_ANY;
 					}
 					%>
