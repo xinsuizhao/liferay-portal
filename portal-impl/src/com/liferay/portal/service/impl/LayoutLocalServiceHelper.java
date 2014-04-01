@@ -387,7 +387,6 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			String friendlyURL = entry.getValue();
-			Locale locale = entry.getKey();
 
 			try {
 				validateFriendlyURL(
@@ -401,7 +400,6 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 				layoutFriendlyURLsException.addLayoutFriendlyURLException(
 					lfurle);
-				layoutFriendlyURLsException.addLocale(locale);
 			}
 		}
 
