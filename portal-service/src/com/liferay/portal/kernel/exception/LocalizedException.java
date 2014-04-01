@@ -24,14 +24,14 @@ import java.util.Map;
 public class LocalizedException extends PortalException {
 
 	public void addLocalizedException(Locale locale, Exception exception) {
-		_localizedExceptionsMap.put(locale, exception);
+		_localizedExceptions.put(locale, exception);
 	}
 
-	public Map<Locale, Exception> getLocalizedExceptionsMap() {
-		return _localizedExceptionsMap;
+	public Map<Locale, Exception> getLocalizedExceptions() {
+		return _localizedExceptions;
 	}
 
-	private Map<Locale, Exception> _localizedExceptionsMap =
+	private Map<Locale, Exception> _localizedExceptions =
 		new HashMap<Locale, Exception>();
 
 }

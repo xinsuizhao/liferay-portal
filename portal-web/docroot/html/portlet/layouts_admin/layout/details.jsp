@@ -67,9 +67,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<%
 		LayoutFriendlyURLsException lfurlse = (LayoutFriendlyURLsException)errorException;
 
-		Map<Locale, Exception> localizedExceptionsMap = lfurlse.getLocalizedExceptionsMap();
+		Map<Locale, Exception> localizedExceptions = (Map<Locale, Exception>)lfurlse.getLocalizedExceptions();
 
-		for (Map.Entry<Locale, Exception> localizedException : localizedExceptionsMap.entrySet()) {
+		for (Map.Entry<Locale, Exception> localizedException : localizedExceptions.entrySet()) {
 			LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)localizedException.getValue();
 			Locale localeException = localizedException.getKey();
 		%>

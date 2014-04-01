@@ -83,9 +83,9 @@ if ((exception != null) && fieldName.equals(focusField)) {
 	if (LocalizedException.class.isAssignableFrom(exception.getClass())) {
 		LocalizedException le = (LocalizedException)exception;
 
-		Map<Locale, Exception> localizedExceptionsMap = le.getLocalizedExceptionsMap();
+		Map<Locale, Exception> localizedExceptions = le.getLocalizedExceptions();
 
-		errorLocales = localizedExceptionsMap.keySet();
+		errorLocales = localizedExceptions.keySet();
 	}
 }
 %>
