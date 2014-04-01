@@ -241,7 +241,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 							FileVersion latestFileVersion = fileEntry.getFileVersion();
 
-							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 								latestFileVersion = fileEntry.getLatestFileVersion();
 							}
 
@@ -271,7 +271,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 							<%
 							int status = WorkflowConstants.STATUS_APPROVED;
 
-							if (permissionChecker.isReviewer(user.getCompanyId(), curFolder.getGroupId())) {
+							if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(curFolder.getGroupId())) {
 								status = WorkflowConstants.STATUS_ANY;
 							}
 

@@ -269,7 +269,7 @@ else {
 						<%
 						}
 						catch (Exception e) {
-							if (permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
+							if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
 								String errorMessage = null;
 
 								if (e instanceof PrincipalException) {

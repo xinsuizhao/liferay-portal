@@ -152,7 +152,7 @@ int total = 0;
 
 			status = WorkflowConstants.STATUS_ANY;
 		}
-		else if (!permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
+		else if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
@@ -189,7 +189,7 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		if (!permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
+		if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
@@ -250,7 +250,7 @@ for (int i = 0; i < results.size(); i++) {
 					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 					tempRowURL.setParameter("articleId", curArticle.getArticleId());
 
-					if (!permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
+						if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
 						status = WorkflowConstants.STATUS_APPROVED;
 					}
 
@@ -282,7 +282,7 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 						rowURL.setParameter("articleId", curArticle.getArticleId());
 
-						if (!permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
+							if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
 							status = WorkflowConstants.STATUS_APPROVED;
 						}
 
