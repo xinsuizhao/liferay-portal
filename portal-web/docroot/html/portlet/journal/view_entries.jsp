@@ -152,9 +152,6 @@ int total = 0;
 
 			status = WorkflowConstants.STATUS_ANY;
 		}
-		else if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
 
 		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
 
@@ -189,10 +186,6 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
 
 		searchContainer.setTotal(total);
@@ -250,7 +243,7 @@ for (int i = 0; i < results.size(); i++) {
 					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 					tempRowURL.setParameter("articleId", curArticle.getArticleId());
 
-						if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
+					if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
 						status = WorkflowConstants.STATUS_APPROVED;
 					}
 
@@ -281,10 +274,6 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 						rowURL.setParameter("articleId", curArticle.getArticleId());
-
-							if (!(permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER, true) || RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER, true))) {
-							status = WorkflowConstants.STATUS_APPROVED;
-						}
 
 						rowURL.setParameter("status", String.valueOf(status));
 						%>
