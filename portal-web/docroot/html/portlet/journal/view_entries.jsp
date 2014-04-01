@@ -149,8 +149,6 @@ int total = 0;
 
 		if (displayTerms.getNavigation().equals("mine")) {
 			userId = themeDisplay.getUserId();
-
-			status = WorkflowConstants.STATUS_ANY;
 		}
 		else if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
 			status = WorkflowConstants.STATUS_APPROVED;
