@@ -63,22 +63,6 @@ public class UserTestUtil {
 		return groupUser;
 	}
 
-	public static User addOmniAdmin() throws Exception {
-		User user = addUser();
-
-		user.setCompanyId(PortalInstances.getDefaultCompanyId());
-
-		UserLocalServiceUtil.updateUser(user);
-
-		Role administratorRole = RoleLocalServiceUtil.getRole(
-			PortalInstances.getDefaultCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		UserLocalServiceUtil.setRoleUsers(
-			administratorRole.getRoleId(), new long[] {user.getUserId()});
-
-		return user;
-	}
-
 	public static User addOrganizationAdminUser(Organization organization)
 		throws Exception {
 
