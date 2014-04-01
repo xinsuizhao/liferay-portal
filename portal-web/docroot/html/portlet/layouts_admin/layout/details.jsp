@@ -66,10 +66,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<%
 		LayoutFriendlyURLsException lfurlse = (LayoutFriendlyURLsException)errorException;
 
-		Map<Locale, Exception> localizedExceptions = (Map<Locale, Exception>)lfurlse.getLocalizedExceptions();
+		List<LayoutFriendlyURLException> layoutFriendlyURLExceptions = lfurlse.getLayoutFriendlyURLExceptions();
 
-		for (Map.Entry<Locale, Exception> localizedException : localizedExceptions.entrySet()) {
-			LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)localizedException.getValue();
+		for (LayoutFriendlyURLException lfurle : layoutFriendlyURLExceptions) {
 		%>
 
 			<%@ include file="/html/portlet/layouts_admin/error_friendly_url_exception.jspf" %>
