@@ -386,15 +386,14 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		LayoutFriendlyURLsException layoutFriendlyURLsException = null;
 
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
-			try {
-				String friendlyURL = entry.getValue();
+			String friendlyURL = entry.getValue();
+			Locale locale = entry.getKey();
 
+			try {
 				validateFriendlyURL(
 					groupId, privateLayout, layoutId, friendlyURL);
 			}
 			catch (LayoutFriendlyURLException lfurle) {
-				Locale locale = entry.getKey();
-
 				if (layoutFriendlyURLsException == null) {
 					layoutFriendlyURLsException =
 						new LayoutFriendlyURLsException();

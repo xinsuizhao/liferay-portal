@@ -264,7 +264,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 			var available = {};
 
-			var errors = {};
+			var errores = {};
 
 			<%
 			for (Locale availableLocale : availableLocales) {
@@ -286,13 +286,13 @@ if ((exception != null) && fieldName.equals(focusField)) {
 				String errorLocaleId = LocaleUtil.toLanguageId(errorLocale);
 			%>
 
-				errors['<%= errorLocaleId %>'] = '<%= errorLocale.getDisplayName(locale) %>';
+				errores['<%= errorLocaleId %>'] = '<%= errorLocale.getDisplayName(locale) %>';
 
 			<%
 			}
 			%>
 
-			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errors));
+			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errores));
 
 			Liferay.InputLocalized.register(
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
