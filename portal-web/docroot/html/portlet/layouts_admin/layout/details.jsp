@@ -52,7 +52,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	}
 	%>
 
-	<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="friendlyURL">
+	<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>">
 
 		<%
 		LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
@@ -61,7 +61,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<%@ include file="/html/portlet/layouts_admin/error_friendly_url_exception.jspf" %>
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= LayoutFriendlyURLsException.class %>" focusField="friendlyURL">
+	<liferay-ui:error exception="<%= LayoutFriendlyURLsException.class %>">
 
 		<%
 		LayoutFriendlyURLsException lfurlse = (LayoutFriendlyURLsException)errorException;
