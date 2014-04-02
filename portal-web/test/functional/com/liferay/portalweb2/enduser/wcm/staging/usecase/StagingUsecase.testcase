@@ -155,7 +155,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SitesDirectory#viewPortletTitlePG">
+		<execute macro="Portlet#viewNoSpecificPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
