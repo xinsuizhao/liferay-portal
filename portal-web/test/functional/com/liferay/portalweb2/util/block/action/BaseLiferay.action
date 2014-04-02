@@ -179,7 +179,7 @@
 
 	<command name="dragAndDrop">
 		<default>
-			<execute function="DragAndDrop#dragAndDrop" />
+			<execute function="DragAndDrop#dragAndDropToObject" />
 		</default>
 	</command>
 
