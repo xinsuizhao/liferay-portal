@@ -54,7 +54,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" known-issues="LPS-44534,LPS-45223" priority="5">
+	<command name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" known-issues="LPS-44534" priority="5">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event All Day Comment" />
@@ -122,7 +122,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularCommentToCurrentSiteCalendars" known-issues="LPS-44534,LPS-45223" priority="5">
+	<command name="AddCalendarEventRegularCommentToCurrentSiteCalendars" known-issues="LPS-44534" priority="5">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
@@ -190,7 +190,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" known-issues="LPS-44534,LPS-45223" priority="5">
+	<command name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" known-issues="LPS-44534" priority="5">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Repeating Comment" />
@@ -381,7 +381,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeColorCalendarSiteCalendarsEventRegular" known-issues="LPS-45223" priority="5">
+	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="5">
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
 		<var name="eventFontColorRGB" value="(104, 142, 217)" />
