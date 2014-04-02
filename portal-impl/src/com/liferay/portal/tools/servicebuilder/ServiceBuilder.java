@@ -4689,15 +4689,7 @@ public class ServiceBuilder {
 				EntityMapping entityMapping = new EntityMapping(
 					mappingTable, ejbName, collectionEntity);
 
-				int ejbNameWeight = StringUtil.startsWithWeight(
-					mappingTable, ejbName);
-				int collectionEntityWeight = StringUtil.startsWithWeight(
-					mappingTable, collectionEntity);
-
-				if ((ejbNameWeight > collectionEntityWeight) ||
-					((ejbNameWeight == collectionEntityWeight) &&
-					 (ejbName.compareTo(collectionEntity) > 0))) {
-
+				if (!_entityMappings.containsKey(mappingTable)) {
 					_entityMappings.put(mappingTable, entityMapping);
 				}
 			}
