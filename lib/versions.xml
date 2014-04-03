@@ -435,6 +435,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/jsch.jar</file-name>
+		<version>0.1.51</version>
+		<project-name>JSch</project-name>
+		<project-url>http://www.jcraft.com/jsch/</project-url>
+		<licenses>
+			<license>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://www.jcraft.com/jsch/LICENSE.txt</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/jsp-api.jar</file-name>
 		<version>2.1</version>
 		<project-name>JavaServer Pages</project-name>
