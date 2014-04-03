@@ -109,10 +109,6 @@ public abstract class BaseIndexer implements Indexer {
 	public static final int INDEX_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_FILTER_SEARCH_LIMIT));
 
-	public BaseIndexer() {
-		_document = new DocumentImpl();
-	}
-
 	@Override
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
@@ -1692,7 +1688,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
-	private Document _document;
+	private Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;
 	private IndexerPostProcessor[] _indexerPostProcessors =
