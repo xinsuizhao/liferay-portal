@@ -1792,10 +1792,13 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		if (!attributeMap.containsKey("value") && Validator.isNull(varText)) {
-			if (!attributeMap.containsKey("locator") &&
+			if (!attributeMap.containsKey("group") &&
+				!attributeMap.containsKey("input") &&
+				!attributeMap.containsKey("locator") &&
 				!attributeMap.containsKey("locator-key") &&
 				!attributeMap.containsKey("method") &&
-				!attributeMap.containsKey("path")) {
+				!attributeMap.containsKey("path") &&
+				!attributeMap.containsKey("pattern")) {
 
 				throwValidationException(
 					1004, fileName, element, new String [] {"value"});
@@ -1859,8 +1862,8 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {
-			"attribute", "line-number", "locator", "locator-key", "method",
-			"name", "path", "value"
+			"attribute", "group", "input", "line-number", "locator",
+			"locator-key", "method", "name", "path", "pattern", "value"
 		});
 	private static List<String> _componentNames;
 	private static List<String> _methodNames = ListUtil.fromArray(
