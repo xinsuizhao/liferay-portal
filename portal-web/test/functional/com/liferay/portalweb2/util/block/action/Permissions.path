@@ -137,6 +137,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_ADD_PAGE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_LAYOUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_CONFIGURE_PORTLETS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_CUSTOMIZE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_DELETE_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_DELETE']</td>
 	<td></td>
