@@ -1934,13 +1934,6 @@
 
 				docBody.addClass(currentClass);
 
-				Liferay.fire(
-					'toggleControls',
-					{
-						enabled: (Liferay._editControlsState === 'visible')
-					}
-				);
-
 				trigger.on(
 					EVENT_CLICK,
 					function(event) {
@@ -1953,14 +1946,6 @@
 						Liferay._editControlsState = (docBody.hasClass(visibleClass) ? 'visible' : 'hidden');
 
 						Liferay.Store('liferay_toggle_controls', Liferay._editControlsState);
-
-						Liferay.fire(
-							'toggleControls',
-							{
-								enabled: (Liferay._editControlsState === 'visible'),
-								src: 'ui'
-							}
-						);
 					}
 				);
 			}
