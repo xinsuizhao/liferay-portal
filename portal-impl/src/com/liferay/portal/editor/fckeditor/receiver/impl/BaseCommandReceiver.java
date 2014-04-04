@@ -251,6 +251,9 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 				else if (causeString.contains("AssetCategoryException")) {
 					returnValue = "212";
 				}
+				else if (causeString.contains("AntivirusScannerException")) {
+					returnValue = "211";
+				}
 				else {
 					throw fcke;
 				}

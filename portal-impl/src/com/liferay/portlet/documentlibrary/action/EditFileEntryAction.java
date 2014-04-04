@@ -72,6 +72,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -663,7 +664,12 @@ public class EditFileEntryAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (e instanceof AssetCategoryException) {
+		if (e instanceof AntivirusScannerException) {
+			AntivirusScannerException ase = (AntivirusScannerException)e;
+
+			errorMessage = themeDisplay.translate(ase.getMessageKey());
+		}
+		else if (e instanceof AssetCategoryException) {
 			AssetCategoryException ace = (AssetCategoryException)e;
 
 			AssetVocabulary assetVocabulary = ace.getVocabulary();
@@ -799,7 +805,8 @@ public class EditFileEntryAction extends PortletAction {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
-		else if (e instanceof DuplicateFileException ||
+		else if (e instanceof AntivirusScannerException ||
+				 e instanceof DuplicateFileException ||
 				 e instanceof DuplicateFolderNameException ||
 				 e instanceof LiferayFileItemException ||
 				 e instanceof FileExtensionException ||
@@ -830,12 +837,18 @@ public class EditFileEntryAction extends PortletAction {
 					 !cmd.equals(Constants.ADD_MULTIPLE) &&
 					 !cmd.equals(Constants.ADD_TEMP)) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				if (e instanceof AntivirusScannerException) {
+					SessionErrors.add(actionRequest, e.getClass(), e);
+				}
+				else {
+					SessionErrors.add(actionRequest, e.getClass());
+				}
 
 				return;
 			}
 
-			if (e instanceof DuplicateFileException ||
+			if (e instanceof AntivirusScannerException ||
+				e instanceof DuplicateFileException ||
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
 				e instanceof FileSizeException) {
@@ -852,6 +865,15 @@ public class EditFileEntryAction extends PortletAction {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
+
+				if (e instanceof AntivirusScannerException) {
+					AntivirusScannerException ase =
+						(AntivirusScannerException)e;
+
+					errorMessage = themeDisplay.translate(ase.getMessageKey());
+					errorType =
+						ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
+				}
 
 				if (e instanceof DuplicateFileException) {
 					errorMessage = themeDisplay.translate(
@@ -900,7 +922,12 @@ public class EditFileEntryAction extends PortletAction {
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 
-			SessionErrors.add(actionRequest, e.getClass());
+			if (e instanceof AntivirusScannerException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
 		}
 		else if (e instanceof DuplicateLockException ||
 				 e instanceof InvalidFileVersionException ||
