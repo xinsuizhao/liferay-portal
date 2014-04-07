@@ -84,7 +84,8 @@ public class FolderStagedModelDataHandler
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {
 
-		Element folderElement = portletDataContext.getExportDataElement(folder);
+		Element folderElement = portletDataContext.getExportDataElement(
+			folder, Folder.class);
 
 		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
@@ -92,7 +93,8 @@ public class FolderStagedModelDataHandler
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, folder, folder.getParentFolder(),
+				portletDataContext, folder, Folder.class,
+				folder.getParentFolder(), Folder.class,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
@@ -128,7 +130,7 @@ public class FolderStagedModelDataHandler
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, folder, DLFolder.class,
+				portletDataContext, folder, Folder.class,
 				folder.getParentFolderId());
 		}
 
@@ -266,7 +268,8 @@ public class FolderStagedModelDataHandler
 
 			if (dlFileEntryType.isExportable()) {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, folder, dlFileEntryType,
+					portletDataContext, folder, Folder.class, dlFileEntryType,
+					DLFileEntryType.class,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 			}
 		}

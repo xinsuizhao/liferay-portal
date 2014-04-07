@@ -1414,7 +1414,7 @@ public class PortletExporter {
 				portletDataContext.addZipEntry(ratingsEntryPath, ratingsEntry);
 
 				portletDataContext.addReferenceElement(
-					ratingsEntry, assetElement, user,
+					ratingsEntry, assetElement, user, User.class,
 					PortletDataContext.REFERENCE_TYPE_WEAK, true);
 			}
 		}
