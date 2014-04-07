@@ -958,8 +958,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			String uuid = referenceElement.attributeValue("uuid");
 
+			long importGroupId = groupId;
+
+			if (groupId == portletDataContext.getSourceCompanyGroupId()) {
+				importGroupId = portletDataContext.getCompanyGroupId();
+			}
+			else if (groupId == portletDataContext.getSourceGroupId()) {
+				importGroupId = portletDataContext.getGroupId();
+			}
+
 			FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
-				uuid, groupId);
+				uuid, importGroupId);
 
 			if (importedFileEntry == null) {
 				continue;
