@@ -73,6 +73,11 @@ viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDis
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
 		<div class="asset-metadata">
+
+			<%
+			boolean filterByMetadata = true;
+			%>
+
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</li>
