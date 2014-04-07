@@ -1,6 +1,7 @@
 <definition component-name="portal-calendar">
 	<property name="portlet.plugins.includes" value="calendar-portlet" />
 	<property name="default.layout.template.id" value="1_column" />
+	<property name="testray.main.component.name" value="Calendar" />
 
 	<var name="pageName" value="Calendar Page" />
 	<var name="portletName" value="Calendar" />

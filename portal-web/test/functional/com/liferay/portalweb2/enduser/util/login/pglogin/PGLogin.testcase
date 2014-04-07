@@ -1,4 +1,6 @@
 <definition component-name="portal-authentication">
+	<property name="testray.main.component.name" value="Authentication" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
