@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportClassUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -567,10 +566,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			getPrimaryKeyString(className, classPK), ratingsEntries);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public Element addReferenceElement(
 		ClassedModel referrerClassedModel, Element element,
@@ -589,8 +584,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return addReferenceElement(
 			referrerClassedModel, element, classedModel,
-			ExportImportClassUtil.getModelClassName(classedModel),
-			StringPool.BLANK, referenceType, missing);
+			classedModel.getModelClassName(), StringPool.BLANK, referenceType,
+			missing);
 	}
 
 	@Override
@@ -601,8 +596,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return addReferenceElement(
 			referrerClassedModel, element, classedModel,
-			ExportImportClassUtil.getModelClassName(classedModel), binPath,
-			referenceType, missing);
+			classedModel.getModelClassName(), binPath, referenceType, missing);
 	}
 
 	@Override
@@ -930,28 +924,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Element getExportDataElement(ClassedModel classedModel) {
-		return getExportDataElement(
-			classedModel,
-			ExportImportClassUtil.getModelClassSimpleName(classedModel));
+		return getExportDataElement(classedModel, classedModel.getModelClass());
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getExportDataElement(ClassedModel, String)}
-	 */
-	@Deprecated
 	@Override
 	public Element getExportDataElement(
 		ClassedModel classedModel, Class<?> modelClass) {
 
-		return getExportDataElement(classedModel, modelClass.getSimpleName());
-	}
-
-	@Override
-	public Element getExportDataElement(
-		ClassedModel classedModel, String modelClassSimpleName) {
-
-		Element groupElement = getExportDataGroupElement(modelClassSimpleName);
+		Element groupElement = getExportDataGroupElement(
+			modelClass.getSimpleName());
 
 		Element element = null;
 
@@ -1012,8 +993,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Element getImportDataElement(StagedModel stagedModel) {
+		StagedModelType stagedModelType = stagedModel.getStagedModelType();
+
 		return getImportDataElement(
-			ExportImportClassUtil.getModelClassSimpleName(stagedModel), "uuid",
+			stagedModelType.getClassSimpleName(), "uuid",
 			stagedModel.getUuid());
 	}
 
@@ -1042,9 +1025,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element getImportDataStagedModelElement(StagedModel stagedModel) {
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
+		StagedModelType stagedModelType = stagedModel.getStagedModelType();
+
 		return getImportDataElement(
-			ExportImportClassUtil.getModelClassSimpleName(stagedModel), "path",
-			path);
+			stagedModelType.getClassSimpleName(), "path", path);
 	}
 
 	@Override
