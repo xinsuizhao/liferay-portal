@@ -38,9 +38,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
@@ -84,12 +82,12 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			manifestSummary.getModelAdditionCounters();
 
 		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
-			DLFileEntry.class.getName());
+			FileEntry.class.getName());
 
 		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
 
 		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
-			DLFolder.class.getName());
+			Folder.class.getName());
 
 		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
 
@@ -103,12 +101,12 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		modelAdditionCounters = manifestSummary.getModelAdditionCounters();
 
 		fileEntryModelAdditionCounter = modelAdditionCounters.get(
-			DLFileEntry.class.getName());
+			FileEntry.class.getName());
 
 		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
 
 		folderModelAdditionCounter = modelAdditionCounters.get(
-			DLFolder.class.getName());
+			Folder.class.getName());
 
 		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
 	}
