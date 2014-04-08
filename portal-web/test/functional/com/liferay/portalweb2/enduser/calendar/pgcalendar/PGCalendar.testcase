@@ -458,7 +458,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarMyCalendars" priority="5">
+	<command name="DeleteCalendarMyCalendars" known-issues="LPS-45783" priority="5">
 		<var name="calendarName" value="Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
