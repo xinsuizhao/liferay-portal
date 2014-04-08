@@ -418,6 +418,10 @@
 		<put name="portlet_content" value="/portlet/dockbar/add_content_redirect.jsp" />
 	</definition>
 
+	<definition name="portlet.dockbar.add_layout" extends="portlet.dockbar">
+		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
+	</definition>
+
 	<definition name="portlet.dockbar.add_panel" extends="portlet.dockbar">
 		<put name="portlet_content" value="/portlet/dockbar/add_panel.jsp" />
 	</definition>
