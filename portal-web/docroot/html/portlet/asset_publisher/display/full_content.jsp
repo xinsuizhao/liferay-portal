@@ -240,11 +240,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	<c:if test="<%= show %>">
 		<div class="asset-metadata">
-
-			<%
-			boolean filterByMetadata = true;
-			%>
-
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</c:if>
