@@ -15,8 +15,9 @@
 --%>
 
 <%
-boolean previous = false;
 boolean filterByMetadata = GetterUtil.getBoolean((Boolean)request.getAttribute("asset_metadata.jspf-filterByMetadata"));
+
+boolean previous = false;
 
 for (int j = 0; j < metadataFields.length; j++) {
 	String value = null;
