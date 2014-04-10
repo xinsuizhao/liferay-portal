@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
-	<td>//div[@class='portlet-content']//ul[@class='breadcrumb']</td>
+	<td>//div[@class='portlet-content']//ul[contains(@class,'breadcrumb')]</td>
 	<td></td>
 </tr>
 <tr>
