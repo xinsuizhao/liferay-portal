@@ -41,7 +41,9 @@ public class UserGroupRoleLocalServiceImpl
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
-		groupPersistence.addUser(groupId, userId);
+		if (!userLocalService.hasGroupUser(groupId, userId)) {
+ 			userLocalService.addGroupUser(groupId, userId);
+		}
 
 		for (long roleId : roleIds) {
 			UserGroupRole userGroupRole = addUserGroupRole(
@@ -62,9 +64,11 @@ public class UserGroupRoleLocalServiceImpl
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
-		groupPersistence.addUsers(groupId, userIds);
-
 		for (long userId : userIds) {
+			if (!userLocalService.hasGroupUser(groupId, userId)) {
+				userLocalService.addGroupUser(groupId, userId);
+			}
+
 			UserGroupRole userGroupRole = addUserGroupRole(
 				userId, groupId, roleId);
 
