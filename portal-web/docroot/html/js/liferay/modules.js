@@ -8,6 +8,10 @@
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
+	var testTouch = function(A) {
+		return A.UA.touch;
+	};
+
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -47,9 +51,7 @@
 							'liferay-app-view-move-touch': {
 								condition: {
 									name: 'liferay-app-view-move-touch',
-									test: function(A) {
-										return A.UA.touch;
-									},
+									test: testTouch,
 									trigger: 'liferay-app-view-move'
 								}
 							}
@@ -364,9 +366,7 @@
 							'liferay-input-move-boxes-touch': {
 								condition: {
 									name: 'liferay-input-move-boxes-touch',
-									test: function(A) {
-										return A.UA.touch;
-									},
+									test: testTouch,
 									trigger: 'liferay-input-move-boxes'
 								}
 							}
@@ -465,9 +465,7 @@
 							'liferay-navigation-touch': {
 								condition: {
 									name: 'liferay-navigation-touch',
-									test: function(A) {
-										return A.UA.touch;
-									},
+									test: testTouch,
 									trigger: 'liferay-navigation'
 								}
 							}
@@ -479,9 +477,7 @@
 							'liferay-navigation-interaction-touch': {
 								condition: {
 									name: 'liferay-navigation-interaction-touch',
-									test: function(A) {
-										return A.UA.touch;
-									},
+									test: testTouch,
 									trigger: 'liferay-navigation-interaction'
 								}
 							}
