@@ -16,8 +16,10 @@ package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -772,7 +774,8 @@ public class HookHotDeployListener
 				"model-listener-class");
 
 			ModelListener<BaseModel<?>> modelListener = initModelListener(
-				modelName, modelListenerClassName, portletClassLoader);
+				modelName, modelListenerClassName, servletContextName,
+				portletClassLoader);
 
 			if (modelListener != null) {
 				modelListenersContainer.registerModelListener(
@@ -912,7 +915,8 @@ public class HookHotDeployListener
 			_modelListenersContainerMap.remove(servletContextName);
 
 		if (modelListenersContainer != null) {
-			modelListenersContainer.unregisterModelListeners();
+			modelListenersContainer.unregisterModelListeners(
+				servletContextName);
 		}
 
 		Properties portalProperties = _portalPropertiesMap.remove(
@@ -987,7 +991,9 @@ public class HookHotDeployListener
 		return locale;
 	}
 
-	protected BasePersistence<?> getPersistence(String modelName) {
+	protected BasePersistence<?> getPersistence(
+		String modelName, String servletContextName) {
+
 		int pos = modelName.lastIndexOf(CharPool.PERIOD);
 
 		String entityName = modelName.substring(pos + 1);
@@ -996,8 +1002,19 @@ public class HookHotDeployListener
 
 		String packagePath = modelName.substring(0, pos);
 
-		return (BasePersistence<?>)PortalBeanLocatorUtil.locate(
-			packagePath + ".service.persistence." + entityName + "Persistence");
+		String beanName =
+			packagePath + ".service.persistence." + entityName + "Persistence";
+
+		if (servletContextName != null) {
+			try {
+				return (BasePersistence<?>)PortletBeanLocatorUtil.locate(
+					servletContextName, beanName);
+			}
+			catch (BeanLocatorException e) {
+			}
+		}
+
+		return (BasePersistence<?>)PortalBeanLocatorUtil.locate(beanName);
 	}
 
 	protected File getPortalJspBackupFile(File portalJspFile) {
@@ -1564,7 +1581,7 @@ public class HookHotDeployListener
 	@SuppressWarnings("rawtypes")
 	protected ModelListener<BaseModel<?>> initModelListener(
 			String modelName, String modelListenerClassName,
-			ClassLoader portletClassLoader)
+			String servletContextName, ClassLoader portletClassLoader)
 		throws Exception {
 
 		ModelListener<BaseModel<?>> modelListener =
@@ -1572,7 +1589,8 @@ public class HookHotDeployListener
 				portletClassLoader, ModelListener.class,
 				modelListenerClassName);
 
-		BasePersistence persistence = getPersistence(modelName);
+		BasePersistence persistence = getPersistence(
+			modelName, servletContextName);
 
 		persistence.registerListener(modelListener);
 
@@ -1604,7 +1622,8 @@ public class HookHotDeployListener
 
 			for (String modelListenerClassName : modelListenerClassNames) {
 				ModelListener<BaseModel<?>> modelListener = initModelListener(
-					modelName, modelListenerClassName, portletClassLoader);
+					modelName, modelListenerClassName, servletContextName,
+					portletClassLoader);
 
 				if (modelListener != null) {
 					modelListenersContainer.registerModelListener(
@@ -3336,7 +3355,7 @@ public class HookHotDeployListener
 		}
 
 		@SuppressWarnings("rawtypes")
-		public void unregisterModelListeners() {
+		public void unregisterModelListeners(String servletContextName) {
 			for (Map.Entry<String, List<ModelListener<BaseModel<?>>>> entry :
 					_modelListenersMap.entrySet()) {
 
@@ -3344,7 +3363,8 @@ public class HookHotDeployListener
 				List<ModelListener<BaseModel<?>>> modelListeners =
 					entry.getValue();
 
-				BasePersistence persistence = getPersistence(modelName);
+				BasePersistence persistence = getPersistence(
+					modelName, servletContextName);
 
 				for (ModelListener<BaseModel<?>> modelListener :
 						modelListeners) {
