@@ -1704,10 +1704,10 @@ public class DDMStructureLocalServiceImpl
 	protected void validate(Document parentDocument, Document childDocument)
 		throws PortalException {
 
-		Set<String> parentElementNames = getElementNames(parentDocument);
+		Set<String> parentNames = getElementNames(parentDocument);
 
-		for (String childElementName : getElementNames(childDocument)) {
-			if (parentElementNames.contains(childElementName)) {
+		for (String childName : getElementNames(childDocument)) {
+			if (parentNames.contains(childName)) {
 				throw new StructureDuplicateElementException();
 			}
 		}
