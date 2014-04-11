@@ -1542,8 +1542,19 @@ public class DDMStructureLocalServiceImpl
 		for (Node node : nodes) {
 			Element element = (Element)node;
 
-			String name = StringUtil.toLowerCase(
-				element.attributeValue("name"));
+			String name = element.attributeValue("name");
+
+			Element parentElement = element.getParent();
+
+			while (!parentElement.isRootElement()) {
+				name =
+					parentElement.attributeValue("name") + StringPool.SLASH +
+						name;
+
+				parentElement = parentElement.getParent();
+			}
+
+			name = StringUtil.toLowerCase(name);
 
 			elementNames.add(name);
 		}
@@ -1664,12 +1675,23 @@ public class DDMStructureLocalServiceImpl
 		for (Node node : nodes) {
 			Element element = (Element)node;
 
-			String name = StringUtil.toLowerCase(
-				element.attributeValue("name"));
+			String name = element.attributeValue("name");
 
 			if (name.startsWith(DDMStructureConstants.XSD_NAME_RESERVED)) {
 				throw new StructureXsdException();
 			}
+
+			Element parentElement = element.getParent();
+
+			while (!parentElement.isRootElement()) {
+				name =
+					parentElement.attributeValue("name") + StringPool.SLASH +
+						name;
+
+				parentElement = parentElement.getParent();
+			}
+
+			name = StringUtil.toLowerCase(name);
 
 			if (elementNames.contains(name)) {
 				throw new StructureDuplicateElementException();
