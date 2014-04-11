@@ -98,7 +98,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a)| xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[1])</td>
+	<td>//div[@id='_167_ocerSearchContainer']//tr/td[1]/a | //div[@id='_167_ocerSearchContainer']//tr/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2]/a) | xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2])</td>
+	<td>//div[@id='_167_ocerSearchContainer']//tr/td[2]/a | //div[@id='_167_ocerSearchContainer']//tr/td[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_THREE_RECORD_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[3]/a) | xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[3])</td>
+	<td>//div[@id='_167_ocerSearchContainer']//tr/td[3]/a | //div[@id='_167_ocerSearchContainer']//tr/td[3]</td>
 	<td></td>
 </tr>
 <tr>
