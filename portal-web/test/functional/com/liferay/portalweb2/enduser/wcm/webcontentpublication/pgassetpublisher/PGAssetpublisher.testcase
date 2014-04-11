@@ -55,7 +55,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBookmarkViaAP" known-issues="LIFERAYQA-6795" priority="4">
+	<command name="AddBookmarkViaAP" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -283,7 +283,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureAPPortletEnableRatings" known-issues="LIFERAYQA-6795" priority="4">
+	<command name="ConfigureAPPortletEnableRatings" priority="4">
 		<var name="assetTitle" value="WC WebContent Title" />
 		<var name="enableRatings" value="true" />
 		<var name="webContentContent" value="WC WebContent Content" />

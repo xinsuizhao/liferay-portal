@@ -159,7 +159,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategorywithSiteRole" known-issues="LPS-43522" priority="4">
+	<command name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
