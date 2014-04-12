@@ -21,6 +21,16 @@
 		<execute selenium="pause" argument1="1000" />
 	</command>
 
+	<command name="pauseType">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="type" />
+	</command>
+
 	<command name="sendKeys">
 		<execute selenium="waitForVisible" />
 
