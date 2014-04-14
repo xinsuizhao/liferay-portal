@@ -218,7 +218,7 @@ if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.
 	defaultAssetPublisher = true;
 }
 
-boolean enablePermissions = (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) ? true : GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
+boolean enablePermissions = isEnablePermissions(portletName, portletPreferences);
 
 assetEntryQuery.setEnablePermissions(enablePermissions);
 
@@ -276,5 +276,23 @@ private String _checkViewURL(AssetEntry assetEntry, boolean viewInContext, Strin
 	}
 
 	return viewURL;
+}
+
+private Boolean isEnablePermissions(String portletName, PortletPreferences portletPreferences) {
+	Boolean enablePermissions = null;
+
+	if (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) &&
+		!portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) &&
+		PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+
+		return true;
+	}
+
+	if (!PropsValues.ASSET_PUBLISHER_PERMISSION_CHECKING_CONFIGURABLE) {
+
+		return true;
+	}
+
+	return GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
 }
 %>
