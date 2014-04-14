@@ -96,6 +96,10 @@ body.html-editor {
 
 /* ---------- Miscellaneous ---------- */
 
+span.alert {
+	display: inline-block;
+}
+
 #skip-to-content {
 	clip: rect(0 0 0 0);
 	position: absolute;
