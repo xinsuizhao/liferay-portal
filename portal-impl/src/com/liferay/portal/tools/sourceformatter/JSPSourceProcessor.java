@@ -297,6 +297,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			if (portalSource &&
 				!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) &&
+				!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0) &&
 				fileName.endsWith("/init.jsp") &&
 				!fileName.endsWith("/common/init.jsp")) {
 
