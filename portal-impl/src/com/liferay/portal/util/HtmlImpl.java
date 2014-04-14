@@ -328,10 +328,6 @@ public class HtmlImpl implements Html {
 			return text;
 		}
 
-		if (text.length() == 0) {
-			return StringPool.BLANK;
-		}
-
 		StringBundler sb = null;
 
 		int lastReplacementIndex = 0;
