@@ -1292,6 +1292,8 @@ public interface Portal {
 	 */
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 
+	public String resetPortletParams(String portletId, String url);
+
 	public void sendError(
 			Exception e, ActionRequest actionRequest,
 			ActionResponse actionResponse)
