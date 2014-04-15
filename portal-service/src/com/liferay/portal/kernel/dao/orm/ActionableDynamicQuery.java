@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.service.BaseLocalService;
 
 /**
@@ -46,8 +45,5 @@ public interface ActionableDynamicQuery {
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName);
 
 	public void setSearchEngineId(String searchEngineId);
-
-	public void setTransactionAttribute(
-		TransactionAttribute transactionAttribute);
 
 }
