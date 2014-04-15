@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.BaseLocalService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -34,39 +33,81 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Shuyang Zhou
  */
 public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
 	@Override
 	public void performActions() throws PortalException, SystemException {
-		long previousPrimaryKey = -1;
+		long count = doPerformCount();
 
-		while (true) {
-			long lastPrimaryKey = doPerformActions(previousPrimaryKey);
-
-			if (lastPrimaryKey < 0) {
-				return;
-			}
-
-			intervalCompleted(previousPrimaryKey, lastPrimaryKey);
-
-			previousPrimaryKey = lastPrimaryKey;
+		if (count > _interval) {
+			performActionsInMultipleIntervals();
+		}
+		else {
+			performActionsInSingleInterval();
 		}
 	}
 
-	@Override
-	public long performCount() throws PortalException, SystemException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+	public void performActions(long startPrimaryKey, long endPrimaryKey)
+		throws PortalException, SystemException {
+
+		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
+
+		Property property = PropertyFactoryUtil.forName(
+			_primaryKeyPropertyName);
+
+		dynamicQuery.add(property.ge(startPrimaryKey));
+		dynamicQuery.add(property.lt(endPrimaryKey));
 
 		addDefaultCriteria(dynamicQuery);
 
 		addCriteria(dynamicQuery);
 
-		return (Long)executeDynamicQuery(
-			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
+		Callable<Void> performActionsCallable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				List<Object> objects = (List<Object>)executeDynamicQuery(
+					_dynamicQueryMethod, dynamicQuery);
+
+				for (Object object : objects) {
+					performAction(object);
+				}
+
+				return null;
+			}
+
+		};
+
+		TransactionAttribute transactionAttribute = getTransactionAttribute();
+
+		try {
+			if (transactionAttribute == null) {
+				performActionsCallable.call();
+			}
+			else {
+				TransactionInvokerUtil.invoke(
+					transactionAttribute, performActionsCallable);
+			}
+		}
+		catch (Throwable t) {
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+
+			if (t instanceof SystemException) {
+				throw (SystemException)t;
+			}
+
+			throw new SystemException(t);
+		}
+	}
+
+	@Override
+	public long performCount() throws PortalException, SystemException {
+		return doPerformCount();
 	}
 
 	@Override
@@ -172,77 +213,16 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
-	protected long doPerformActions(long previousPrimaryKey)
-		throws PortalException, SystemException {
-
-		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+	protected long doPerformCount() throws PortalException, SystemException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
-
-		Property property = PropertyFactoryUtil.forName(
-			_primaryKeyPropertyName);
-
-		dynamicQuery.add(property.gt(previousPrimaryKey));
-
-		dynamicQuery.setLimit(0, _interval);
-
-		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
 
 		addDefaultCriteria(dynamicQuery);
 
 		addCriteria(dynamicQuery);
 
-		Callable<Long> performActionsCallable = new Callable<Long>() {
-
-			@Override
-			public Long call() throws Exception {
-				List<Object> objects = (List<Object>)executeDynamicQuery(
-					_dynamicQueryMethod, dynamicQuery);
-
-				if (objects.isEmpty()) {
-					return -1L;
-				}
-
-				for (Object object : objects) {
-					performAction(object);
-				}
-
-				if (objects.size() < _interval) {
-					return -1L;
-				}
-
-				BaseModel<?> baseModel = (BaseModel<?>)objects.get(
-					objects.size() - 1);
-
-				return (Long)baseModel.getPrimaryKeyObj();
-			}
-
-		};
-
-		TransactionAttribute transactionAttribute = getTransactionAttribute();
-
-		try {
-			if (transactionAttribute == null) {
-				return performActionsCallable.call();
-			}
-			else {
-				return TransactionInvokerUtil.invoke(
-					transactionAttribute, performActionsCallable);
-			}
-		}
-		catch (Throwable t) {
-			if (t instanceof PortalException) {
-				throw (PortalException)t;
-			}
-
-			if (t instanceof SystemException) {
-				throw (SystemException)t;
-			}
-
-			throw new SystemException(t);
-		}
-		finally {
-			indexInterval();
-		}
+		return (Long)executeDynamicQuery(
+			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
 	}
 
 	protected Object executeDynamicQuery(
@@ -299,6 +279,109 @@ public abstract class BaseActionableDynamicQuery
 
 	protected abstract void performAction(Object object)
 		throws PortalException, SystemException;
+
+	protected void performActionsInMultipleIntervals()
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		Projection minPrimaryKeyProjection = ProjectionFactoryUtil.min(
+			_primaryKeyPropertyName);
+		Projection maxPrimaryKeyProjection = ProjectionFactoryUtil.max(
+			_primaryKeyPropertyName);
+
+		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+
+		projectionList.add(minPrimaryKeyProjection);
+		projectionList.add(maxPrimaryKeyProjection);
+
+		dynamicQuery.setProjection(projectionList);
+
+		addDefaultCriteria(dynamicQuery);
+
+		addCriteria(dynamicQuery);
+
+		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
+			_dynamicQueryMethod, dynamicQuery);
+
+		Object[] minAndMaxPrimaryKeys = results.get(0);
+
+		if ((minAndMaxPrimaryKeys[0] == null) ||
+			(minAndMaxPrimaryKeys[1] == null)) {
+
+			return;
+		}
+
+		long minPrimaryKey = (Long)minAndMaxPrimaryKeys[0];
+		long maxPrimaryKey = (Long)minAndMaxPrimaryKeys[1];
+
+		long startPrimaryKey = minPrimaryKey;
+		long endPrimaryKey = startPrimaryKey + _interval;
+
+		while (startPrimaryKey <= maxPrimaryKey) {
+			performActions(startPrimaryKey, endPrimaryKey);
+
+			indexInterval();
+
+			intervalCompleted(startPrimaryKey, endPrimaryKey);
+
+			startPrimaryKey = endPrimaryKey;
+			endPrimaryKey += _interval;
+		}
+	}
+
+	protected void performActionsInSingleInterval()
+		throws PortalException, SystemException {
+
+		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		addDefaultCriteria(dynamicQuery);
+
+		addCriteria(dynamicQuery);
+
+		Callable<Void> performActionsCallable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				List<Object> objects = (List<Object>)executeDynamicQuery(
+					_dynamicQueryMethod, dynamicQuery);
+
+				for (Object object : objects) {
+					performAction(object);
+				}
+
+				return null;
+			}
+
+		};
+
+		TransactionAttribute transactionAttribute = getTransactionAttribute();
+
+		try {
+			if (transactionAttribute == null) {
+				performActionsCallable.call();
+			}
+			else {
+				TransactionInvokerUtil.invoke(
+					transactionAttribute, performActionsCallable);
+			}
+		}
+		catch (Throwable t) {
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+
+			if (t instanceof SystemException) {
+				throw (SystemException)t;
+			}
+
+			throw new SystemException(t);
+		}
+
+		indexInterval();
+	}
 
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
