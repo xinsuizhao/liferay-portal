@@ -52,7 +52,12 @@ if (Validator.isNull(script)) {
 	if (templateHandler != null) {
 		Class<?> templateHandlerClass = templateHandler.getClass();
 
-		script = ContentUtil.get(templateHandlerClass.getClassLoader(), templateHandler.getTemplatesHelpPath(language));
+		try {
+			script = StringUtil.read(templateHandlerClass.getClassLoader(), templateHandler.getTemplatesHelpPath(language));
+		}
+		catch(Exception e) {
+			script = StringUtil.read(PortalClassLoaderUtil.getClassLoader(), templateHandler.getTemplatesHelpPath(language));
+		}
 	}
 	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class.getName())) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
