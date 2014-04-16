@@ -6468,7 +6468,7 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String resetPortletParams(String portletId, String url) {
+	public String resetPortletParams(String url, String portletId) {
 		if(Validator.isNull(portletId) || Validator.isNull(url)) {
 			return url;
 		}
