@@ -2065,6 +2065,23 @@ public class JournalArticleLocalServiceWrapper
 			folderId);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle getOldestArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getOldestArticle(groupId, articleId);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle getOldestArticle(
+		long groupId, java.lang.String articleId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getOldestArticle(groupId, articleId,
+			status);
+	}
+
 	/**
 	* Returns the web content articles matching the group and DDM structure
 	* key.

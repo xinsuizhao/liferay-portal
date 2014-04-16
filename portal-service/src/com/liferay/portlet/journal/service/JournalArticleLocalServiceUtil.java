@@ -1975,6 +1975,20 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getNotInTrashArticlesCount(groupId, folderId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle getOldestArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOldestArticle(groupId, articleId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle getOldestArticle(
+		long groupId, java.lang.String articleId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOldestArticle(groupId, articleId, status);
+	}
+
 	/**
 	* Returns the web content articles matching the group and DDM structure
 	* key.
