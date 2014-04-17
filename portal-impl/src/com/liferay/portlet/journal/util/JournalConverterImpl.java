@@ -161,8 +161,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Element rootElement = document.getRootElement();
 
-		String defaultLanguageId = rootElement.attributeValue(
-			"default-locale");
+		String defaultLanguageId = rootElement.attributeValue("default-locale");
 
 		List<Element> dynamicElementElements = rootElement.elements(
 			"dynamic-element");
