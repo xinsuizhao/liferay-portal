@@ -121,6 +121,7 @@ public class InputTag extends BaseInputTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_forLabel = null;
 		_validators = null;
 	}
 
@@ -223,16 +224,7 @@ public class InputTag extends BaseInputTag {
 			label = TextFormatter.format(name, TextFormatter.K);
 		}
 
-		String forLabel = id;
-
-		if (type.equals("assetTags")) {
-			forLabel += "assetTagNames";
-		}
-
-		if (Validator.equals(getType(), "checkbox")) {
-			forLabel = forLabel.concat("Checkbox");
-		}
-
+		_forLabel = id;
 		_inputName = getName();
 
 		String baseType = null;
@@ -271,7 +263,7 @@ public class InputTag extends BaseInputTag {
 		setNamespacedAttribute(request, "bean", bean);
 		setNamespacedAttribute(request, "defaultLanguageId", defaultLanguageId);
 		setNamespacedAttribute(request, "field", field);
-		setNamespacedAttribute(request, "forLabel", forLabel);
+		setNamespacedAttribute(request, "forLabel", _forLabel);
 		setNamespacedAttribute(request, "formName", formName);
 		setNamespacedAttribute(request, "id", id);
 		setNamespacedAttribute(request, "label", label);
@@ -314,6 +306,7 @@ public class InputTag extends BaseInputTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
+	private String _forLabel;
 	private String _inputName;
 	private Map<String, ValidatorTag> _validators;
 
