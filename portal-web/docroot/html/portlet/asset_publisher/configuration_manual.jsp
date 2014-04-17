@@ -197,7 +197,8 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 				{
 					dialog: {
 						constrain: true,
-						modal: true
+						modal: true,
+						width: 900
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),
