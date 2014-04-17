@@ -39,6 +39,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.BackgroundTaskLocalServiceBaseImpl;
+import com.liferay.portal.util.PortletFileRepositoryThreadLocal;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
@@ -120,11 +121,25 @@ public class BackgroundTaskLocalServiceImpl
 
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
-		PortletFileRepositoryUtil.addPortletFileEntry(
-			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
-			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
-			folder.getFolderId(), file, fileName, ContentTypes.APPLICATION_ZIP,
-			false);
+		boolean addBackgroundTaskAttachmentInProcess =
+			PortletFileRepositoryThreadLocal.
+				isAddBackgroundTaskAttachmentInProcess();
+
+		try {
+			PortletFileRepositoryThreadLocal.
+				setAddBackgroundTaskAttachmentInProcess(true);
+
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				backgroundTask.getGroupId(), userId,
+				BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
+				PortletKeys.BACKGROUND_TASK, folder.getFolderId(), file,
+				fileName, ContentTypes.APPLICATION_ZIP, false);
+		}
+		finally {
+			PortletFileRepositoryThreadLocal.
+				setAddBackgroundTaskAttachmentInProcess(
+					addBackgroundTaskAttachmentInProcess);
+		}
 	}
 
 	@Override
@@ -137,11 +152,25 @@ public class BackgroundTaskLocalServiceImpl
 
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
-		PortletFileRepositoryUtil.addPortletFileEntry(
-			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
-			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
-			folder.getFolderId(), inputStream, fileName,
-			ContentTypes.APPLICATION_ZIP, false);
+		boolean addBackgroundTaskAttachmentInProcess =
+			PortletFileRepositoryThreadLocal.
+				isAddBackgroundTaskAttachmentInProcess();
+
+		try {
+			PortletFileRepositoryThreadLocal.
+				setAddBackgroundTaskAttachmentInProcess(true);
+
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				backgroundTask.getGroupId(), userId,
+				BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
+				PortletKeys.BACKGROUND_TASK, folder.getFolderId(), inputStream,
+				fileName, ContentTypes.APPLICATION_ZIP, false);
+		}
+		finally {
+			PortletFileRepositoryThreadLocal.
+				setAddBackgroundTaskAttachmentInProcess(
+					addBackgroundTaskAttachmentInProcess);
+		}
 	}
 
 	@Override
