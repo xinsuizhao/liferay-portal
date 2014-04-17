@@ -65,6 +65,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%@ include file="/html/portlet/asset_publisher/asset_search_results.jspf" %>
 			</liferay-ui:search-container-results>
 
+			<div class="separator"><!-- --></div>
+
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.search.Document"
 				escapedModel="<%= true %>"
