@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -433,6 +435,16 @@ public class ActionUtil {
 		JournalUtil.addRecentDDMTemplate(portletRequest, ddmTemplate);
 	}
 
+	protected static String getContent(String value) throws Exception {
+		if (value.equals("delete")) {
+			return value;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+		return jsonObject.getString("data");
+	}
+
 	protected static Map<String, byte[]> getImages(Fields fields, Locale locale)
 		throws Exception {
 
@@ -448,7 +460,7 @@ public class ActionUtil {
 			List<Serializable> values = field.getValues(locale);
 
 			for (int i = 0; i < values.size(); i++) {
-				String content = (String)values.get(i);
+				String content = getContent((String)values.get(i));
 
 				if (content.equals("update")) {
 					continue;
