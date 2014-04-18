@@ -107,14 +107,13 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 						<aui:validator name="acceptFiles">'.lar'</aui:validator>
 						<aui:validator errorMessage='<%= LanguageUtil.get(pageContext, "the-following-are-invalid-characters") + "!@#$%^&*()" %>' name="custom">
 							function(val, fieldNode, ruleValue) {
-								var exportFileName = A.one('#<portlet:namespace />exportFileName').val();
-
 								var disallowedCharactersRegex = new RegExp('[!@#$%^&*()]');
 
-								return !disallowedCharactersRegex.test(exportFileName);
+								return !disallowedCharactersRegex.test(val);
 							}
 						</aui:validator>
 						<aui:validator name="maxLength">75</aui:validator>
+						<aui:validator name="minLength">5</aui:validator>
 						<aui:validator name="required" />
 					</aui:input>
 
