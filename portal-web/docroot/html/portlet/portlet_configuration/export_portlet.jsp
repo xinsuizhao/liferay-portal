@@ -57,8 +57,18 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 			<div class="export-dialog-tree">
 				<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" showRequiredLabel="<%= false %>" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>'>
-					<aui:validator name="maxLength">75</aui:validator>
-					<aui:validator name="required" />
+						<aui:validator name="acceptFiles">'.lar'</aui:validator>
+						<aui:validator errorMessage='<%= LanguageUtil.get(pageContext, "the-following-are-invalid-characters") + "!@#$%^&*()" %>' name="custom">
+							function(val, fieldNode, ruleValue) {
+								var exportFileName = A.one('#<portlet:namespace />exportFileName').val();
+
+								var disallowedCharactersRegex = new RegExp('[!@#$%^&*()]');
+
+								return !disallowedCharactersRegex.test(exportFileName);
+							}
+						</aui:validator>
+						<aui:validator name="maxLength">75</aui:validator>
+						<aui:validator name="required" />
 				</aui:input>
 
 				<%
