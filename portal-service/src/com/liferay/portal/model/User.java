@@ -115,8 +115,8 @@ public interface User extends UserModel, PersistedModel {
 	* @param portalURL the portal's URL
 	* @param mainPath the main path
 	* @param privateLayout whether to use the URL of the user's default
-	intranet(versus extranet)  site home page, if no friendly URL is
-	available for the user's profile
+	intranet(versus extranet)  site home page, if no friendly URL
+	is available for the user's profile
 	* @return the user's display URL
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
