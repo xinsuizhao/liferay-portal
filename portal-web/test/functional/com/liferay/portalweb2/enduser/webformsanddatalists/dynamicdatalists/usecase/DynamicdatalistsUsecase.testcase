@@ -547,20 +547,20 @@
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[13]" value1="Modified Date" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[14]" value1="Author" />
 
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]" value1="true" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]" value1="30" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]" value1="QA Engineer" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]" value1="Joe Engineer works in QA" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[5]" value1="4/1/15" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]" value1="35000.0" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a | //tbody[@class='table-data']/tr/td[1]" value1="true" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a | //tbody[@class='table-data']/tr/td[2]" value1="30" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a | //tbody[@class='table-data']/tr/td[3]" value1="QA Engineer" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/a | //tbody[@class='table-data']/tr/td[4]" value1="Joe Engineer works in QA" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[5]/a | //tbody[@class='table-data']/tr/td[5]" value1="4/1/15" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]/a | //tbody[@class='table-data']/tr/td[6]" value1="35000.0" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[7]" value1="" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[8]" value1="Joe Engineer" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[9]" value1="Document Title" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[10]" value1="40" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[11]" value1="5+" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[8]/a | //tbody[@class='table-data']/tr/td[8]" value1="Joe Engineer" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[9]/a | //tbody[@class='table-data']/tr/td[9]" value1="Document Title" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[10]/a | //tbody[@class='table-data']/tr/td[10]" value1="40" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[11]/a | //tbody[@class='table-data']/tr/td[11]" value1="5+" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[12]/span/span/span/strong" value1="Approved" />
-		<execute action="PGDynamicdatalists#assertElementPresent" locator1="//tbody[@class='table-data']/tr/td[13]" value1="Modified Date" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[14]" value1="Test Test" />
+		<execute action="PGDynamicdatalists#assertElementPresent" locator1="//tbody[@class='table-data']/tr/td[13]/a | //tbody[@class='table-data']/tr/td[13]" value1="Modified Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[14]/a | //tbody[@class='table-data']/tr/td[14]" value1="Test Test" />
 
 		<execute macro="DataDefinitionTemplate#editFormTemplatePG">
 			<var name="dataDefinitionFormTemplateNameEdit" value="Template Rev" />
