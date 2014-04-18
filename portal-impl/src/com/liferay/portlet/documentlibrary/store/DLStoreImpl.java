@@ -647,7 +647,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if (PortletFileRepositoryThreadLocal.checkFileSize() &&
+		if (PortletFileRepositoryThreadLocal.isInProcess() &&
 			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			((bytes == null) ||
 			 (bytes.length >
@@ -664,7 +664,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if (PortletFileRepositoryThreadLocal.checkFileSize() &&
+		if (PortletFileRepositoryThreadLocal.isInProcess() &&
 			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			((file == null) ||
 			 (file.length() >
@@ -684,7 +684,7 @@ public class DLStoreImpl implements DLStore {
 		// LEP-4851
 
 		try {
-			if (PortletFileRepositoryThreadLocal.checkFileSize() &&
+			if (PortletFileRepositoryThreadLocal.isInProcess() &&
 				((is == null) ||
 				 ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 				  (is.available() >
@@ -708,7 +708,7 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			StringPool.BLANK);
 
-		if (PortletFileRepositoryThreadLocal.checkFileSize() &&
+		if (PortletFileRepositoryThreadLocal.isInProcess() &&
 			(file != null) &&
 			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			(file.length() >
@@ -729,7 +729,7 @@ public class DLStoreImpl implements DLStore {
 			StringPool.BLANK);
 
 		try {
-			if (PortletFileRepositoryThreadLocal.checkFileSize() &&
+			if (PortletFileRepositoryThreadLocal.isInProcess() &&
 				(is != null) &&
 				(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 				(is.available() >

@@ -17,11 +17,11 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
- * @author Michael C. Han
+ * @author Kenneth Chang
  */
 public class PortletFileRepositoryThreadLocal {
 
-	public static boolean checkFileSize() {
+	public static boolean isInProcess() {
 		if (isAddBackgroundTaskAttachmentInProcess() ||
 			isAddTempFileInProcess()) {
 
