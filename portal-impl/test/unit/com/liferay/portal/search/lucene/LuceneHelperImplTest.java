@@ -253,9 +253,6 @@ public class LuceneHelperImplTest {
 		_mockClusterExecutor.setNodeNumber(2);
 		_mockClusterExecutor.setPort(mockServer.getPort());
 
-		JDKLoggerTestUtil.configureJDKLogger(
-			LuceneHelperImpl.class.getName(), Level.INFO);
-
 		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
 
 		byte[] responseMessage = _mockIndexAccessor.getResponseMessage();
