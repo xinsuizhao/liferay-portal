@@ -105,6 +105,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 				<div class="export-dialog-tree">
 					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" showRequiredLabel="<%= false %>" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>'>
 						<aui:validator name="acceptFiles">'.lar'</aui:validator>
+
 						<aui:validator errorMessage='<%= LanguageUtil.get(pageContext, "the-following-are-invalid-characters") + "!@#$%^&*()" %>' name="custom">
 							function(val, fieldNode, ruleValue) {
 								var disallowedCharactersRegex = new RegExp('[!@#$%^&*()]');
@@ -112,6 +113,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 								return !disallowedCharactersRegex.test(val);
 							}
 						</aui:validator>
+
 						<aui:validator name="maxLength">75</aui:validator>
 						<aui:validator name="minLength">5</aui:validator>
 						<aui:validator name="required" />
