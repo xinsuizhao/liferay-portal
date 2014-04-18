@@ -46,11 +46,10 @@ double version = ParamUtil.getDouble(request, "version");
 
 		PortletURL articleURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-		ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
+		ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL, "no-web-content-was-found-that-matched-the-specified-filters");
 
 		searchContainer.setDelta(pageDelta);
 		searchContainer.setDeltaConfigurable(false);
-		searchContainer.setEmptyResultsMessage("no-web-content-was-found-that-matched-the-specified-filters");
 		searchContainer.setOrderByCol(orderByCol);
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setOrderByComparator(orderByComparator);
