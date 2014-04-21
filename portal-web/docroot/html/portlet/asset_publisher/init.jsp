@@ -41,6 +41,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 String selectionStyle = GetterUtil.getString(portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
+long[] siteGroupIds = getSiteGroupIds(groupIds);
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
@@ -75,12 +76,7 @@ Serializable ddmStructureFieldValue = null;
 boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
 
 if (selectionStyle.equals("dynamic")) {
-	if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
-		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, ArrayUtil.append(groupIds, scopeGroupId));
-	}
-	else {
-		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, groupIds);
-	}
+	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, siteGroupIds);
 
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(portletPreferences, scopeGroupId);
 
@@ -157,7 +153,7 @@ String assetTagName = ParamUtil.getString(request, "tag");
 if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};
 
-	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, allAssetTagNames);
+	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(siteGroupIds, allAssetTagNames);
 
 	assetEntryQuery.setAnyTagIds(assetTagIds);
 
@@ -291,5 +287,17 @@ private boolean _isEnablePermissions(String portletName, PortletPreferences port
 	}
 
 	return GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
+}
+
+private long[] getSiteGroupIds(long[] groupIds)
+	throws PortalException, SystemException {
+
+	Set<Long> siteGroupIds = new HashSet<Long>();
+
+	for (long groupId : groupIds) {
+		siteGroupIds.add(PortalUtil.getSiteGroupId(groupId));
+	}
+
+	return ArrayUtil.toLongArray(siteGroupIds);
 }
 %>

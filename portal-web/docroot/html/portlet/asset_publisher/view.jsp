@@ -39,7 +39,7 @@ if (mergeUrlTags || mergeLayoutTags) {
 
 		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
 
-		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames);
+		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(siteGroupIds, allAssetTagNames);
 
 		assetEntryQuery.setAllTagIds(allAssetTagIds);
 
