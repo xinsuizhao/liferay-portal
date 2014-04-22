@@ -99,6 +99,56 @@ public class VerifySQLServer extends VerifyProcess {
 		}
 	}
 
+	protected void convertColumnToNvarcharMax(
+			String tableName, String columnName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("select count(*) from INFORMATION_SCHEMA.COLUMNS ");
+			sb.append("where table_name = '");
+			sb.append(tableName);
+			sb.append("' and column_name = '");
+			sb.append(columnName);
+			sb.append("' and data_type = 'nvarchar' and ");
+			sb.append("character_maximum_length = '-1'");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				return;
+			}
+
+			int count = rs.getInt(1);
+
+			if (count > 0) {
+				return;
+			}
+
+			sb = new StringBundler(5);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" alter column ");
+			sb.append(columnName);
+			sb.append(" nvarchar(max) null");
+
+			runSQL(sb.toString());
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void convertTextColumn(
 			String tableName, String columnName, boolean nullable)
 		throws Exception {
@@ -175,6 +225,10 @@ public class VerifySQLServer extends VerifyProcess {
 		}
 
 		convertColumnsToUnicode();
+
+		convertColumnToNvarcharMax("AssetEntry", "description");
+		convertColumnToNvarcharMax("AssetEntry", "summary");
+		convertColumnToNvarcharMax("JournalArticle", "description");
 	}
 
 	protected void dropNonunicodeTableIndexes() {
