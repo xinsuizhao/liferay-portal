@@ -423,14 +423,22 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#list>
 
-		<#if entity.isHierarchicalTree()>
-			shrinkTree(${entity.varName});
-		</#if>
-
 		Session session = null;
 
 		try {
 			session = openSession();
+
+			<#if entity.isHierarchicalTree()>
+				if (rebuildTreeEnabled) {
+					session.flush();
+
+					shrinkTree(${entity.varName});
+
+					clearCache();
+
+					session.clear();
+				}
+			</#if>
 
 			if (!session.contains(${entity.varName})) {
 				${entity.varName} = (${entity.name})session.get(
@@ -486,20 +494,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				String uuid = PortalUUIDUtil.generate();
 
 				${entity.varName}.setUuid(uuid);
-			}
-		</#if>
-
-		<#if entity.isHierarchicalTree()>
-			if (isNew) {
-				expandTree(${entity.varName}, null);
-			}
-			else {
-				if (${entity.varName}.getParent${pkColumn.methodName}() != ${entity.varName}ModelImpl.getOriginalParent${pkColumn.methodName}()) {
-					List<Long> children${pkColumn.methodNames} = getChildrenTree${pkColumn.methodNames}(${entity.varName});
-
-					shrinkTree(${entity.varName});
-					expandTree(${entity.varName}, children${pkColumn.methodNames});
-				}
 			}
 		</#if>
 
@@ -566,6 +560,28 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		try {
 			session = openSession();
+
+			<#if entity.isHierarchicalTree()>
+				if (rebuildTreeEnabled) {
+					session.flush();
+
+					if (isNew) {
+						expandTree(${entity.varName}, null);
+					}
+					else {
+						if (${entity.varName}.getParent${pkColumn.methodName}() != ${entity.varName}ModelImpl.getOriginalParent${pkColumn.methodName}()) {
+							List<Long> children${pkColumn.methodNames} = getChildrenTree${pkColumn.methodNames}(${entity.varName});
+
+							shrinkTree(${entity.varName});
+							expandTree(${entity.varName}, children${pkColumn.methodNames});
+						}
+					}
+
+					clearCache();
+
+					session.clear();
+				}
+			</#if>
 
 			if (${entity.varName}.isNew()) {
 				session.save(${entity.varName});
