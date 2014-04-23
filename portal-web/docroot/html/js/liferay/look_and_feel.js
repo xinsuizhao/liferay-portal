@@ -233,6 +233,7 @@ AUI.add(
 				if (!instance._backgroundColorPicker) {
 					instance._backgroundColorPicker = new A.ColorPickerPopover(
 						{
+							constrain: true,
 							trigger: backgroundColor,
 							plugins: [Liferay.WidgetZIndex]
 						}
@@ -478,6 +479,7 @@ AUI.add(
 						if (!instance[borderLocation]) {
 							instance[borderLocation] = new A.ColorPickerPopover(
 								{
+									constrain: true,
 									trigger: item,
 									zIndex: 1000
 								}
@@ -1951,6 +1953,7 @@ AUI.add(
 				if (!instance._fontColorPicker) {
 					instance._fontColorPicker = new A.ColorPickerPopover(
 						{
+							constrain: true,
 							trigger: fontColor,
 							plugins: [Liferay.WidgetZIndex]
 						}
