@@ -1,0 +1,63 @@
+<definition component-name="marketplace">
+	<property name="portlet.plugins.includes" value="calendar-portlet"/>
+
+	<set-up>
+		<execute macro="User#firstLoginPG"/>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Site#tearDownCP"/>
+
+		<execute macro="BlogsEntry#tearDownCP"/>
+
+		<execute macro="BookmarksFolder#tearDownCP"/>
+
+		<execute macro="DMDocument#tearDownCP"/>
+
+		<execute macro="CalendarEvent#tearDownPG" >
+			<var name="Marketplace" value="Marketplace"/>
+		</execute>
+
+		<execute macro="MessageboardsCategory#tearDownCP"/>
+
+		<execute macro="WikiPage#tearDownCP"/>
+
+		<execute macro="Page#tearDownPG"/>
+	</tear-down>
+
+	<command name="MarketplaceSmoke620" priority="5">
+		<property name="testray.main.component.name" value="Marketplace" />
+		<execute macro="Marketplace#smoke"/>
+	</command>
+
+	<command name="MarketplaceSmoke620Sites" priority="5">
+		<property name="testray.main.component.name" value="Marketplace" />
+		<property name="portlet.plugins.includes" value="calendar-portlet"/>
+		<var name="siteName" value="Site Name"/>
+		<var name="sitePageName" value="Public Site Page"/>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites"/>
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="${siteName}"/>
+			<var name="siteType" value="Blank"/>
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites"/>
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}"/>
+			<var name="sitePageName" value="${sitePageName}"/>
+			<var name="sitePagePrivacy" value="Public"/>
+		</execute>
+
+		<execute macro="Marketplace#smoke">
+			<var name="siteName" value="${siteName}"/>
+			<var name="siteURL" value="true"/>
+		</execute>
+	</command>
+</definition>

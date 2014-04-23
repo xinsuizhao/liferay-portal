@@ -418,6 +418,24 @@
 	</command>
 
 	<command name="tearDownPG">
+		<if>
+			<isset var="Marketplace" />
+			<then>
+				<execute macro="Page#addPG">
+					<var name="pageName" value="Marketplace Calendar Testing" />
+				</execute>
+
+				<execute macro="Portlet#addPG">
+					<var name="pageName" value="Marketplace Calendar Testing" />
+					<var name="portletName" value="Calendar" />
+				</execute>
+
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Marketplace Calendar Testing" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Agenda" />
 		</execute>
