@@ -44,11 +44,11 @@ public class TempFileUtil {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
-		boolean addTempFileInProcess =
-			PortletFileRepositoryThreadLocal.isAddTempFileInProcess();
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
 
 		try {
-			PortletFileRepositoryThreadLocal.setAddTempFileInProcess(true);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
 
 			return PortletFileRepositoryUtil.addPortletFileEntry(
 				groupId, userId, StringPool.BLANK, 0,
@@ -56,8 +56,8 @@ public class TempFileUtil {
 				fileName, mimeType, false);
 		}
 		finally {
-			PortletFileRepositoryThreadLocal.setAddTempFileInProcess(
-				addTempFileInProcess);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
 		}
 	}
 
@@ -68,11 +68,11 @@ public class TempFileUtil {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
-		boolean addTempFileInProcess =
-			PortletFileRepositoryThreadLocal.isAddTempFileInProcess();
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
 
 		try {
-			PortletFileRepositoryThreadLocal.setAddTempFileInProcess(true);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
 
 			return PortletFileRepositoryUtil.addPortletFileEntry(
 				groupId, userId, StringPool.BLANK, 0,
@@ -80,8 +80,8 @@ public class TempFileUtil {
 				fileName, mimeType, false);
 		}
 		finally {
-			PortletFileRepositoryThreadLocal.setAddTempFileInProcess(
-				addTempFileInProcess);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
 		}
 	}
 

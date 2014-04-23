@@ -121,13 +121,11 @@ public class BackgroundTaskLocalServiceImpl
 
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
-		boolean addBackgroundTaskAttachmentInProcess =
-			PortletFileRepositoryThreadLocal.
-				isAddBackgroundTaskAttachmentInProcess();
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
 
 		try {
-			PortletFileRepositoryThreadLocal.
-				setAddBackgroundTaskAttachmentInProcess(true);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				backgroundTask.getGroupId(), userId,
@@ -136,9 +134,8 @@ public class BackgroundTaskLocalServiceImpl
 				fileName, ContentTypes.APPLICATION_ZIP, false);
 		}
 		finally {
-			PortletFileRepositoryThreadLocal.
-				setAddBackgroundTaskAttachmentInProcess(
-					addBackgroundTaskAttachmentInProcess);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
 		}
 	}
 
@@ -152,13 +149,11 @@ public class BackgroundTaskLocalServiceImpl
 
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
-		boolean addBackgroundTaskAttachmentInProcess =
-			PortletFileRepositoryThreadLocal.
-				isAddBackgroundTaskAttachmentInProcess();
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
 
 		try {
-			PortletFileRepositoryThreadLocal.
-				setAddBackgroundTaskAttachmentInProcess(true);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				backgroundTask.getGroupId(), userId,
@@ -167,9 +162,8 @@ public class BackgroundTaskLocalServiceImpl
 				fileName, ContentTypes.APPLICATION_ZIP, false);
 		}
 		finally {
-			PortletFileRepositoryThreadLocal.
-				setAddBackgroundTaskAttachmentInProcess(
-					addBackgroundTaskAttachmentInProcess);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
 		}
 	}
 

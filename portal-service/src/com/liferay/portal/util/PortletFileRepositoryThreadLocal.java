@@ -18,45 +18,23 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Kenneth Chang
+ * @author Mate Thurzo
  */
 public class PortletFileRepositoryThreadLocal {
 
-	public static boolean isAddBackgroundTaskAttachmentInProcess() {
-		return _addBackgroundTaskAttachmentInProcess.get();
+	public static boolean isFileMaxSizeCheckEnabled() {
+		return _fileMaxSizeCheckEnabled.get();
 	}
 
-	public static boolean isAddTempFileInProcess() {
-		return _addTempFileInProcess.get();
+	public static void setFileMaxSizeCheckEnabled(
+		boolean fileMaxSizeCheckEnabled) {
+
+		_fileMaxSizeCheckEnabled.set(fileMaxSizeCheckEnabled);
 	}
 
-	public static boolean isInProcess() {
-		if (isAddBackgroundTaskAttachmentInProcess() ||
-			isAddTempFileInProcess()) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public static void setAddBackgroundTaskAttachmentInProcess(
-		boolean addBackgroundTaskAttachmentInProcess) {
-
-		_addBackgroundTaskAttachmentInProcess.set(
-			addBackgroundTaskAttachmentInProcess);
-	}
-
-	public static void setAddTempFileInProcess(boolean addTempFileInProcess) {
-		_addTempFileInProcess.set(addTempFileInProcess);
-	}
-
-	private static ThreadLocal<Boolean> _addBackgroundTaskAttachmentInProcess =
+	private static ThreadLocal<Boolean> _fileMaxSizeCheckEnabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortletFileRepositoryThreadLocal.class +
-				"._addBackgroundTaskAttachmentInProcess", false);
-	private static ThreadLocal<Boolean> _addTempFileInProcess =
-		new AutoResetThreadLocal<Boolean>(
-			PortletFileRepositoryThreadLocal.class +
-				"._addTempFileInProcess", false);
+				"._fileMaxSizeCheckEnabled", true);
 
 }
