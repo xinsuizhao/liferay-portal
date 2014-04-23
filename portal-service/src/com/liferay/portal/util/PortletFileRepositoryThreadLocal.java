@@ -21,6 +21,14 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
  */
 public class PortletFileRepositoryThreadLocal {
 
+	public static boolean isAddBackgroundTaskAttachmentInProcess() {
+		return _addBackgroundTaskAttachmentInProcess.get();
+	}
+
+	public static boolean isAddTempFileInProcess() {
+		return _addTempFileInProcess.get();
+	}
+
 	public static boolean isInProcess() {
 		if (isAddBackgroundTaskAttachmentInProcess() ||
 			isAddTempFileInProcess()) {
@@ -29,14 +37,6 @@ public class PortletFileRepositoryThreadLocal {
 		}
 
 		return true;
-	}
-
-	public static boolean isAddBackgroundTaskAttachmentInProcess() {
-		return _addBackgroundTaskAttachmentInProcess.get();
-	}
-
-	public static boolean isAddTempFileInProcess() {
-		return _addTempFileInProcess.get();
 	}
 
 	public static void setAddBackgroundTaskAttachmentInProcess(
