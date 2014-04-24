@@ -11,14 +11,7 @@
 
 	<@aui.input name="${namespacedFieldName}Delete" type="hidden" value="delete" />
 
-	<#if fieldRawValue?has_content>
-		<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
-
-		<#assign alt = fileJSONObject.getString('alt')>
-		<#assign src = fileJSONObject.getString('data')>
-	</#if>
-
-	<#if src?has_content>
+	<#if (fields??) && (fieldValue != "")>
 		[ <a href="javascript:;" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
 
 		<div class="hide wcm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">
@@ -26,8 +19,12 @@
 				<a href="javascript:;" id="${portletNamespace}${namespacedFieldName}DeleteImage" onClick="${portletNamespace}${namespacedFieldName}ToggleDeleteImage();">${languageUtil.get(locale, "delete")}</a>
 			</#if>
 
-			<img id="${portletNamespace}${namespacedFieldName}Image" src="${src}" />
+			<img id="${portletNamespace}${namespacedFieldName}Image" src="${fieldValue}" />
 		</div>
+	</#if>
+
+	<#if (field??)>
+		<#assign alt = field.getAttribute(requestedLocale, "alt")>
 	</#if>
 
 	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value=alt />
