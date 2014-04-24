@@ -129,7 +129,7 @@ public class AssetCategoryPermission {
 		if (permissionChecker.hasOwnerPermission(
 				category.getCompanyId(), AssetCategory.class.getName(),
 				category.getCategoryId(), category.getUserId(), actionId) ||
-				permissionChecker.hasPermission(
+			permissionChecker.hasPermission(
 					category.getGroupId(), AssetCategory.class.getName(),
 					category.getCategoryId(), actionId)) {
 
