@@ -460,10 +460,11 @@ public class ActionUtil {
 			List<Serializable> values = field.getValues(locale);
 
 			for (int i = 0; i < values.size(); i++) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					(String)values.get(i));
+				String content = getContent((String)values.get(i));
 
-				String content = jsonObject.getString("data");
+				if (content.equals("update")) {
+					continue;
+				}
 
 				StringBundler sb = new StringBundler(6);
 
