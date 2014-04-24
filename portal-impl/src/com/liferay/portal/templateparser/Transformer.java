@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -514,14 +513,6 @@ public class Transformer {
 				data = dynamicContentElement.getText();
 			}
 
-			List<Attribute> attributes = dynamicContentElement.attributes();
-
-			Map<String, String> fieldAttributes = new HashMap<String, String>();
-
-			for (Attribute attribute : attributes) {
-				fieldAttributes.put(attribute.getName(), attribute.getValue());
-			}
-
 			String name = dynamicElementElement.attributeValue(
 				"name", StringPool.BLANK);
 
@@ -534,8 +525,7 @@ public class Transformer {
 				"type", StringPool.BLANK);
 
 			TemplateNode templateNode = new TemplateNode(
-				themeDisplay, name, stripCDATA(data), type,
-					fieldAttributes);
+				themeDisplay, name, stripCDATA(data), type);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
