@@ -460,6 +460,11 @@ public class ActionUtil {
 			List<Serializable> values = field.getValues(locale);
 
 			for (int i = 0; i < values.size(); i++) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					(String)values.get(i));
+
+				String content = jsonObject.getString("data");
+
 				StringBundler sb = new StringBundler(6);
 
 				sb.append(StringPool.UNDERLINE);
@@ -468,11 +473,6 @@ public class ActionUtil {
 				sb.append(i);
 				sb.append(StringPool.UNDERLINE);
 				sb.append(LanguageUtil.getLanguageId(locale));
-
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					(String)values.get(i));
-
-				String content = jsonObject.getString("data");
 
 				images.put(sb.toString(), UnicodeFormatter.hexToBytes(content));
 			}
