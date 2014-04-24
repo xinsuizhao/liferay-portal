@@ -532,7 +532,8 @@ public class Transformer {
 			}
 
 			TemplateNode templateNode = new TemplateNode(
-				themeDisplay, name, stripCDATA(data), type, attributes);
+				themeDisplay, name, stripCDATA(data), type,
+				attributes);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
