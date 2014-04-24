@@ -23,12 +23,6 @@
 		</div>
 	</#if>
 
-	<#if (field??)>
-		<#assign alt = field.getAttribute(requestedLocale, "alt")>
-	</#if>
-
-	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value=alt />
-
 	${fieldStructure.children}
 </@>
 
