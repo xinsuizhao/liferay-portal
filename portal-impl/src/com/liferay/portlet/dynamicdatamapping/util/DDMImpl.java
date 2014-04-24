@@ -89,8 +89,6 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_DDM_DOCUMENTLIBRARY = "ddm-documentlibrary";
 
-	public static final String TYPE_DDM_IMAGE = "ddm-image";
-
 	public static final String TYPE_DDM_LINK_TO_PAGE = "ddm-link-to-page";
 
 	public static final String TYPE_RADIO = "radio";
@@ -494,8 +492,23 @@ public class DDMImpl implements DDM {
 					return null;
 				}
 
-				fieldValue = getImageFieldValue(
-					(UploadRequest)request, fieldNameValue);
+				UploadRequest uploadRequest = (UploadRequest)request;
+
+				File file = uploadRequest.getFile(fieldNameValue);
+
+				try {
+					byte[] bytes = FileUtil.getBytes(file);
+
+					if (ArrayUtil.isNotEmpty(bytes)) {
+						fieldValue = UnicodeFormatter.bytesToHex(bytes);
+					}
+					else {
+						fieldValue = "update";
+					}
+				}
+				catch (IOException ioe) {
+					return null;
+				}
 			}
 
 			if (fieldValue == null) {
@@ -520,34 +533,6 @@ public class DDMImpl implements DDM {
 		}
 
 		return fieldValues;
-	}
-
-	protected String getImageFieldValue(
-		UploadRequest uploadRequest, String fieldNameValue) {
-
-		File file = uploadRequest.getFile(fieldNameValue);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			byte[] bytes = FileUtil.getBytes(file);
-
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
-			}
-			else {
-				jsonObject.put("data", "update");
-			}
-		}
-		catch (IOException ioe) {
-			return null;
-		}
-
-		String alt = uploadRequest.getParameter(fieldNameValue + "Alt");
-
-		jsonObject.put("alt", alt);
-
-		return jsonObject.toString();
 	}
 
 }
