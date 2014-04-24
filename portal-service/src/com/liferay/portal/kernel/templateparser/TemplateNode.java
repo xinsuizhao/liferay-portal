@@ -78,17 +78,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getAttribute(String name) {
-		Map<String, String> attributes = getAttributes();
+		Map<String, String> attributes = (Map<String, String>)get("attributes");
 
 		if (attributes == null) {
 			return StringPool.BLANK;
 		}
 
 		return attributes.get(name);
-	}
-
-	public Map<String, String> getAttributes() {
-		return (Map<String, String>)get("attributes");
 	}
 
 	public TemplateNode getChild(String name) {
