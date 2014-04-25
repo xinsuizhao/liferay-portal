@@ -10797,20 +10797,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		assetCategoryToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(assetCategory.getPrimaryKey());
 
+		shrinkTree(assetCategory);
+
 		Session session = null;
 
 		try {
 			session = openSession();
-
-			if (rebuildTreeEnabled) {
-				session.flush();
-
-				shrinkTree(assetCategory);
-
-				clearCache();
-
-				session.clear();
-			}
 
 			if (!session.contains(assetCategory)) {
 				assetCategory = (AssetCategory)session.get(AssetCategoryImpl.class,
@@ -10851,30 +10843,22 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			assetCategory.setUuid(uuid);
 		}
 
+		if (isNew) {
+			expandTree(assetCategory, null);
+		}
+		else {
+			if (assetCategory.getParentCategoryId() != assetCategoryModelImpl.getOriginalParentCategoryId()) {
+				List<Long> childrenCategoryIds = getChildrenTreeCategoryIds(assetCategory);
+
+				shrinkTree(assetCategory);
+				expandTree(assetCategory, childrenCategoryIds);
+			}
+		}
+
 		Session session = null;
 
 		try {
 			session = openSession();
-
-			if (rebuildTreeEnabled) {
-				session.flush();
-
-				if (isNew) {
-					expandTree(assetCategory, null);
-				}
-				else {
-					if (assetCategory.getParentCategoryId() != assetCategoryModelImpl.getOriginalParentCategoryId()) {
-						List<Long> childrenCategoryIds = getChildrenTreeCategoryIds(assetCategory);
-
-						shrinkTree(assetCategory);
-						expandTree(assetCategory, childrenCategoryIds);
-					}
-				}
-
-				clearCache();
-
-				session.clear();
-			}
 
 			if (assetCategory.isNew()) {
 				session.save(assetCategory);
@@ -11864,6 +11848,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				expandTreeLeftCategoryId.expand(groupId, lastRightCategoryId);
 				expandTreeRightCategoryId.expand(groupId, lastRightCategoryId);
 			}
+
+			if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+				CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+			}
+
+			EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		assetCategory.setLeftCategoryId(leftCategoryId);
@@ -12002,6 +11994,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		shrinkTreeLeftCategoryId.shrink(groupId, rightCategoryId, delta);
 		shrinkTreeRightCategoryId.shrink(groupId, rightCategoryId, delta);
+
+		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+		}
+
+		EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	protected void updateChildrenTree(long groupId,
