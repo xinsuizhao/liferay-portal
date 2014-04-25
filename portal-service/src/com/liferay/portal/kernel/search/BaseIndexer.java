@@ -47,6 +47,7 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupedModel;
@@ -84,6 +85,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -1131,7 +1133,7 @@ public abstract class BaseIndexer implements Indexer {
 				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
 
 			if (trashedModel.isInTrash() &&
-				!trashedModel.isInTrashExplicitly()) {
+				!isInTrashExplicitly(trashedModel)) {
 
 				document.addKeyword(
 					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());
@@ -1684,6 +1686,26 @@ public abstract class BaseIndexer implements Indexer {
 
 	protected void setStagingAware(boolean stagingAware) {
 		_stagingAware = stagingAware;
+	}
+
+	private boolean isInTrashExplicitly(TrashedModel trashedModel)
+		throws SystemException {
+
+		if (!trashedModel.isInTrash()) {
+			return false;
+		}
+
+		ClassedModel classedModel = (ClassedModel)trashedModel;
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+			classedModel.getModelClassName(),
+			trashedModel.getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
