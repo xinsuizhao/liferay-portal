@@ -1368,6 +1368,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					expandTreeLeft${pkColumn.methodName}.expand(${scopeColumn.name}, lastRight${pkColumn.methodName});
 					expandTreeRight${pkColumn.methodName}.expand(${scopeColumn.name}, lastRight${pkColumn.methodName});
 				}
+
+				if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+				}
+
+				EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 			}
 
 			${entity.varName}.setLeft${pkColumn.methodName}(left${pkColumn.methodName});
@@ -1497,6 +1505,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			shrinkTreeLeft${pkColumn.methodName}.shrink(${scopeColumn.name}, right${pkColumn.methodName}, delta);
 			shrinkTreeRight${pkColumn.methodName}.shrink(${scopeColumn.name}, right${pkColumn.methodName}, delta);
+
+			if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+				CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+			}
+
+			EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		protected void updateChildrenTree(long ${scopeColumn.name}, List<Long> children${pkColumn.methodNames}, long delta) {
