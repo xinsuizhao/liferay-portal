@@ -27,6 +27,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,6 +169,22 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 			return dlFolder.isHidden();
 		}
 		catch (Exception e) {
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() throws SystemException {
+		if (!isInTrash()) {
+			return false;
+		}
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+			getModelClassName(), getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return true;
 		}
 
 		return false;
