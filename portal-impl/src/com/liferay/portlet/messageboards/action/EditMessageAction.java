@@ -106,7 +106,7 @@ public class EditMessageAction extends PortletAction {
 				throw new PortalException(uploadException.getCause());
 			}
 			else if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.UPDATE)) {
+					 cmd.equals(Constants.UPDATE)) {
 
 				message = updateMessage(actionRequest, actionResponse);
 			}
