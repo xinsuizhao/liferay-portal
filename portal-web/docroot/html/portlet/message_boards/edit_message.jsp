@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect", currentURL);
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
@@ -154,6 +155,7 @@ else {
 
 <portlet:actionURL var="editMessageURL">
 	<portlet:param name="struts_action" value="/message_boards/edit_message" />
+	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage(false);" %>'>
