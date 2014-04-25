@@ -144,6 +144,9 @@ public class VerifySQLServer extends VerifyProcess {
 
 			runSQL(sb.toString());
 		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
