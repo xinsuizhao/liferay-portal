@@ -18,8 +18,7 @@
 
 <%@ page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
-page import="com.liferay.portlet.journal.service.permission.JournalPermission" %><%@
-page import="com.liferay.portlet.journal.util.JournalUtil" %>
+page import="com.liferay.portlet.journal.service.permission.JournalPermission" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
