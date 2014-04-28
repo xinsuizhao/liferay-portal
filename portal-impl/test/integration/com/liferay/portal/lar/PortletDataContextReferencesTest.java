@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -72,6 +73,7 @@ public class PortletDataContextReferencesTest {
 		Element rootElement = document.addElement("root");
 
 		_portletDataContext.setExportDataRootElement(rootElement);
+		_portletDataContext.setImportDataRootElement(rootElement);
 
 		Element missingReferencesElement = rootElement.addElement(
 			"missing-references");
@@ -294,6 +296,42 @@ public class PortletDataContextReferencesTest {
 			missingReferencesElement.elements();
 
 		Assert.assertTrue(missingReferenceElements.isEmpty());
+	}
+
+	@Test
+	public void testSameMissingReferenceMultipleTimes() throws Exception {
+		Element bookmarksEntryElement =
+			_portletDataContext.getExportDataElement(_bookmarksEntry);
+
+		bookmarksEntryElement.addAttribute(
+			"path", ExportImportPathUtil.getModelPath(_bookmarksEntry));
+
+		_portletDataContext.addReferenceElement(
+			_bookmarksEntry, bookmarksEntryElement, _bookmarksFolder,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+		_portletDataContext.addReferenceElement(
+			_bookmarksEntry, bookmarksEntryElement, _bookmarksFolder,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements();
+
+		Assert.assertEquals(1, missingReferenceElements.size());
+
+		List<Element> referencesElements =
+			_portletDataContext.getReferenceElements(
+				_bookmarksEntry, BookmarksFolder.class);
+
+		Assert.assertEquals(2, referencesElements.size());
+
+		for (Element referenceElement : referencesElements) {
+			Assert.assertTrue(
+				GetterUtil.getBoolean(
+					referenceElement.attributeValue("missing")));
+		}
 	}
 
 	private BookmarksEntry _bookmarksEntry;
