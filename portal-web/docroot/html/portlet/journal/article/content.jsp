@@ -81,13 +81,13 @@ boolean preselectCurrentLayout = false;
 if (article != null) {
 	if (Validator.isNull(content)) {
 		content = article.getContent();
-	}
 
-	if (Validator.isNotNull(toLanguageId)) {
-		content = JournalArticleImpl.getContentByLocale(content, Validator.isNotNull(structureId), toLanguageId);
-	}
-	else {
-		content = JournalArticleImpl.getContentByLocale(content, Validator.isNotNull(structureId), defaultLanguageId);
+		if (Validator.isNotNull(toLanguageId)) {
+			content = JournalArticleImpl.getContentByLocale(content, Validator.isNotNull(structureId), toLanguageId);
+		}
+		else {
+			content = JournalArticleImpl.getContentByLocale(content, Validator.isNotNull(structureId), defaultLanguageId);
+		}
 	}
 }
 else {
