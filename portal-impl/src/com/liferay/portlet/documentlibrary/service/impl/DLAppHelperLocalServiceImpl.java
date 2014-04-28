@@ -640,14 +640,14 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		TrashEntry trashEntry = dlFileShortcut.getTrashEntry();
-
 		if (dlFileShortcut.isInTrashExplicitly()) {
 			restoreFileShortcutFromTrash(userId, dlFileShortcut);
 		}
 		else {
 
 			// File shortcut
+
+			TrashEntry trashEntry = dlFileShortcut.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
