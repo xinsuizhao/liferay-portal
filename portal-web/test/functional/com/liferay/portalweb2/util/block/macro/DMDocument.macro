@@ -502,14 +502,14 @@
 		<if>
 			<equals arg1="${soDocument}" arg2="true" />
 			<then>
-				<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_RATING_SOCIAL_OFFICE" />
+				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG" />
 			</then>
 			<else>
-				<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_RATING_PORTAL" />
+				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="AVERAGE_RATING_STAR_ICON_PNG" />
 			</else>
 		</if>
 
-		<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_STATUS" />
+		<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="DOCUMENT_DETAILS_WORKFLOW_PNG" />
 	</command>
 
 	<command name="removeDocumentViewPermissionsPG">
@@ -1003,11 +1003,10 @@
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_1" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_2" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_3" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_4" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_4" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_4" />
 		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_5" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_1" />
-		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_2" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_2" />
 	</command>
 
 	<command name="viewPGViaMG">
