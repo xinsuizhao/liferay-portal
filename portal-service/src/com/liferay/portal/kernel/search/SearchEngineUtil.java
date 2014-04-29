@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -291,7 +293,9 @@ public class SearchEngineUtil {
 
 	public static String getSearchEngineId(Collection<Document> documents) {
 		if (!documents.isEmpty()) {
-			Document document = documents.iterator().next();
+			Iterator<Document> iterator = documents.iterator();
+
+			Document document = iterator.next();
 
 			return getSearchEngineId(document);
 		}
@@ -308,8 +312,8 @@ public class SearchEngineUtil {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Search engine ID for " + indexer.getClass() + " is " +
-					searchEngineId);
+				"Search engine ID " + searchEngineId + " is associated with " +
+					ClassUtil.getClassName(indexer));
 		}
 
 		return searchEngineId;
