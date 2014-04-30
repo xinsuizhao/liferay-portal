@@ -1133,7 +1133,7 @@ public abstract class BaseIndexer implements Indexer {
 				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
 
 			if (trashedModel.isInTrash() &&
-				!isInTrashExplicitly(trashedModel)) {
+				!_isInTrashExplicitly(trashedModel)) {
 
 				document.addKeyword(
 					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());
@@ -1688,7 +1688,7 @@ public abstract class BaseIndexer implements Indexer {
 		_stagingAware = stagingAware;
 	}
 
-	private boolean isInTrashExplicitly(TrashedModel trashedModel)
+	private boolean _isInTrashExplicitly(TrashedModel trashedModel)
 		throws SystemException {
 
 		if (!trashedModel.isInTrash()) {
