@@ -59,9 +59,6 @@ public class SeleniumBuilder {
 		_seleniumBuilderContext = new SeleniumBuilderContext(
 			_seleniumBuilderFileUtil);
 
-		Set<String> types = SetUtil.fromArray(
-			StringUtil.split(arguments.get("selenium.types")));
-
 		Set<String> actionNames = _seleniumBuilderContext.getActionNames();
 
 		for (String actionName : actionNames) {
@@ -85,6 +82,9 @@ public class SeleniumBuilder {
 		for (String testCaseName : testCaseNames) {
 			_seleniumBuilderContext.validateTestCaseElements(testCaseName);
 		}
+
+		Set<String> types = SetUtil.fromArray(
+			StringUtil.split(arguments.get("selenium.types")));
 
 		if (types.contains("action")) {
 			ActionConverter actionConverter = new ActionConverter(
