@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
+import com.liferay.portal.lar.LayoutImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
@@ -1132,7 +1132,7 @@ public class LayoutStagedModelDataHandler
 			String columnValue = layoutTypePortlet.getTypeSettingsProperty(
 				columnId);
 
-			columnValue = StringUtil.removeFromList(columnValue, portletId);
+			columnValue = StringUtil.remove(columnValue, portletId);
 
 			layoutTypePortlet.setTypeSettingsProperty(columnId, columnValue);
 		}
@@ -1166,9 +1166,10 @@ public class LayoutStagedModelDataHandler
 
 				try {
 					boolean[] importPortletControls =
-						ExportImportHelperUtil.getImportPortletControls(
+						LayoutImporter.getImportPortletControls(
 							portletDataContext.getCompanyId(), portletId,
-							portletDataContext.getParameterMap(), null);
+							portletDataContext.getParameterMap(), null,
+							portletDataContext.getManifestSummary());
 
 					importPortletSetup = importPortletControls[2];
 				}
