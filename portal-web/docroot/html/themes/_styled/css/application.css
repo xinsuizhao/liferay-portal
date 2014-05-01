@@ -551,6 +551,14 @@
 	padding: 0;
 }
 
+/* ---------- CKEditor menu ---------- */
+
+.aui {
+	.cke_dialog .cke_dialog_ui_input_text {
+		height: auto;
+	}
+}
+
 /* ---------- Inline editing ---------- */
 
 .lfr-editable {
@@ -637,6 +645,10 @@
 }
 
 .ie {
+	& input.cke_dialog_ui_input_text {
+		height: auto;
+	}
+
 	.proxy.not-intersecting .forbidden-action {
 		right: 2px;
 		top: 2px;
