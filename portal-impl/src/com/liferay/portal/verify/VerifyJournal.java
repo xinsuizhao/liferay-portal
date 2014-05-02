@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -295,10 +293,6 @@ public class VerifyJournal extends VerifyProcess {
 						null, assetEntry.isVisible());
 				}
 
-				String content = GetterUtil.getString(article.getContent());
-
-				String newContent = HtmlUtil.replaceMsWordCharacters(content);
-
 				if (Validator.isNotNull(structureId)) {
 					/*JournalStructure structure =
 						JournalStructureLocalServiceUtil.getStructure(
@@ -306,11 +300,6 @@ public class VerifyJournal extends VerifyProcess {
 
 					newContent = JournalUtil.removeOldContent(
 						newContent, structure.getXsd());*/
-				}
-
-				if (!content.equals(newContent)) {
-					JournalArticleLocalServiceUtil.updateContent(
-						groupId, articleId, version, newContent);
 				}
 
 				try {

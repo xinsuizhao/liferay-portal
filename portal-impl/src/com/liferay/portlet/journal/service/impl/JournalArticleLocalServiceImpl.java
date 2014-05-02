@@ -5959,8 +5959,6 @@ public class JournalArticleLocalServiceImpl
 			_log.error(de, de);
 		}
 
-		content = HtmlUtil.replaceMsWordCharacters(content);
-
 		return content;
 	}
 
