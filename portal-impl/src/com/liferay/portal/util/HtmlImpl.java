@@ -315,6 +315,7 @@ public class HtmlImpl implements Html {
 		return StringUtil.replace(text, "&amp;", "&");
 	}
 
+	@Deprecated
 	@Override
 	public String render(String html) {
 		if (html == null) {

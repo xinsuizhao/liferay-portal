@@ -78,6 +78,7 @@ public class HtmlUtil {
 		return getHtml().render(html);
 	}
 
+	@Deprecated
 	public static String replaceMsWordCharacters(String html) {
 		return getHtml().replaceMsWordCharacters(html);
 	}
