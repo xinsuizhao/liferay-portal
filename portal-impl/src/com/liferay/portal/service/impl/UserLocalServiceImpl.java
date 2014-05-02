@@ -5880,9 +5880,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			List<UserGroupRole> previousUserGroupRoles)
 		throws PortalException, SystemException {
 
-		if (userGroupRoles == null) {
+		if ((userGroupRoles == null) || userGroupRoles.isEmpty()) {
 			return;
 		}
+
+		userGroupRoles = new ArrayList<UserGroupRole>(userGroupRoles);
 
 		for (UserGroupRole userGroupRole : previousUserGroupRoles) {
 			if (userGroupRoles.contains(userGroupRole)) {
