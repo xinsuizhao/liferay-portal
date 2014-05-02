@@ -864,18 +864,21 @@ public class CMISRepository extends BaseCmisRepository {
 	public Session getSession() throws PortalException, SystemException {
 		Session session = getCachedSession();
 
-		if (session != null) {
-			return session;
+		if (session == null) {
+			SessionImpl sessionImpl =
+				(SessionImpl)_cmisRepositoryHandler.getSession();
+
+			session = sessionImpl.getSession();
+
+			setCachedSession(session);
 		}
 
-		SessionImpl sessionImpl =
-			(SessionImpl)_cmisRepositoryHandler.getSession();
+		if (_cmisRepositoryDetector == null) {
+			RepositoryInfo repositoryInfo = session.getRepositoryInfo();
 
-		session = sessionImpl.getSession();
-
-		setCachedSession(session);
-
-		initCMISRepositoryDetector();
+			_cmisRepositoryDetector = new CMISRepositoryDetector(
+				repositoryInfo);
+		}
 
 		return session;
 	}
@@ -2112,16 +2115,6 @@ public class CMISRepository extends BaseCmisRepository {
 				getSubfolderIds(subfolderIds, subSubFolders, recurse);
 			}
 		}
-	}
-
-	protected void initCMISRepositoryDetector()
-		throws PortalException, SystemException {
-
-		Session session = getSession();
-
-		RepositoryInfo repositoryInfo = session.getRepositoryInfo();
-
-		_cmisRepositoryDetector = new CMISRepositoryDetector(repositoryInfo);
 	}
 
 	protected boolean isActionAllowable(String objectId, Action action)
