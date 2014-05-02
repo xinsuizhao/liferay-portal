@@ -133,7 +133,6 @@
 		Liferay.component(
 			'<%= namespace + id %>',
 			function() {
-
 				if (!translationManager) {
 					translationManager = new Liferay.TranslationManager(
 						{

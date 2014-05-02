@@ -283,7 +283,7 @@ if (translating) {
 </aui:script>
 
 <aui:script use="aui-base">
-	if(!<%= translating %>) {
+	if (<%= !translating %>) {
 		Liferay.provide(
 			window,
 			'<portlet:namespace />postProcessTranslation',
