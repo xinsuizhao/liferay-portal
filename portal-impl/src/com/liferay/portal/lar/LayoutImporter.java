@@ -154,14 +154,26 @@ public class LayoutImporter {
 		boolean importCurPortletUserPreferences = importPortletConfiguration;
 
 		if (importPortletConfigurationAll) {
+			boolean importCurPortletConfiguration = true;
+
+			if ((manifestSummary != null) &&
+				(manifestSummary.getConfigurationPortletOptions(
+					rootPortletId) == null)) {
+
+				importCurPortletConfiguration = false;
+			}
+
 			importCurPortletArchivedSetups =
+				importCurPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
 					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
 			importCurPortletSetup =
+				importCurPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
 			importCurPortletUserPreferences =
+				importCurPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
