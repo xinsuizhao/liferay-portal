@@ -221,7 +221,7 @@ public class LayoutStagedModelDataHandler
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class + ".layout");
 
-		String action = layoutElement.attributeValue("action");
+		String action = layoutElement.attributeValue(Constants.ACTION);
 
 		if (action.equals(Constants.DELETE)) {
 			Layout deletingLayout =
