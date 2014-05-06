@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryThreadLocal;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.BackgroundTaskLocalServiceBaseImpl;
@@ -121,22 +120,11 @@ public class BackgroundTaskLocalServiceImpl
 
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
-		boolean fileMaxSizeCheckEnabled =
-			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
-
-		try {
-			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
-
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				backgroundTask.getGroupId(), userId,
-				BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
-				PortletKeys.BACKGROUND_TASK, folder.getFolderId(), file,
-				fileName, ContentTypes.APPLICATION_ZIP, false);
-		}
-		finally {
-			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
-				fileMaxSizeCheckEnabled);
-		}
+		PortletFileRepositoryUtil.addPortletFileEntry(
+			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
+			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
+			folder.getFolderId(), file, fileName, ContentTypes.APPLICATION_ZIP,
+			false);
 	}
 
 	@Override
@@ -149,22 +137,11 @@ public class BackgroundTaskLocalServiceImpl
 
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
-		boolean fileMaxSizeCheckEnabled =
-			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
-
-		try {
-			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
-
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				backgroundTask.getGroupId(), userId,
-				BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
-				PortletKeys.BACKGROUND_TASK, folder.getFolderId(), inputStream,
-				fileName, ContentTypes.APPLICATION_ZIP, false);
-		}
-		finally {
-			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
-				fileMaxSizeCheckEnabled);
-		}
+		PortletFileRepositoryUtil.addPortletFileEntry(
+			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
+			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
+			folder.getFolderId(), inputStream, fileName,
+			ContentTypes.APPLICATION_ZIP, false);
 	}
 
 	@Override
