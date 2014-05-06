@@ -93,7 +93,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 		hits = DDLRecordLocalServiceUtil.search(searchContext);
 
-		Assert.assertEquals(1, hits.getLength());
+		Assert.assertEquals(2, hits.getLength());
 	}
 
 	protected void addRecord(String name, String description) throws Exception {
