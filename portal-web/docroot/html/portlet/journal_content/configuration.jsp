@@ -19,6 +19,8 @@
 <%
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
+String redirect = ParamUtil.getString(request, "redirect");
+
 JournalArticle article = null;
 
 String type = ParamUtil.getString(request, "type");
@@ -38,7 +40,6 @@ catch (NoSuchArticleException nsae) {
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
-
 <liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm1">
