@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -59,6 +60,12 @@ public class WorkflowTasksUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
+		String entryClassName = jsonObject.getString("entryClassName");
+
+		if (Validator.equals(entryClassName, _KALEO_PROCESS_CLASS_NAME)) {
+			return null;
+		}
+
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASKS,
 			PortalUtil.getControlPanelPlid(serviceContext.getCompanyId()),
@@ -73,5 +80,8 @@ public class WorkflowTasksUserNotificationHandler
 
 		return portletURL.toString();
 	}
+
+	private static final String _KALEO_PROCESS_CLASS_NAME =
+		"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess";
 
 }
