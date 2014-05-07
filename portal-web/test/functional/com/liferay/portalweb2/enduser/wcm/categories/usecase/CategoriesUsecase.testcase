@@ -20,7 +20,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddCategorywithLocalization" known-issues="LPS-43522" priority="4">
+	<command name="AddCategorywithLocalization" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="pageName" value="Category Page Name" />
 		<var name="siteName" value="Liferay" />
