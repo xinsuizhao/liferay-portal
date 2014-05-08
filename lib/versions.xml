@@ -1512,6 +1512,9 @@
 				<copyright-notice>Copyright (c) 2002-2006 The Apache Software Foundation</copyright-notice>
 			</license>
 		</licenses>
+		<comments>
+			This includes a public patch for CVE-2014-0050.
+		</comments>
 	</library>
 	<library>
 		<file-name>lib/portal/commons-httpclient.jar</file-name>
