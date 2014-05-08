@@ -368,7 +368,7 @@
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE</td>
-	<td>//div[@class="alert alert-info"]</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -415,6 +415,11 @@
 <tr>
 	<td>MY_SITES_SITE_NAME</td>
 	<td>//span[@class='site-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SITES_SITE_NAME_2</td>
+	<td>//span[@class='site-name' and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>
