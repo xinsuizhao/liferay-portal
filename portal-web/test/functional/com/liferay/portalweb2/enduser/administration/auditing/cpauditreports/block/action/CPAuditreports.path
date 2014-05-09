@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_ICON</td>
-	<td>//span[@class='toggle-advanced']</td>
+	<td>//button[@id='toggle_id_audit_event_searchtoggleAdvanced']|//a[@id='toggle_id_audit_event_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
