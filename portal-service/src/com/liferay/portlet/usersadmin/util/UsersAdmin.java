@@ -145,18 +145,27 @@ public interface UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, String)}
+	 *             #hasUpdateFieldPermission(User, User, String)}
 	 */
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #hasUpdateFieldPermission(User, User, String)}
+	 */
+	@Deprecated
 	public boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException;
+
+	public boolean hasUpdateFieldPermission(
+			User curUser, User selUser, String field)
 		throws PortalException, SystemException;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, String)}
+	 *             #hasUpdateFieldPermission(User, User, String)}
 	 */
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
