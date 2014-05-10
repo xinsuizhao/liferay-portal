@@ -1001,12 +1001,14 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="AVERAGE_RATING" value1="Average (1 Vote)" />
 
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_1" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_2" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_3" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_2" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_3" />
 		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_4" />
 		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_5" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_1" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_2" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_3" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_4" />
 	</command>
 
 	<command name="viewPGViaMG">
