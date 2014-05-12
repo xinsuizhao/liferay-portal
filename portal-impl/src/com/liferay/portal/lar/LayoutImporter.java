@@ -78,6 +78,8 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
@@ -449,7 +451,8 @@ public class LayoutImporter {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		_portletImporter.readAssetCategories(portletDataContext);
+		importAssetCategories(portletDataContext);
+
 		_portletImporter.readAssetTags(portletDataContext);
 		_portletImporter.readComments(portletDataContext);
 		_portletImporter.readExpandoTables(portletDataContext);
@@ -831,6 +834,31 @@ public class LayoutImporter {
 		return new boolean[] {
 			importCurPortletArchivedSetups, importCurPortletData,
 			importCurPortletSetup, importCurPortletUserPreferences};
+	}
+
+	protected void importAssetCategories(PortletDataContext portletDataContext)
+		throws Exception {
+
+		Element assetVocabulariesElement =
+			portletDataContext.getImportDataGroupElement(AssetVocabulary.class);
+
+		List<Element> assetVocabularyElements =
+			assetVocabulariesElement.elements();
+
+		for (Element assetVocabularyElement : assetVocabularyElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetVocabularyElement);
+		}
+
+		Element assetCategoriesElement =
+			portletDataContext.getImportDataGroupElement(AssetCategory.class);
+
+		List<Element> assetCategoryElements = assetCategoriesElement.elements();
+
+		for (Element assetCategoryElement : assetCategoryElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetCategoryElement);
+		}
 	}
 
 	protected void importLayout(
