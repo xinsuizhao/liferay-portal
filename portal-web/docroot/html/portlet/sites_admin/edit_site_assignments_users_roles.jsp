@@ -76,7 +76,6 @@ PortletURL updateRoleAssignmentsURL = renderResponse.createRenderURL();
 updateRoleAssignmentsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 updateRoleAssignmentsURL.setParameter("tabs1", tabs1);
 updateRoleAssignmentsURL.setParameter("tabs2", tabs2);
-updateRoleAssignmentsURL.setParameter("cur", String.valueOf(cur));
 updateRoleAssignmentsURL.setParameter("redirect", redirect);
 updateRoleAssignmentsURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 updateRoleAssignmentsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
@@ -85,7 +84,7 @@ updateRoleAssignmentsURL.setParameter("groupId", String.valueOf(group.getGroupId
 <div class="separator"><!-- --></div>
 
 <%
-String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupRole('" + updateRoleAssignmentsURL.toString() + "');";
+String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupRole('" + updateRoleAssignmentsURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 %>
 
 <aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
