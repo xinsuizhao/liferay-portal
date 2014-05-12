@@ -92,7 +92,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="PublishCustomPortletTitle" known-issues="BPR-526" priority="5">
+	<command known-issues="BPR-526" name="PublishCustomPortletTitle" priority="5">
 		<execute test-case="super#AddSitePagesVariation" />
 
 		<var name="portletName" value="Sites Directory" />
@@ -724,7 +724,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive3" known-issues="LPS-43693" priority="5">
+	<command known-issues="LPS-43693" name="StagingDemoLocalLive3" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1052,7 +1052,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive4" known-issues="LPS-43693" priority="5">
+	<command known-issues="LPS-43693" name="StagingDemoLocalLive4" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />

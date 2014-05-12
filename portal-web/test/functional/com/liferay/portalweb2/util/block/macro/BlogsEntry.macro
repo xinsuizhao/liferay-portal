@@ -293,7 +293,7 @@
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 
-		<var name="displayDateHour" path="PGBlogsAdd" locator-key="DISPLAY_DATE_DATE_HOUR" />
+		<var locator-key="DISPLAY_DATE_DATE_HOUR" name="displayDateHour" path="PGBlogsAdd" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -303,7 +303,7 @@
 			</then>
 		</if>
 
-		<var name="displayDateMinute" path="PGBlogsAdd" locator-key="DISPLAY_DATE_DATE_MINUTE" />
+		<var locator-key="DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" path="PGBlogsAdd" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
@@ -315,7 +315,7 @@
 			</then>
 		</if>
 
-		<var name="displayDateMeridian" path="PGBlogsAdd" locator-key="DISPLAY_DATE_DATE_MERIDIAN" />
+		<var locator-key="DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" path="PGBlogsAdd" />
 		<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
 		<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
 
@@ -1097,7 +1097,7 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#pause" locator1="3000" />
 
-		<var name="entryViewCount" path="CPBlogsEntry" locator-key="ENTRY_STATS_VIEW_COUNT" />
+		<var locator-key="ENTRY_STATS_VIEW_COUNT" name="entryViewCount" path="CPBlogsEntry" />
 		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
 
 		<if>
@@ -1143,7 +1143,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#pause" locator1="3000" />
 
-		<var name="entryViewCount" path="PGBlogsEntry" locator-key="ENTRY_STATS_VIEW_COUNT" />
+		<var locator-key="ENTRY_STATS_VIEW_COUNT" name="entryViewCount" path="PGBlogsEntry" />
 		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
 
 		<if>

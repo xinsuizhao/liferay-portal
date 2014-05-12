@@ -451,7 +451,7 @@
 		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_RADIO" />
 		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
 
-		<var name="displayDateHour" locator="//input[@id='_88_schedulerStartDateHour']" attribute="value" />
+		<var attribute="value" locator="//input[@id='_88_schedulerStartDateHour']" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -461,11 +461,11 @@
 			</then>
 		</if>
 
-		<var name="displayDateAMPM" locator="//input[@id='_88_schedulerStartDateAmPm']" attribute="value" />
+		<var attribute="value" locator="//input[@id='_88_schedulerStartDateAmPm']" name="displayDateAMPM" />
 		<var name="displayDateAMPM" value="${displayDateAMPM?replace('0', 'AM')}" />
 		<var name="displayDateAMPM" value="${displayDateAMPM?replace('1', 'PM')}" />
 
-		<var name="displayDateMinute" locator="//input[@id='_88_schedulerStartDateMinute']" attribute="value" />
+		<var attribute="value" locator="//input[@id='_88_schedulerStartDateMinute']" name="displayDateMinute" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />

@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ViewLatestBlogsEntryPG" known-issues="Ignore" priority="5">
+	<command known-issues="Ignore" name="ViewLatestBlogsEntryPG" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

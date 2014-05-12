@@ -17,7 +17,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWebContentRemoveGuestViewPermission" known-issues="LPS-43420" priority="5">
+	<command known-issues="LPS-43420" name="AddWebContentRemoveGuestViewPermission" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="portletName" value="Web Content Display" />
