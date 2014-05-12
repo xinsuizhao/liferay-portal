@@ -162,9 +162,10 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<c:otherwise>
 
 				<%
+				portletURL.setParameter("cur", String.valueOf(cur));
 				portletURL.setParameter("tabs2", "current");
 
-				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + "');";
 				%>
 
 				<aui:button-row>
