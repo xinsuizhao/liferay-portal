@@ -89,7 +89,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-	config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
+	config.contentsCss = ['<%= HtmlUtil.escapeJS(cssPath) %>/main.css', '<%= HtmlUtil.escapeJS(cssPath) %>/aui.css'];
 
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
