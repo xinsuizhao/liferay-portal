@@ -169,8 +169,8 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			<c:otherwise>
 
 				<%
-				portletURL.setParameter("tabs2", "current");
 				portletURL.setParameter("cur", String.valueOf(cur));
+				portletURL.setParameter("tabs2", "current");
 
 				String taglibOnClick = renderResponse.getNamespace() + "updateGroupOrganizations('" + portletURL.toString() + "');";
 				%>
