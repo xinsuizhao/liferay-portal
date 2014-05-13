@@ -196,12 +196,12 @@ if (!inlineEdit) {
 <%
 String textareaName = name;
 
-String modules = "node-core";
+String modules = StringPool.BLANK;
 
 if (inlineEdit && (inlineEditSaveURL != null)) {
 	textareaName = name + "_original";
 
-	modules += " inline-editor-ckeditor";
+	modules = "inline-editor-ckeditor";
 }
 %>
 
@@ -239,18 +239,6 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 					}
 				);
 			</c:if>
-
-			var iframe = A.one('#cke_<%= name %> iframe');
-
-			if (iframe) {
-				var iframeWin = iframe.getDOM().contentWindow;
-
-				if (iframeWin) {
-					var iframeDoc = iframeWin.document.documentElement;
-
-					A.one(iframeDoc).addClass('aui');
-				}
-			}
 
 			window['<%= name %>'].instanceReady = true;
 		}
