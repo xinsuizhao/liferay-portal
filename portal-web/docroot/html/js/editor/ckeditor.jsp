@@ -217,39 +217,44 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 <aui:script use="<%= modules %>">
 	<c:if test="<%= inlineEdit && (inlineEditSaveURL != null) %>">
-		var inlineEditor;
+	var inlineEditor;
 
-		Liferay.on(
-			'toggleControls',
-			function(event) {
-				if (event.src === 'ui') {
-					var ckEditor = CKEDITOR.instances['<%= name %>'];
+	Liferay.on(
+		'toggleControls',
+		function(event) {
+			if (event.src === 'ui') {
+				var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-					if (event.enabled && !ckEditor) {
+				if (event.enabled) {
+					if (!ckEditor) {
 						createEditor();
 					}
-					else if (ckEditor) {
-						inlineEditor.destroy();
-						ckEditor.destroy();
+				}
+				else if (ckEditor) {
+					inlineEditor.destroy();
 
-						ckEditor = null;
+					ckEditor.destroy();
 
-						var editorNode = A.one('#<%= name %>');
+					ckEditor = null;
 
-						editorNode.removeAttribute('contenteditable');
-						editorNode.removeClass('lfr-editable');
-					}
+					var editorNode = A.one('#' + '<%= name %>');
+
+					editorNode.removeAttribute('contenteditable');
+
+					editorNode.removeClass('lfr-editable');
 				}
 			}
-		);
+		}
+	);
 	</c:if>
 
 	var createEditor = function() {
 		var Util = Liferay.Util;
 
-		var editorNode = A.one('#<%= name %>');
+		var editorNode = A.one('#' + '<%= name %>');
 
 		editorNode.setAttribute('contenteditable', true);
+
 		editorNode.addClass('lfr-editable');
 
 		function getToolbarSet(toolbarSet) {
@@ -316,14 +321,16 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
 		<c:if test="<%= inlineEdit && (inlineEditSaveURL != null) %>">
-			inlineEditor = new Liferay.CKEditorInline(
-				{
-					editor: ckEditor,
-					editorName: '<%= name %>',
-					namespace: '<portlet:namespace />',
-					saveURL: '<%= inlineEditSaveURL %>'
-				}
-			);
+
+		inlineEditor = new Liferay.CKEditorInline(
+			{
+				editor: ckEditor,
+				editorName: '<%= name %>',
+				namespace: '<portlet:namespace />',
+				saveURL: '<%= inlineEditSaveURL %>'
+			}
+		);
+
 		</c:if>
 
 		var customDataProcessorLoaded = false;
@@ -459,7 +466,9 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 	%>
 
 	<c:if test='<%= (inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit %>'>;
-		createEditor();
+
+	createEditor();
+
 	</c:if>
 
 </aui:script>
