@@ -130,7 +130,7 @@ public class JournalTestUtilTest {
 	public void testAddDDMStructureWithNonexistingLocale() throws Exception {
 		try {
 			CompanyTestUtil.resetCompanyLocales(
-				PortalUtil.getDefaultCompanyId(), "en_US");
+				PortalUtil.getDefaultCompanyId(), "en_US", "en_US");
 
 			DDMStructureTestUtil.addStructure(
 				JournalArticle.class.getName(), LocaleUtil.CANADA);
