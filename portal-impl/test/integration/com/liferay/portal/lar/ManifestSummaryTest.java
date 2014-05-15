@@ -115,7 +115,6 @@ public class ManifestSummaryTest
 			1, manifestSummary.getModelAdditionCount(JournalArticle.class));
 		Assert.assertEquals(
 			1, manifestSummary.getModelAdditionCount(JournalFolder.class));
-
 		Assert.assertTrue(
 			DateUtil.equals(
 				_exportDate, manifestSummary.getExportDate(), true));
