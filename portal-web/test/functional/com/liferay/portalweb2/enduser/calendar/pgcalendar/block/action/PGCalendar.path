@@ -545,6 +545,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE_GUEST</td>
+	<td>//form[@id='schedulerEventRecorderForm']/div/div/div/div/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_CALENDAR</td>
 	<td>//select[@name='calendarId']</td>
 	<td></td>
