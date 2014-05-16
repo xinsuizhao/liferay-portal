@@ -14,29 +14,15 @@
 
 package com.liferay.portlet.asset.lar;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Zsolt Berentey
  * @author Gergely Mathe
- * @author Mate Thurzo
  */
 public class AssetVocabularyStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetVocabulary> {
@@ -68,38 +54,29 @@ public class AssetVocabularyStagedModelDataHandler
 		return vocabulary.getTitleCurrentValue();
 	}
 
-	protected ServiceContext createServiceContext(
-		PortletDataContext portletDataContext, AssetVocabulary vocabulary) {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCreateDate(vocabulary.getCreateDate());
-		serviceContext.setModifiedDate(vocabulary.getModifiedDate());
-		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
-
-		return serviceContext;
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws Exception {
 
-		Element vocabularyElement = portletDataContext.getExportDataElement(
-			vocabulary);
+		String path = getAssetVocabulariesPath(
+			portletDataContext, assetVocabulary.getVocabularyId());
 
-		String vocabularyPath = ExportImportPathUtil.getModelPath(vocabulary);
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
 
-		vocabularyElement.addAttribute("path", vocabularyPath);
+		Element assetVocabularyElement = assetVocabulariesElement.addElement(
+			"vocabulary");
 
-		vocabulary.setUserUuid(vocabulary.getUserUuid());
+		assetVocabularyElement.addAttribute("path", path);
+
+		assetVocabulary.setUserUuid(assetVocabulary.getUserUuid());
+
+		portletDataContext.addZipEntry(path, assetVocabulary);
 
 		portletDataContext.addPermissions(
-			AssetVocabulary.class, vocabulary.getVocabularyId());
-
-		portletDataContext.addZipEntry(vocabularyPath, vocabulary);
+			AssetVocabulary.class, assetVocabulary.getVocabularyId());
 	}
 
 	@Override
@@ -107,61 +84,68 @@ public class AssetVocabularyStagedModelDataHandler
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(vocabulary.getUserUuid());
+		long userId = portletDataContext.getUserId(
+			assetVocabulary.getUserUuid());
+		long groupId = portletDataContext.getScopeGroupId();
 
-		ServiceContext serviceContext = createServiceContext(
-			portletDataContext, vocabulary);
+		ServiceContext serviceContext = new ServiceContext();
 
-		AssetVocabulary importedVocabulary = null;
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCreateDate(assetVocabulary.getCreateDate());
+		serviceContext.setModifiedDate(assetVocabulary.getModifiedDate());
+		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
+
+		AssetVocabulary importedAssetVocabulary = null;
 
 		AssetVocabulary existingAssetVocabulary =
 			AssetVocabularyUtil.fetchByUUID_G(
-				vocabulary.getUuid(), portletDataContext.getScopeGroupId());
+				assetVocabulary.getUuid(), groupId);
 
 		if (existingAssetVocabulary == null) {
 			existingAssetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
-				vocabulary.getUuid(), portletDataContext.getCompanyGroupId());
+				assetVocabulary.getUuid(),
+				portletDataContext.getCompanyGroupId());
 		}
 
 		if (existingAssetVocabulary == null) {
 			String name = getAssetVocabularyName(
-				null, portletDataContext.getScopeGroupId(),
-				vocabulary.getName(), 2);
+				null, groupId, assetVocabulary.getName(), 2);
 
-			serviceContext.setUuid(vocabulary.getUuid());
+			serviceContext.setUuid(assetVocabulary.getUuid());
 
-			importedVocabulary =
+			importedAssetVocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
 					userId, StringPool.BLANK,
-					getAssetVocabularyTitleMap(
-						portletDataContext.getScopeGroupId(), vocabulary, name),
-					vocabulary.getDescriptionMap(), vocabulary.getSettings(),
-					serviceContext);
+					getAssetVocabularyTitleMap(groupId, assetVocabulary, name),
+					assetVocabulary.getDescriptionMap(),
+					assetVocabulary.getSettings(), serviceContext);
+		}
+		else if (portletDataContext.isCompanyStagedGroupedModel(
+					existingAssetVocabulary)) {
+
+			return;
 		}
 		else {
 			String name = getAssetVocabularyName(
-				vocabulary.getUuid(), portletDataContext.getScopeGroupId(),
-				vocabulary.getName(), 2);
+				assetVocabulary.getUuid(), groupId, assetVocabulary.getName(),
+				2);
 
-			importedVocabulary =
+			importedAssetVocabulary =
 				AssetVocabularyLocalServiceUtil.updateVocabulary(
 					existingAssetVocabulary.getVocabularyId(), StringPool.BLANK,
-					getAssetVocabularyTitleMap(
-						portletDataContext.getScopeGroupId(), vocabulary, name),
-					vocabulary.getDescriptionMap(), vocabulary.getSettings(),
-					serviceContext);
+					getAssetVocabularyTitleMap(groupId, assetVocabulary, name),
+					assetVocabulary.getDescriptionMap(),
+					assetVocabulary.getSettings(), serviceContext);
 		}
 
-		Map<Long, Long> vocabularyIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetVocabulary.class);
-
-		vocabularyIds.put(
-			vocabulary.getVocabularyId(), importedVocabulary.getVocabularyId());
+		assetVocabularyPKs.put(
+			assetVocabulary.getVocabularyId(),
+			importedAssetVocabulary.getVocabularyId());
 
 		portletDataContext.importPermissions(
-			AssetVocabulary.class, vocabulary.getVocabularyId(),
-			importedVocabulary.getVocabularyId());
+			AssetVocabulary.class, assetVocabulary.getVocabularyId(),
+			importedAssetVocabulary.getVocabularyId());
 	}
 
 	protected String getAssetVocabularyName(
