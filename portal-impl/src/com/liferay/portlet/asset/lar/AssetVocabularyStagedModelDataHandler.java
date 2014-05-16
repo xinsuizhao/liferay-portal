@@ -103,24 +103,6 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long vocabularyId)
-		throws Exception {
-
-		AssetVocabulary existingVocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> vocabularyIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetVocabulary.class);
-
-		vocabularyIds.put(vocabularyId, existingVocabulary.getVocabularyId());
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws Exception {
