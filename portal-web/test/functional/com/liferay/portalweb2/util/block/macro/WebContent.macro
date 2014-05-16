@@ -124,7 +124,9 @@
 		<if>
 			<isset var="webContentImage" />
 			<then>
-				<execute action="CPWebcontentAddwebcontent#type" locator-key1="IMAGE_FIELD" value1="${webContentImage}" />
+				<var name="key_fieldName" value="Image" />
+
+				<execute action="CPWebcontentAddwebcontent#uploadCommonFile" locator-key1="IMAGE_FIELD" value1="${webContentImage}" />
 			</then>
 		</if>
 
@@ -287,7 +289,7 @@
 	<command name="addTagPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
 
-		<execute action="PGWebcontentdisplayEditwebcontent#assertElementPresent" locator-key1="CONTENT_FIELD" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertElementPresent" locator-key1="TOOLBAR_BASIC_PREVIEW" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="MENU_CATEGORIZATION" value1="Categorization" />
 
 		<var name="key_tagName" value="${tagName}" />
