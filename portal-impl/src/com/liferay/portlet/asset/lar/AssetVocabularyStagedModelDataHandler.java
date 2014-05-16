@@ -114,17 +114,17 @@ public class AssetVocabularyStagedModelDataHandler
 
 		AssetVocabulary importedVocabulary = null;
 
-		AssetVocabulary existingVocabulary =
+		AssetVocabulary existingAssetVocabulary =
 			AssetVocabularyUtil.fetchByUUID_G(
 				vocabulary.getUuid(), portletDataContext.getScopeGroupId());
 
-		if (existingVocabulary == null) {
-			existingVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+		if (existingAssetVocabulary == null) {
+			existingAssetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
 				vocabulary.getUuid(), portletDataContext.getCompanyGroupId());
 		}
 
-		if (existingVocabulary == null) {
-			String name = getVocabularyName(
+		if (existingAssetVocabulary == null) {
+			String name = getAssetVocabularyName(
 				null, portletDataContext.getScopeGroupId(),
 				vocabulary.getName(), 2);
 
@@ -133,20 +133,20 @@ public class AssetVocabularyStagedModelDataHandler
 			importedVocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
 					userId, StringPool.BLANK,
-					getVocabularyTitleMap(
+					getAssetVocabularyTitleMap(
 						portletDataContext.getScopeGroupId(), vocabulary, name),
 					vocabulary.getDescriptionMap(), vocabulary.getSettings(),
 					serviceContext);
 		}
 		else {
-			String name = getVocabularyName(
+			String name = getAssetVocabularyName(
 				vocabulary.getUuid(), portletDataContext.getScopeGroupId(),
 				vocabulary.getName(), 2);
 
 			importedVocabulary =
 				AssetVocabularyLocalServiceUtil.updateVocabulary(
-					existingVocabulary.getVocabularyId(), StringPool.BLANK,
-					getVocabularyTitleMap(
+					existingAssetVocabulary.getVocabularyId(), StringPool.BLANK,
+					getAssetVocabularyTitleMap(
 						portletDataContext.getScopeGroupId(), vocabulary, name),
 					vocabulary.getDescriptionMap(), vocabulary.getSettings(),
 					serviceContext);
@@ -164,31 +164,33 @@ public class AssetVocabularyStagedModelDataHandler
 			importedVocabulary.getVocabularyId());
 	}
 
-	protected String getVocabularyName(
+	protected String getAssetVocabularyName(
 			String uuid, long groupId, String name, int count)
 		throws Exception {
 
-		AssetVocabulary vocabulary = AssetVocabularyUtil.fetchByG_N(
+		AssetVocabulary assetVocabulary = AssetVocabularyUtil.fetchByG_N(
 			groupId, name);
 
-		if (vocabulary == null) {
+		if (assetVocabulary == null) {
 			return name;
 		}
 
-		if (Validator.isNotNull(uuid) && uuid.equals(vocabulary.getUuid())) {
+		if (Validator.isNotNull(uuid) &&
+			uuid.equals(assetVocabulary.getUuid())) {
+
 			return name;
 		}
 
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
-		return getVocabularyName(uuid, groupId, name, ++count);
+		return getAssetVocabularyName(uuid, groupId, name, ++count);
 	}
 
-	protected Map<Locale, String> getVocabularyTitleMap(
-			long groupId, AssetVocabulary vocabulary, String name)
+	protected Map<Locale, String> getAssetVocabularyTitleMap(
+			long groupId, AssetVocabulary assetVocabulary, String name)
 		throws PortalException, SystemException {
 
-		Map<Locale, String> titleMap = vocabulary.getTitleMap();
+		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
 
 		if (titleMap == null) {
 			titleMap = new HashMap<Locale, String>();
