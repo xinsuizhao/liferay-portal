@@ -160,7 +160,7 @@ public interface UsersAdmin {
 		throws PortalException, SystemException;
 
 	public boolean hasUpdateFieldPermission(
-			User updatingUser, User updatedUser, String field)
+			User curUser, User selUser, String field)
 		throws PortalException, SystemException;
 
 	/**
