@@ -281,37 +281,34 @@ public class PortletDataContextImpl implements PortletDataContext {
 			auditedModel.setUserUuid(auditedModel.getUserUuid());
 		}
 
-		if (!isResourceMain(classedModel)) {
-			addZipEntry(path, classedModel);
-
-			return;
-		}
-
 		long classPK = getClassPK(classedModel);
 
-		addAssetCategories(clazz, classPK);
-		addAssetLinks(clazz, classPK);
-		addAssetTags(clazz, classPK);
-		addExpando(element, path, classedModel, clazz);
-		addLocks(clazz, String.valueOf(classPK));
-		addPermissions(clazz, classPK);
+		if (isResourceMain(classedModel)) {
+			addAssetLinks(clazz, classPK);
+			addAssetTags(clazz, classPK);
+			addExpando(element, path, classedModel, clazz);
+			addLocks(clazz, String.valueOf(classPK));
+			addPermissions(clazz, classPK);
 
-		boolean portletDataAll = MapUtil.getBoolean(
-			getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
+			boolean portletDataAll = MapUtil.getBoolean(
+				getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
-		if (portletDataAll ||
-			MapUtil.getBoolean(
-				getParameterMap(), PortletDataHandlerKeys.COMMENTS)) {
+			if (portletDataAll ||
+				MapUtil.getBoolean(
+					getParameterMap(), PortletDataHandlerKeys.COMMENTS)) {
 
-			addComments(clazz, classPK);
+				addComments(clazz, classPK);
+			}
+
+			if (portletDataAll ||
+				MapUtil.getBoolean(
+					getParameterMap(), PortletDataHandlerKeys.RATINGS)) {
+
+				addRatingsEntries(clazz, classPK);
+			}
 		}
 
-		if (portletDataAll ||
-			MapUtil.getBoolean(
-				getParameterMap(), PortletDataHandlerKeys.RATINGS)) {
-
-			addRatingsEntries(clazz, classPK);
-		}
+		_references.add(getReferenceKey(classedModel));
 
 		addZipEntry(path, classedModel);
 	}
