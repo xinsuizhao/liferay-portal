@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.StagedModel;
 
 /**
@@ -38,17 +37,6 @@ public class ExportImportClassedModelUtil {
 		}
 
 		return modelClassName;
-	}
-
-	public static long getClassPK(ClassedModel classedModel) {
-		if (classedModel instanceof ResourcedModel) {
-			ResourcedModel resourcedModel = (ResourcedModel)classedModel;
-
-			return resourcedModel.getResourcePrimKey();
-		}
-		else {
-			return (Long)classedModel.getPrimaryKeyObj();
-		}
 	}
 
 	public static String getClassSimpleName(ClassedModel classedModel) {
