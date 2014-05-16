@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Lock;
@@ -65,6 +66,7 @@ import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -80,14 +82,18 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.NoSuchTagException;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagConstants;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetTagUtil;
+import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoTable;
@@ -103,6 +109,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -499,6 +506,7 @@ public class PortletImporter {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
+		readAssetCategories(portletDataContext);
 		readAssetTags(portletDataContext);
 		readComments(portletDataContext);
 		readExpandoTables(portletDataContext);
@@ -903,6 +911,114 @@ public class PortletImporter {
 				portletDataContext.setScopeType(scopeType);
 				portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
 			}
+		}
+	}
+
+	protected void readAssetCategories(PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/categories-hierarchy.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		Element assetVocabulariesElement = rootElement.element("vocabularies");
+
+		List<Element> assetVocabularyElements =
+			assetVocabulariesElement.elements("vocabulary");
+
+		Map<Long, Long> assetVocabularyPKs =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetVocabulary.class);
+
+		for (Element assetVocabularyElement : assetVocabularyElements) {
+			String path = assetVocabularyElement.attributeValue("path");
+
+			if (!portletDataContext.isPathNotProcessed(path)) {
+				continue;
+			}
+
+			AssetVocabulary assetVocabulary =
+				(AssetVocabulary)portletDataContext.getZipEntryAsObject(path);
+
+			importAssetVocabulary(
+				portletDataContext, assetVocabularyPKs, assetVocabularyElement,
+				assetVocabulary);
+		}
+
+		Element assetCategoriesElement = rootElement.element("categories");
+
+		List<Element> assetCategoryElements = assetCategoriesElement.elements(
+			"category");
+
+		Map<Long, Long> assetCategoryPKs =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetCategory.class);
+
+		Map<String, String> assetCategoryUuids =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				AssetCategory.class + ".uuid");
+
+		for (Element assetCategoryElement : assetCategoryElements) {
+			String path = assetCategoryElement.attributeValue("path");
+
+			if (!portletDataContext.isPathNotProcessed(path)) {
+				continue;
+			}
+
+			AssetCategory assetCategory =
+				(AssetCategory)portletDataContext.getZipEntryAsObject(path);
+
+			importAssetCategory(
+				portletDataContext, assetVocabularyPKs, assetCategoryPKs,
+				assetCategoryUuids, assetCategoryElement, assetCategory);
+		}
+
+		Element assetsElement = rootElement.element("assets");
+
+		List<Element> assetElements = assetsElement.elements("asset");
+
+		for (Element assetElement : assetElements) {
+			String className = GetterUtil.getString(
+				assetElement.attributeValue("class-name"));
+			long classPK = GetterUtil.getLong(
+				assetElement.attributeValue("class-pk"));
+			String[] assetCategoryUuidArray = StringUtil.split(
+				GetterUtil.getString(
+					assetElement.attributeValue("category-uuids")));
+
+			long[] assetCategoryIds = new long[0];
+
+			for (String assetCategoryUuid : assetCategoryUuidArray) {
+				assetCategoryUuid = MapUtil.getString(
+					assetCategoryUuids, assetCategoryUuid, assetCategoryUuid);
+
+				AssetCategory assetCategory = AssetCategoryUtil.fetchByUUID_G(
+					assetCategoryUuid, portletDataContext.getScopeGroupId());
+
+				if (assetCategory == null) {
+					Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+						portletDataContext.getCompanyId());
+
+					assetCategory = AssetCategoryUtil.fetchByUUID_G(
+						assetCategoryUuid, companyGroup.getGroupId());
+				}
+
+				if (assetCategory != null) {
+					assetCategoryIds = ArrayUtil.append(
+						assetCategoryIds, assetCategory.getCategoryId());
+				}
+			}
+
+			portletDataContext.addAssetCategories(
+				className, classPK, assetCategoryIds);
 		}
 	}
 
