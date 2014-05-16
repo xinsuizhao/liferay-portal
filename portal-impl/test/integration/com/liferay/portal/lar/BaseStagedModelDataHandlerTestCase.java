@@ -234,6 +234,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	protected void initImport() throws Exception {
 		PortletExporter portletExporter = new PortletExporter();
 
+		portletExporter.exportAssetCategories(portletDataContext);
 		portletExporter.exportAssetTags(portletDataContext);
 
 		userIdStrategy = new CurrentUserIdStrategy(TestPropsValues.getUser());
@@ -256,6 +257,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		PortletImporter portletImporter = new PortletImporter();
 
+		portletImporter.readAssetCategories(portletDataContext);
 		portletImporter.readAssetTags(portletDataContext);
 	}
 
@@ -357,20 +359,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Element rootElement = portletDataContext.getExportDataRootElement();
 
-		List<Element> stagedModelGroupElements = new ArrayList<Element>();
-
-		Class<?> stagedModelClass = getStagedModelClass();
-		String stagedModelClassSimpleName = stagedModelClass.getSimpleName();
-
-		stagedModelGroupElements.addAll(
-			rootElement.elements(stagedModelClassSimpleName));
-
-		for (String dependentStagedModelSimpleClassName :
-				dependentStagedModelsMap.keySet()) {
-
-			stagedModelGroupElements.addAll(
-				rootElement.elements(dependentStagedModelSimpleClassName));
-		}
+		List<Element> stagedModelGroupElements = rootElement.elements();
 
 		for (Element stagedModelGroupElement : stagedModelGroupElements) {
 			String className = stagedModelGroupElement.getName();
@@ -385,7 +374,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				dependentStagedModels = ListUtil.copy(dependentStagedModels);
 			}
 
-			if (className.equals(stagedModelClassSimpleName)) {
+			Class<?> stagedModelClass = getStagedModelClass();
+
+			if (className.equals(stagedModelClass.getSimpleName())) {
 				dependentStagedModels.add(stagedModel);
 			}
 
