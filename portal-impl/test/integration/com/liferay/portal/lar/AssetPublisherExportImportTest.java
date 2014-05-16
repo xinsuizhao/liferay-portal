@@ -181,6 +181,7 @@ public class AssetPublisherExportImportTest
 				importedAssetCategoryId);
 
 		Assert.assertNotNull(importedAssetCategory);
+
 		Assert.assertEquals(
 			assetCategory.getUuid(), importedAssetCategory.getUuid());
 	}

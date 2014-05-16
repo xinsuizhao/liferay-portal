@@ -296,12 +296,11 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Group companyGroup = company.getGroup();
 
-		AssetVocabulary companyAssetVocabulary = AssetTestUtil.addVocabulary(
+		AssetVocabulary globalAssetVocabulary = AssetTestUtil.addVocabulary(
 			companyGroup.getGroupId());
 
-		AssetCategory companyAssetCategory = AssetTestUtil.addCategory(
-			companyGroup.getGroupId(),
-			companyAssetVocabulary.getVocabularyId());
+		AssetCategory globalAssetCategory = AssetTestUtil.addCategory(
+			companyGroup.getGroupId(), globalAssetVocabulary.getVocabularyId());
 
 		AssetTag assetTag = AssetTestUtil.addTag(stagingGroup.getGroupId());
 
@@ -310,7 +309,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			assetEntry.getClassName(), assetEntry.getClassPK(),
 			new long[] {
 				assetCategory.getCategoryId(),
-				companAssetCategory.getCategoryId()
+				globalAssetCategory.getCategoryId()
 			},
 			new String[] {assetTag.getName()});
 
@@ -334,8 +333,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Assert.assertEquals(2, assetCategories.size());
 
-		AssetCategory stagedAssetCategory =
-			stagedModelAssets.getAssetCategory();
+		AssetCategory stageAssetCategory = stagedModelAssets.getAssetCategory();
 
 		AssetCategory importedAssetCategory = null;
 
@@ -355,7 +353,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		}
 
 		Assert.assertEquals(
-			stagedAssetCategory.getUuid(), importedAssetCategory.getUuid());
+			stageAssetCategory.getUuid(), importedAssetCategory.getUuid());
 
 		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getEntryTags(
 			assetEntry.getEntryId());
