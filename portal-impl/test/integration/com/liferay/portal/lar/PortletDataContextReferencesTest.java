@@ -263,6 +263,36 @@ public class PortletDataContextReferencesTest {
 		Assert.assertEquals(0, missingReferenceElements.size());
 	}
 
+	@Test
+	public void testNotReferenceMissingReference() throws Exception {
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		_portletDataContext.setZipWriter(zipWriter);
+
+		Element bookmarksEntryElement =
+			_portletDataContext.getExportDataElement(_bookmarksEntry);
+
+		_portletDataContext.addClassedModel(
+			bookmarksEntryElement,
+			ExportImportPathUtil.getModelPath(_bookmarksEntry),
+			_bookmarksEntry);
+
+		Element bookmarksFolderElement =
+			_portletDataContext.getExportDataElement(_bookmarksFolder);
+
+		_portletDataContext.addReferenceElement(
+			_bookmarksFolder, bookmarksFolderElement, _bookmarksEntry,
+			PortletDataContext.REFERENCE_TYPE_CHILD, true);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements();
+
+		Assert.assertTrue(missingReferenceElements.isEmpty());
+	}
+
 	private BookmarksEntry _bookmarksEntry;
 	private BookmarksFolder _bookmarksFolder;
 	private PortletDataContext _portletDataContext;
