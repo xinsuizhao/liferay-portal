@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -22,7 +21,6 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 /**
  * @author Zsolt Berentey
- * @author Gergely Mathe
  */
 public class AssetVocabularyStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetVocabulary> {
@@ -32,16 +30,7 @@ public class AssetVocabularyStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws SystemException {
-
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
-
-		if (vocabulary != null) {
-			AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(vocabulary);
-		}
+		String uuid, long groupId, String className, String extraData) {
 	}
 
 	@Override
