@@ -25,6 +25,7 @@ import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -85,6 +86,7 @@ import com.liferay.portlet.sites.util.Sites;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -857,6 +859,11 @@ public class LayoutImporter {
 			}
 		}
 
+		// Page priorities
+
+		updateLayoutPriorities(
+			portletDataContext, _layoutElements, privateLayout);
+
 		// Deletion system events
 
 		_deletionSystemEventImporter.importDeletionSystemEvents(
@@ -1015,6 +1022,58 @@ public class LayoutImporter {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	protected void updateLayoutPriorities(
+			PortletDataContext portletDataContext, List<Element> layoutElements,
+			boolean privateLayouts)
+		throws PortalException, SystemException {
+
+		Map<Long, Layout> layouts =
+			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class + ".layout");
+
+		Map<Long, Integer> layoutPriorities = new HashMap<Long, Integer>();
+
+		int maxPriority = Integer.MIN_VALUE;
+
+		for (Element layoutElement : layoutElements) {
+			String action = layoutElement.attributeValue(Constants.ACTION);
+
+			if (action.equals(Constants.SKIP)) {
+				return;
+			}
+
+			if (action.equals(Constants.ADD)) {
+				long layoutId = GetterUtil.getLong(
+					layoutElement.attributeValue("layout-id"));
+
+				Layout layout = layouts.get(layoutId);
+
+				int priority = GetterUtil.getInteger(
+					layoutElement.attributeValue("layout-priority"));
+
+				layoutPriorities.put(layout.getPlid(), priority);
+
+				if (maxPriority < priority) {
+					maxPriority = priority;
+				}
+			}
+		}
+
+		List<Layout> layoutSetLayouts = LayoutLocalServiceUtil.getLayouts(
+			portletDataContext.getGroupId(), privateLayouts);
+
+		for (Layout layout : layoutSetLayouts) {
+			if (layoutPriorities.containsKey(layout.getPlid())) {
+				layout.setPriority(layoutPriorities.get(layout.getPlid()));
+			}
+			else {
+				layout.setPriority(++maxPriority);
+			}
+
+			LayoutLocalServiceUtil.updateLayout(layout);
 		}
 	}
 
