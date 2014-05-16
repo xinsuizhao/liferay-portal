@@ -360,17 +360,16 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		List<Element> stagedModelGroupElements = new ArrayList<Element>();
 
 		Class<?> stagedModelClass = getStagedModelClass();
-
 		String stagedModelClassSimpleName = stagedModelClass.getSimpleName();
 
 		stagedModelGroupElements.addAll(
 			rootElement.elements(stagedModelClassSimpleName));
 
-		for (String dependentStagedModelClassSimpleName :
+		for (String dependentStagedModelSimpleClassName :
 				dependentStagedModelsMap.keySet()) {
 
 			stagedModelGroupElements.addAll(
-				rootElement.elements(dependentStagedModelClassSimpleName));
+				rootElement.elements(dependentStagedModelSimpleClassName));
 		}
 
 		for (Element stagedModelGroupElement : stagedModelGroupElements) {

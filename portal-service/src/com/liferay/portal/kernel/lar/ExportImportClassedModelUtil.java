@@ -46,8 +46,9 @@ public class ExportImportClassedModelUtil {
 
 			return resourcedModel.getResourcePrimKey();
 		}
-
-		return (Long)classedModel.getPrimaryKeyObj();
+		else {
+			return (Long)classedModel.getPrimaryKeyObj();
+		}
 	}
 
 	public static String getClassSimpleName(ClassedModel classedModel) {
