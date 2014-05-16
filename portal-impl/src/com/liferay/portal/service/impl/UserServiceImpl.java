@@ -1835,6 +1835,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long curUserId = getUserId();
 
 		if (curUserId == userId) {
+			validateUpdatePermission(
+				user, screenName, emailAddress, firstName, middleName, lastName,
+				prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear,
+				male, jobTitle);
+
 			emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 			if (!StringUtil.equalsIgnoreCase(
@@ -1843,11 +1848,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				validateEmailAddress(user, emailAddress);
 			}
 		}
-
-		validateUpdatePermission(
-			user, screenName, emailAddress, firstName, middleName, lastName,
-			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, male,
-			jobTitle);
 
 		// Group membership policy
 
@@ -2694,9 +2694,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserFieldException ufe = new UserFieldException();
 
 		for (String field : fields) {
-			if (!UsersAdminUtil.hasUpdateFieldPermission(
-					getUser(), user, field)) {
-
+			if (!UsersAdminUtil.hasUpdateFieldPermission(user, field)) {
 				ufe.addField(field);
 			}
 		}
