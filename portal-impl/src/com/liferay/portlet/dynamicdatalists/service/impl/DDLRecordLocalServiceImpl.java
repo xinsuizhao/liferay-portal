@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -64,7 +62,6 @@ import java.util.Map;
  */
 public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord addRecord(
 			long userId, long groupId, long recordSetId, int displayIndex,
@@ -141,13 +138,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(ddmStructure.getStructureId(), fieldsMap);
 
-		return ddlRecordLocalService.addRecord(
+		return addRecord(
 			userId, groupId, recordSetId, displayIndex, fields, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DDLRecord deleteRecord(DDLRecord record)
+	public void deleteRecord(DDLRecord record)
 		throws PortalException, SystemException {
 
 		// Record
@@ -173,7 +169,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
 		}
 
-		return record;
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		indexer.delete(record);
 	}
 
 	@Override
@@ -200,7 +201,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			valuesMap.remove(locale);
 		}
 
-		return ddlRecordLocalService.updateRecord(
+		return updateRecord(
 			serviceContext.getUserId(), recordId, false,
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, false,
 			serviceContext);
@@ -385,7 +386,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		Fields fields = StorageEngineUtil.getFields(
 			recordVersion.getDDMStorageId());
 
-		ddlRecordLocalService.updateRecord(
+		updateRecord(
 			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
 			false, serviceContext);
 	}
@@ -464,7 +465,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord updateRecord(
 			long userId, long recordId, boolean majorVersion, int displayIndex,
@@ -543,12 +543,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(ddmStructure.getStructureId(), fieldsMap);
 
-		return ddlRecordLocalService.updateRecord(
+		return updateRecord(
 			userId, recordId, false, displayIndex, fields, mergeFields,
 			serviceContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord updateStatus(
 			long userId, long recordVersionId, int status,
