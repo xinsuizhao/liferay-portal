@@ -116,6 +116,14 @@ public class TransactionalPortalCacheTest {
 		_transactionalPortalCache.destroy();
 	}
 
+	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new TransactionalPortalCacheHelper();
+	}
+
 	@AdviseWith(adviceClasses = {DisableTransactionalCacheAdvice.class})
 	@Test
 	public void testNoneTransactionalCache1() {
