@@ -70,6 +70,14 @@ public class TransactionalPortalCacheTest {
 	}
 
 	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new TransactionalPortalCacheHelper();
+	}
+
+	@Test
 	public void testMisc() throws Exception {
 		Assert.assertEquals(_CACHE_NAME, _transactionalPortalCache.getName());
 
@@ -114,14 +122,6 @@ public class TransactionalPortalCacheTest {
 		Assert.assertNull(values.get(1));
 
 		_transactionalPortalCache.destroy();
-	}
-
-	@Test
-	public void testConstructor() {
-
-		// Satisfy test coverage
-
-		new TransactionalPortalCacheHelper();
 	}
 
 	@AdviseWith(adviceClasses = {DisableTransactionalCacheAdvice.class})
