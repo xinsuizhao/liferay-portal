@@ -284,6 +284,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (isResourceMain(classedModel)) {
 			long classPK = getClassPK(classedModel);
 
+			addAssetCategories(clazz, classPK);
 			addAssetLinks(clazz, classPK);
 			addAssetTags(clazz, classPK);
 			addExpando(element, path, classedModel, clazz);
