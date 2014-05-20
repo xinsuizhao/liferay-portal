@@ -61,6 +61,7 @@
 
 						<liferay-ui:icon
 							cssClass="lfr-translation-manager-translation-item"
+							id="<%= LocaleUtil.toLanguageId(locales[i]) %>"
 							image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
 							lang="<%= LocaleUtil.toLanguageId(locales[i]) %>"
 							message="<%= locales[i].getDisplayName(locale) %>"
@@ -73,6 +74,10 @@
 
 				</liferay-ui:icon-menu>
 			</span>
+
+			<div class="alert alert-info hide" id="<portlet:namespace />translationsMessage">
+				<liferay-ui:message key="the-changes-in-your-translations-will-be-available-once-the-content-is-published" />
+			</div>
 
 			<c:if test="<%= availableLocales.length > 1 %>">
 				<div class="lfr-translation-manager-available-translations">
@@ -141,6 +146,13 @@
 							srcNode: '#<%= namespace + id %> .lfr-translation-manager-content'
 						}
 					).render();
+
+					translationManager.once(
+						'addAvailableLocale',
+						function(event) {
+							A.one(<portlet:namespace />translationsMessage).show();
+						}
+					);
 				}
 
 				return translationManager;
