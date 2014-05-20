@@ -666,7 +666,16 @@ public class ServicePreAction extends Action {
 			scopeGroupId = doAsGroupId;
 		}
 
-		long siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+		long siteGroupId = 0;
+
+		if (layout != null) {
+			if (layout.isTypeControlPanel()) {
+				siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+			}
+			else {
+				siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
+			}
+		}
 
 		// Theme and color scheme
 
@@ -1057,7 +1066,7 @@ public class ServicePreAction extends Action {
 			boolean hasAddLayoutGroupPermission = GroupPermissionUtil.contains(
 				permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT);
 			boolean hasAddLayoutLayoutPermission =
-				!layout.isTypeControlPanel() &&
+				(layout != null) && !layout.isTypeControlPanel() &&
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.ADD_LAYOUT);
 			boolean hasManageLayoutsGroupPermission =
