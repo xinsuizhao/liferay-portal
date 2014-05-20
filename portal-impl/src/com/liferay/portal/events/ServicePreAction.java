@@ -1309,18 +1309,16 @@ public class ServicePreAction extends Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout == null) {
+		if ((layout == null) || !layout.isTypeControlPanel()) {
 			return;
 		}
-
-		Group group = layout.getGroup();
 
 		String controlPanelCategory = themeDisplay.getControlPanelCategory();
 		String ppid = themeDisplay.getPpid();
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 		String currentURL = themeDisplay.getURLCurrent();
 
-		if (group.isControlPanel() && Validator.isNotNull(ppid)) {
+		if (Validator.isNotNull(ppid)) {
 			boolean switchGroup = ParamUtil.getBoolean(request, "switchGroup");
 
 			if (switchGroup &&
@@ -1333,7 +1331,7 @@ public class ServicePreAction extends Action {
 				response.sendRedirect(redirect);
 			}
 		}
-		else if (group.isControlPanel() && Validator.isNull(ppid)) {
+		else {
 			if (Validator.isNull(controlPanelCategory)) {
 				Map<String, List<Portlet>> categoriesMap =
 					PortalUtil.getControlPanelCategoriesMap(request);
