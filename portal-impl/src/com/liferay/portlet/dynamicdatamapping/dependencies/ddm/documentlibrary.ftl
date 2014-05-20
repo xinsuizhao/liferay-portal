@@ -12,6 +12,8 @@
 	<#assign fieldRawValue = predefinedValue>
 </#if>
 
+<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
+
 <#assign fileEntryTitle = "">
 
 <#if (fieldRawValue != "")>
