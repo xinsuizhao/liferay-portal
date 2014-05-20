@@ -1294,10 +1294,6 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLUpdateManager(updateManagerURL);
 
-		// Control Panel redirects
-
-		processControlPanelRedirects(request, response);
-
 		return themeDisplay;
 	}
 
@@ -2195,6 +2191,10 @@ public class ServicePreAction extends Action {
 		}
 
 		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		// Redirects
+
+		processControlPanelRedirects(request, response);
 
 		// Service context
 
