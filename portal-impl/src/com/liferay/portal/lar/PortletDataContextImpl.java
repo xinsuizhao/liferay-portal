@@ -281,9 +281,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			auditedModel.setUserUuid(auditedModel.getUserUuid());
 		}
 
-		long classPK = getClassPK(classedModel);
-
 		if (isResourceMain(classedModel)) {
+			long classPK = getClassPK(classedModel);
+
 			addAssetLinks(clazz, classPK);
 			addAssetTags(clazz, classPK);
 			addExpando(element, path, classedModel, clazz);
