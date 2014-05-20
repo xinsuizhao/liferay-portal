@@ -295,12 +295,12 @@ public class MBUtil {
 		sb.append(StringPool.SPACE);
 
 		for (MBCategory curCategory : categories) {
-			sb.append(StringPool.RAQUO);
+			sb.append("\u00bb");
 			sb.append(StringPool.SPACE);
 			sb.append(curCategory.getName());
 		}
 
-		sb.append(StringPool.RAQUO);
+		sb.append("\u00bb");
 		sb.append(StringPool.SPACE);
 		sb.append(mbCategory.getName());
 
