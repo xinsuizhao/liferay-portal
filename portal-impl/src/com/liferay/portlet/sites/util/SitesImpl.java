@@ -1169,12 +1169,14 @@ public class SitesImpl implements Sites {
 					layout.getCompanyId(), layoutSetPrototypeId);
 
 			Layout sourcePrototypeLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 					sourcePrototypeLayoutUuid,
 					layoutSetPrototypeGroup.getGroupId(), true);
 
-			doMergeLayoutPrototypeLayout(
-				layoutSetPrototypeGroup, sourcePrototypeLayout);
+			if (sourcePrototypeLayout != null) {
+				doMergeLayoutPrototypeLayout(
+					layoutSetPrototypeGroup, sourcePrototypeLayout);
+			}
 		}
 
 		doMergeLayoutPrototypeLayout(group, layout);
