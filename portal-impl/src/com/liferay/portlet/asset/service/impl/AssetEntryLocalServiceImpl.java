@@ -856,7 +856,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	protected long[] getClassNameIds(long companyId, String className) {
 		if (Validator.isNotNull(className)) {
-			return new long[] {classNameLocalService.getClassNameId(className)};
+			return new long[] {PortalUtil.getClassNameId(className)};
 		}
 
 		List<AssetRendererFactory> rendererFactories =
@@ -868,7 +868,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		for (int i = 0; i < rendererFactories.size(); i++) {
 			AssetRendererFactory rendererFactory = rendererFactories.get(i);
 
-			classNameIds[i] = classNameLocalService.getClassNameId(
+			classNameIds[i] = PortalUtil.getClassNameId(
 				rendererFactory.getClassName());
 		}
 
