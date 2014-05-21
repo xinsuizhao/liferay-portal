@@ -169,6 +169,7 @@ public class DDMXSDImpl implements DDMXSD {
 			}
 
 			fieldStructure.put("fieldNamespace", fieldNamespace);
+
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
 			if (fieldDisplayable) {
@@ -768,12 +769,9 @@ public class DDMXSDImpl implements DDMXSD {
 			}
 		}
 
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)pageContext.getRequest();
-
 		return ParamUtil.getString(
-			httpServletRequest, DDMImpl.FIELDS_DISPLAY_NAME,
-			defaultFieldsDisplayValue);
+			(HttpServletRequest)pageContext.getRequest(),
+			DDMImpl.FIELDS_DISPLAY_NAME, defaultFieldsDisplayValue);
 	}
 
 	protected String[] getFieldsDisplayValues(String fieldDisplayValue) {
