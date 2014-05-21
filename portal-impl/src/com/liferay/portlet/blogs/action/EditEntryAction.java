@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -55,6 +56,7 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.InputStream;
 
@@ -99,7 +101,20 @@ public class EditEntryAction extends PortletAction {
 			BlogsEntry entry = null;
 			String oldUrlTitle = StringPool.BLANK;
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				if (uploadException.isExceededSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
+				}
+
+				throw new PortalException(uploadException.getCause());
+			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.UPDATE)) {
+
 				Object[] returnValue = updateEntry(actionRequest);
 
 				entry = (BlogsEntry)returnValue[0];
@@ -226,6 +241,7 @@ public class EditEntryAction extends PortletAction {
 					 e instanceof EntrySmallImageNameException ||
 					 e instanceof EntrySmallImageSizeException ||
 					 e instanceof EntryTitleException ||
+					 e instanceof FileSizeException ||
 					 e instanceof SanitizerException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
