@@ -803,7 +803,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (liveGroup.hasRemoteStagingGroup()) {
+		if (liveGroup.isStagedRemotely()) {
 			return;
 		}
 
