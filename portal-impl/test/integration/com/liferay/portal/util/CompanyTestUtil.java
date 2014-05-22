@@ -98,16 +98,6 @@ public class CompanyTestUtil {
 				return LocaleUtil.toLanguageId(locale);
 			}
 
-			@Override
-			public Class<String> getAttributeClass() {
-				return String.class;
-			}
-
-			@Override
-			public Class<Locale> getTypeClass() {
-				return Locale.class;
-			}
-
 		};
 
 }
