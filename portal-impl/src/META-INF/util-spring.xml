@@ -439,11 +439,6 @@
 			<bean class="com.liferay.portal.spring.transaction.TransactionCommitCallbackRegistryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
-		<property name="transactionInvoker">
-			<bean class="com.liferay.portal.spring.transaction.TransactionInvokerImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" class="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil">
 		<property name="trashHandlerRegistry">
 			<bean class="com.liferay.portal.trash.TrashHandlerRegistryImpl" />
