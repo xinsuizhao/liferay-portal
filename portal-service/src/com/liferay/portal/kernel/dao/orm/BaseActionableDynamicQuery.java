@@ -313,8 +313,7 @@ public abstract class BaseActionableDynamicQuery
 	protected abstract void performAction(Object object)
 		throws PortalException, SystemException;
 
-	protected static final TransactionAttribute
-		REQUIRES_NEW_TRANSACTION_ATTRIBUTE;
+	private static TransactionAttribute _defaultTransactionAttribute;
 
 	static {
 		TransactionAttribute.Builder builder =
@@ -324,7 +323,7 @@ public abstract class BaseActionableDynamicQuery
 		builder.rollbackForClasses(
 			PortalException.class, SystemException.class);
 
-		REQUIRES_NEW_TRANSACTION_ATTRIBUTE = builder.build();
+		_defaultTransactionAttribute = builder.build();
 	}
 
 	private BaseLocalService _baseLocalService;
@@ -339,6 +338,7 @@ public abstract class BaseActionableDynamicQuery
 	private int _interval = Indexer.DEFAULT_INTERVAL;
 	private String _primaryKeyPropertyName;
 	private String _searchEngineId;
-	private TransactionAttribute _transactionAttribute;
+	private TransactionAttribute _transactionAttribute =
+		_defaultTransactionAttribute;
 
 }
