@@ -120,7 +120,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 		boolean fileMaxSizeCheckEnabled =
-				PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
