@@ -33,6 +33,11 @@
 	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
 </tr>
+<tr><!--This locator is necessary for tests that require the sendKey action-->
+	<td>BODY_FIELD_SOURCE_ON_SEND_KEYS</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button__source')]</td>
@@ -86,6 +91,57 @@
 <tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ATTACHMENTS-->
+<tr>
+	<td>ATTACHMENTS_DROPDOWN</td>
+	<td>//div[@id='mbMessageAttachmentsPanel']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header-collapsed') and @data-persist-id='mbMessageAttachmentsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_1</td>
+	<td>//input[contains(@id,'_msgFile1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_2</td>
+	<td>//input[contains(@id,'_msgFile2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_3</td>
+	<td>//input[contains(@id,'_msgFile3')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_4</td>
+	<td>//input[contains(@id,'_msgFile4')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_5</td>
+	<td>//input[contains(@id,'_msgFile5')]</td>
 	<td></td>
 </tr>
 <tr>
