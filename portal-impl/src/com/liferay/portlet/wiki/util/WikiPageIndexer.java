@@ -251,7 +251,7 @@ public class WikiPageIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		WikiPage page = (WikiPage)obj;
 
-		if ((!page.isApproved() && !page.isInTrash()) || !page.isHead()) {
+		if (!page.isHead() || (!page.isApproved() && !page.isInTrash())) {
 			return;
 		}
 
@@ -268,7 +268,7 @@ public class WikiPageIndexer extends BaseIndexer {
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
-				classPK, (Boolean)null);
+			classPK, (Boolean)null);
 
 		doReindex(page);
 	}
