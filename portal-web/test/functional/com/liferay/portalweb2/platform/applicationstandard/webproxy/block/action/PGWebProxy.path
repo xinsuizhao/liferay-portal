@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>PGWebProxy</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebProxy</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebProxy</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION_OPTIONS_MENULIST-->
+<tr>
+	<td>CONFIGURATION_OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//a[contains(@id, 'menu_export-import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//a[contains(@id, 'menu_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_GOOGLE_HOME_PNG</td>
+	<td>portal/screenshots/webproxy/google_home.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
