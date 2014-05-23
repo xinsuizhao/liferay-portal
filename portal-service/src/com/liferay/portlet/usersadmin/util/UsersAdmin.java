@@ -145,7 +145,8 @@ public interface UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
@@ -158,7 +159,8 @@ public interface UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Deprecated
 	public boolean hasUpdateFieldPermission(User user, String field)
@@ -166,7 +168,8 @@ public interface UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
