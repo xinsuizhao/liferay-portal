@@ -680,10 +680,6 @@ public class Entity {
 		return _jsonEnabled;
 	}
 
-	public boolean isLocalizedModel() {
-		return hasLocalizedColumn();
-	}
-
 	public boolean isOrdered() {
 		if (_order != null) {
 			return true;

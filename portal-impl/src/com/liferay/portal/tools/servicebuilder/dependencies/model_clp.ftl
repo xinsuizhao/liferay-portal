@@ -716,7 +716,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
-	<#if entity.isLocalizedModel()>
+	<#if entity.hasLocalizedColumn()>
 		@Override
 		public String[] getAvailableLanguageIds() {
 			Set<String> availableLanguageIds = new TreeSet<String>();
