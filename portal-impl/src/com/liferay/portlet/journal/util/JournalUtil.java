@@ -1403,10 +1403,6 @@ public class JournalUtil {
 	private static Element _getElementByInstanceId(
 		Document document, String instanceId) {
 
-		if (Validator.isNull(instanceId)) {
-			return null;
-		}
-
 		XPath xPathSelector = SAXReaderUtil.createXPath(
 			"//dynamic-element[@instance-id=" +
 				HtmlUtil.escapeXPathAttribute(instanceId) + "]");
