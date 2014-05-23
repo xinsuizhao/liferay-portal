@@ -56,7 +56,7 @@ public class SearchEngineUtil {
 	public static void addDocument(long companyId, Document document)
 		throws SearchException {
 
-		addDocument(getSearchEngineId(document), companyId, document);
+		addDocument(_getSearchEngineId(document), companyId, document);
 	}
 
 	public static void addDocument(
@@ -93,7 +93,7 @@ public class SearchEngineUtil {
 			long companyId, Collection<Document> documents)
 		throws SearchException {
 
-		addDocuments(getSearchEngineId(documents), companyId, documents);
+		addDocuments(_getSearchEngineId(documents), companyId, documents);
 	}
 
 	public static void addDocuments(
@@ -287,32 +287,6 @@ public class SearchEngineUtil {
 		}
 
 		return searchEngine;
-	}
-
-	public static String getSearchEngineId(Collection<Document> documents) {
-		if (!documents.isEmpty()) {
-			Document document = documents.iterator().next();
-
-			return getSearchEngineId(document);
-		}
-
-		return getDefaultSearchEngineId();
-	}
-
-	public static String getSearchEngineId(Document document) {
-		String entryClassName = document.get("entryClassName");
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
-
-		String searchEngineId = indexer.getSearchEngineId();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Search engine ID for " + indexer.getClass() + " is " +
-					searchEngineId);
-		}
-
-		return searchEngineId;
 	}
 
 	public static Set<String> getSearchEngineIds() {
@@ -730,7 +704,7 @@ public class SearchEngineUtil {
 	public static void updateDocument(long companyId, Document document)
 		throws SearchException {
 
-		updateDocument(getSearchEngineId(document), companyId, document);
+		updateDocument(_getSearchEngineId(document), companyId, document);
 	}
 
 	public static void updateDocument(
@@ -767,7 +741,7 @@ public class SearchEngineUtil {
 			long companyId, Collection<Document> documents)
 		throws SearchException {
 
-		updateDocuments(getSearchEngineId(documents), companyId, documents);
+		updateDocuments(_getSearchEngineId(documents), companyId, documents);
 	}
 
 	public static void updateDocuments(
@@ -835,6 +809,32 @@ public class SearchEngineUtil {
 			getClass(), "searchPermissionChecker");
 
 		_searchPermissionChecker = searchPermissionChecker;
+	}
+
+	private static String _getSearchEngineId(Collection<Document> documents) {
+		if (!documents.isEmpty()) {
+			Document document = documents.iterator().next();
+
+			return _getSearchEngineId(document);
+		}
+
+		return getDefaultSearchEngineId();
+	}
+
+	private static String _getSearchEngineId(Document document) {
+		String entryClassName = document.get("entryClassName");
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+
+		String searchEngineId = indexer.getSearchEngineId();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Search engine ID for " + indexer.getClass() + " is " +
+					searchEngineId);
+		}
+
+		return searchEngineId;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
