@@ -92,6 +92,7 @@ public class CompanyTestUtil {
 	}
 
 	private static final Accessor<Locale, String> _LOCALE_LANGUAGE_ID_ACCESSOR =
+
 		new Accessor<Locale, String>() {
 
 			@Override
