@@ -61,13 +61,11 @@ public class PortalImplLocalizedFriendlyURLTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_availableLocales = LanguageUtil.getAvailableLocales();
-		_defaultLocale = LocaleUtil.getDefault();
 
 		CompanyTestUtil.resetCompanyLocales(
 			PortalUtil.getDefaultCompanyId(),
 			new Locale[] {
-				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US},
-				LocaleUtil.US);
+				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US});
 
 		_nameMap = new HashMap<Locale, String>();
 
@@ -85,8 +83,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		CompanyTestUtil.resetCompanyLocales(
-			PortalUtil.getDefaultCompanyId(), _availableLocales,
-			_defaultLocale);
+			PortalUtil.getDefaultCompanyId(), _availableLocales);
 	}
 
 	@Test
@@ -703,7 +700,6 @@ public class PortalImplLocalizedFriendlyURLTest {
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
 	private static Locale[] _availableLocales;
-	private static Locale _defaultLocale;
 	private static Map<Locale, String> _friendlyURLMap;
 	private static Map<Locale, String> _nameMap;
 
