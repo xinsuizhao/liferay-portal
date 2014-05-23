@@ -1,0 +1,11 @@
+<definition>
+	<command name="addCP">
+		<execute action="PGWebProxy#click" locator-key1="OPTIONS_WRENCH_ICON" />
+		<execute action="PGWebProxy#click" locator-key1="CONFIGURATION_OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="PGWebProxyConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGWebProxyConfiguration#type" locator-key1="INITIAL_URL_FIELD" value1="${initialURL}" />
+		<execute action="PGWebProxyConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGWebProxyConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+</definition>
