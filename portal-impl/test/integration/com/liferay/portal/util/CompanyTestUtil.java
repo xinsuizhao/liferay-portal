@@ -54,7 +54,8 @@ public class CompanyTestUtil {
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		String languageIds = ArrayUtil.toString(locales, _accessor);
+		String languageIds = ArrayUtil.toString(
+			locales, _LOCALE_LANGUAGE_ID_ACCESSOR);
 
 		resetCompanyLocales(companyId, languageIds, defaultLanguageId);
 	}
@@ -81,7 +82,7 @@ public class CompanyTestUtil {
 
 		preferences.store();
 
-		// Reset company locales cache
+		// Empty company locales cache
 
 		LanguageUtil.resetAvailableLocales(companyId);
 
@@ -90,7 +91,7 @@ public class CompanyTestUtil {
 		CompanyThreadLocal.setCompanyId(companyId);
 	}
 
-	private static Accessor<Locale, String> _accessor =
+	private static final Accessor<Locale, String> _LOCALE_LANGUAGE_ID_ACCESSOR =
 		new Accessor<Locale, String>() {
 
 			@Override
