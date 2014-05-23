@@ -42,10 +42,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFeed;
@@ -79,73 +75,6 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return addArticle(
-			groupId, folderId, classNameId, titleMap, descriptionMap,
-			contentMap, defaultLocale, null, workflowEnabled, approved,
-			serviceContext);
-	}
-
-	public static JournalArticle addArticle(
-			long groupId, long folderId, long classNameId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> contentMap, Locale defaultLocale,
-			Date expirationDate, boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return addArticle(
-			groupId, folderId, classNameId, titleMap, descriptionMap,
-			contentMap, null, defaultLocale, expirationDate, workflowEnabled,
-			approved, serviceContext);
-	}
-
-	public static JournalArticle addArticle(
-			long groupId, long folderId, long classNameId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> contentMap, String layoutUuid,
-			Locale defaultLocale, Date expirationDate, boolean workflowEnabled,
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
-			contentMap, LocaleUtil.toLanguageId(defaultLocale));
-
-		String xsd = DDMStructureTestUtil.getSampleStructureXSD(
-			_locales, defaultLocale);
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(), xsd, defaultLocale);
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			groupId, ddmStructure.getStructureId());
-
-		boolean neverExpire = true;
-
-		int expirationDateDay = 0;
-		int expirationDateMonth = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-
-		if (expirationDate != null) {
-			neverExpire = false;
-
-			Calendar expirationCal = CalendarFactoryUtil.getCalendar(
-				TestPropsValues.getUser().getTimeZone());
-
-			expirationCal.setTime(expirationDate);
-
-			expirationDateMonth = expirationCal.get(Calendar.MONTH);
-			expirationDateDay = expirationCal.get(Calendar.DATE);
-			expirationDateYear = expirationCal.get(Calendar.YEAR);
-			expirationDateHour = expirationCal.get(Calendar.HOUR);
-			expirationDateMinute = expirationCal.get(Calendar.MINUTE);
-
-			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
-				expirationDateHour += 12;
-			}
-		}
-
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();
 
@@ -158,7 +87,7 @@ public class JournalTestUtil {
 			}
 		}
 
-		content = createLocalizedContent(contentMap, defaultLocale);
+		String content = createLocalizedContent(contentMap, defaultLocale);
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
