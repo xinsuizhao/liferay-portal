@@ -1149,43 +1149,46 @@ public class JournalUtil {
 		throws LocaleException {
 
 		try {
-			Document oldDocument = SAXReaderUtil.read(content);
+			Document curDocument = SAXReaderUtil.read(content);
 
-			Document newDocument = SAXReaderUtil.read(content);
+			Document updatedDocument = SAXReaderUtil.read(content);
 
-			Element newRootElement = newDocument.getRootElement();
+			Element updatedRootElement = updatedDocument.getRootElement();
 
-			Attribute availableLocalesAttribute = newRootElement.attribute(
+			Attribute availableLocales = updatedRootElement.attribute(
 				"available-locales");
 
-			String defaultImportLanguageId = LocaleUtil.toLanguageId(
+			String defaultImportLocaleId = LocaleUtil.toLanguageId(
 				defaultImportLocale);
 
 			if (!StringUtil.contains(
-					availableLocalesAttribute.getValue(),
-					defaultImportLanguageId)) {
+					availableLocales.getValue(), defaultImportLocaleId)) {
 
-				availableLocalesAttribute.setValue(
-					availableLocalesAttribute.getValue() + StringPool.COMMA +
-						defaultImportLanguageId);
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(availableLocales.getValue());
+				sb.append(StringPool.COMMA);
+				sb.append(defaultImportLocaleId);
+
+				availableLocales.setValue(sb.toString());
 
 				_mergeArticleContentUpdate(
-					oldDocument, newRootElement,
+					curDocument, updatedRootElement,
 					LocaleUtil.toLanguageId(defaultImportLocale));
 
-				content = DDMXMLUtil.formatXML(newDocument);
+				content = DDMXMLUtil.formatXML(updatedDocument);
 			}
 
-			Attribute defaultLocaleAttribute = newRootElement.attribute(
+			Attribute defaultLocale = updatedRootElement.attribute(
 				"default-locale");
 
-			Locale defaultContentLocale = LocaleUtil.fromLanguageId(
-				defaultLocaleAttribute.getValue());
+			Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
+				defaultLocale.getValue());
 
-			if (!LocaleUtil.equals(defaultContentLocale, defaultImportLocale)) {
-				defaultLocaleAttribute.setValue(defaultImportLanguageId);
+			if (!LocaleUtil.equals(contentDefaultLocale, defaultImportLocale)) {
+				defaultLocale.setValue(defaultImportLocaleId);
 
-				content = DDMXMLUtil.formatXML(newDocument);
+				content = DDMXMLUtil.formatXML(updatedDocument);
 			}
 		}
 		catch (Exception e) {
