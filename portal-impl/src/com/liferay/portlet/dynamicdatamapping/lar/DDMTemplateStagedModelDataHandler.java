@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +47,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -298,6 +301,8 @@ public class DDMTemplateStagedModelDataHandler
 			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
 
+		prepareLanguagesForImport(template);
+
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
 		long classPK = template.getClassPK();
@@ -423,6 +428,22 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		return existingTemplate;
+	}
+
+	protected void prepareLanguagesForImport(DDMTemplate template)
+		throws PortalException {
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			template.getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			template.getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			DDMTemplate.class.getName(), template.getPrimaryKey(),
+			defaultLocale, availableLocales);
+
+		template.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
