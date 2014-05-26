@@ -43,8 +43,7 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface LayoutModel extends BaseModel<Layout>, LocalizedModel,
-	StagedGroupedModel {
+public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -1032,16 +1031,12 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
-	@Override
 	public String[] getAvailableLanguageIds();
 
-	@Override
 	public String getDefaultLanguageId();
 
-	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException;
 
-	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 

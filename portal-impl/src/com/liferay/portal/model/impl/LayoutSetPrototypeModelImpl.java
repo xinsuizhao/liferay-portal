@@ -607,16 +607,8 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
-
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(LayoutSetPrototype.class.getName(),
-				getPrimaryKey(), defaultLocale, availableLocales);
-
-		prepareLocalizedFieldsForImport(defaultImportLocale);
+		prepareLocalizedFieldsForImport(null);
 	}
 
 	@Override

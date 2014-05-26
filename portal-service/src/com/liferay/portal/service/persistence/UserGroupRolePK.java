@@ -21,7 +21,6 @@ import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 public class UserGroupRolePK implements Comparable<UserGroupRolePK>,
 	Serializable {

@@ -21,7 +21,6 @@ import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 public class OrgGroupRolePK implements Comparable<OrgGroupRolePK>, Serializable {
 	public long organizationId;
