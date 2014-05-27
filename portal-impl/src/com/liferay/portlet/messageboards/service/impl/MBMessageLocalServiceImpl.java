@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUt
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2106,17 +2107,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
 
-		if (Validator.isNotNull(signature)) {
-			String signatureSeparator = null;
-
-			if (htmlFormat) {
-				signatureSeparator = "<br />--<br />";
-			}
-			else {
-				signatureSeparator = "\n--\n";
+		if (htmlFormat) {
+			if (Validator.isNotNull(signature)) {
+				body += "<br />--<br />" + signature;
 			}
 
-			body += signatureSeparator + signature;
+			body = HtmlUtil.replaceNewLine(body);
+		}
+		else if (Validator.isNotNull(signature)) {
+			body += "\n--\n" + signature;
 		}
 
 		String messageBody = message.getBody();
