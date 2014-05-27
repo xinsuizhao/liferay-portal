@@ -298,6 +298,28 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
+	<command name="quickReplyPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<if>
+			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_QUICK_REPLY_1" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsThread#type" locator-key1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="ratePG">
 		<if>
 			<equals arg1="${ratingType}" arg2="Positive" />
@@ -379,28 +401,6 @@
 				<execute macro="MessageboardsThread#markAsAnswerPG" />
 			</then>
 		</if>
-	</command>
-
-	<command name="quickReplyPG">
-		<var name="key_threadSubject" value="${threadSubject}" />
-
-		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-
-		<if>
-			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_QUICK_REPLY_1" />
-			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-			</then>
-			<else>
-				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-			</else>
-		</if>
-
-		<execute action="PGMessageboardsThread#type" locator-key1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
-		<execute action="PGMessageboardsThread#assertClick" locator-key1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="replyWithQuotePG">
