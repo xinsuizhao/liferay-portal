@@ -473,6 +473,8 @@ public class SeleniumBuilder {
 
 			for (Element rootPropertyElement : rootPropertyElements) {
 				sb = new StringBundler();
+				String attributeName = rootPropertyElement.attributeValue(
+					"name");
 
 				sb.append(testCaseName);
 				sb.append("TestCase.all.");
@@ -481,6 +483,18 @@ public class SeleniumBuilder {
 				sb.append(rootPropertyElement.attributeValue("value"));
 
 				testCaseProperties.add(sb.toString());
+
+				if (attributeName.equals("ignore.errors")) {
+					sb = new StringBundler();
+
+					sb.append(testCaseName);
+					sb.append("TestCase.all.");
+					sb.append(rootPropertyElement.attributeValue("name"));
+					sb.append(".delimiter=");
+					sb.append(rootPropertyElement.attributeValue("delimiter"));
+
+					testCaseProperties.add(sb.toString());
+				}
 			}
 
 			List<Element> commandElements =

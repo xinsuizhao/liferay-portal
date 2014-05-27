@@ -48,7 +48,11 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		TestPropsUtil.get("fixed.issues"));
 
-	public static final String IGNORE_ERROR = TestPropsUtil.get("ignore.error");
+	public static final String IGNORE_ERRORS = TestPropsUtil.get(
+		"ignore.errors");
+
+	public static final String IGNORE_ERRORS_DELIMITER = TestPropsUtil.get(
+		"delimiter");
 
 	public static final String LIFERAY_PORTAL_BRANCH = TestPropsUtil.get(
 		"liferay.portal.branch");
