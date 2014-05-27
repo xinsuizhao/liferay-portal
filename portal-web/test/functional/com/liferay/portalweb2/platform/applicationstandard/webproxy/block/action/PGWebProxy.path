@@ -18,32 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>OPTIONS_WRENCH_ICON</td>
-	<td>//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CONFIGURATION_OPTIONS_MENULIST-->
-<tr>
-	<td>CONFIGURATION_OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//a[contains(@id, 'menu_export-import')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//a[contains(@id, 'menu_configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCREENSHOTS-->
 <tr>
 	<td>SCREENSHOTS_GOOGLE_HOME_PNG</td>
