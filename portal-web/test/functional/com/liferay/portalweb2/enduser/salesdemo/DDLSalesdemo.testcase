@@ -1,0 +1,189 @@
+
+<definition component-name="portal-web-forms-and-data-lists">
+	<property name="testray.main.component.name" value="Web Forms and Data Lists" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="List#tearDownCP" />
+
+		<execute macro="DataDefinition#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command known-issues="sales-demo" name="Demo1" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Company Picnic" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Company Picnic" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1_column" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Dynamic Data List Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Company Picnic" />
+		</execute>
+
+		<execute macro="List#addPGViaDDLDisplay">
+			<var name="listDescription" value="Sign up list for our company picnic." />
+			<var name="listName" value="Potluck Sign Up List" />
+		</execute>
+
+		<execute macro="DataDefinition#addPGViaDDLDisplay">
+			<var name="dataDefinitionDescription" value="List for Potlucks" />
+			<var name="dataDefinitionName" value="Potluck Items" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="First Name" />
+			<var name="fieldName" value="First_Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Last Name" />
+			<var name="fieldName" value="Last_Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="What are you bringing?" />
+			<var name="fieldName" value="What_are_you_bringing" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="What are you bringing?" />
+			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="fieldOptionsNames" value="Carrots,Beef Jerky,Chips" />
+			<var name="fieldOptionsValues" value="Carrots,Beef Jerky,Chips" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
+
+		<execute macro="DataDefinition#selectCP">
+			<var name="dataDefinitionName" value="Potluck Items" />
+		</execute>
+
+		<execute macro="List#savePGViaDDLDisplay" />
+
+		<execute macro="ListRecord#addPGViaDDLDisplay">
+			<var name="dataDefinitionName" value="Potluck Items" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="First Name" />
+			<var name="fieldName" value="First_Name" />
+			<var name="recordFieldData" value="John" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Last Name" />
+			<var name="fieldName" value="Last_Name" />
+			<var name="recordFieldData" value="Doe" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="What are you bringing?" />
+			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="recordFieldData" value="Beef Jerky" />
+		</execute>
+
+		<execute macro="ListRecord#publishPGViaDDLDisplay" />
+
+		<execute macro="ListRecord#addPGViaDDLDisplay">
+			<var name="dataDefinitionName" value="Potluck Items" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="First Name" />
+			<var name="fieldName" value="First_Name" />
+			<var name="recordFieldData" value="Jane" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Last Name" />
+			<var name="fieldName" value="Last_Name" />
+			<var name="recordFieldData" value="Smith" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="What are you bringing?" />
+			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="recordFieldData" value="Carrots" />
+		</execute>
+
+		<execute macro="ListRecord#publishPGViaDDLDisplay" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="First Name" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Last Name" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[3]" value1="What are you bringing?" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[4]" value1="Status" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[5]" value1="Modified Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Author" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]" value1="Jane" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]" value1="Smith" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]" value1="Carrots" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/span/span/span/strong" value1="Approved" />
+		<execute action="PGDynamicdatalists#assertElementPresent" locator1="//tbody[@class='table-data']/tr/td[5]" value1="Modified Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]" value1="Test Test" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[1]" value1="John" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[2]" value1="Doe" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[3]" value1="Beef Jerky" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[4]/span/span/span/strong" value1="Approved" />
+		<execute action="PGDynamicdatalists#assertElementPresent" locator1="//tbody[@class='table-data']/tr[2]/td[5]" value1="Modified Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[6]" value1="Test Test" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
+			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Company Picnic" />
+		</execute>
+
+		<execute macro="ListRecord#populateFieldTextViaSpreadsheetView">
+			<var name="fieldName" value="First_Name" />
+			<var name="recordFieldData" value="Joe" />
+			<var name="recordRow" value="3" />
+		</execute>
+
+		<execute macro="ListRecord#populateFieldTextViaSpreadsheetView">
+			<var name="fieldName" value="Last_Name" />
+			<var name="recordFieldData" value="Perkins" />
+			<var name="recordRow" value="3" />
+		</execute>
+
+		<execute macro="ListRecord#populateFieldSelectViaSpreadsheetView">
+			<var name="fieldName" value="What_are_you_bringing" />
+			<var name="recordFieldData" value="Chips" />
+			<var name="recordRow" value="3" />
+		</execute>
+	</command>
+</definition>
