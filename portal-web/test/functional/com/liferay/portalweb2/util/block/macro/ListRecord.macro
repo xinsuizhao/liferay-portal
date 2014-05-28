@@ -12,10 +12,6 @@
 		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add ${dataDefinitionName}" />
 	</command>
 
-	<command name="addPGViaDDLDisplay">
-		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add ${dataDefinitionName}" />
-	</command>
-
 	<command name="deleteCP">
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
@@ -218,14 +214,6 @@
 	</command>
 
 	<command name="populateFieldTextViaSpreadsheetView">
-		<execute macro="ListRecord#populateFieldTextViaSpreadsheetViewCmd">
-			<var name="fieldName" value="${fieldName}" />
-			<var name="recordFieldData" value="${recordFieldData}" />
-			<var name="recordRow" value="${recordRow}" />
-		</execute>
-	</command>
-
-	<command name="populateFieldTextViaSpreadsheetViewCmd">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_recordRow" value="${recordRow}" />
 

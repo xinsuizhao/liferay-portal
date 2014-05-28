@@ -11,14 +11,6 @@
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_ADD_LIST" value1="Add List" />
 
 		<execute action="PGDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
-		<execute action="PGDynamicdatalistsAddlist#type" locator-key1="DESCRIPTION_FIELD" value1="${listDescription}" />
-		<execute action="PGDynamicdatalistsAddlist#assertClick" locator-key1="DATA_DEFINITION_SELECT_LINK" value1="Select" />
-	</command>
-
-	<command name="addPGViaDDLDisplay">
-		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_ADD_LIST" value1="Add List" />
-
-		<execute action="PGDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
 
 		<if>
 			<isset var="listDescription" />
@@ -102,10 +94,6 @@
 	</command>
 
 	<command name="savePG">
-		<execute macro="List#saveCmd" />
-	</command>
-
-	<command name="savePGViaDDLDisplay">
 		<execute macro="List#saveCmd" />
 	</command>
 
