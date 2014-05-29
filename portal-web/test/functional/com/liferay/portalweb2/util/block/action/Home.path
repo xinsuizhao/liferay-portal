@@ -385,7 +385,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_NAVIGATION</td>
-	<td>//ul[@class='category-portlets']/li[contains(.,'${key_portletName}')]/a</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'${key_portletName}')]/a | //ul[@class='category-portlets']/li/span[contains(.,'${key_portletName}')]/a</td>
 	<td>Site Administration Navigation</td>
 </tr>
 <tr>
@@ -395,7 +395,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS</td>
-	<td>//ul[@class='category-portlets']/li[contains(.,'Site Memberships')]/a</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'Site Memberships')]/a | //ul[@class='category-portlets']/li/span[contains(.,'Site Memberships')]/a</td>
 	<td></td>
 </tr>
 </tbody>
