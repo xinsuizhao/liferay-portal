@@ -34,7 +34,7 @@ String name = (String)request.getAttribute("liferay-ui:input-localized:name");
 String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 
-id = HtmlUtil.auiCompatibleId(id);
+id = HtmlUtil.getAUICompatibleId(id);
 
 Locale defaultLocale = null;
 
@@ -138,14 +138,14 @@ if ((exception != null) && fieldName.equals(focusField)) {
 			</aui:script>
 		</c:when>
 		<c:when test='<%= type.equals("input") %>'>
-			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + HtmlUtil.auiCompatibleId(fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 		</c:when>
 		<c:when test='<%= type.equals("textarea") %>'>
-			<textarea class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + HtmlUtil.auiCompatibleId(fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
+			<textarea class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
 
 			<c:if test="<%= autoSize %>">
 				<aui:script use="aui-autosize-deprecated">
-					A.one('#<portlet:namespace /><%= id + HtmlUtil.auiCompatibleId(fieldSuffix) %>').plug(A.Plugin.Autosize);
+					A.one('#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>').plug(A.Plugin.Autosize);
 				</aui:script>
 			</c:if>
 		</c:when>
@@ -254,7 +254,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 	<aui:script use="aui-char-counter">
 		new A.CharCounter(
 			{
-				input: '#<portlet:namespace /><%= id + HtmlUtil.auiCompatibleId(fieldSuffix) %>',
+				input: '#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 				maxLength: <%= maxLength %>
 			}
 		);
@@ -299,7 +299,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errors));
 
 			Liferay.InputLocalized.register(
-				'<portlet:namespace /><%= id + HtmlUtil.auiCompatibleId(fieldSuffix) %>',
+				'<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 				{
 					boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
 					columns: 20,
@@ -309,7 +309,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 						editor: window['<portlet:namespace /><%= fieldName %>'],
 					</c:if>
 
-					inputPlaceholder: '#<portlet:namespace /><%= id + HtmlUtil.auiCompatibleId(fieldSuffix) %>',
+					inputPlaceholder: '#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 					items: availableLanguageIds,
 					itemsError: errorLanguageIds,
 					lazy: <%= !type.equals("editor") %>,
@@ -321,14 +321,14 @@ if ((exception != null) && fieldName.equals(focusField)) {
 			);
 
 			<c:if test="<%= autoFocus %>">
-				Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + HtmlUtil.auiCompatibleId(fieldSuffix)) %>');
+				Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + HtmlUtil.getAUICompatibleId(fieldSuffix)) %>');
 			</c:if>
 		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= autoFocus %>">
 			<aui:script>
-				Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + HtmlUtil.auiCompatibleId(fieldSuffix)) %>');
+				Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + HtmlUtil.getAUICompatibleId(fieldSuffix)) %>');
 			</aui:script>
 		</c:if>
 	</c:otherwise>
