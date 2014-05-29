@@ -48,6 +48,11 @@ import java.util.Map;
 public class LayoutRemoteStagingBackgroundTaskExecutor
 	extends BaseStagingBackgroundTaskExecutor {
 
+	public LayoutRemoteStagingBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new LayoutStagingBackgroundTaskStatusMessageTranslator());
+	}
+
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
