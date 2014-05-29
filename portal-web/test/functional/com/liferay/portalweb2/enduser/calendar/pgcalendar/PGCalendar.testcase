@@ -62,6 +62,7 @@
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="site" value="Liferay" />
+		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -83,6 +84,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -95,6 +97,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -131,6 +134,7 @@
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="site" value="Liferay" />
+		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -152,6 +156,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -164,6 +169,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -200,6 +206,7 @@
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 		<var name="site" value="Liferay" />
+		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -221,6 +228,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -233,6 +241,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -387,8 +396,6 @@
 
 	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="5">
 		<var name="calendarType" value="Current Site Calendars" />
-		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
-		<var name="eventFontColorRGB" value="(104, 142, 217)" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="site" value="Liferay" />
@@ -422,8 +429,6 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewColorPG">
-			<var name="eventBackgroundColorRGB" value="${eventBackgroundColorRGB}" />
-			<var name="eventFontColorRGB" value="${eventFontColorRGB}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
