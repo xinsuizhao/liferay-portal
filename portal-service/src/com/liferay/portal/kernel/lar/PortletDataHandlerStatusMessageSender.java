@@ -21,6 +21,11 @@ import com.liferay.portal.model.StagedModel;
  */
 public interface PortletDataHandlerStatusMessageSender {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #sendStatusMessage(String, String[], ManifestSummary)}
+	 */
+	@Deprecated
 	public void sendStatusMessage(
 		String messageType, ManifestSummary manifestSummary);
 
