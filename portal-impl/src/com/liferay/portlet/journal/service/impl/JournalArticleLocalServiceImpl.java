@@ -344,7 +344,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = journalArticlePersistence.create(id);
 
-		Locale locale = getDefaultLocale(content, serviceContext);
+		Locale locale = getArticleDefaultLocale(content, serviceContext);
 
 		String title = titleMap.get(locale);
 
@@ -4790,7 +4790,7 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(latestArticle.getSmallImageId());
 		}
 
-		Locale locale = getDefaultLocale(content, serviceContext);
+		Locale locale = getArticleDefaultLocale(content, serviceContext);
 
 		String title = titleMap.get(locale);
 
@@ -5017,7 +5017,7 @@ public class JournalArticleLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(oldArticle.getUserId());
 
-		Locale defaultLocale = getDefaultLocale(content, serviceContext);
+		Locale defaultLocale = getArticleDefaultLocale(content, serviceContext);
 
 		if (incrementVersion) {
 			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
@@ -6103,6 +6103,23 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	protected Locale getArticleDefaultLocale(
+		String content, ServiceContext serviceContext) {
+
+		String defaultLanguageId = ParamUtil.getString(
+			serviceContext, "defaultLanguageId");
+
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
+		}
+
+		if (Validator.isNotNull(defaultLanguageId)) {
+			return LocaleUtil.fromLanguageId(defaultLanguageId);
+		}
+
+		return LocaleUtil.getSiteDefault();
+	}
+
 	protected List<ObjectValuePair<Long, Integer>> getArticleVersionStatuses(
 		List<JournalArticle> articles) {
 
@@ -6197,23 +6214,6 @@ public class JournalArticleLocalServiceImpl
 		dateInterval[1] = latestExpirationDate;
 
 		return dateInterval;
-	}
-
-	protected Locale getDefaultLocale(
-		String content, ServiceContext serviceContext) {
-
-		String defaultLanguageId = ParamUtil.getString(
-			serviceContext, "defaultLanguageId");
-
-		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
-		}
-
-		if (Validator.isNotNull(defaultLanguageId)) {
-			return LocaleUtil.fromLanguageId(defaultLanguageId);
-		}
-
-		return LocaleUtil.getSiteDefault();
 	}
 
 	protected JournalArticle getFirstArticle(
