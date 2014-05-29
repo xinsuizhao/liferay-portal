@@ -495,7 +495,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
-	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'(209, 219, 240)')]/div[contains(.,'${key_eventTitle}')] | //div[contains(@class,'calendar-portlet-event') and contains(@style,'(208, 219, 240)')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -505,7 +505,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
-	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'(104, 141, 217)')]/div[contains(.,'${key_eventTitle}')] | //div[contains(@class,'calendar-portlet-event') and contains(@style,'(104, 142, 217)')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
