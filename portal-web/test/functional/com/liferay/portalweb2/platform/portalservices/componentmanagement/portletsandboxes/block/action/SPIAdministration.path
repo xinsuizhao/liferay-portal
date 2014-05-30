@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>SPIAdministration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SPIAdministration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SPIAdministration</td>
+</tr>
+<!---->
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//a[@id='_1_WAR_spiadminportlet_controlPanelSubNav1_WAR_spiadminportletLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTION_MENULIST-->
+<tr>
+	<td>ACTION_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_MENULIST_START</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Start')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_MENULIST_STOP</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Stop')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPI_TABLE-->
+<tr>
+	<td>SPI_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[1]/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_APPLICATIONS</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_CONNECTOR_PORT</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_EDIT_LINK</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[6]/span[contains(.,'Edit')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_spiName}')]/td[6]/div/a[@title='Actions']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_ACTIONS_1</td>
+	<td>//tr/td[6]/div/a[@title='Actions']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPI_TABLE_STATUS_UNABLE_TO_RESTART</td>
+	<td>//span[@class='taglib-icon-help']/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

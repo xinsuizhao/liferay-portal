@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>SPIAdministrationConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SPIAdministrationConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SPIAdministrationConfiguration</td>
+</tr>
+<!---->
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[@id='_1_WAR_spiadminportlet_configurationIframeDialog_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECOVERY_OPTIONS_NOTIFICATION_OPTIONS-->
+<tr>
+	<td>RECOVERY_OPTIONS_NOTIFICATION_OPTIONS_NOTIFICATION_EMAIL_FROM_ADDRESS_FIELD</td>
+	<td>//input[@id='_86_notificationEmailFromAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECOVERY_OPTIONS_NOTIFICATION_OPTIONS_NOTIFICATION_EMAIL_FROM_NAME_FIELD</td>
+	<td>//input[@id='_86_notificationEmailFromName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECOVERY_OPTIONS_NOTIFICATION_OPTIONS_NOTIFICATION_RECIPIENTS_FIELD</td>
+	<td>//input[@id='_86_notificationRecipients']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECOVERY_OPTIONS_NOTIFICATION_OPTIONS_NOTIFICATION_EMAIL_SUBJECT_FIELD</td>
+	<td>//input[@id='_86_notificationEmailSubject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECOVERY_OPTIONS_NOTIFICATION_OPTIONS_NOTIFICATION_EMAIL_BODY_FIELD</td>
+	<td>//textarea[@id='_86_notificationEmailBody']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECOVERY_OPTIONS_RESTART_OPTIONS-->
+<tr>
+	<td>RECOVERY_OPTIONS_RESTART_OPTIONS_MAX_RESTART_ATTEMPTS_FIELD</td>
+	<td>//input[@id='_86_maxRestartAttempts']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
