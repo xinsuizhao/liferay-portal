@@ -367,6 +367,7 @@ public class LayoutImporter {
 				companyId, groupId, parameterMap, strategy, zipReader);
 
 		portletDataContext.setManifestSummary(manifestSummary);
+
 		portletDataContext.setPortetDataContextListener(
 			new PortletDataContextListenerImpl(portletDataContext));
 
