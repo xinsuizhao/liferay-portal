@@ -176,6 +176,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_CKE_EDIT_INLINE_SENDKEYS</td><!--This path is here so that sendKeys can be used on this locator-->
+	<td>//div[@class='entry-body']/div[contains(@class,'cke_editable') and contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_CKE_EDIT_INLINE_TOOLBAR</td>
 	<td>//div[contains(@id,'cke_blogs') and contains(@id,'entry-content')]//span[@class='cke_toolbar']</td>
 	<td></td>
