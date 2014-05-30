@@ -77,6 +77,8 @@ public class SeleniumBuilderFileUtil {
 
 		_componentNames = ListUtil.fromArray(
 			StringUtil.split(properties.getProperty("component.names")));
+		_propertyNames = ListUtil.fromArray(
+			StringUtil.split(properties.getProperty("property.names")));
 		_testrayAvailableComponentNames = ListUtil.fromArray(
 			StringUtil.split(
 				properties.getProperty("testray.available.component.names")));
@@ -575,6 +577,10 @@ public class SeleniumBuilderFileUtil {
 		else if (errorCode == 3002) {
 			throw new IllegalArgumentException(
 				prefix + "Missing property '" + string1 + "' for " + suffix);
+		}
+		else if (errorCode == 3003) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid property " + string1 + " at " + suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
@@ -1529,6 +1535,11 @@ public class SeleniumBuilderFileUtil {
 
 		String propertyName = propertyElement.attributeValue("name");
 
+		if (!_propertyNames.contains(propertyName)) {
+			throwValidationException(
+				3003, fileName, propertyElement, propertyName);
+		}
+
 		if (propertyName.equals("ignore.errors")) {
 			String propertyDelimiter = propertyElement.attributeValue(
 				"delimiter");
@@ -1980,6 +1991,7 @@ public class SeleniumBuilderFileUtil {
 			"getFirstNumber", "getIPAddress", "increment", "length",
 			"lowercase", "replace", "uppercase"
 		});
+	private static List<String> _propertyNames;
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
