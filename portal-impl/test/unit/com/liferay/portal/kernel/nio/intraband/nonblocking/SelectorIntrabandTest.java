@@ -1136,6 +1136,8 @@ public class SelectorIntrabandTest {
 
 		Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
 
+		while ((writeSelectionKey.interestOps() & SelectionKey.OP_WRITE) != 0);
+
 		synchronized (writeSelectionKey) {
 			synchronized (selector) {
 				wakeUpThread.interrupt();
