@@ -258,11 +258,11 @@ public class LayoutImporter {
 		UserIdStrategy strategy = _portletImporter.getUserIdStrategy(
 			user, userIdStrategy);
 
-		ManifestSummary manifestSummary =
-			ExportImportHelperUtil.getManifestSummary(
-				userId, groupId, parameterMap, file);
-
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			ManifestSummary manifestSummary =
+				ExportImportHelperUtil.getManifestSummary(
+					userId, groupId, parameterMap, file);
+
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"layout", manifestSummary);
 		}
@@ -272,8 +272,6 @@ public class LayoutImporter {
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				companyId, groupId, parameterMap, strategy, zipReader);
-
-		portletDataContext.setManifestSummary(manifestSummary);
 
 		portletDataContext.setPortetDataContextListener(
 			new PortletDataContextListenerImpl(portletDataContext));
