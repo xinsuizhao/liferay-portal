@@ -1114,27 +1114,26 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void removePortletFromLayoutTypePortlet(
-		String portletId, LayoutTypePortlet layoutTypePortlet) {
+	protected void removePortletFromLayoutType(
+		String portletId, LayoutTypePortlet layoutType) {
 
-		List<String> columnIds = new ArrayList<String>();
+		List<String> columns = new ArrayList<String>();
 
-		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+		LayoutTemplate layoutTemplate = layoutType.getLayoutTemplate();
 
-		columnIds.addAll(layoutTemplate.getColumns());
+		columns.addAll(layoutTemplate.getColumns());
 
-		String nestedColumnIds = layoutTypePortlet.getTypeSettingsProperty(
+		String nestedColumnIds = layoutType.getTypeSettingsProperty(
 			LayoutTypePortletConstants.NESTED_COLUMN_IDS);
 
-		columnIds.addAll(ListUtil.fromArray(StringUtil.split(nestedColumnIds)));
+		columns.addAll(ListUtil.fromArray(StringUtil.split(nestedColumnIds)));
 
-		for (String columnId : columnIds) {
-			String columnValue = layoutTypePortlet.getTypeSettingsProperty(
-				columnId);
+		for (String columnId : columns) {
+			String columnValue = layoutType.getTypeSettingsProperty(columnId);
 
 			columnValue = StringUtil.removeFromList(columnValue, portletId);
 
-			layoutTypePortlet.setTypeSettingsProperty(columnId, columnValue);
+			layoutType.setTypeSettingsProperty(columnId, columnValue);
 		}
 	}
 
@@ -1154,23 +1153,23 @@ public class LayoutStagedModelDataHandler
 
 			layout.setGroupId(importedLayout.getGroupId());
 
-			LayoutTypePortlet layoutTypePortlet =
+			LayoutTypePortlet layoutType =
 				(LayoutTypePortlet)layout.getLayoutType();
 
 			// Remove portlets with unchecked setup from the target layout
 
-			List<String> sourcePortletIds = layoutTypePortlet.getPortletIds();
+			List<String> sourcePortletIds = layoutType.getPortletIds();
 
 			for (String portletId : sourcePortletIds) {
 				boolean importPortletSetup = false;
 
 				try {
-					boolean[] importPortletControls =
+					boolean[] importControls =
 						ExportImportHelperUtil.getImportPortletControls(
 							portletDataContext.getCompanyId(), portletId,
 							portletDataContext.getParameterMap(), null);
 
-					importPortletSetup = importPortletControls[2];
+					importPortletSetup = importControls[2];
 				}
 				catch (Exception e) {
 				}
@@ -1178,12 +1177,11 @@ public class LayoutStagedModelDataHandler
 				if (!importPortletSetup &&
 					!importedPortletIds.contains(portletId)) {
 
-					removePortletFromLayoutTypePortlet(
-						portletId, layoutTypePortlet);
+					removePortletFromLayoutType(portletId, layoutType);
 				}
 			}
 
-			importedPortletIds.removeAll(layoutTypePortlet.getPortletIds());
+			importedPortletIds.removeAll(layoutType.getPortletIds());
 
 			// Delete already removed portlet instances
 
@@ -1196,7 +1194,7 @@ public class LayoutStagedModelDataHandler
 			}
 
 			importedLayout.setTypeSettingsProperties(
-				layoutTypePortlet.getTypeSettingsProperties());
+				layoutType.getTypeSettingsProperties());
 		}
 		finally {
 			layout.setGroupId(groupId);
