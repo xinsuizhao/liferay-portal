@@ -541,6 +541,8 @@
 				<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Pending (Review)" />
 			</else>
 		</if>
+
+		<execute action="PGStaging#pause" locator1="5000" />
 	</command>
 
 	<command name="undoStagingPageVersioningPG">
