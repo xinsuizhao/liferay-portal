@@ -2695,7 +2695,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		for (String field : fields) {
 			if (!UsersAdminUtil.hasUpdateFieldPermission(
-					getUser(), user, field)) {
+					getPermissionChecker(), getUser(), user, field)) {
 
 				ufe.addField(field);
 			}
