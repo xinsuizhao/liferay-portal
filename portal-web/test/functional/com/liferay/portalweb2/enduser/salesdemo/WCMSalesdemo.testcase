@@ -21,10 +21,6 @@
 		<var name="webContentContent" value="DHS Content" />
 		<var name="webContentTitle" value="DHS Title" />
 
-		<execute macro="Portlet#tearDownPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
