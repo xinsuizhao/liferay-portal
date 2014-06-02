@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_SITE_TEMPLATE_SETTINGS</td>
-	<td>//li[contains(.,'Site Template Settings')]/a/span/span</td>
+	<td>//li[contains(.,'Site Template Settings')]/a/span/span | //li[contains(.,'Site Template Settings')]/span/a</td>
 	<td></td>
 </tr>
 <tr>
