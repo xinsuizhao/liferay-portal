@@ -1,0 +1,203 @@
+<definition component-name="portal-portal-services">
+	<property name="custom.properties" value="layout.parallel.render.enable=false$${line.separator}portal.resiliency.enabled=true$${line.separator}portal.resiliency.portlet.show.footer=true" />
+	<property name="testray.main.component.name" value="Platform" />
+	<property name="portlet.plugins.includes" value="spi-admin-portlet" />
+	<property name="web.plugins.includes" value="spi-provider-web" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="SPIAdministration#tearDownCP">
+			<var name="spiStatus" value="Started" />
+		</execute>
+
+		<execute macro="ServerAdministration#tearDownMailServerSettings" />
+	</tear-down>
+
+	<command name="AutomaticShutdown" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SPI Administration" />
+		</execute>
+
+		<execute macro="SPIAdministration#addCP">
+			<var name="spiConnectorPort" value="9000" />
+			<var name="spiCoreApplications" value="Web Content" />
+			<var name="spiDescription" value="SPI Description" />
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewCP">
+			<var name="spiConnectorPort" value="9000" />
+			<var name="spiCoreApplications" value="Web Content" />
+			<var name="spiDescription" value="SPI Description" />
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Stopped" />
+		</execute>
+
+		<execute macro="SPIAdministration#startCP">
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Stopped" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewStartCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute action="Home#assertConsoleTextNotPresent" value1="Error" />
+	</command>
+
+	<command name="AutomaticStartup" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SPI Administration" />
+		</execute>
+
+		<execute macro="SPIAdministration#addCP">
+			<var name="spiConnectorPort" value="9000" />
+			<var name="spiCoreApplications" value="Web Content" />
+			<var name="spiDescription" value="SPI Description" />
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewCP">
+			<var name="spiConnectorPort" value="9000" />
+			<var name="spiCoreApplications" value="Web Content" />
+			<var name="spiDescription" value="SPI Description" />
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Stopped" />
+		</execute>
+
+		<execute macro="SPIAdministration#startCP">
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Stopped" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewStartCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="stop-app-server" />
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="start-app-server" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SPI Administration" />
+		</execute>
+
+		<execute action="SPIAdministration#pause" locator1="90000" />
+
+		<execute action="Home#refresh" />
+
+		<execute macro="SPIAdministration#viewStartCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute macro="SPIAdministration#stopCP">
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Started" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewStopCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+	</command>
+
+	<command name="EmailNotifications" priority="5">
+		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SPI Administration" />
+		</execute>
+
+		<execute macro="SPIAdministration#addCP">
+			<var name="spiConnectorPort" value="9000" />
+			<var name="spiCoreApplications" value="Web Content" />
+			<var name="spiDescription" value="SPI Description" />
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewCP">
+			<var name="spiConnectorPort" value="9000" />
+			<var name="spiCoreApplications" value="Web Content" />
+			<var name="spiDescription" value="SPI Description" />
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Stopped" />
+		</execute>
+
+		<execute macro="SPIAdministration#startCP">
+			<var name="spiName" value="SPI Name" />
+			<var name="spiStatus" value="Stopped" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewStartCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute macro="SPIAdministration#configureEmailNotificationsCP">
+			<var name="maxRestartAttempts" value="1" />
+			<var name="notificationRecipients" property-value="email.address.2" />
+		</execute>
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="shutdown-spi" />
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="liferay.qa" />
+			<var name="gmailAssetType" value="Sandbox Status Notification" />
+			<var name="gmailMailTableMessageTitle" value="Sandbox Status Notification" />
+			<var name="gmailMessageBody" value="There have been [$SANDBOX_RESTART_ATTEMPTS$] restart attempts. Please view the sandbox status in the Control Panel." />
+			<var name="gmailMessageBodyClosing" value="Sincerely" />
+			<var name="gmailMessageBodyGreeting" value="There was an issue with the following sandbox" />
+			<var name="gmailMessageTitle" value="Sandbox Status Notification: SPI Name" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SPI Administration" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewStartCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="shutdown-spi" />
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SPI Administration" />
+		</execute>
+
+		<execute macro="SPIAdministration#viewNoRestartCP">
+			<var name="spiName" value="SPI Name" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+	</command>
+</definition>
