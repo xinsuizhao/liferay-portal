@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 
@@ -194,31 +195,38 @@ public class ProcessUtilTest {
 
 	@Test
 	public void testEchoLogging() throws Exception {
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggingOutputProcessor.class.getName(), Level.INFO);
 
-		Future<?> future = ProcessUtil.execute(
-			ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
-			_buildArguments(Echo.class, "2"));
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		future.get();
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
+				_buildArguments(Echo.class, "2"));
 
-		future.cancel(true);
+			future.get();
 
-		List<String> messageRecords = new ArrayList<String>();
+			future.cancel(true);
 
-		for (LogRecord logRecord : logRecords) {
-			messageRecords.add(logRecord.getMessage());
+			List<String> messageRecords = new ArrayList<String>();
+
+			for (LogRecord logRecord : logRecords) {
+				messageRecords.add(logRecord.getMessage());
+			}
+
+			Assert.assertTrue(
+				messageRecords.contains("{stdErr}" + Echo.class.getName() + "0"));
+			Assert.assertTrue(
+				messageRecords.contains("{stdErr}" + Echo.class.getName() + "1"));
+			Assert.assertTrue(
+				messageRecords.contains("{stdOut}" + Echo.class.getName() + "0"));
+			Assert.assertTrue(
+				messageRecords.contains("{stdOut}" + Echo.class.getName() + "1"));
 		}
-
-		Assert.assertTrue(
-			messageRecords.contains("{stdErr}" + Echo.class.getName() + "0"));
-		Assert.assertTrue(
-			messageRecords.contains("{stdErr}" + Echo.class.getName() + "1"));
-		Assert.assertTrue(
-			messageRecords.contains("{stdOut}" + Echo.class.getName() + "0"));
-		Assert.assertTrue(
-			messageRecords.contains("{stdOut}" + Echo.class.getName() + "1"));
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@Test
