@@ -247,9 +247,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	)
 	@Test
 	public void testErrorLogAndExceptions() throws Exception {
-		JDKLoggerTestUtil.configureJDKLogger(
-			ClusterBase.class.getName(), Level.FINE);
-
 		ClusterExecutorImpl clusterExecutorImpl = null;
 
 		try {
