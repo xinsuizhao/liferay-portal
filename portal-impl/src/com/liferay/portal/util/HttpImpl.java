@@ -738,11 +738,11 @@ public class HttpImpl implements Http {
 					try {
 						value = decodeURL(kvp[1]);
 					}
-					catch (IllegalArgumentException e) {
+					catch (IllegalArgumentException iae) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
-								"Skipping parameter " + key +
-									", it has invalid value " + kvp[1] + " .",
+								"Skipping parameter with key " + key +
+									" because of invalid value " + kvp[1],
 								e);
 						}
 
