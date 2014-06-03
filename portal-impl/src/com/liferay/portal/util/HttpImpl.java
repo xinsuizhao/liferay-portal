@@ -735,7 +735,19 @@ public class HttpImpl implements Http {
 				String value = StringPool.BLANK;
 
 				if (kvp.length > 1) {
-					value = decodeURL(kvp[1]);
+					try {
+						value = decodeURL(kvp[1]);
+					}
+					catch (IllegalArgumentException e) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Skipping parameter " + key +
+									", it has invalid value " + kvp[1] + " .",
+								e);
+						}
+
+						continue;
+					}
 				}
 
 				List<String> values = tempParameterMap.get(key);
