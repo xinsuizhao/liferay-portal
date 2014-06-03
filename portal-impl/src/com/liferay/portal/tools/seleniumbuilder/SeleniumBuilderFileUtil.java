@@ -1912,8 +1912,7 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		if (!attributeMap.containsKey("property-value") &&
-			!attributeMap.containsKey("value") &&
-			Validator.isNull(varText)) {
+			!attributeMap.containsKey("value") && Validator.isNull(varText)) {
 
 			if (!attributeMap.containsKey("group") &&
 				!attributeMap.containsKey("input") &&
