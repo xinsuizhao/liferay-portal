@@ -29,7 +29,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 	<liferay-ui:search-toggle
 		autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 		buttonLabel="search"
@@ -123,3 +123,16 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 		</aui:fieldset>
 	</liferay-ui:search-toggle>
 </aui:form>
+
+<aui:script use="aui-node-base,liferay-form">
+	var form = Liferay.Form.get('<portlet:namespace />fm1');
+
+	if (form) {
+		form.set(
+			'onSubmit',
+			function(event) {
+				event.preventDefault();
+			}
+		);
+	}
+</aui:script>
