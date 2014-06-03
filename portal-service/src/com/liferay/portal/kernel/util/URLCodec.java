@@ -318,6 +318,7 @@ public class URLCodec {
 					if (((i + 1) < rawString.length()) &&
 						Character.isLowSurrogate(rawString.charAt(i + 1))) {
 
+						i++;
 						count++;
 					}
 				}
