@@ -749,7 +749,13 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 						return StringPool.BLANK;
 					}
 
-					return LocalizationUtil.getDefaultLanguageId(xml);
+					<#if entity.isGroupedModel()>
+						Locale defaultLocale = LocaleUtil.getSiteDefault();
+					<#else>
+						Locale defaultLocale = LocaleUtil.getDefault();
+					</#if>
+
+					return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 					<#break>
 				</#if>
 			</#list>
@@ -763,7 +769,11 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		@Override
 		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
-			Locale defaultLocale = LocaleUtil.getSiteDefault();
+			<#if entity.isGroupedModel()>
+				Locale defaultLocale = LocaleUtil.getSiteDefault();
+			<#else>
+				Locale defaultLocale = LocaleUtil.getDefault();
+			</#if>
 
 			String modelDefaultLanguageId = getDefaultLanguageId();
 
