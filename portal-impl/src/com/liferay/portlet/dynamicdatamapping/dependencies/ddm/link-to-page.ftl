@@ -9,7 +9,9 @@
 	selectedPlid
 	level = 0
 >
-	<#assign layouts = layoutLocalService.getLayouts(groupId, privateLayout, parentLayoutId)>
+	<#assign layoutService = serviceLocator.findService("com.liferay.portal.service.LayoutService")>
+
+	<#assign layouts = layoutService.getLayouts(groupId, privateLayout, parentLayoutId)>
 
 	<#if (layouts?size > 0)>
 		<#if (level == 0)>
@@ -64,12 +66,24 @@
 
 		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
 
-		<#if (selectedLayout?? && selectedLayout != "")>
+		<#if (validator.isNotNull(selectedLayout))>
 			<#assign selectedPlid = selectedLayout.getPlid()>
 		</#if>
 	</#if>
 
 	<select name="${namespacedFieldName}">
+		<#if (validator.isNotNull(selectedLayout) && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
+			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
+
+				<#assign selectedLayoutJSON = escapeAttribute("{ \"layoutId\": ${selectedLayout.getLayoutId()}, \"groupId\": ${scopeGroupId}, \"privateLayout\": ${selectedLayout?string} }")>
+
+				<@aui.option selected=true useModelValue=false value=selectedLayoutJSON>
+					${escape(selectedLayout.getName(requestedLocale))}
+				</@>
+
+			</optgroup>
+		</#if>
+
 		<@getLayoutsOptions
 			groupId = scopeGroupId
 			parentLayoutId = 0
