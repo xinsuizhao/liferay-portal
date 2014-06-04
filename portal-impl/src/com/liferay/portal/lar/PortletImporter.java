@@ -475,7 +475,10 @@ public class PortletImporter {
 
 		Element portletDataElement = portletElement.element("portlet-data");
 
-		boolean importData = importPortletData && (portletDataElement != null);
+		boolean[] importPortletControls =
+			LayoutImporter.getImportPortletControls(
+				layout.getCompanyId(), portletId, parameterMap,
+				portletDataElement);
 
 		try {
 
@@ -483,13 +486,13 @@ public class PortletImporter {
 
 			importPortletPreferences(
 				portletDataContext, layout.getCompanyId(), groupId, layout,
-				portletId, portletElement, importPortletSetup,
-				importPortletArchivedSetups, importPortletUserPreferences, true,
-				importData);
+				portletId, portletElement, true, importPortletControls[0],
+				importPortletControls[1], importPortletControls[2],
+				importPortletControls[3]);
 
 			// Portlet data
 
-			if (importData) {
+			if (importPortletControls[1]) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Importing portlet data");
 				}
@@ -949,9 +952,9 @@ public class PortletImporter {
 	protected void importPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long groupId,
 			Layout layout, String portletId, Element parentElement,
-			boolean importPortletSetup, boolean importPortletArchivedSetups,
-			boolean importPortletUserPreferences, boolean preserveScopeLayoutId,
-			boolean importPortletData)
+			boolean preserveScopeLayoutId, boolean importPortletArchivedSetups,
+			boolean importPortletData, boolean importPortletSetup,
+			boolean importPortletUserPreferences)
 		throws Exception {
 
 		if (portletId == null) {
