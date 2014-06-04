@@ -111,6 +111,16 @@ public class LayoutImporter {
 			Map<String, String[]> parameterMap, Element portletDataElement)
 		throws Exception {
 
+		return getImportPortletControls(
+			companyId, portletId, parameterMap, portletDataElement, null);
+	}
+
+	public static boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception {
+
 		boolean importPortletConfiguration = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
 		boolean importPortletConfigurationAll = MapUtil.getBoolean(
@@ -153,14 +163,26 @@ public class LayoutImporter {
 		boolean importCurPortletUserPreferences = importPortletConfiguration;
 
 		if (importPortletConfigurationAll) {
+			boolean importCurPortletConfiguration = true;
+
+			if ((manifestSummary != null) &&
+				(manifestSummary.getConfigurationPortletOptions(
+					rootPortletId) == null)) {
+
+				importCurPortletConfiguration = false;
+			}
+
 			importCurPortletArchivedSetups =
+				importCurPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
 					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
 			importCurPortletSetup =
+				importCurPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
 			importCurPortletUserPreferences =
+				importCurPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
@@ -682,7 +704,8 @@ public class LayoutImporter {
 			Element portletDataElement = portletElement.element("portlet-data");
 
 			boolean[] importPortletControls = getImportPortletControls(
-					companyId, portletId, parameterMap, portletDataElement);
+					companyId, portletId, parameterMap, portletDataElement,
+					manifestSummary);
 
 			try {
 				if (layout != null) {

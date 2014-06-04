@@ -478,7 +478,7 @@ public class PortletImporter {
 		boolean[] importPortletControls =
 			LayoutImporter.getImportPortletControls(
 				layout.getCompanyId(), portletId, parameterMap,
-				portletDataElement);
+				portletDataElement, manifestSummary);
 
 		try {
 
