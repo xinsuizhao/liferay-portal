@@ -704,8 +704,8 @@ public class LayoutImporter {
 			Element portletDataElement = portletElement.element("portlet-data");
 
 			boolean[] importPortletControls = getImportPortletControls(
-					companyId, portletId, parameterMap, portletDataElement,
-					manifestSummary);
+				companyId, portletId, parameterMap, portletDataElement,
+				manifestSummary);
 
 			try {
 				if (layout != null) {

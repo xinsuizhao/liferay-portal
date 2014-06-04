@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -1133,7 +1132,7 @@ public class LayoutStagedModelDataHandler
 			String columnValue = layoutTypePortlet.getTypeSettingsProperty(
 				columnId);
 
-			columnValue = StringUtil.removeFromList(columnValue, portletId);
+			columnValue = StringUtil.remove(columnValue, portletId);
 
 			layoutTypePortlet.setTypeSettingsProperty(columnId, columnValue);
 		}
