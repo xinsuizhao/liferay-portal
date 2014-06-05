@@ -236,7 +236,8 @@ public class LayoutExporter {
 
 		return new boolean[] {
 			exportCurPortletArchivedSetups, exportCurPortletData,
-			exportCurPortletSetup, exportCurPortletUserPreferences};
+			exportCurPortletSetup, exportCurPortletUserPreferences
+		};
 	}
 
 	public static List<Portlet> getPortletDataHandlerPortlets(

@@ -217,7 +217,8 @@ public class LayoutImporter {
 
 		return new boolean[] {
 			importCurPortletArchivedSetups, importCurPortletData,
-			importCurPortletSetup, importCurPortletUserPreferences};
+			importCurPortletSetup, importCurPortletUserPreferences
+		};
 	}
 
 	public void importLayouts(
