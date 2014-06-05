@@ -127,9 +127,7 @@ public class PortletExporter {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if ((portletDataHandler == null) ||
-			portletDataHandler.isDataPortletInstanceLevel()) {
-
+		if (portletDataHandler == null) {
 			return;
 		}
 
