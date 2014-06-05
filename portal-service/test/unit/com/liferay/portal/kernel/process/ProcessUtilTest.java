@@ -216,13 +216,17 @@ public class ProcessUtilTest {
 			}
 
 			Assert.assertTrue(
-				messageRecords.contains("{stdErr}" + Echo.class.getName() + "0"));
+				messageRecords.contains(
+					"{stdErr}" + Echo.class.getName() + "0"));
 			Assert.assertTrue(
-				messageRecords.contains("{stdErr}" + Echo.class.getName() + "1"));
+				messageRecords.contains(
+					"{stdErr}" + Echo.class.getName() + "1"));
 			Assert.assertTrue(
-				messageRecords.contains("{stdOut}" + Echo.class.getName() + "0"));
+				messageRecords.contains(
+					"{stdOut}" + Echo.class.getName() + "0"));
 			Assert.assertTrue(
-				messageRecords.contains("{stdOut}" + Echo.class.getName() + "1"));
+				messageRecords.contains(
+					"{stdOut}" + Echo.class.getName() + "1"));
 		}
 		finally {
 			captureHandler.close();

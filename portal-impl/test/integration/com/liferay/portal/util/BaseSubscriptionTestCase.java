@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.model.Group;
@@ -94,166 +95,238 @@ public abstract class BaseSubscriptionTestCase {
 	public void testSubscriptionBaseModelWhenInContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		long baseModelId = addBaseModel(containerModelId);
+			long containerModelId = addContainerModel(
+				DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		addSubscriptionBaseModel(baseModelId);
+			long baseModelId = addBaseModel(containerModelId);
 
-		updateEntry(baseModelId);
+			addSubscriptionBaseModel(baseModelId);
 
-		Assert.assertEquals(1, logRecords.size());
+			updateEntry(baseModelId);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionBaseModelWhenInRootContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		long baseModelId = addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		addSubscriptionBaseModel(baseModelId);
+			long baseModelId = addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		updateEntry(baseModelId);
+			addSubscriptionBaseModel(baseModelId);
 
-		Assert.assertEquals(1, logRecords.size());
+			updateEntry(baseModelId);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		addSubscriptionContainerModel(containerModelId);
+			long containerModelId = addContainerModel(
+				DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		addBaseModel(containerModelId);
+			addSubscriptionContainerModel(containerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
+			addBaseModel(containerModelId);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionContainerModelWhenInRootContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		addSubscriptionContainerModel(containerModelId);
+			long containerModelId = addContainerModel(
+				DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			addSubscriptionContainerModel(containerModelId);
 
-		Assert.assertEquals(0, logRecords.size());
+			addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+
+			Assert.assertEquals(0, logRecords.size());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionContainerModelWhenInSubcontainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		addSubscriptionContainerModel(containerModelId);
+			long containerModelId = addContainerModel(
+				DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		long subcontainerModelId = addContainerModel(containerModelId);
+			addSubscriptionContainerModel(containerModelId);
 
-		addBaseModel(subcontainerModelId);
+			long subcontainerModelId = addContainerModel(containerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
+			addBaseModel(subcontainerModelId);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionRootContainerModelWhenInContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		addBaseModel(containerModelId);
+			long containerModelId = addContainerModel(
+				DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		Assert.assertEquals(1, logRecords.size());
+			addBaseModel(containerModelId);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionRootContainerModelWhenInRootContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		Assert.assertEquals(1, logRecords.size());
+			addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
 	public void testSubscriptionRootContainerModelWhenInSubcontainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		long subcontainerModelId = addContainerModel(containerModelId);
+			long containerModelId = addContainerModel(
+				DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		addBaseModel(subcontainerModelId);
+			long subcontainerModelId = addContainerModel(containerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
+			addBaseModel(subcontainerModelId);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals("Sending email", logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	public abstract long updateEntry(long baseModelId) throws Exception;

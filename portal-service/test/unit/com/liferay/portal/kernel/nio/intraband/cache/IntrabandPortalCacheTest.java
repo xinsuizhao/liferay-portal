@@ -276,34 +276,42 @@ public class IntrabandPortalCacheTest {
 
 		// Unable to bulk get, with log
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			IntrabandPortalCache.class.getName(), Level.WARNING);
 
-		RuntimeException runtimeException = new RuntimeException();
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		runtimeExceptionReference.set(runtimeException);
+			RuntimeException runtimeException = new RuntimeException();
 
-		Assert.assertEquals(
-			Arrays.asList(null, null, null),
-			intrabandPortalCache.get(testKeys));
-		Assert.assertEquals(1, logRecords.size());
+			runtimeExceptionReference.set(runtimeException);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(
+				Arrays.asList(null, null, null),
+				intrabandPortalCache.get(testKeys));
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals(
-			"Unable to bulk get, coverting to cache miss",
-			logRecord.getMessage());
-		Assert.assertSame(runtimeException, logRecord.getThrown());
+			LogRecord logRecord = logRecords.get(0);
 
-		// Unable to bulk get, without log
+			Assert.assertEquals(
+				"Unable to bulk get, coverting to cache miss",
+				logRecord.getMessage());
+			Assert.assertSame(runtimeException, logRecord.getThrown());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			IntrabandPortalCache.class.getName(), Level.OFF);
+			// Unable to bulk get, without log
 
-		Assert.assertEquals(
-			Arrays.asList(null, null, null),
-			intrabandPortalCache.get(testKeys));
-		Assert.assertTrue(logRecords.isEmpty());
+			logRecords = captureHandler.resetLogLevel(Level.OFF);
+
+			Assert.assertEquals(
+				Arrays.asList(null, null, null),
+				intrabandPortalCache.get(testKeys));
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -71,28 +72,40 @@ public class BootstrapRPCDatagramReceiveHandlerTest {
 		Assert.assertEquals(
 			TestProcessCallable.class.getName(), deserializer.readObject());
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			BootstrapRPCDatagramReceiveHandler.class.getName(), Level.SEVERE);
+		CaptureHandler captureHandler = null;
 
-		serializer = new Serializer();
+		try {
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				BootstrapRPCDatagramReceiveHandler.class.getName(),
+				Level.SEVERE);
 
-		serializer.writeObject(new ErrorTestProcessCallable());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		bootstrapRPCDatagramReceiveHandler.receive(
-			new MockRegistrationReference(mockIntraband),
-			Datagram.createRequestDatagram(
-				systemDataType.getValue(), serializer.toByteBuffer()));
+			serializer = new Serializer();
 
-		Assert.assertEquals(1, logRecords.size());
+			serializer.writeObject(new ErrorTestProcessCallable());
 
-		LogRecord logRecord = logRecords.get(0);
+			bootstrapRPCDatagramReceiveHandler.receive(
+				new MockRegistrationReference(mockIntraband),
+				Datagram.createRequestDatagram(
+					systemDataType.getValue(), serializer.toByteBuffer()));
 
-		Assert.assertEquals("Unable to execute", logRecord.getMessage());
+			Assert.assertEquals(1, logRecords.size());
 
-		Throwable throwable = logRecord.getThrown();
+			LogRecord logRecord = logRecords.get(0);
 
-		Assert.assertSame(ProcessException.class, throwable.getClass());
-		Assert.assertEquals("Execution error", throwable.getMessage());
+			Assert.assertEquals("Unable to execute", logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(ProcessException.class, throwable.getClass());
+			Assert.assertEquals("Execution error", throwable.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	private static class ErrorTestProcessCallable
