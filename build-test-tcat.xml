@@ -4,9 +4,9 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-tcat">
-		<app-server-properties-update>
+		<app-server-update>
 			app.server.type=tomcat
-		</app-server-properties-update>
+		</app-server-update>
 
 		<echo file="test.${user.name}.properties" append="true">
 			tcat.enabled=true

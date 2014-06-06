@@ -16,9 +16,9 @@
 	</target>
 
 	<target name="run-selenium-jetty">
-		<app-server-properties-update>
+		<app-server-update>
 			app.server.type=jetty
-		</app-server-properties-update>
+		</app-server-update>
 
 		<if>
 			<not>
