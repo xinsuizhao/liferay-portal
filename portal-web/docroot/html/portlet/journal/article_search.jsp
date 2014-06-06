@@ -110,7 +110,9 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 			</c:if>
 
 			<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) %>">
-				<aui:select inlineField="<%= true %>" name="<%= displayTerms.STATUS %>">
+				<div class="separator"><!-- --></div>
+
+				<aui:select name="<%= displayTerms.STATUS %>">
 					<aui:option value=""></aui:option>
 					<aui:option label="draft" selected='<%= displayTerms.getStatus().equals("draft") %>' />
 					<aui:option label="pending" selected='<%= displayTerms.getStatus().equals("pending") %>' />
