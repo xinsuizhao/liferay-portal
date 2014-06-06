@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -296,7 +298,21 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+			Folder folder = null;
+
+			try {
+				folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+			}
+			catch (PortalException e) {
+				if (_log.isErrorEnabled()) {
+					_log.error(
+						"Portlet " + portletId +
+							" refers to an invalid root folder: " +
+							rootFolderId);
+				}
+
+				throw e;
+			}
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, folder);
@@ -539,5 +555,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		};
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(DLPortletDataHandler.class);
 
 }
