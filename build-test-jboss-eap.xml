@@ -16,7 +16,10 @@
 	</target>
 
 	<target name="run-selenium-jboss-eap">
-		<echo file="app.server.${user.name}.properties">app.server.type=jboss</echo>
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.version=6.1.0
+app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+app.server.jboss.zip.name=jboss-eap-6.1.0.zip</echo>
 
 		<if>
 			<not>
