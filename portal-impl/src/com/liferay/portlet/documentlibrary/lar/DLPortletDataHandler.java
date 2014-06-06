@@ -307,8 +307,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				if (_log.isErrorEnabled()) {
 					_log.error(
 						"Portlet " + portletId +
-							" refers to an invalid root folder: " +
-							rootFolderId);
+							" refers to an invalid root folder ID " +
+								rootFolderId);
 				}
 
 				throw e;
