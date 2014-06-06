@@ -4,9 +4,7 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-tcserver">
-		<app-server-update>
-			app.server.type=tcserver
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
 
 		<if>
 			<not>

@@ -51,13 +51,11 @@
 	<target name="build-dist-geronimo">
 		<antcall target="unzip-geronimo" />
 
-		<app-server-update>
-			app.server.type=geronimo
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=geronimo</echo>
 
 		<antcall target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.geronimo.deploy.dir}" />
@@ -69,13 +67,11 @@
 	<target name="build-dist-glassfish">
 		<antcall target="unzip-glassfish" />
 
-		<app-server-update>
-			app.server.type=glassfish
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.glassfish.deploy.dir}" />
@@ -87,15 +83,13 @@
 	<target name="build-dist-jboss">
 		<antcall target="unzip-jboss" />
 
-		<app-server-update>
-			app.server.type=jboss
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss</echo>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<if>
 			<equals arg1="${app.server.jboss.major.version}" arg2="5" />
@@ -117,13 +111,11 @@
 	</target>
 
 	<target name="build-dist-jboss-eap-6.0">
-		<app-server-update>
-			app.server.type=jboss
-			app.server.jboss.version=6.0.1
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.0
-			app.server.jboss.zip.name=jboss-eap-6.0.1.zip
-			app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.0.1.zip
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.version=6.0.1
+app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.0
+app.server.jboss.zip.name=jboss-eap-6.0.1.zip
+app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.0.1.zip</echo>
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -131,7 +123,7 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jboss.deploy.dir}" />
@@ -141,13 +133,11 @@
 	</target>
 
 	<target name="build-dist-jboss-eap-6.1">
-		<app-server-update>
-			app.server.type=jboss
-			app.server.jboss.version=6.1.0
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
-			app.server.jboss.zip.name=jboss-eap-6.1.0.zip
-			app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.version=6.1.0
+app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+app.server.jboss.zip.name=jboss-eap-6.1.0.zip
+app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip</echo>
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -155,7 +145,7 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jboss.deploy.dir}" />
@@ -167,15 +157,13 @@
 	<target name="build-dist-jetty">
 		<antcall target="unzip-jetty" />
 
-		<app-server-update>
-			app.server.type=jetty
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=jetty</echo>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jetty.deploy.dir}" />
@@ -187,15 +175,13 @@
 	<target name="build-dist-jonas">
 		<antcall target="unzip-jonas" />
 
-		<app-server-update>
-			app.server.type=jonas
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=jonas</echo>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jonas.deploy.dir}" />
@@ -288,15 +274,13 @@
 	<target name="build-dist-resin">
 		<antcall target="unzip-resin" />
 
-		<app-server-update>
-			app.server.type=resin
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=resin</echo>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.resin.deploy.dir}" />
@@ -313,11 +297,12 @@
 	</target>
 
 	<target name="build-dist-tcat">
-		<app-server-update>
+		<echo file="app.server.${user.name}.properties">
 			app.server.type=tomcat
+
 			app.server.tomcat.version=7.0.39
 			app.server.tomcat.zip.url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.zip
-		</app-server-update>
+		</echo>
 
 		<antcall target="build-dist-tomcat" inheritAll="false">
 			<param name="tomcat.keep.app.server.properties" value="true" />
@@ -370,7 +355,7 @@
 			<param name="app.server.tcat.zip.name" value="${app.server.tcat.zip.name}" />
 		</antcall>
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 	</target>
 
 	<target name="build-dist-tcat-admin">
@@ -526,15 +511,13 @@
 	<target name="build-dist-tcserver">
 		<antcall target="unzip-tcserver" />
 
-		<app-server-update>
-			app.server.type=tcserver
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<antcall target="all" inheritAll="false" />
 
-		<app-server-reset />
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.tcserver.deploy.dir}" />
@@ -552,9 +535,7 @@
 			<else>
 				<antcall target="unzip-tomcat" />
 
-				<app-server-update>
-					app.server.type=tomcat
-				</app-server-update>
+				<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
 			</else>
 		</if>
 
@@ -567,7 +548,7 @@
 				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
 			</not>
 			<then>
-				<app-server-reset />
+				<delete file="app.server.${user.name}.properties" />
 			</then>
 		</if>
 

@@ -16,9 +16,7 @@
 	</target>
 
 	<target name="run-selenium-jboss">
-		<app-server-update>
-			app.server.type=jboss
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss</echo>
 
 		<if>
 			<not>

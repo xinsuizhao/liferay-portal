@@ -4,9 +4,7 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-websphere">
-		<app-server-update>
-			app.server.type=websphere
-		</app-server-update>
+		<echo file="app.server.${user.name}.properties">app.server.type=websphere</echo>
 
 		<if>
 			<not>
