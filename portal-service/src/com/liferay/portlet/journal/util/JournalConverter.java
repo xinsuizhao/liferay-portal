@@ -17,6 +17,8 @@ package com.liferay.portlet.journal.util;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.util.Locale;
+
 /**
  * @author Marcellus Tavares
  * @author Bruno Basto
@@ -31,6 +33,12 @@ public interface JournalConverter {
 
 	public String getDDMXSD(String journalXSD) throws Exception;
 
+	public String getDDMXSD(String journalXSD, Locale defaultLocale)
+		throws Exception;
+
 	public String getJournalXSD(String ddmXSD) throws Exception;
+
+	public Locale getStructureNameDefaultLocale(String structureName)
+		throws Exception;
 
 }
