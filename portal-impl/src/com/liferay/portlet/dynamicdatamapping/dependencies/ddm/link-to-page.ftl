@@ -85,8 +85,8 @@
 			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
 				<@getLayoutOption
 					groupId = scopeGroupId
-					parentLayoutId = parentLayoutId
-					privateLayout = privateLayout
+					parentLayoutId = 0
+					privateLayout = selectedLayout.isPrivateLayout()
 					selected = true
 					layout = selectedLayout
 					level = 0
