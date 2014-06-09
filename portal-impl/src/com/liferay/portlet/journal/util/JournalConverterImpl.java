@@ -60,6 +60,27 @@ import java.util.Set;
  */
 public class JournalConverterImpl implements JournalConverter {
 
+	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
+		throws Exception {
+
+		Document document = SAXReaderUtil.read(journalXSD);
+
+		Element rootElement = document.getRootElement();
+
+		rootElement.addAttribute("available-locales", defaultLocale.toString());
+		rootElement.addAttribute("default-locale", defaultLocale.toString());
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateJournalXSDDynamicElement(
+				dynamicElementElement, defaultLocale.toString());
+		}
+
+		return DDMXMLUtil.formatXML(document);
+	}
+
 	public JournalConverterImpl() {
 		_ddmDataTypes = new HashMap<String, String>();
 
@@ -182,27 +203,6 @@ public class JournalConverterImpl implements JournalConverter {
 		return getDDMXSD(journalXSD, defaultLocale);
 	}
 
-	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
-		throws Exception {
-
-		Document document = SAXReaderUtil.read(journalXSD);
-
-		Element rootElement = document.getRootElement();
-
-		rootElement.addAttribute("available-locales", defaultLocale.toString());
-		rootElement.addAttribute("default-locale", defaultLocale.toString());
-
-		List<Element> dynamicElementElements = rootElement.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateJournalXSDDynamicElement(
-				dynamicElementElement, defaultLocale.toString());
-		}
-
-		return DDMXMLUtil.formatXML(document);
-	}
-
 	@Override
 	public String getJournalXSD(String ddmXSD) throws Exception {
 		Document document = SAXReaderUtil.read(ddmXSD);
@@ -223,6 +223,157 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return DDMXMLUtil.formatXML(document);
+	}
+
+	protected static void addMetadataEntry(
+		Element metadataElement, String name, String value) {
+
+		Element entryElement = metadataElement.addElement("entry");
+
+		entryElement.addAttribute("name", name);
+		entryElement.addCDATA(value);
+	}
+
+	protected static Element fetchMetadataEntry(
+		Element parentElement, String attributeName, String attributeValue) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("entry[@");
+		sb.append(attributeName);
+		sb.append(StringPool.EQUAL);
+		sb.append(HtmlUtil.escapeXPathAttribute(attributeValue));
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
+
+		return (Element)xPathSelector.selectSingleNode(parentElement);
+	}
+
+	protected static void updateJournalXSDDynamicElement(
+		Element element, String defaultLanguageId) {
+
+		String name = element.attributeValue("name");
+		String type = element.attributeValue("type");
+
+		Element metadataElement = element.element("meta-data");
+
+		if (metadataElement == null) {
+			metadataElement = element.addElement("meta-data");
+		}
+
+		if (type.equals("multi-list")) {
+			element.addAttribute("multiple", "true");
+		}
+		else {
+			Element parentElement = element.getParent();
+
+			String parentType = parentElement.attributeValue("type");
+
+			if ((parentType != null) && parentType.equals("select")) {
+				metadataElement.addAttribute("locale", defaultLanguageId);
+
+				addMetadataEntry(metadataElement, "label", name);
+
+				element.addAttribute("name", "option" + StringUtil.randomId());
+				element.addAttribute("type", "option");
+				element.addAttribute("value", type);
+
+				return;
+			}
+		}
+
+		String indexType = StringPool.BLANK;
+
+		Attribute indexTypeAttribute = element.attribute("index-type");
+
+		if (indexTypeAttribute != null) {
+			indexType = indexTypeAttribute.getValue();
+
+			element.remove(indexTypeAttribute);
+		}
+
+		element.remove(element.attribute("type"));
+
+		if (!type.equals("selection_break")) {
+			String dataType = _ddmDataTypes.get(type);
+
+			if (dataType == null) {
+				dataType = "string";
+			}
+
+			element.addAttribute("dataType", dataType);
+		}
+
+		element.addAttribute("indexType", indexType);
+
+		String required = "false";
+
+		Element requiredElement = fetchMetadataEntry(
+			metadataElement, "name", "required");
+
+		if (requiredElement != null) {
+			required = requiredElement.getText();
+		}
+
+		element.addAttribute("required", required);
+
+		element.addAttribute("showLabel", "true");
+
+		String newType = _journalTypesToDDMTypes.get(type);
+
+		if (newType == null) {
+			newType = type;
+		}
+
+		element.addAttribute("type", newType);
+
+		if (newType.startsWith("ddm")) {
+			element.addAttribute("fieldNamespace", "ddm");
+		}
+
+		metadataElement.addAttribute("locale", defaultLanguageId);
+
+		List<Element> entryElements = metadataElement.elements();
+
+		if (entryElements.isEmpty()) {
+			addMetadataEntry(metadataElement, "label", name);
+		}
+		else {
+			for (Element entryElement : entryElements) {
+				String oldEntryName = entryElement.attributeValue("name");
+
+				String newEntryName = _ddmMetadataAttributes.get(oldEntryName);
+
+				if (newEntryName == null) {
+					metadataElement.remove(entryElement);
+				}
+				else {
+					entryElement.addAttribute("name", newEntryName);
+				}
+			}
+		}
+
+		if (newType.equals("ddm-date") || newType.equals("ddm-decimal") ||
+			newType.equals("ddm-integer") ||
+			newType.equals("ddm-link-to-page") ||
+			newType.equals("ddm-number") || newType.equals("ddm-text-html") ||
+			newType.equals("text") || newType.equals("textarea")) {
+
+			element.addAttribute("width", "25");
+		}
+		else if (newType.equals("wcm-image")) {
+			element.addAttribute("fieldNamespace", "wcm");
+			element.addAttribute("readOnly", "false");
+		}
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateJournalXSDDynamicElement(
+				dynamicElementElement, defaultLanguageId);
+		}
 	}
 
 	protected void addDDMFields(
@@ -269,15 +420,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	protected static void addMetadataEntry(
-		Element metadataElement, String name, String value) {
-
-		Element entryElement = metadataElement.addElement("entry");
-
-		entryElement.addAttribute("name", name);
-		entryElement.addCDATA(value);
-	}
-
 	protected int countFieldRepetition(
 			Fields ddmFields, String fieldName, String parentFieldName,
 			int parentOffset)
@@ -311,22 +453,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return repetitions;
-	}
-
-	protected static Element fetchMetadataEntry(
-		Element parentElement, String attributeName, String attributeValue) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("entry[@");
-		sb.append(attributeName);
-		sb.append(StringPool.EQUAL);
-		sb.append(HtmlUtil.escapeXPathAttribute(attributeValue));
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
-
-		return (Element)xPathSelector.selectSingleNode(parentElement);
 	}
 
 	protected String getAvailableLocales(Fields ddmFields) {
@@ -797,137 +923,12 @@ public class JournalConverterImpl implements JournalConverter {
 			element, LocaleUtil.toLanguageId(defaultLocale));
 	}
 
-	protected static void updateJournalXSDDynamicElement(
-		Element element, String defaultLanguageId) {
-
-		String name = element.attributeValue("name");
-		String type = element.attributeValue("type");
-
-		Element metadataElement = element.element("meta-data");
-
-		if (metadataElement == null) {
-			metadataElement = element.addElement("meta-data");
-		}
-
-		if (type.equals("multi-list")) {
-			element.addAttribute("multiple", "true");
-		}
-		else {
-			Element parentElement = element.getParent();
-
-			String parentType = parentElement.attributeValue("type");
-
-			if ((parentType != null) && parentType.equals("select")) {
-				metadataElement.addAttribute("locale", defaultLanguageId);
-
-				addMetadataEntry(metadataElement, "label", name);
-
-				element.addAttribute("name", "option" + StringUtil.randomId());
-				element.addAttribute("type", "option");
-				element.addAttribute("value", type);
-
-				return;
-			}
-		}
-
-		String indexType = StringPool.BLANK;
-
-		Attribute indexTypeAttribute = element.attribute("index-type");
-
-		if (indexTypeAttribute != null) {
-			indexType = indexTypeAttribute.getValue();
-
-			element.remove(indexTypeAttribute);
-		}
-
-		element.remove(element.attribute("type"));
-
-		if (!type.equals("selection_break")) {
-			String dataType = _ddmDataTypes.get(type);
-
-			if (dataType == null) {
-				dataType = "string";
-			}
-
-			element.addAttribute("dataType", dataType);
-		}
-
-		element.addAttribute("indexType", indexType);
-
-		String required = "false";
-
-		Element requiredElement = fetchMetadataEntry(
-			metadataElement, "name", "required");
-
-		if (requiredElement != null) {
-			required = requiredElement.getText();
-		}
-
-		element.addAttribute("required", required);
-
-		element.addAttribute("showLabel", "true");
-
-		String newType = _journalTypesToDDMTypes.get(type);
-
-		if (newType == null) {
-			newType = type;
-		}
-
-		element.addAttribute("type", newType);
-
-		if (newType.startsWith("ddm")) {
-			element.addAttribute("fieldNamespace", "ddm");
-		}
-
-		metadataElement.addAttribute("locale", defaultLanguageId);
-
-		List<Element> entryElements = metadataElement.elements();
-
-		if (entryElements.isEmpty()) {
-			addMetadataEntry(metadataElement, "label", name);
-		}
-		else {
-			for (Element entryElement : entryElements) {
-				String oldEntryName = entryElement.attributeValue("name");
-
-				String newEntryName = _ddmMetadataAttributes.get(oldEntryName);
-
-				if (newEntryName == null) {
-					metadataElement.remove(entryElement);
-				}
-				else {
-					entryElement.addAttribute("name", newEntryName);
-				}
-			}
-		}
-
-		if (newType.equals("ddm-date") || newType.equals("ddm-decimal") ||
-			newType.equals("ddm-integer") ||
-			newType.equals("ddm-link-to-page") ||
-			newType.equals("ddm-number") || newType.equals("ddm-text-html") ||
-			newType.equals("text") || newType.equals("textarea")) {
-
-			element.addAttribute("width", "25");
-		}
-		else if (newType.equals("wcm-image")) {
-			element.addAttribute("fieldNamespace", "wcm");
-			element.addAttribute("readOnly", "false");
-		}
-
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateJournalXSDDynamicElement(
-				dynamicElementElement, defaultLanguageId);
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(JournalConverterImpl.class);
 
 	private static Map<String, String> _ddmDataTypes;
 	private static Map<String, String> _ddmMetadataAttributes;
-	private Map<String, String> _ddmTypesToJournalTypes;
 	private static Map<String, String> _journalTypesToDDMTypes;
+
+	private Map<String, String> _ddmTypesToJournalTypes;
 
 }
