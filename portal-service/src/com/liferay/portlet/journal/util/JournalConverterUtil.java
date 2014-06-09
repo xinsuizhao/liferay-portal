@@ -59,13 +59,6 @@ public class JournalConverterUtil {
 		return getJournalConverter().getJournalXSD(ddmXSD);
 	}
 
-	public static Locale getStructureNameDefaultLocale(String structureName)
-		throws Exception {
-
-		return getJournalConverter().getStructureNameDefaultLocale(
-			structureName);
-	}
-
 	public void setJournalConverter(JournalConverter journalConverter) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
