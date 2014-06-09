@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
-import java.util.Locale;
-
 /**
  * @author Marcellus Tavares
  * @author Bruno Basto
@@ -40,12 +38,6 @@ public class JournalConverterUtil {
 
 	public static String getDDMXSD(String journalXSD) throws Exception {
 		return getJournalConverter().getDDMXSD(journalXSD);
-	}
-
-	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
-		throws Exception {
-
-		return getJournalConverter().getDDMXSD(journalXSD, defaultLocale);
 	}
 
 	public static JournalConverter getJournalConverter() {

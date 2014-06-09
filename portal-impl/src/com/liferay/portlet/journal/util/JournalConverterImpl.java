@@ -182,8 +182,7 @@ public class JournalConverterImpl implements JournalConverter {
 		return getDDMXSD(journalXSD, defaultLocale);
 	}
 
-	@Override
-	public String getDDMXSD(String journalXSD, Locale defaultLocale)
+	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
 		throws Exception {
 
 		Document document = SAXReaderUtil.read(journalXSD);
@@ -270,7 +269,7 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	protected void addMetadataEntry(
+	protected static void addMetadataEntry(
 		Element metadataElement, String name, String value) {
 
 		Element entryElement = metadataElement.addElement("entry");
@@ -314,7 +313,7 @@ public class JournalConverterImpl implements JournalConverter {
 		return repetitions;
 	}
 
-	protected Element fetchMetadataEntry(
+	protected static Element fetchMetadataEntry(
 		Element parentElement, String attributeName, String attributeValue) {
 
 		StringBundler sb = new StringBundler();
@@ -798,7 +797,7 @@ public class JournalConverterImpl implements JournalConverter {
 			element, LocaleUtil.toLanguageId(defaultLocale));
 	}
 
-	protected void updateJournalXSDDynamicElement(
+	protected static void updateJournalXSDDynamicElement(
 		Element element, String defaultLanguageId) {
 
 		String name = element.attributeValue("name");
@@ -926,9 +925,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 	private static Log _log = LogFactoryUtil.getLog(JournalConverterImpl.class);
 
-	private Map<String, String> _ddmDataTypes;
-	private Map<String, String> _ddmMetadataAttributes;
+	private static Map<String, String> _ddmDataTypes;
+	private static Map<String, String> _ddmMetadataAttributes;
 	private Map<String, String> _ddmTypesToJournalTypes;
-	private Map<String, String> _journalTypesToDDMTypes;
+	private static Map<String, String> _journalTypesToDDMTypes;
 
 }

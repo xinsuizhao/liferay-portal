@@ -37,7 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
-import com.liferay.portlet.journal.util.JournalConverterUtil;
+import com.liferay.portlet.journal.util.JournalConverterImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,7 +101,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(13, description);
 			ps.setString(
 				14,
-				JournalConverterUtil.getDDMXSD(xsd, getDefaultLocale(name)));
+				JournalConverterImpl.getDDMXSD(xsd, getDefaultLocale(name)));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 
