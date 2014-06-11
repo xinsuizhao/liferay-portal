@@ -3,54 +3,6 @@
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 <#assign layoutService = serviceLocator.findService("com.liferay.portal.service.LayoutService")>
 
-<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
-	<#assign selectedPlid = 0>
-
-	<#if (fieldRawValue?? && fieldRawValue != "")>
-		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
-
-		<#if (fieldLayoutJSONObject.getLong("groupId") > 0)>
-			<#assign selectedLayoutGroupId = fieldLayoutJSONObject.getLong("groupId")>
-		<#else>
-			<#assign selectedLayoutGroupId = scopeGroupId>
-		</#if>
-
-		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
-
-		<#if (selectedLayout??)>
-			<#assign selectedPlid = selectedLayout.getPlid()>
-		</#if>
-	</#if>
-
-	<select name="${namespacedFieldName}">
-		<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
-			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
-				<@getLayoutOption
-					layout = selectedLayout
-					level = 0
-					selected = true
-				/>
-			</optgroup>
-		</#if>
-
-		<@getLayoutsOptions
-			groupId = scopeGroupId
-			parentLayoutId = 0
-			privateLayout = false
-			selectedPlid = selectedPlid
-		/>
-
-		<@getLayoutsOptions
-			groupId = scopeGroupId
-			parentLayoutId = 0
-			privateLayout = true
-			selectedPlid = selectedPlid
-		/>
-	</select>
-
-	${fieldStructure.children}
-</@>
-
 <#macro getLayoutOption
 	layout
 	level = 0
@@ -102,3 +54,51 @@
 		</#if>
 	</#if>
 </#macro>
+
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+	<#assign selectedPlid = 0>
+
+	<#if (fieldRawValue?? && fieldRawValue != "")>
+		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
+
+		<#if (fieldLayoutJSONObject.getLong("groupId") > 0)>
+			<#assign selectedLayoutGroupId = fieldLayoutJSONObject.getLong("groupId")>
+		<#else>
+			<#assign selectedLayoutGroupId = scopeGroupId>
+		</#if>
+
+		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
+
+		<#if (selectedLayout??)>
+			<#assign selectedPlid = selectedLayout.getPlid()>
+		</#if>
+	</#if>
+
+	<select name="${namespacedFieldName}">
+		<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
+			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
+				<@getLayoutOption
+					layout = selectedLayout
+					level = 0
+					selected = true
+				/>
+			</optgroup>
+		</#if>
+
+		<@getLayoutsOptions
+			groupId = scopeGroupId
+			parentLayoutId = 0
+			privateLayout = false
+			selectedPlid = selectedPlid
+		/>
+
+		<@getLayoutsOptions
+			groupId = scopeGroupId
+			parentLayoutId = 0
+			privateLayout = true
+			selectedPlid = selectedPlid
+		/>
+	</select>
+
+	${fieldStructure.children}
+</@>
