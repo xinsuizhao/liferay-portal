@@ -121,24 +121,26 @@ public class VerifyOracle extends VerifyProcess {
 
 			StringBundler sb = new StringBundler(6);
 
-			sb.append("select count(*) from user_tab_columns where ");
+			sb.append("select data_type from user_tab_columns where ");
 			sb.append("table_name = '");
 			sb.append(StringUtil.toUpperCase(tableName));
 			sb.append("' and column_name = '");
 			sb.append(StringUtil.toUpperCase(columnName));
-			sb.append("' and data_type = 'CLOB'");
-
+			sb.append("'");
+			
 			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
+				
+				_log.warn("Unable to check Oracle table user_tab_columns");
 				return;
 			}
+			
+			String dataType = rs.getString(1);
 
-			int count = rs.getInt(1);
-
-			if (count > 0) {
+			if (dataType.equals("CLOB")) {
 				return;
 			}
 
