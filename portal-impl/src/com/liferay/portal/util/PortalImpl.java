@@ -3873,7 +3873,10 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(HttpServletRequest request, boolean secure) {
-		String domain = getValidPortalDomain(request.getServerName());
+		long companyId = getCompanyId(request);
+
+		String domain = getValidPortalDomain(
+			request.getServerName(), companyId);
 
 		return getPortalURL(domain, request.getServerPort(), secure);
 	}
@@ -3913,7 +3916,10 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(PortletRequest portletRequest, boolean secure) {
-		String domain = getValidPortalDomain(portletRequest.getServerName());
+		long companyId = getCompanyId(portletRequest);
+
+		String domain = getValidPortalDomain(
+			portletRequest.getServerName(), companyId);
 
 		return getPortalURL(domain, portletRequest.getServerPort(), secure);
 	}
@@ -7585,12 +7591,24 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
-	protected String getValidPortalDomain(String domain) {
+	protected String getValidPortalDomain(String domain, long companyId) {
 		if (StringUtil.equalsIgnoreCase(domain, _LOCALHOST)) {
 			return _LOCALHOST;
 		}
 
+		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
+			return PropsValues.WEB_SERVER_HOST;
+		}
+
 		if (isValidVirtualHostname(domain)) {
+			return domain;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId))) {
+			return domain;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
 			return domain;
 		}
 
