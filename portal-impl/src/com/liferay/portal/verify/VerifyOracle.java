@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
@@ -126,18 +127,28 @@ public class VerifyOracle extends VerifyProcess {
 			sb.append(StringUtil.toUpperCase(tableName));
 			sb.append("' and column_name = '");
 			sb.append(StringUtil.toUpperCase(columnName));
-			sb.append("'");
-			
+			sb.append(StringPool.APOSTROPHE);
+
 			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
-				
-				_log.warn("Unable to check Oracle table user_tab_columns");
+				if (_log.isWarnEnabled()) {
+					StringBundler sb2 = new StringBundler(5);
+
+					sb2.append("Column ");
+					sb2.append(columnName);
+					sb2.append(" in table ");
+					sb2.append(tableName);
+					sb2.append(" could not be found.");
+
+					_log.warn(sb2.toString());
+				}
+
 				return;
 			}
-			
+
 			String dataType = rs.getString(1);
 
 			if (dataType.equals("CLOB")) {
