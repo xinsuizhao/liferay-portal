@@ -23,101 +23,92 @@ import org.junit.Test;
 public class TableNameOrderByComparatorTest {
 
 	@Test
-	public void testOrderByTableNameWithPeriodReturnsDecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field"), "table.");
+	public void testGetOrderByTableNameWithPeriodReturnsDecoratedTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column"), "table.");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"table.column", tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithBlankTableNameReturnsUndecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field1, field2"), "");
+	public void testGetOrderByWithBlankTableNameReturnsUndecoratedTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column1, column2"), "");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "field1, field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"column1, column2", tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithMultipleFieldsReturnsDecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field1, field2"), "table");
+	public void testGetOrderByWithMultipleColumnNamesReturnsDecoratedTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column1, column2"), "table");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field1, table.field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"table.column1, table.column2",
+			tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithMultipleTableNameReturnsOriginalTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("table1.field1, field2"), "table2");
+	public void testGetOrderByWithMultipleTableNameReturnsOriginalTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("table1.column1, column2"),
+				"table2");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table1.field1, table2.field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"table1.column1, table2.column2",
+			tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithNullTableNameReturnsUndecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field1, field2"), null);
+	public void testGetOrderByWithNullTableNameReturnsUndecoratedTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column1, column2"), null);
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "field1, field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"column1, column2", tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithSingleFieldReturnsDecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field"), "table");
+	public void testGetOrderByWithSingleColumnNameReturnsDecoratedTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column"), "table");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"table.column", tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithSingleTableNameReturnsOriginalTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("table1.field1"), "table2");
+	public void testGetOrderByWithSingleTableNameReturnsOriginalTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("table1.column1"), "table2");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table1.field1";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"table1.column1", tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testOrderByWithSortDirectionReturnsDecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field ASC"), "table");
+	public void testGetOrderByWithSortDirectionReturnsDecoratedTableName() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column ASC"), "table");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field ASC";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"table.column ASC", tableNameOrderByComparator.getOrderBy());
 	}
 
-	private TableNameOrderByComparator _tableNameOrderByComparator;
+	private class TestGetOrderByComparator extends OrderByComparator {
 
-	private class TestableOrderByComparator extends OrderByComparator {
-
-		public TestableOrderByComparator(String orderByClause) {
-			super();
-
-			_orderByClause = orderByClause;
+		public TestGetOrderByComparator(String orderBy) {
+			_orderBy = orderBy;
 		}
 
 		@Override
@@ -127,10 +118,10 @@ public class TableNameOrderByComparatorTest {
 
 		@Override
 		public String getOrderBy() {
-			return _orderByClause;
+			return _orderBy;
 		}
 
-		private String _orderByClause;
+		private String _orderBy;
 
 	}
 
