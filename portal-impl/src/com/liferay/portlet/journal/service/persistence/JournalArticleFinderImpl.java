@@ -1090,6 +1090,8 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				FIND_BY_G_F, queryDefinition, "JournalArticle");
 
+			queryDefinition.setOrderByComparatorTableName("JournalArticle");
+
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
@@ -1143,6 +1145,8 @@ public class JournalArticleFinderImpl
 
 			String sql = CustomSQLUtil.get(
 				FIND_BY_G_C_S, queryDefinition, "JournalArticle");
+
+			queryDefinition.setOrderByComparatorTableName("JournalArticle");
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
@@ -1208,6 +1212,8 @@ public class JournalArticleFinderImpl
 
 			String sql = CustomSQLUtil.get(
 				FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
+
+			queryDefinition.setOrderByComparatorTableName("JournalArticle");
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
