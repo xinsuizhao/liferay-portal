@@ -61,7 +61,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 			finalOrderBy.append(StringUtil.trim(field));
 
 			if (i < (sortedFields.length - 1)) {
-				finalOrderBy.append(ORDER_BY_SEPARATOR);
+				finalOrderBy.append(_ORDER_BY_SEPARATOR);
 			}
 		}
 
@@ -95,7 +95,12 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	public void setTableName(String tableName) {
 		if ((tableName != null) && (tableName.length() > 0)) {
-			_tableName = tableName + CharPool.PERIOD;
+			if (tableName.endsWith(StringPool.PERIOD)) {
+				_tableName = tableName;
+			}
+			else {
+				_tableName = tableName + CharPool.PERIOD;
+			}
 		}
 		else {
 			_tableName = null;
@@ -107,7 +112,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		return _decoratedComparator.toString();
 	}
 
-	private static final String ORDER_BY_SEPARATOR = ", ";
+	private static final String _ORDER_BY_SEPARATOR = ", ";
 
 	private OrderByComparator _decoratedComparator;
 	private String _tableName;
