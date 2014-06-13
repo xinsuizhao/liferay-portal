@@ -25,7 +25,7 @@
 		}
 	}
 
-	.alert {
+	.alert, .portlet-msg-alert, .portlet-msg-error, .portlet-msg-help, .portlet-msg-info, .portlet-msg-progress, .portlet-msg-success {
 		word-wrap: break-word;
 	}
 
