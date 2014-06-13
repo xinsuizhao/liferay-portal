@@ -1090,10 +1090,8 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				FIND_BY_G_F, queryDefinition, "JournalArticle");
 
-			queryDefinition.setOrderByComparatorTableName("JournalArticle");
-
 			sql = CustomSQLUtil.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
+				sql, queryDefinition.getOrderByComparator("JournalArticle"));
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -1146,10 +1144,8 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				FIND_BY_G_C_S, queryDefinition, "JournalArticle");
 
-			queryDefinition.setOrderByComparatorTableName("JournalArticle");
-
 			sql = CustomSQLUtil.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
+				sql, queryDefinition.getOrderByComparator("JournalArticle"));
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
@@ -1213,10 +1209,8 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
 
-			queryDefinition.setOrderByComparatorTableName("JournalArticle");
-
 			sql = CustomSQLUtil.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
+				sql, queryDefinition.getOrderByComparator("JournalArticle"));
 
 			if (folderIds.isEmpty()) {
 				sql = StringUtil.replace(
