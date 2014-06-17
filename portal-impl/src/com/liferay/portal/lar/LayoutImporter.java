@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -136,7 +137,16 @@ public class LayoutImporter {
 			ExportImportHelperUtil.getExportableRootPortletId(
 				companyId, portletId);
 
-		if (portletDataElement == null) {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if ((portletDataHandler == null) ||
+			((portletDataElement == null) &&
+			 !portletDataHandler.isDisplayPortlet())) {
+
 			importCurPortletData = false;
 		}
 		else if (importPortletDataAll) {
