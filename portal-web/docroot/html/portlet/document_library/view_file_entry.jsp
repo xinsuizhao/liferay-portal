@@ -380,7 +380,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 														<span class="lfr-preview-file-toolbar" id="<portlet:namespace />previewToolbar"></span>
 
 														<span class="lfr-preview-file-info">
-															<span class="lfr-preview-file-index" id="<portlet:namespace />previewFileIndex">1</span> of <span class="lfr-preview-file-count"><%= previewFileCount %></span>
+															<span class="lfr-preview-file-index" id="<portlet:namespace />previewFileIndex">1</span> <%= LanguageUtil.get(locale, "of") %> <span class="lfr-preview-file-count"><%= previewFileCount %></span>
 														</span>
 													</span>
 												</div>
