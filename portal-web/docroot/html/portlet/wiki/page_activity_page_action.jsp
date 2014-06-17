@@ -27,13 +27,7 @@ double version = extraDataJSONObject.getDouble("version");
 
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-WikiPage socialActivityWikiPage = null;
-
-try {
-	socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
-}
-catch (NoSuchPageException nspe) {
-}
+WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
 %>
 
 <c:if test="<%= socialActivityWikiPage != null %>">
