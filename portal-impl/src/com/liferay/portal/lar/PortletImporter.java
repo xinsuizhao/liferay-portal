@@ -154,7 +154,9 @@ public class PortletImporter {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (portletDataHandler == null) {
+		if ((portletDataHandler == null) ||
+			portletDataHandler.isDataPortletInstanceLevel()) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Do not import portlet data for " + portletId +
