@@ -523,10 +523,6 @@ public class LayoutSetPrototypePropagationTest
 
 	@Override
 	protected void setLinkEnabled(boolean linkEnabled) throws Exception {
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
-			linkEnabled, linkEnabled);
-
 		if ((layout != null) && (_layout != null)) {
 			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
@@ -540,6 +536,10 @@ public class LayoutSetPrototypePropagationTest
 
 			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
+
+		SitesUtil.updateLayoutSetPrototypesLinks(
+			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
+			linkEnabled, linkEnabled);
 	}
 
 	protected void testAddChildLayout(boolean layoutSetPrototypeLinkEnabled)
