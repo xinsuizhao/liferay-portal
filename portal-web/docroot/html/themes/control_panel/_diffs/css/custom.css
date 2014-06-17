@@ -475,6 +475,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 0 10px 14px;
 			position: relative;
 
+			.icon-search {
+				left: 18px;
+				position: absolute;
+				top: 8px;
+			}
+
 			.cancel-search {
 				color: #f88;
 				display: none;
@@ -524,7 +530,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				input {
-					padding-left: 40px;
+					padding-left: 28px;
 				}
 			}
 		}
@@ -570,7 +576,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.control-panel-tools {
 				cursor: pointer;
-				padding-top: 16px;
+				padding: 12px 0;
 
 				&:hover {
 					background-color: #DDD;
@@ -623,10 +629,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.search-panels {
+				padding: 0;
 				text-align: center;
 
 				.icon-search {
 					display: block;
+					position: static;
 				}
 			}
 
