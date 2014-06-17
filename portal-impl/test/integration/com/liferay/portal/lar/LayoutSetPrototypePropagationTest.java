@@ -313,21 +313,19 @@ public class LayoutSetPrototypePropagationTest
 			_layoutSetPrototypeGroup.getGroupId(), "Test Article",
 			"Test Content");
 
-		journalContentPortletId =
-			addJournalContentPortletToLayout(
-				TestPropsValues.getUserId(), prototypeLayout,
-				_layoutSetPrototypeJournalArticle, "column-1");
+		journalContentPortletId = addJournalContentPortletToLayout(
+			TestPropsValues.getUserId(), prototypeLayout,
+			_layoutSetPrototypeJournalArticle, "column-1");
 
 		_prototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
 			ServiceTestUtil.randomString(), true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
-				_prototypeLayout, initialLayoutTemplateId);
+			_prototypeLayout, initialLayoutTemplateId);
 
-		_initialPrototypeLayoutCount =
-			LayoutLocalServiceUtil.getLayoutsCount(
-				_layoutSetPrototypeGroup, true);
+		_initialPrototypeLayoutCount = LayoutLocalServiceUtil.getLayoutsCount(
+			_layoutSetPrototypeGroup, true);
 
 		// Group
 
@@ -343,10 +341,9 @@ public class LayoutSetPrototypePropagationTest
 
 		_initialLayoutCount = getGroupLayoutCount();
 
-		journalArticle =
-			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
-				group.getGroupId(),
-				_layoutSetPrototypeJournalArticle.getUrlTitle());
+		journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(
+			group.getGroupId(),
+			_layoutSetPrototypeJournalArticle.getUrlTitle());
 	}
 
 	protected void doTestIsLayoutUpdateable() throws Exception {
