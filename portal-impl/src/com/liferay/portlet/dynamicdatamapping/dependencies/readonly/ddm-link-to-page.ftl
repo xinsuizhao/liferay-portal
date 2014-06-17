@@ -15,7 +15,9 @@
 
 	<#if (fieldLayout?? && fieldLayout != "")>
 		<@aui["field-wrapper"] label=escape(label)>
-			<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
+			<#if !disabled>
+				<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
+			</#if>
 
 			<a href="${fieldLayout.getRegularURL(request)}">${escape(fieldLayout.getName(requestedLocale))}</a>
 
