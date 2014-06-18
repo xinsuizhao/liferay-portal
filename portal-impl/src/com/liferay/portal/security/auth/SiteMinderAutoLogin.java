@@ -95,6 +95,8 @@ public class SiteMinderAutoLogin extends BaseAutoLogin {
 		String redirect = ParamUtil.getString(request, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
+			redirect = PortalUtil.escapeRedirect(redirect);
+
 			request.setAttribute(
 				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, redirect);
 		}
