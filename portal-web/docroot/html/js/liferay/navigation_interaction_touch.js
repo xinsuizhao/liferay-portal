@@ -3,6 +3,10 @@ AUI.add(
 	function(A) {
 		var STR_OPEN = 'open';
 
+		var android = A.UA.android;
+
+		var androidLegacy = (android && android < 4.4);
+
 		A.mix(
 			Liferay.NavigationInteraction.prototype,
 			{
@@ -22,8 +26,14 @@ AUI.add(
 					if (!menuOpen) {
 						Liferay.fire('showNavigationMenu', mapHover);
 
+						var outsideEvents = ['clickoutside', 'touchendoutside'];
+
+						if (androidLegacy) {
+							outsideEvents = outsideEvents[0];
+						}
+
 						handle = menuNew.on(
-							['clickoutside', 'touchstartoutside'],
+							outsideEvents,
 							function() {
 								Liferay.fire(
 									'hideNavigationMenu',
@@ -54,11 +64,9 @@ AUI.add(
 				_initChildMenuHandlers: function(navigation) {
 					var instance = this;
 
-					var android = A.UA.android;
-
 					var delay = 0;
 
-					if (android && android < 4.4) {
+					if (androidLegacy) {
 						delay = 400;
 					}
 
