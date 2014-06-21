@@ -53,10 +53,6 @@ public class RatingsTag extends IncludeTag {
 		_setRatingsStats = true;
 	}
 
-	public void setRound(boolean round) {
-		_round = round;
-	}
-
 	public void setType(String type) {
 		_type = type;
 	}
@@ -72,7 +68,6 @@ public class RatingsTag extends IncludeTag {
 		_numberOfStars = _DEFAULT_NUMBER_OF_STARS;
 		_ratingsEntry = null;
 		_ratingsStats = null;
-		_round = true;
 		_setRatingsEntry = false;
 		_setRatingsStats = false;
 		_type = "stars";
@@ -99,8 +94,6 @@ public class RatingsTag extends IncludeTag {
 		request.setAttribute("liferay-ui:ratings:ratingsEntry", _ratingsEntry);
 		request.setAttribute("liferay-ui:ratings:ratingsStats", _ratingsStats);
 		request.setAttribute(
-			"liferay-ui:ratings:round", String.valueOf(_round));
-		request.setAttribute(
 			"liferay-ui:ratings:setRatingsEntry",
 			String.valueOf(_setRatingsEntry));
 		request.setAttribute(
@@ -122,7 +115,6 @@ public class RatingsTag extends IncludeTag {
 	private int _numberOfStars = _DEFAULT_NUMBER_OF_STARS;
 	private RatingsEntry _ratingsEntry;
 	private RatingsStats _ratingsStats;
-	private boolean _round;
 	private boolean _setRatingsEntry;
 	private boolean _setRatingsStats;
 	private String _type = "stars";

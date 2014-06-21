@@ -24,7 +24,6 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ratin
 int numberOfStars = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:ratings:numberOfStars"));
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("liferay-ui:ratings:ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("liferay-ui:ratings:ratingsStats");
-boolean round = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ratings:round"), true);
 boolean setRatingsEntry = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ratings:setRatingsEntry"));
 boolean setRatingsStats = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ratings:setRatingsStats"));
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:ratings:type"));
@@ -44,18 +43,6 @@ if (!setRatingsStats) {
 
 if (Validator.isNull(url)) {
 	url = themeDisplay.getPathMain() + "/portal/rate_entry";
-}
-
-double averageScore = 0.0;
-
-if (ratingsStats != null) {
-	averageScore = ratingsStats.getAverageScore();
-}
-
-int averageIndex = (int)Math.round(averageScore);
-
-if (!round) {
-	averageIndex = (int)Math.floor(averageScore);
 }
 
 double yourScore = 0.0;
@@ -114,7 +101,7 @@ if (ratingsEntry != null) {
 							for (int i = 1; i <= numberOfStars; i++) {
 							%>
 
-								<a class="rating-element <%= (i <= averageIndex) ? "icon-star" : "icon-star-empty" %>" href="javascript:;" title="<%= TrashUtil.isInTrash(className, classPK) ? LanguageUtil.get(pageContext, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : ((i == 1) ? LanguageUtil.format(pageContext, "the-average-rating-is-x-stars-out-of-x", new Object[] {averageScore, numberOfStars}) : StringPool.BLANK) %>"></a>
+								<a class="rating-element <%= (i <= ratingsStats.getAverageScore()) ? "icon-star" : "icon-star-empty" %>" href="javascript:;" title="<%= TrashUtil.isInTrash(className, classPK) ? LanguageUtil.get(pageContext, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : ((i == 1) ? LanguageUtil.format(pageContext, "the-average-rating-is-x-stars-out-of-x", new Object[] {ratingsStats.getAverageScore(), numberOfStars}) : StringPool.BLANK) %>"></a>
 
 							<%
 							}
@@ -127,7 +114,7 @@ if (ratingsEntry != null) {
 			<c:when test='<%= type.equals("thumbs") %>'>
 				<c:choose>
 					<c:when test="<%= themeDisplay.isSignedIn() %>">
-						<div class="liferay-rating-vote thumbrating" id="<%= randomNamespace %>ratingThumb">
+						<div class="thumbrating liferay-rating-vote" id="<%= randomNamespace %>ratingThumb">
 							<div class="helper-clearfix rating-content thumbrating-content" id="<%= randomNamespace %>ratingThumbContent">
 								<liferay-util:whitespace-remover>
 									<div class="rating-label">
@@ -136,7 +123,7 @@ if (ratingsEntry != null) {
 												0
 											</c:when>
 											<c:otherwise>
-												<%= (averageScore > 0) ? "+" : StringPool.BLANK %><%= (int)ratingsStats.getTotalScore() %>
+												<%= (ratingsStats.getAverageScore() > 0) ? "+" : StringPool.BLANK %><%= (int)ratingsStats.getTotalScore() %>
 											</c:otherwise>
 										</c:choose>
 
@@ -190,12 +177,11 @@ if (ratingsEntry != null) {
 		<aui:script use="liferay-ratings">
 			Liferay.Ratings.register(
 				{
-					averageScore: <%= averageScore %>,
+					averageScore: <%= ratingsStats.getAverageScore() %>,
 					className: '<%= HtmlUtil.escapeJS(className) %>',
 					classPK: '<%= classPK %>',
 					containerId: '<%= randomNamespace %>ratingContainer',
 					namespace: '<%= randomNamespace %>',
-					round: <%= round %>,
 					size: <%= numberOfStars %>,
 					totalEntries: <%= ratingsStats.getTotalEntries() %>,
 					totalScore: <%= ratingsStats.getTotalScore() %>,
