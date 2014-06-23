@@ -48,7 +48,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 			field.set(null, defaultGroup.getName());
 
 			ThemeDisplay themeDisplay = initThemeDisplay(
-				company, group, layout, VIRTUAL_HOSTNAME);
+				company, group, publicLayout, VIRTUAL_HOSTNAME);
 
 			company.setVirtualHostname(LOCALHOST);
 
