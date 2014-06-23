@@ -208,13 +208,10 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
+		boolean missing = GetterUtil.getBoolean(
+			referenceElement.attributeValue("missing"));
 
-		if ((portletDataContext.getSourceCompanyGroupId() == groupId) &&
-			(portletDataContext.getGroupId() !=
-				portletDataContext.getCompanyGroupId())) {
-
+		if (missing) {
 			StagedModelDataHandler<?> stagedModelDataHandler =
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 					stagedModelClass.getName());
@@ -255,13 +252,10 @@ public class StagedModelDataHandlerUtil {
 				continue;
 			}
 
-			long groupId = GetterUtil.getLong(
-				referenceElement.attributeValue("group-id"));
+			boolean missing = GetterUtil.getBoolean(
+				referenceElement.attributeValue("missing"));
 
-			if ((portletDataContext.getSourceCompanyGroupId() == groupId) &&
-				(portletDataContext.getGroupId() !=
-					portletDataContext.getCompanyGroupId())) {
-
+			if (missing) {
 				StagedModelDataHandler<?> stagedModelDataHandler =
 					StagedModelDataHandlerRegistryUtil.
 						getStagedModelDataHandler(stagedModelClass.getName());
