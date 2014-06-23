@@ -228,7 +228,12 @@ public class FileEntryStagedModelDataHandler
 		throws Exception {
 
 		FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
-			uuid, portletDataContext.getCompanyGroupId());
+			uuid, portletDataContext.getScopeGroupId());
+
+		if (existingFileEntry == null) {
+			existingFileEntry = FileEntryUtil.fetchByUUID_R(
+				uuid, portletDataContext.getCompanyGroupId());
+		}
 
 		Map<Long, Long> fileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
