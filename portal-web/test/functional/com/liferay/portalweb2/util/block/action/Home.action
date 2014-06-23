@@ -19,6 +19,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="NODE_NAME">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="PAGE_DELETE">
 			<execute function="Click#click" />
