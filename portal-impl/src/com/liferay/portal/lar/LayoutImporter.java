@@ -581,7 +581,7 @@ public class LayoutImporter {
 
 		// Read asset categories, asset tags, comments, locks, permissions, and
 		// ratings entries to make them available to the data handlers through
-		// the context
+		// the portlet data context
 
 		if (importPermissions) {
 			for (Element portletElement : portletElements) {

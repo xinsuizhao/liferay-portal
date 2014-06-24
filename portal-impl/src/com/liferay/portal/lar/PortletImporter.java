@@ -435,7 +435,7 @@ public class PortletImporter {
 
 		// Read asset categories, asset tags, comments, locks, and ratings
 		// entries to make them available to the data handlers through the
-		// context
+		// portlet data context
 
 		Element portletElement = null;
 
