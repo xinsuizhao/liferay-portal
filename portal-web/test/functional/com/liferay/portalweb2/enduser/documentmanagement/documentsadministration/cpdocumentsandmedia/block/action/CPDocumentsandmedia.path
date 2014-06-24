@@ -13,7 +13,6 @@
 	<td></td>
 	<td>CPDocumentsandmedia</td>
 </tr>
-<!---->
 <tr>
 	<td>PORTLET_TITLE</td>
 	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
@@ -360,8 +359,12 @@
 	<td>//div[@id='_20_breadcrumbContainer']//li[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
-<!---->
 <!--DOCUMENT_CONTAINER_DOCUMENT-->
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_GENERIC</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[@class='entry-thumbnail']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]</td>
