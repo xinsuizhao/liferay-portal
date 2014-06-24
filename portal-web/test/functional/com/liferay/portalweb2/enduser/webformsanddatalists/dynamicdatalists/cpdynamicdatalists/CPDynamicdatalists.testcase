@@ -2365,6 +2365,7 @@
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldShowLabel" value="${fieldShowLabel}" />
 			<var name="recordFieldData" value="${recordFieldData}" />
 		</execute>
 	</command>
