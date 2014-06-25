@@ -77,7 +77,7 @@
 		<execute macro="Staging#submitForPublicationPageRevision" />
 	</command>
 
-	<command name="assertClusterNodePortPG">
+	<command name="assertNodePortPG">
 		<var name="key_nodePort" value="${nodePort}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="NODE_NAME" />

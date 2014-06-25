@@ -1,8 +1,6 @@
 <definition component-name="portal-tools">
 	<property name="cluster.enabled" value="true" />
 	<property name="testray.main.component.name" value="Platform" />
-	
-	<var name="portletName" value="Blogs" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -15,51 +13,34 @@
 	</tear-down>
 
 	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="5">
-		<property name="app.server.bundle.suffixes" value="1" />
-		
-		<var name="assetType" value="Blogs Entry" />
-		<var name="entryContent1" value="Blogs Entry1 Content" />
-		<var name="entryContent2" value="Blogs Entry2 Content" />
-		<var name="entryTitle1" value="Blogs Entry1 Title" />
-		<var name="entryTitle2" value="Blogs Entry2 Title" />
+		<property name="app.server.bundle.count" value="1" />
 
-		<execute macro="Page#assertClusterNodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="nodePort" value="8080" />
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="8080" />
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="8080" />
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="Blogs" />
-
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="User#logoutPG">
-			<var name="nodePort" value="8080" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
@@ -70,7 +51,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#assertClusterNodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="1080" />
 		</execute>
 
@@ -80,8 +61,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -95,7 +76,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -104,11 +85,9 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
-
-		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="Blogs" />
 
 		<execute macro="Page#gotoPG">
 			<var name="nodePort" value="1080" />
@@ -116,23 +95,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="1080" />
-			<var name="pageName" value="Test Page2" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -141,9 +105,10 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="nodePort" value="1080" />
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -162,19 +127,21 @@
 		</execute>
 
 		<execute macro="User#loginPG">
-			<var name="nodePort" value="8080" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="8080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 	</command>
 </definition>
