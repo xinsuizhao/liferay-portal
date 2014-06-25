@@ -326,7 +326,7 @@ AUI.add(
 										currentSpan.on(
 											'click',
 											function(event) {
-												if (themeDisplay.isStateMaximized() && !event.shiftKey) {
+												if ((themeDisplay.isStateMaximized() && !event.shiftKey) || event.target.hasClass('lfr-nav-child-toggle')) {
 													return;
 												}
 

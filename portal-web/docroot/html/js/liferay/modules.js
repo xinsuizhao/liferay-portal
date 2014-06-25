@@ -494,6 +494,7 @@
 					'liferay-navigation-interaction-touch': {
 						path: 'navigation_interaction_touch.js',
 						requires: [
+							'event-tap',
 							'event-touch',
 							'liferay-navigation-interaction'
 						]
