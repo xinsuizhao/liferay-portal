@@ -2024,7 +2024,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.EXPORT, null, null, file.getName());
+				Constants.IMPORT, null, null, file.getName());
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
