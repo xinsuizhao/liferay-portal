@@ -31,8 +31,10 @@
 			<var name="pageName" value="IFrame Page" />
 		</execute>
 
-		<execute action="PGIFrame#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_LIFERAY_PRODUCTS_ARTICLE_PNG" />
-		<execute action="PGIFrame#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_LIFERAY_PRODUCTS_BANNER_PNG" />
+		<execute action="PGIFrame#pause" locator1="2000" />
+
+		<take-screenshot />
+
 		<execute action="PGIFrame#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
 	</command>
 
@@ -51,13 +53,17 @@
 		</execute>
 
 		<execute macro="WebProxy#addCP">
-			<var name="initialURL" value="https://www.google.com/" />
+			<var name="initialURL" value="http://images.google.com/" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Proxy Page" />
 		</execute>
 
-		<execute action="PGWebProxy#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_GOOGLE_HOME_PNG" />
+		<execute action="PGWebProxy#assertElementPresent" locator1="//div[@title='Google Images']" />
+
+		<take-screenshot />
+
+		<execute action="PGWebProxy#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_GOOGLE_IMAGES_PNG" />
 	</command>
 </definition>
