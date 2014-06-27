@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_INVALID_NAME</td>
-	<td>//div[@class='journal-article-body-content']/div[@class='alert alert-error']</td>
+	<td>//div[@class='journal-article-body-content']/div[@class='alert alert-error'] | //span[@id='_15_titleBoundingBox']//div[contains(.,'This field is required.')]</td>
 	<td></td>
 </tr>
 <tr>
