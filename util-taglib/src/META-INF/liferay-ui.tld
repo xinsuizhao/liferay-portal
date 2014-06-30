@@ -1621,6 +1621,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>nullable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>yearParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
