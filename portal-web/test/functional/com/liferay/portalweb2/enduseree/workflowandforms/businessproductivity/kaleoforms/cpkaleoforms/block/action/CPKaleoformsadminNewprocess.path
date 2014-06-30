@@ -88,7 +88,7 @@
 <!--FIELDS_DEFINITION-->
 <tr>
 	<td>SELECTED_DEFINITION</td>
-	<td>//div[contains(.,'Selected Definition')]/span</td>
+	<td>//div[contains(.,'Selected Definition')]//span[@id='_2_WAR_kaleoformsportlet_ddmStructureDisplay']</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,7 +141,7 @@
 <!--WORKFLOW-->
 <tr>
 	<td>SELECTED_WORKFLOW</td>
-	<td>//div[contains(.,'Selected Workflow')]/span</td>
+	<td>//div[contains(.,'Selected Workflow')]//span[@id='_2_WAR_kaleoformsportlet_workflowDefinitionDisplay']</td>
 	<td></td>
 </tr>
 <tr>
@@ -194,7 +194,7 @@
 <!--FORMS_TABLE-->
 <tr>
 	<td>FORMS_TABLE_ASSIGN_FORM</td>
-	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowDefinitionTask}')]/td[3]/a</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowDefinitionTask}')]/td[3]/button</td>
 	<td></td>
 </tr>
 <tr>
