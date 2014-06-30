@@ -115,7 +115,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	@Deprecated
 	@Override
 	public void setEventListener(MessageListener eventListener) {
-		Class clazz = eventListener.getClass();
+		Class<?> clazz = eventListener.getClass();
 
 		setEventListenerClass(clazz.getName());
 	}
