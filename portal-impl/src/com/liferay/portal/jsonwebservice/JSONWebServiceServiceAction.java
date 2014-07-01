@@ -79,14 +79,12 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				throw (SecurityException)throwable;
 			}
 
-			_log.error(throwable, throwable);
+			_log.error(_getThrowableMessage(throwable));
 
 			return JSONFactoryUtil.serializeThrowable(throwable);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
+			_log.error(_getThrowableMessage(e));
 
 			return JSONFactoryUtil.serializeException(e);
 		}
@@ -152,6 +150,16 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	@Override
 	protected String getReroutePath() {
 		return _REROUTE_PATH;
+	}
+
+	private String _getThrowableMessage(Throwable throwable) {
+		String message = throwable.getMessage();
+
+		if (message != null) {
+			return message;
+		}
+
+		return throwable.toString();
 	}
 
 	private static final String _REROUTE_PATH = "/jsonws";
