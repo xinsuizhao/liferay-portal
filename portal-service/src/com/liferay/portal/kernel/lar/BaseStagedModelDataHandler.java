@@ -288,8 +288,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for " +
-							stagedModel.getModelClassName() + " - classPK: " +
-							classPK);
+							stagedModel.getModelClassName() +
+								" with primary key " + classPK);
 				}
 			}
 		}
