@@ -80,12 +80,22 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				throw (SecurityException)throwable;
 			}
 
-			_log.error(getThrowableMessage(throwable));
+			if (_log.isDebugEnabled()) {
+				_log.debug(getThrowableMessage(throwable), throwable);
+			}
+			else {
+				_log.error(getThrowableMessage(throwable));
+			}
 
 			return JSONFactoryUtil.serializeThrowable(throwable);
 		}
 		catch (Exception e) {
-			_log.error(getThrowableMessage(e));
+			if (_log.isDebugEnabled()) {
+				_log.debug(getThrowableMessage(e), e);
+			}
+			else {
+				_log.error(getThrowableMessage(e));
+			}
 
 			return JSONFactoryUtil.serializeException(e);
 		}
