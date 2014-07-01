@@ -282,15 +282,14 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				throw pde;
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for " +
 							stagedModel.getModelClassName() + " - classPK: " +
 							classPK);
-				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
 				}
 			}
 		}
