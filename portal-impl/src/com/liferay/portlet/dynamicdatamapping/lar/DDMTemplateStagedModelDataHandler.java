@@ -273,11 +273,10 @@ public class DDMTemplateStagedModelDataHandler
 			}
 		}
 
-		String script =
-			ExportImportHelperUtil.replaceExportContentReferences(
-				portletDataContext, template, template.getScript(),
-				portletDataContext.getBooleanParameter(
-					DDMPortletDataHandler.NAMESPACE, "referenced-content"));
+		String script = ExportImportHelperUtil.replaceExportContentReferences(
+			portletDataContext, template, template.getScript(),
+			portletDataContext.getBooleanParameter(
+				DDMPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		template.setScript(script);
 
