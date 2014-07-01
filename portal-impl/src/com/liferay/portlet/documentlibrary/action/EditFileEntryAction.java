@@ -385,11 +385,6 @@ public class EditFileEntryAction extends PortletAction {
 				selectedFileName, _TEMP_FOLDER_NAME);
 
 			String mimeType = tempFileEntry.getMimeType();
-			InputStream inputStream = tempFileEntry.getContentStream();
-			long size = tempFileEntry.getSize();
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), actionRequest);
 
 			String extension = FileUtil.getExtension(selectedFileName);
 
@@ -427,6 +422,12 @@ public class EditFileEntryAction extends PortletAction {
 					break;
 				}
 			}
+
+			InputStream inputStream = tempFileEntry.getContentStream();
+			long size = tempFileEntry.getSize();
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), actionRequest);
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, selectedFileName, mimeType,
