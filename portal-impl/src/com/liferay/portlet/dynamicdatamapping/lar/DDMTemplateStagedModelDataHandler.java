@@ -273,16 +273,13 @@ public class DDMTemplateStagedModelDataHandler
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				DDMPortletDataHandler.NAMESPACE, "referenced-content")) {
+		String script =
+			ExportImportHelperUtil.replaceExportContentReferences(
+				portletDataContext, template, template.getScript(),
+				portletDataContext.getBooleanParameter(
+					DDMPortletDataHandler.NAMESPACE, "referenced-content"));
 
-			String content =
-				ExportImportHelperUtil.replaceExportContentReferences(
-					portletDataContext, template, templateElement,
-					template.getScript(), true);
-
-			template.setScript(content);
-		}
+		template.setScript(script);
 
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 			template.getCompanyId());
