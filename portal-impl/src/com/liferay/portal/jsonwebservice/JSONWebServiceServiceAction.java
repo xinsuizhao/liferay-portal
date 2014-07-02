@@ -80,12 +80,12 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				throw (SecurityException)throwable;
 			}
 
-			_log.error(_getThrowableMessage(throwable));
+			_log.error(getThrowableMessage(throwable));
 
 			return JSONFactoryUtil.serializeThrowable(throwable);
 		}
 		catch (Exception e) {
-			_log.error(_getThrowableMessage(e));
+			_log.error(getThrowableMessage(e));
 
 			return JSONFactoryUtil.serializeException(e);
 		}
@@ -153,7 +153,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		return _REROUTE_PATH;
 	}
 
-	private String _getThrowableMessage(Throwable throwable) {
+	protected String getThrowableMessage(Throwable throwable) {
 		String message = throwable.getMessage();
 
 		if (Validator.isNotNull(message)) {
