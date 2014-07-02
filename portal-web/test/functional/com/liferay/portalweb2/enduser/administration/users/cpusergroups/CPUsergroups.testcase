@@ -309,6 +309,10 @@
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
 		<execute macro="UserGroup#editCP">
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
 		</execute>
