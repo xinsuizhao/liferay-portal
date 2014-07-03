@@ -139,46 +139,6 @@ public class LayoutExporter {
 		return portlets;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getExportPortletControlsMap(long, String, Map)}
-	 */
-	@Deprecated
-	public static boolean[] getExportPortletControls(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap)
-		throws Exception {
-
-		return getExportPortletControls(
-			companyId, portletId, parameterMap, "layout-set");
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getExportPortletControlsMap(long, String, Map, String)}
-	 */
-	@Deprecated
-	public static boolean[] getExportPortletControls(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, String type)
-		throws Exception {
-
-		Map<String, Boolean> exportPortletControlsMap =
-			getExportPortletControlsMap(
-				companyId, portletId, parameterMap, type);
-
-		return new boolean[] {
-			exportPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
-			exportPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_DATA),
-			exportPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_SETUP),
-			exportPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
-		};
-	}
-
 	public static Map<String, Boolean> getExportPortletControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap)

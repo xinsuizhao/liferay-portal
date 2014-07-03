@@ -108,50 +108,6 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class LayoutImporter {
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getImportPortletControlsMap(long, String, Map, Element,
-	 *             ManifestSummary)}
-	 */
-	@Deprecated
-	public static boolean[] getImportPortletControls(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, Element portletDataElement)
-		throws Exception {
-
-		return getImportPortletControls(
-			companyId, portletId, parameterMap, portletDataElement, null);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getImportPortletControlsMap(long, String, Map, Element,
-	 *             ManifestSummary)}
-	 */
-	@Deprecated
-	public static boolean[] getImportPortletControls(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, Element portletDataElement,
-			ManifestSummary manifestSummary)
-		throws Exception {
-
-		Map<String, Boolean> importPortletControlsMap =
-			getImportPortletControlsMap(
-				companyId, portletId, parameterMap, portletDataElement,
-				manifestSummary);
-
-		return new boolean[] {
-			importPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
-			importPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_DATA),
-			importPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_SETUP),
-			importPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
-		};
-	}
-
 	public static Map<String, Boolean> getImportPortletControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement,
