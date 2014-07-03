@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.nio.intraband.cache.PortalCacheDatagramReceiveH
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
@@ -43,6 +44,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.JspFactorySwapper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
@@ -81,6 +84,22 @@ public class StartupAction extends SimpleAction {
 		// Print release information
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo());
+
+		// Print installed patches
+
+		String installedPatches = StringUtil.merge(
+			PatcherUtil.getInstalledPatches(), ", ");
+
+		if (_log.isInfoEnabled()) {
+			if (Validator.isNull(installedPatches)) {
+				_log.info("There is no patch installed");
+			}
+			else {
+				_log.info(
+					"The system has the following patches installed: " +
+					installedPatches);
+			}
+		}
 
 		// Portal resiliency
 
