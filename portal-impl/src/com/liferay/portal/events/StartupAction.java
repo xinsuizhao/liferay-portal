@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.JspFactorySwapper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageIndexer;
@@ -88,7 +89,7 @@ public class StartupAction extends SimpleAction {
 		// Print installed patches
 
 		String installedPatches = StringUtil.merge(
-			PatcherUtil.getInstalledPatches(), ", ");
+			PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
 
 		if (_log.isInfoEnabled()) {
 			if (Validator.isNull(installedPatches)) {
@@ -97,7 +98,7 @@ public class StartupAction extends SimpleAction {
 			else {
 				_log.info(
 					"The system has the following patches installed: " +
-					installedPatches);
+						installedPatches);
 			}
 		}
 
