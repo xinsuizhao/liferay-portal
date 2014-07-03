@@ -123,6 +123,29 @@ public class LayoutImporter {
 			ManifestSummary manifestSummary)
 		throws Exception {
 
+		Map<String, Boolean> importPortletControlsMap =
+			getImportPortletControlsMap(
+				companyId, portletId, parameterMap, portletDataElement,
+				manifestSummary);
+
+		return new boolean[] {
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_DATA),
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_SETUP),
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
+		};
+	}
+
+	public static Map<String, Boolean> getImportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception {
+
 		boolean importPortletConfiguration = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
 		boolean importPortletConfigurationAll = MapUtil.getBoolean(
@@ -161,11 +184,12 @@ public class LayoutImporter {
 		}
 
 		boolean importCurPortletArchivedSetups = importPortletConfiguration;
+		boolean importCurPortletConfiguration = importPortletConfiguration;
 		boolean importCurPortletSetup = importPortletConfiguration;
 		boolean importCurPortletUserPreferences = importPortletConfiguration;
 
 		if (importPortletConfigurationAll) {
-			boolean importCurPortletConfiguration = true;
+			importCurPortletConfiguration = true;
 
 			if ((manifestSummary != null) &&
 				(manifestSummary.getConfigurationPortletOptions(
@@ -190,7 +214,7 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
-			boolean importCurPortletConfiguration =
+			importCurPortletConfiguration =
 				importPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
@@ -217,10 +241,24 @@ public class LayoutImporter {
 						StringPool.UNDERLINE + rootPortletId);
 		}
 
-		return new boolean[] {
-			importCurPortletArchivedSetups, importCurPortletData,
-			importCurPortletSetup, importCurPortletUserPreferences
-		};
+		Map<String, Boolean> importPortletControlsMap =
+			new HashMap<String, Boolean>();
+
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+			importCurPortletArchivedSetups);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			importCurPortletConfiguration);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA, importCurPortletData);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP, importCurPortletSetup);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+			importCurPortletUserPreferences);
+
+		return importPortletControlsMap;
 	}
 
 	public void importLayouts(

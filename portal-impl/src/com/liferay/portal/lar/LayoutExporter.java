@@ -83,6 +83,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -152,6 +153,36 @@ public class LayoutExporter {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
+		Map<String, Boolean> exportPortletControlsMap =
+			getExportPortletControlsMap(
+				companyId, portletId, parameterMap, type);
+
+		return new boolean[] {
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_DATA),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_SETUP),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
+		};
+	}
+
+	public static Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception {
+
+		return getExportPortletControlsMap(
+			companyId, portletId, parameterMap, "layout-set");
+	}
+
+	public static Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception {
+
 		boolean exportPortletConfiguration = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
 		boolean exportPortletConfigurationAll = MapUtil.getBoolean(
@@ -191,11 +222,14 @@ public class LayoutExporter {
 		}
 
 		boolean exportCurPortletArchivedSetups = exportPortletConfiguration;
+		boolean exportCurPortletConfiguration = exportPortletConfiguration;
 		boolean exportCurPortletSetup = exportPortletConfiguration;
 		boolean exportCurPortletUserPreferences = exportPortletConfiguration;
 
 		if (exportPortletConfigurationAll ||
 			(exportPortletConfiguration && type.equals("layout-prototype"))) {
+
+			exportCurPortletConfiguration = true;
 
 			exportCurPortletArchivedSetups =
 				MapUtil.getBoolean(
@@ -210,7 +244,7 @@ public class LayoutExporter {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
-			boolean exportCurPortletConfiguration =
+			exportCurPortletConfiguration =
 				exportPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
@@ -237,10 +271,24 @@ public class LayoutExporter {
 						StringPool.UNDERLINE + rootPortletId);
 		}
 
-		return new boolean[] {
-			exportCurPortletArchivedSetups, exportCurPortletData,
-			exportCurPortletSetup, exportCurPortletUserPreferences
-		};
+		Map<String, Boolean> exportPortletControlsMap =
+			new HashMap<String, Boolean>();
+
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+			exportCurPortletArchivedSetups);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			exportCurPortletConfiguration);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA, exportCurPortletData);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP, exportCurPortletSetup);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+			exportCurPortletUserPreferences);
+
+		return exportPortletControlsMap;
 	}
 
 	public static List<Portlet> getPortletDataHandlerPortlets(
