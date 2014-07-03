@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LicenseValidationTransportUtil;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
@@ -97,6 +98,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
 
 		ThreadLocalCacheManager.destroy();
+
+		try {
+			LicenseValidationTransportUtil.stopMulticastTransportThread();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
 		try {
 			ClearThreadLocalUtil.clearThreadLocal();
