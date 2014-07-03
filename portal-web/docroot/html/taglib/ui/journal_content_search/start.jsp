@@ -17,7 +17,6 @@
 <%@ include file="/html/taglib/ui/journal_content_search/init.jsp" %>
 
 <%
-String randomId = StringPool.UNDERLINE + StringUtil.randomId();
 boolean showListed = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:journal-content-search:showListed"));
 String targetPortletId = (String)request.getAttribute("liferay-ui:journal-content-search:targetPortletId");
 String type = (String)request.getAttribute("liferay-ui:journal-content-search:type");
@@ -60,6 +59,6 @@ String taglibOnBlur = "if (this.value == '') { this.value = '" + unicodeDefaultK
 String taglibOnFocus = "if (this.value == '" + unicodeDefaultKeywords + "') { this.value = ''; }";
 %>
 
-<aui:input cssClass="lfr-search-keywords" id='<%= namespace + "keywords" + randomId %>' inlineField="<%= true %>" label="" name='<%= namespace + "keywords" %>' onBlur="<%= taglibOnBlur %>" onFocus="<%= taglibOnFocus %>" size="30" title="search-web-content" type="text" useNamespace='<%= false %>' value="<%= HtmlUtil.escape(keywords) %>" />
+<aui:input cssClass="lfr-search-keywords" id='<%= namespace + "keywords_" + StringUtil.randomId() %>' inlineField="<%= true %>" label="" name='<%= namespace + "keywords" %>' onBlur="<%= taglibOnBlur %>" onFocus="<%= taglibOnFocus %>" size="30" title="search-web-content" type="text" useNamespace="<%= false %>" value="<%= HtmlUtil.escape(keywords) %>" />
 
 <aui:input alt="search" cssClass="lfr-search-button" inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' type="image" />

@@ -58,7 +58,7 @@ public class InputSearchTag extends IncludeTag {
 		_title = title;
 	}
 
-	public void setuseNamespace(boolean useNamespace) {
+	public void setUseNamespace(boolean useNamespace) {
 		_useNamespace = useNamespace;
 	}
 
@@ -125,7 +125,8 @@ public class InputSearchTag extends IncludeTag {
 			"liferay-ui:input-search:placeholder", placeholder);
 		request.setAttribute("liferay-ui:input-search:showButton", _showButton);
 		request.setAttribute("liferay-ui:input-search:title", _title);
-		request.setAttribute("liferay-ui:input-search:useNamespace", _useNamespace);
+		request.setAttribute(
+			"liferay-ui:input-search:useNamespace", _useNamespace);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_search/page.jsp";
