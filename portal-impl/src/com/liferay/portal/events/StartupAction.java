@@ -86,19 +86,18 @@ public class StartupAction extends SimpleAction {
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo());
 
-		// Print installed patches
-
-		String installedPatches = StringUtil.merge(
-			PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
+		// Installed patches
 
 		if (_log.isInfoEnabled()) {
+			String installedPatches = StringUtil.merge(
+				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
+
 			if (Validator.isNull(installedPatches)) {
-				_log.info("There is no patch installed");
+				_log.info("There are no patches installed");
 			}
 			else {
 				_log.info(
-					"The system has the following patches installed: " +
-						installedPatches);
+					"The following patches are installed: " + installedPatches);
 			}
 		}
 
