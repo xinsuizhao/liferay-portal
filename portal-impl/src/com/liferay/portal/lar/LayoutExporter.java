@@ -139,6 +139,11 @@ public class LayoutExporter {
 		return portlets;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map)}
+	 */
+	@Deprecated
 	public static boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap)
@@ -148,6 +153,11 @@ public class LayoutExporter {
 			companyId, portletId, parameterMap, "layout-set");
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map, String)}
+	 */
+	@Deprecated
 	public static boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, String type)
