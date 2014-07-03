@@ -109,17 +109,13 @@ boolean expired = true;
 											</aui:script>
 										</c:when>
 										<c:otherwise>
-
-											<%
-											PortletURL printPageURL = renderResponse.createRenderURL();
-
-											printPageURL.setParameter("struts_action", "/journal_content/view");
-											printPageURL.setParameter("groupId", String.valueOf(articleDisplay.getGroupId()));
-											printPageURL.setParameter("articleId", articleDisplay.getArticleId());
-											printPageURL.setParameter("page", String.valueOf(articleDisplay.getCurrentPage()));
-											printPageURL.setParameter("viewMode", Constants.PRINT);
-											printPageURL.setWindowState(LiferayWindowState.POP_UP);
-											%>
+											<portlet:renderURL var="printPageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+												<portlet:param name="struts_action" value="/journal_content/view" />
+												<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
+												<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
+												<portlet:param name="page" value="<%= String.valueOf(articleDisplay.getCurrentPage()) %>" />
+												<portlet:param name="viewMode" value="<%= Constants.PRINT %>" />
+											</portlet:renderURL>
 
 											<div class="print-action">
 												<liferay-ui:icon
@@ -140,30 +136,26 @@ boolean expired = true;
 								</c:if>
 
 								<c:if test="<%= enableConversions && !print %>">
-
-									<%
-									PortletURL exportArticleURL = renderResponse.createActionURL();
-
-									exportArticleURL.setParameter("struts_action", "/journal_content/export_article");
-									exportArticleURL.setParameter("groupId", String.valueOf(articleDisplay.getGroupId()));
-									exportArticleURL.setParameter("articleId", articleDisplay.getArticleId());
-									exportArticleURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-									%>
-
 									<div class="export-actions">
 										<liferay-ui:icon-list>
 
 											<%
 											for (String extension : extensions) {
-												exportArticleURL.setParameter("targetExtension", extension);
 											%>
+
+												<portlet:actionURL var="exportArticleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+													<portlet:param name="struts_action" value="/journal_content/export_article" />
+													<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
+													<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
+													<portlet:param name="targetExtension" value="<%= extension %>" />
+												</portlet:actionURL>
 
 												<liferay-ui:icon
 													image='<%= "../file_system/small/" + HtmlUtil.escapeAttribute(extension) %>'
 													label="<%= true %>"
 													message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
 													method="get"
-													url="<%= exportArticleURL.toString() %>"
+													url="<%= exportArticleURL %>"
 												/>
 
 											<%

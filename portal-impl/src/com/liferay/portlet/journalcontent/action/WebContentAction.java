@@ -15,7 +15,6 @@
 package com.liferay.portlet.journalcontent.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -63,11 +62,6 @@ public class WebContentAction extends PortletAction {
 		String ddmTemplateKey = PrefsParamUtil.getString(
 			portletPreferences, actionRequest, "ddmTemplateKey");
 
-		if (groupId < 1) {
-			groupId = GetterUtil.getLong(
-				portletPreferences.getValue("groupId", null));
-		}
-
 		String viewMode = ParamUtil.getString(actionRequest, "viewMode");
 		String languageId = LanguageUtil.getLanguageId(actionRequest);
 		int page = ParamUtil.getInteger(actionRequest, "page", 1);
@@ -109,24 +103,12 @@ public class WebContentAction extends PortletAction {
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-
-			if (groupId < 1) {
-				groupId = GetterUtil.getLong(
-					portletPreferences.getValue("groupId", null));
-			}
-
-			String articleId = ParamUtil.getString(
-				resourceRequest, "articleId");
-			String ddmTemplateKey = ParamUtil.getString(
-				resourceRequest, "ddmTemplateKey");
-
-			if (Validator.isNull(articleId)) {
-				articleId = GetterUtil.getString(
-					portletPreferences.getValue("articleId", null));
-				ddmTemplateKey = GetterUtil.getString(
-					portletPreferences.getValue("ddmTemplateKey", null));
-			}
+			long groupId = PrefsParamUtil.getLong(
+				portletPreferences, resourceRequest, "groupId");
+			String articleId = PrefsParamUtil.getString(
+				portletPreferences, resourceRequest, "articleId");
+			String ddmTemplateKey = PrefsParamUtil.getString(
+				portletPreferences, resourceRequest, "ddmTemplateKey");
 
 			String viewMode = ParamUtil.getString(resourceRequest, "viewMode");
 			String languageId = LanguageUtil.getLanguageId(resourceRequest);
