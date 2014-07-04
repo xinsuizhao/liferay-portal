@@ -274,7 +274,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		String script = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, template, template.getScript(),
+			portletDataContext, template, templateElement, template.getScript(),
 			portletDataContext.getBooleanParameter(
 				DDMPortletDataHandler.NAMESPACE, "referenced-content"));
 
@@ -317,18 +317,17 @@ public class DDMTemplateStagedModelDataHandler
 		File smallFile = null;
 
 		try {
+			Element templateElement =
+				portletDataContext.getImportDataStagedModelElement(template);
+			
 			if (template.isSmallImage()) {
-				Element element =
-					portletDataContext.getImportDataStagedModelElement(
-						template);
-
-				String smallImagePath = element.attributeValue(
+				String smallImagePath = templateElement.attributeValue(
 					"small-image-path");
 
 				if (Validator.isNotNull(template.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, element,
+							portletDataContext, templateElement,
 							template.getSmallImageURL(), true);
 
 					template.setSmallImageURL(smallImageURL);
@@ -348,7 +347,8 @@ public class DDMTemplateStagedModelDataHandler
 
 			String script =
 				ExportImportHelperUtil.replaceImportContentReferences(
-					portletDataContext, template, template.getScript());
+					portletDataContext, templateElement, template.getScript(),
+					true);
 
 			template.setScript(script);
 
@@ -358,12 +358,8 @@ public class DDMTemplateStagedModelDataHandler
 			DDMTemplate importedTemplate = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				Element element =
-					portletDataContext.getImportDataStagedModelElement(
-						template);
-
 				boolean preloaded = GetterUtil.getBoolean(
-					element.attributeValue("preloaded"));
+					templateElement.attributeValue("preloaded"));
 
 				DDMTemplate existingTemplate = getExistingTemplate(
 					template.getUuid(), portletDataContext.getScopeGroupId(),
