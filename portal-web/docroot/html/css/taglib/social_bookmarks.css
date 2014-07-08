@@ -13,14 +13,15 @@
 			height: 0;
 			visibility: hidden;
 		}
-	}
 
-	li {
-		float: left;
-		margin-right: 1em;
+		li {
+			float: left;
+			line-height: inherit;
+			margin-right: 1em;
 
-		.social-bookmark-link {
-			padding: 3px 2px 3px 20px;
+			.social-bookmark-link {
+				padding: 3px 2px 3px 20px;
+			}
 		}
 	}
 }
