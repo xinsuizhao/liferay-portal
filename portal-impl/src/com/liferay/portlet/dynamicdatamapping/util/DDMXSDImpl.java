@@ -123,6 +123,7 @@ public class DDMXSDImpl implements DDMXSD {
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
 		int fieldRepetition = 1;
+		int offset = 0;
 
 		DDMFieldsCounter ddmFieldsCounter = getFieldsCounter(
 			pageContext, fields, portletNamespace, namespace);
@@ -143,7 +144,12 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String parentFieldName = (String)parentFieldStructure.get("name");
 
-			int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+			offset = getFieldOffset(
+				fieldsDisplayValues, name, ddmFieldsCounter.get(name));
+
+			if (offset == fieldsDisplayValues.length) {
+				return StringPool.BLANK;
+			}
 
 			fieldRepetition = countFieldRepetition(
 				fieldsDisplayValues, parentFieldName, offset);
@@ -157,7 +163,6 @@ public class DDMXSDImpl implements DDMXSD {
 
 			if (fieldDisplayable) {
 				ddmFieldsCounter.incrementKey(name);
-				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 			}
 
 			String childrenHTML = getHTML(
@@ -668,6 +673,24 @@ public class DDMXSDImpl implements DDMXSD {
 		fieldsContext.put(name, fieldContext);
 
 		return fieldContext;
+	}
+
+	protected int getFieldOffset(
+		String[] fieldsDisplayValues, String name, int index) {
+
+		int offset = 0;
+
+		for (; offset < fieldsDisplayValues.length; offset++) {
+			if (name.equals(fieldsDisplayValues[offset])) {
+				index--;
+
+				if (index < 0) {
+					break;
+				}
+			}
+		}
+
+		return offset;
 	}
 
 	protected Map<String, Map<String, Object>> getFieldsContext(
