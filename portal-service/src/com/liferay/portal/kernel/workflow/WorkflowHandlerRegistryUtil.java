@@ -223,6 +223,14 @@ public class WorkflowHandlerRegistryUtil {
 		return null;
 	}
 
+	public void setWorkflowHandlerRegistry(
+		WorkflowHandlerRegistry workflowHandlerRegistry) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_workflowHandlerRegistry = workflowHandlerRegistry;
+	}
+
 	private boolean _hasWorkflowInstanceInProgress(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -244,14 +252,6 @@ public class WorkflowHandlerRegistryUtil {
 		}
 
 		return false;
-	}
-
-	public void setWorkflowHandlerRegistry(
-		WorkflowHandlerRegistry workflowHandlerRegistry) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_workflowHandlerRegistry = workflowHandlerRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
