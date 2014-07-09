@@ -135,15 +135,15 @@ public class VerifyOracle extends VerifyProcess {
 
 			if (!rs.next()) {
 				if (_log.isWarnEnabled()) {
-					StringBundler sb2 = new StringBundler(5);
+					sb = new StringBundler(5);
 
-					sb2.append("Column ");
-					sb2.append(columnName);
-					sb2.append(" in table ");
-					sb2.append(tableName);
-					sb2.append(" could not be found.");
+					sb.append("Column ");
+					sb.append(columnName);
+					sb.append(" in table ");
+					sb.append(tableName);
+					sb.append(" could not be found.");
 
-					_log.warn(sb2.toString());
+					_log.warn(sb.toString());
 				}
 
 				return;
