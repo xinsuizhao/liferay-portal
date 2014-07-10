@@ -257,6 +257,9 @@ public class WorkflowHandlerRegistryUtil {
 	private static Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
 
+	private static WorkflowHandlerRegistryUtil _instance =
+		new WorkflowHandlerRegistryUtil();
+
 	private static WorkflowHandlerRegistry _workflowHandlerRegistry;
 
 }
