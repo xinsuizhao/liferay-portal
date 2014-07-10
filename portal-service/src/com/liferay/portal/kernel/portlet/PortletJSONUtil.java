@@ -251,8 +251,23 @@ public class PortletJSONUtil {
 			return;
 		}
 
-		writePaths(
-			response, footerCssPathsJSONArray, footerJavaScriptPathsJSONArray);
+		PrintWriter printWriter = response.getWriter();
+
+		for (int i = 0; i < footerCssPathsJSONArray.length(); i++) {
+			String value = footerCssPathsJSONArray.getString(i);
+
+			printWriter.print("<link href=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		for (int i = 0; i < footerJavaScriptPathsJSONArray.length(); i++) {
+			String value = footerJavaScriptPathsJSONArray.getString(i);
+
+			printWriter.print("<script src=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" type=\"text/javascript\"></script>");
+		}
 	}
 
 	public static void writeHeaderPaths(
@@ -270,8 +285,23 @@ public class PortletJSONUtil {
 			return;
 		}
 
-		writePaths(
-			response, headerCssPathsJSONArray, headerJavaScriptPathsJSONArray);
+		PrintWriter printWriter = response.getWriter();
+
+		for (int i = 0; i < headerCssPathsJSONArray.length(); i++) {
+			String value = headerCssPathsJSONArray.getString(i);
+
+			printWriter.print("<link href=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		for (int i = 0; i < headerJavaScriptPathsJSONArray.length(); i++) {
+			String value = headerJavaScriptPathsJSONArray.getString(i);
+
+			printWriter.print("<script src=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" type=\"text/javascript\"></script>");
+		}
 	}
 
 	protected static String getRootPortletId(Portlet portlet) {
@@ -282,30 +312,6 @@ public class PortletJSONUtil {
 		Portlet rootPortlet = portlet.getRootPortlet();
 
 		return rootPortlet.getPortletId();
-	}
-
-	private static void writePaths(
-			HttpServletResponse response, JSONArray cssPathsJSONArray,
-			JSONArray javaScriptPathsJSONArray)
-		throws IOException {
-
-		PrintWriter printWriter = response.getWriter();
-
-		for (int i = 0; i < cssPathsJSONArray.length(); i++) {
-			String value = cssPathsJSONArray.getString(i);
-
-			printWriter.print("<link href=\"");
-			printWriter.print(HtmlUtil.escape(value));
-			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
-		}
-
-		for (int i = 0; i < javaScriptPathsJSONArray.length(); i++) {
-			String value = javaScriptPathsJSONArray.getString(i);
-
-			printWriter.print("<script src=\"");
-			printWriter.print(HtmlUtil.escape(value));
-			printWriter.println("\" type=\"text/javascript\"></script>");
-		}
 	}
 
 }
