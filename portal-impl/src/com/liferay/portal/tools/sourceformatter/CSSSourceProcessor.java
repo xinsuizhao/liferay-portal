@@ -105,11 +105,9 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = trimContent(content, false);
 
-		if (!portalSource) {
-			newContent = fixComments(newContent);
+		newContent = fixComments(newContent);
 
-			newContent = fixHexColors(newContent);
-		}
+		newContent = fixHexColors(newContent);
 
 		compareAndAutoFixContent(file, fileName, content, newContent);
 

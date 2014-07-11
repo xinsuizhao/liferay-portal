@@ -336,10 +336,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkRegexPattern(
 		String regexPattern, String fileName, int lineCount) {
 
-		if (portalSource) {
-			return;
-		}
-
 		int i = regexPattern.indexOf("Pattern.compile(");
 
 		if (i == -1) {
@@ -607,9 +603,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				matcher.start());
 		}
 
-		if (!portalSource) {
-			newContent = sortAnnotations(newContent, StringPool.BLANK);
-		}
+		newContent = sortAnnotations(newContent, StringPool.BLANK);
 
 		Matcher matcher = _logPattern.matcher(newContent);
 
@@ -674,8 +668,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-45027
 
-		if (!portalSource &&
-			newContent.contains(
+		if (newContent.contains(
 				"com.liferay.portal.kernel.util.UnmodifiableList")) {
 
 			processErrorMessage(
@@ -765,10 +758,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-46017
 
-		if (!portalSource) {
-			newContent = StringUtil.replace(
-				newContent, " static interface ", " interface ");
-		}
+		newContent = StringUtil.replace(
+			newContent, " static interface ", " interface ");
 
 		// LPS-47682
 
@@ -787,16 +778,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 
-		if (!portalSource) {
-			pos = newContent.indexOf("\npublic ");
+		pos = newContent.indexOf("\npublic ");
 
-			if (pos != -1) {
-				String javaClassContent = newContent.substring(pos);
+		if (pos != -1) {
+			String javaClassContent = newContent.substring(pos);
 
-				newContent = formatJavaTerms(
-					fileName, newContent, javaClassContent,
-					_javaTermSortExclusions, _testAnnotationsExclusions);
-			}
+			newContent = formatJavaTerms(
+				fileName, newContent, javaClassContent, _javaTermSortExclusions,
+				_testAnnotationsExclusions);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -867,7 +856,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42924
 
-			if (!portalSource && line.contains("PortalUtil.getClassNameId(") &&
+			if (line.contains("PortalUtil.getClassNameId(") &&
 				fileName.endsWith("ServiceImpl.java")) {
 
 				processErrorMessage(
@@ -883,8 +872,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-45649
 
-			if (!portalSource &&
-				trimmedLine.startsWith("throw new IOException(") &&
+			if (trimmedLine.startsWith("throw new IOException(") &&
 				line.contains("e.getMessage()")) {
 
 				line = StringUtil.replace(
@@ -929,7 +917,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			if (!portalSource && trimmedLine.startsWith("* @see ") &&
+			if (trimmedLine.startsWith("* @see ") &&
 				(StringUtil.count(trimmedLine, StringPool.AT) > 1)) {
 
 				processErrorMessage(
@@ -1176,7 +1164,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				int x = strippedQuotesLine.indexOf(", ");
 
-				if (!portalSource && (x != -1)) {
+				if (x != -1) {
 					String linePart = strippedQuotesLine.substring(0, x);
 
 					int closeParenthesisCount = StringUtil.count(
@@ -1299,11 +1287,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							 previousLine.endsWith(
 								 StringPool.OPEN_PARENTHESIS))) {
 
-							if (!portalSource) {
-								processErrorMessage(
-									fileName,
-									"tab: " + fileName + " " + lineCount);
-							}
+							processErrorMessage(
+								fileName, "tab: " + fileName + " " + lineCount);
 						}
 
 						if (Validator.isNotNull(trimmedLine)) {

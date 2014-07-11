@@ -350,7 +350,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
-		if (!portalSource && _stripJSPImports && !_jspContents.isEmpty()) {
+		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = stripJSPImports(fileName, newContent);
 			}
