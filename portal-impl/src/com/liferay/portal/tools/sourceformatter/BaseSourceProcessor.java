@@ -108,7 +108,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> exclusions, String fileName, int lineCount,
 		String javaTermName) {
 
-		if ((exclusions == null) || exclusions.isEmpty()) {
+		if (ListUtil.isEmpty(exclusions)) {
 			return false;
 		}
 
