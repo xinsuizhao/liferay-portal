@@ -21,30 +21,32 @@ import java.util.regex.Pattern;
 
 /**
  * @author Carlos Sierra Andrés
- * @author André de Oliveira
  */
-public class JavaImportsFormatter extends ImportsFormatter {
+public class ImportPackageFactoryUtil {
 
-	@Override
-	protected ImportPackage createImportPackage(String line) {
-		Matcher matcher = _javaImportPattern.matcher(line);
-
-		if (!matcher.find()) {
+	public static ImportPackage create(String line) {
+		if (Validator.isNull(line)) {
 			return null;
 		}
 
-		boolean isStatic = false;
+		Matcher javaMatcher = _javaImportPattern.matcher(line);
 
-		if (Validator.isNotNull(matcher.group(1))) {
-			isStatic = true;
+		if (javaMatcher.find()) {
+			return new ImportPackage(javaMatcher.group(1), line);
 		}
 
-		String importString = matcher.group(2);
+		Matcher jspMatcher = _jspImportPattern.matcher(line);
 
-		return new ImportPackage(importString, isStatic, line);
+		if (jspMatcher.find()) {
+			return new ImportPackage(jspMatcher.group(1), line);
+		}
+
+		return null;
 	}
 
 	private static final Pattern _javaImportPattern = Pattern.compile(
-		"import( static)? ([^;]+);");
+		"import ([^\\s;]+)");
+	private static final Pattern _jspImportPattern = Pattern.compile(
+		"import=\"([^\\s\"]+)\"");
 
 }

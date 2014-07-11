@@ -33,6 +33,4 @@ public interface SourceProcessor {
 
 	public List<String> getErrorMessages();
 
-	public SourceMismatchException getFirstSourceMismatchException();
-
 }

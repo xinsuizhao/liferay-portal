@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -292,10 +290,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void format() throws Exception {
 		String[] excludes = new String[] {
-			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**",
-			"portal-impl\\**\\*.action", "portal-impl\\**\\*.function",
-			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase",
-			"tools\\sdk\\**"
+			"**\\.bnd\\**", "**\\.idea\\**", "portal-impl\\**\\*.action",
+			"portal-impl\\**\\*.function", "portal-impl\\**\\*.macro",
+			"portal-impl\\**\\*.testcase"
 		};
 
 		String[] includes = new String[] {
@@ -303,10 +300,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"**\\*.xml"
 		};
 
-		List<String> exclusions = getExclusions("xml.excludes");
-
-		_friendlyUrlRoutesSortExclusions = getExclusions(
-			"friendly.url.routes.sort.excludes");
+		Properties exclusions = getExclusionsProperties(
+			"source_formatter_xml_exclusions.properties");
 
 		List<String> fileNames = getFileNames(excludes, includes);
 
@@ -316,7 +311,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			if (isExcluded(exclusions, fileName)) {
+			if ((exclusions != null) &&
+				(exclusions.getProperty(fileName) != null)) {
+
 				continue;
 			}
 
@@ -349,7 +346,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					  fileName.endsWith(".macro") ||
 					  fileName.endsWith(".testcase"))) {
 
-				newContent = formatPoshiXML(fileName, newContent);
+				newContent = formatPoshiXML(newContent);
 			}
 			else if (portalSource && fileName.endsWith("/service.xml")) {
 				formatServiceXML(fileName, newContent);
@@ -360,15 +357,21 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 				formatTilesDefsXML(fileName, newContent);
 			}
-			else if ((portalSource && fileName.endsWith("WEB-INF/web.xml")) ||
-					 (!portalSource && fileName.endsWith("/web.xml"))) {
+			else if (portalSource && fileName.endsWith("WEB-INF/web.xml") ||
+					 !portalSource && fileName.endsWith("/web.xml")) {
 
 				newContent = formatWebXML(fileName, newContent);
 			}
 
 			newContent = formatXML(newContent);
 
-			compareAndAutoFixContent(file, fileName, content, newContent);
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
+				fileUtil.write(file, newContent);
+
+				sourceFormatterHelper.printError(fileName, file);
+			}
 		}
 	}
 
@@ -441,9 +444,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
-		throws DocumentException {
+		throws DocumentException, IOException {
 
-		if (isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
+		Properties friendlyUrlRoutesSortExclusions = getExclusionsProperties(
+			"source_formatter_friendly_url_routes_sort_exclusions.properties");
+
+		String excluded = null;
+
+		if (friendlyUrlRoutesSortExclusions != null) {
+			excluded = friendlyUrlRoutesSortExclusions.getProperty(fileName);
+		}
+
+		if (excluded != null) {
 			return content;
 		}
 
@@ -600,11 +612,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return document.formattedString();
 	}
 
-	protected String formatPoshiXML(String fileName, String content)
-		throws IOException {
-
-		content = sortPoshiAttributes(fileName, content);
-
+	protected String formatPoshiXML(String content) {
 		content = sortPoshiCommands(content);
 
 		content = sortPoshiVariables(content);
@@ -663,8 +671,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 						processErrorMessage(
 							fileName,
-							"sort: " + fileName + " " + entityName + " " +
-								referenceEntity);
+							"sort: " + fileName + " " + referencePackagePath);
 					}
 				}
 
@@ -840,58 +847,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
-	protected String sortPoshiAttributes(String fileName, String content)
-		throws IOException {
-
-		StringBundler sb = new StringBundler();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
-		String line = null;
-
-		int lineCount = 0;
-
-		boolean sortAttributes = true;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
-
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			if (sortAttributes) {
-				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-					trimmedLine.endsWith(StringPool.GREATER_THAN) &&
-					!trimmedLine.startsWith("<%") &&
-					!trimmedLine.startsWith("<!")) {
-
-					line = sortAttributes(fileName, line, lineCount, false);
-				}
-				else if (trimmedLine.startsWith("<![CDATA[") &&
-						 !trimmedLine.endsWith("]]>")) {
-
-					sortAttributes = false;
-				}
-			}
-			else if (trimmedLine.endsWith("]]>")) {
-				sortAttributes = true;
-			}
-
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		unsyncBufferedReader.close();
-
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
-	}
-
 	protected String sortPoshiCommands(String content) {
 		Matcher matcher = _poshiCommandsPattern.matcher(content);
 
@@ -1028,36 +983,37 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		">\n\t+<!--[\n ]");
 	private static Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
-
-	private List<String> _friendlyUrlRoutesSortExclusions;
-	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
-	private Pattern _poshiCommandsPattern = Pattern.compile(
+	private static Pattern _poshiClosingTagPattern = Pattern.compile(
+		"</[^>/]*>");
+	private static Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+");
-	private Pattern _poshiElementWithNoChildPattern = Pattern.compile(
+	private static Pattern _poshiElementWithNoChildPattern = Pattern.compile(
 		"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
-	private Pattern _poshiEndLinesAfterClosingElementPattern = Pattern.compile(
-		"(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
-	private Pattern _poshiEndLinesBeforeClosingElementPattern = Pattern.compile(
-		"(\\n+)(\\t*</[a-z\\-]+>)");
-	private Pattern _poshiEndLinesPattern = Pattern.compile(
+	private static Pattern _poshiEndLinesAfterClosingElementPattern =
+		Pattern.compile("(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
+	private static Pattern _poshiEndLinesBeforeClosingElementPattern =
+		Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
+	private static Pattern _poshiEndLinesPattern = Pattern.compile(
 		"\\>\\n\\n\\n+(\\t*\\<)");
-	private Pattern _poshiOpeningTagPattern = Pattern.compile(
+	private static Pattern _poshiOpeningTagPattern = Pattern.compile(
 		"<[^/][^>]*[^/]>");
-	private Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
+	private static Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
 		"\"[^\"]*\\>[^\"]*\"");
-	private Pattern _poshiSetUpPattern = Pattern.compile(
+	private static Pattern _poshiSetUpPattern = Pattern.compile(
 		"\\n[\\t]++\\<set-up\\>([\\s\\S]*?)\\</set-up\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private Pattern _poshiTabsPattern = Pattern.compile("\\n*([ \\t]*<).*");
-	private Pattern _poshiTearDownPattern = Pattern.compile(
+	private static Pattern _poshiTabsPattern = Pattern.compile(
+		"\\n*([ \\t]*<).*");
+	private static Pattern _poshiTearDownPattern = Pattern.compile(
 		"\\n[\\t]++\\<tear-down\\>([\\s\\S]*?)\\</tear-down\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private Pattern _poshiVariableLinePattern = Pattern.compile(
+	private static Pattern _poshiVariableLinePattern = Pattern.compile(
 		"([\\t]*+)(\\<var name=\\\"([^\\\"]*)\\\".*?/\\>.*+(?:\\</var\\>)??)");
-	private Pattern _poshiVariablesBlockPattern = Pattern.compile(
+	private static Pattern _poshiVariablesBlockPattern = Pattern.compile(
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
-	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
+	private static Pattern _poshiWholeTagPattern = Pattern.compile(
+		"<[^\\>^/]*\\/>");
 
 }

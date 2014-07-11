@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.StringPool;
-
 /**
  * @author Carlos Sierra Andrés
  */
@@ -23,16 +21,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 	@Override
 	public int compareTo(ImportPackage importPackage) {
-		if (_isStatic != importPackage.isStatic()) {
-			if (_isStatic) {
-				return -1;
-			}
-			else {
-				return 1;
-			}
-		}
-
-		return _importString.compareTo(importPackage.getImportString());
+		return _import.compareTo(importPackage._import);
 	}
 
 	@Override
@@ -47,68 +36,28 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 		ImportPackage importPackage = (ImportPackage)obj;
 
-		if ((_isStatic == importPackage.isStatic()) &&
-			_importString.equals(importPackage.getImportString())) {
-
-			return true;
-		}
-
-		return false;
+		return _import.equals(importPackage._import);
 	}
 
-	public String getImportString() {
-		return _importString;
+	public String getImport() {
+		return _import;
 	}
 
 	public String getLine() {
 		return _line;
 	}
 
-	public String getPackageLevel() {
-		int pos = _importString.indexOf(StringPool.PERIOD);
-
-		pos = _importString.indexOf(StringPool.PERIOD, pos + 1);
-
-		if (pos == -1) {
-			pos = _importString.indexOf(StringPool.PERIOD);
-		}
-
-		return _importString.substring(0, pos);
-	}
-
 	@Override
 	public int hashCode() {
-		return _importString.hashCode();
+		return _import.hashCode();
 	}
 
-	public boolean isGroupedWith(ImportPackage importPackage) {
-		if (_isStatic != importPackage.isStatic()) {
-			return false;
-		}
-
-		String packageLevel = getPackageLevel();
-
-		if (packageLevel.equals(importPackage.getPackageLevel())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isStatic() {
-		return _isStatic;
-	}
-
-	protected ImportPackage(
-		String importString, boolean isStatic, String line) {
-
-		_importString = importString;
-		_isStatic = isStatic;
+	protected ImportPackage(String importString, String line) {
+		_import = importString;
 		_line = line;
 	}
 
-	private String _importString;
-	private boolean _isStatic;
+	private String _import;
 	private String _line;
 
 }

@@ -79,7 +79,12 @@ public class SourceFormatter {
 						XMLSourceProcessor.class.newInstance());
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
-						_runSourceProcessor(sourceProcessor);
+						sourceProcessor.format(
+							_useProperties, _printErrors, _autoFix,
+							_mainReleaseVersion);
+
+						_errorMessages.addAll(
+							sourceProcessor.getErrorMessages());
 					}
 				}
 				catch (Exception e) {
@@ -97,7 +102,11 @@ public class SourceFormatter {
 					SourceProcessor sourceProcessor =
 						JSPSourceProcessor.class.newInstance();
 
-					_runSourceProcessor(sourceProcessor);
+					sourceProcessor.format(
+						_useProperties, _printErrors, _autoFix,
+						_mainReleaseVersion);
+
+					_errorMessages.addAll(sourceProcessor.getErrorMessages());
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -112,14 +121,8 @@ public class SourceFormatter {
 		thread1.join();
 		thread2.join();
 
-		if (_throwException) {
-			if (!_errorMessages.isEmpty()) {
-				throw new Exception(StringUtil.merge(_errorMessages, "\n"));
-			}
-
-			if (_firstSourceMismatchException != null) {
-				throw _firstSourceMismatchException;
-			}
+		if (_throwException && !_errorMessages.isEmpty()) {
+			throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 		}
 	}
 
@@ -145,20 +148,6 @@ public class SourceFormatter {
 		return _mainReleaseVersion;
 	}
 
-	private void _runSourceProcessor(SourceProcessor sourceProcessor)
-		throws Exception {
-
-		sourceProcessor.format(
-			_useProperties, _printErrors, _autoFix, _mainReleaseVersion);
-
-		_errorMessages.addAll(sourceProcessor.getErrorMessages());
-
-		if (_firstSourceMismatchException == null) {
-			_firstSourceMismatchException =
-				sourceProcessor.getFirstSourceMismatchException();
-		}
-	}
-
 	private void _setVersion() throws Exception {
 		String releaseInfoVersion = ReleaseInfo.getVersion();
 
@@ -170,22 +159,17 @@ public class SourceFormatter {
 			_mainReleaseVersion =
 				BaseSourceProcessor.MAIN_RELEASE_VERSION_6_2_0;
 		}
-		else if (releaseInfoVersion.startsWith("7.0")) {
-			_mainReleaseVersion =
-				BaseSourceProcessor.MAIN_RELEASE_VERSION_7_0_0;
-		}
 		else {
 			throw new Exception(
 				"Invalid release information: " + ReleaseInfo.getVersion());
 		}
 	}
 
-	private boolean _autoFix;
-	private List<String> _errorMessages = new UniqueList<String>();
-	private SourceMismatchException _firstSourceMismatchException;
-	private String _mainReleaseVersion;
-	private boolean _printErrors;
-	private boolean _throwException;
-	private boolean _useProperties;
+	private static boolean _autoFix;
+	private static List<String> _errorMessages = new UniqueList<String>();
+	private static String _mainReleaseVersion;
+	private static boolean _printErrors;
+	private static boolean _throwException;
+	private static boolean _useProperties;
 
 }
