@@ -365,9 +365,9 @@ if (feed != null) {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 				%>
 
-				showGlobalScope:true,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+				showGlobalScope:true,
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 			},
