@@ -14,25 +14,36 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.util.List;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * @author André de Oliveira
  * @author Hugo Huijser
  */
-public interface SourceProcessor {
+public class SourceMismatchException extends PortalException {
 
-	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix,
-			String mainReleaseVersion)
-		throws Exception;
+	public SourceMismatchException(
+		String fileName, String originalSource, String formattedSource) {
 
-	public String format(
-			String fileName, boolean useProperties, boolean printErrors,
-			boolean autoFix, String mainReleaseVersion)
-		throws Exception;
+		_fileName = fileName;
+		_originalSource = originalSource;
+		_formattedSource = formattedSource;
+	}
 
-	public List<String> getErrorMessages();
+	String getFileName() {
+		return _fileName;
+	}
 
-	public SourceMismatchException getFirstSourceMismatchException();
+	String getFormattedSource() {
+		return _formattedSource;
+	}
+
+	String getOriginalSource() {
+		return _originalSource;
+	}
+
+	private String _fileName;
+	private String _formattedSource;
+	private String _originalSource;
 
 }

@@ -14,25 +14,27 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * @author Hugo Huijser
+ * @author Carlos Sierra Andrés
+ * @author André de Oliveira
  */
-public interface SourceProcessor {
+public class JSPImportsFormatter extends ImportsFormatter {
 
-	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix,
-			String mainReleaseVersion)
-		throws Exception;
+	@Override
+	protected ImportPackage createImportPackage(String line) {
+		Matcher matcher = _jspImportPattern.matcher(line);
 
-	public String format(
-			String fileName, boolean useProperties, boolean printErrors,
-			boolean autoFix, String mainReleaseVersion)
-		throws Exception;
+		if (matcher.find()) {
+			return new ImportPackage(matcher.group(1), false, line);
+		}
 
-	public List<String> getErrorMessages();
+		return null;
+	}
 
-	public SourceMismatchException getFirstSourceMismatchException();
+	private static final Pattern _jspImportPattern = Pattern.compile(
+		"import=\"([^\\s\"]+)\"");
 
 }
