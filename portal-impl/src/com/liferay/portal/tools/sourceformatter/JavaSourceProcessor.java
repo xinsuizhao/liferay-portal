@@ -18,15 +18,20 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
+import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.JavaSource;
+
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -167,6 +172,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				annotation += line + "\n";
 			}
+		}
+
+		return content;
+	}
+
+	protected String applyDiamondOperator(String content) {
+		Matcher matcher = _diamondOperatorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String parameterType = matcher.group(5);
+
+			if (parameterType.contains("Object")) {
+				String constructorParameter = matcher.group(6);
+
+				if (Validator.isNotNull(constructorParameter)) {
+					continue;
+				}
+			}
+
+			String match = matcher.group();
+
+			String replacement = StringUtil.replaceFirst(
+				match, "<" + parameterType + ">", "<>");
+
+			return StringUtil.replace(content, match, replacement);
 		}
 
 		return content;
@@ -366,6 +396,213 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkSystemEventAnnotations(String content, String fileName)
+		throws Exception {
+
+		if (!portalSource || !fileName.endsWith("PortletDataHandler.java")) {
+			return;
+		}
+
+		int pos = content.indexOf("setDeletionSystemEventStagedModelTypes");
+
+		if (pos == -1) {
+			return;
+		}
+
+		String deletionSystemEventStagedModelTypes = content.substring(
+			pos, content.indexOf(");", pos));
+
+		Matcher matcher = _stagedModelTypesPattern.matcher(
+			deletionSystemEventStagedModelTypes);
+
+		while (matcher.find()) {
+			String stagedModelTypeClassName = matcher.group(1);
+
+			pos = stagedModelTypeClassName.indexOf(".class");
+
+			if (pos == -1) {
+				pos = stagedModelTypeClassName.indexOf("Constants");
+			}
+
+			if (pos == -1) {
+				return;
+			}
+
+			String className = stagedModelTypeClassName.substring(0, pos);
+
+			Pattern packageNamePattern = Pattern.compile(
+				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." +
+					className + ";");
+
+			Matcher packageNameMatcher = packageNamePattern.matcher(content);
+
+			if (!packageNameMatcher.find()) {
+				return;
+			}
+
+			String packageName = packageNameMatcher.group(1);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(BASEDIR);
+			sb.append("portal-impl/src/");
+			sb.append(
+				StringUtil.replace(
+					packageName, StringPool.PERIOD, StringPool.SLASH));
+			sb.append("/service/impl/");
+			sb.append(className);
+			sb.append("LocalServiceImpl.java");
+
+			String localServiceImplFileName = sb.toString();
+
+			String localServiceImplContent = fileUtil.read(
+				localServiceImplFileName);
+
+			if (!localServiceImplContent.contains("@SystemEvent")) {
+				processErrorMessage(
+					fileName,
+					"Missing deletion system event: " +
+						localServiceImplFileName);
+			}
+		}
+	}
+
+	protected void checkUnprocessedExceptions(
+			String content, File file, String packagePath, String fileName)
+		throws IOException {
+
+		List<String> importedExceptionClassNames = null;
+		JavaDocBuilder javaDocBuilder = null;
+
+		for (int lineCount = 1;;) {
+			Matcher catchExceptionMatcher = _catchExceptionPattern.matcher(
+				content);
+
+			if (!catchExceptionMatcher.find()) {
+				return;
+			}
+
+			String beforeCatchCode = content.substring(
+				0, catchExceptionMatcher.start());
+
+			lineCount = lineCount + StringUtil.count(beforeCatchCode, "\n") + 1;
+
+			String exceptionClassName = catchExceptionMatcher.group(2);
+			String exceptionVariableName = catchExceptionMatcher.group(3);
+			String tabs = catchExceptionMatcher.group(1);
+
+			int pos = content.indexOf(
+				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE,
+				catchExceptionMatcher.end() - 1);
+
+			String insideCatchCode = content.substring(
+				catchExceptionMatcher.end(), pos + 1);
+
+			Pattern exceptionVariablePattern = Pattern.compile(
+				"\\W" + exceptionVariableName + "\\W");
+
+			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
+				insideCatchCode);
+
+			if (exceptionVariableMatcher.find()) {
+				content = content.substring(catchExceptionMatcher.start() + 1);
+
+				continue;
+			}
+
+			if (javaDocBuilder == null) {
+				javaDocBuilder = new JavaDocBuilder();
+
+				javaDocBuilder.addSource(file);
+			}
+
+			if (importedExceptionClassNames == null) {
+				importedExceptionClassNames = getImportedExceptionClassNames(
+					javaDocBuilder);
+			}
+
+			String originalExceptionClassName = exceptionClassName;
+
+			if (!exceptionClassName.contains(StringPool.PERIOD)) {
+				for (String exceptionClass : importedExceptionClassNames) {
+					if (exceptionClass.endsWith(
+							StringPool.PERIOD + exceptionClassName)) {
+
+						exceptionClassName = exceptionClass;
+
+						break;
+					}
+				}
+			}
+
+			if (!exceptionClassName.contains(StringPool.PERIOD)) {
+				exceptionClassName =
+					packagePath + StringPool.PERIOD + exceptionClassName;
+			}
+
+			com.thoughtworks.qdox.model.JavaClass exceptionClass =
+				javaDocBuilder.getClassByName(exceptionClassName);
+
+			while (true) {
+				String packageName = exceptionClass.getPackageName();
+
+				if (!packageName.contains("com.liferay")) {
+					break;
+				}
+
+				exceptionClassName = exceptionClass.getName();
+
+				if (exceptionClassName.equals("PortalException") ||
+					exceptionClassName.equals("SystemException")) {
+
+					processErrorMessage(
+						fileName,
+						"Unprocessed " + originalExceptionClassName + ": " +
+							fileName + " " + lineCount);
+
+					break;
+				}
+
+				com.thoughtworks.qdox.model.JavaClass exceptionSuperClass =
+					exceptionClass.getSuperJavaClass();
+
+				if (exceptionSuperClass == null) {
+					break;
+				}
+
+				exceptionClass = exceptionSuperClass;
+			}
+
+			content = content.substring(catchExceptionMatcher.start() + 1);
+		}
+	}
+
+	protected String fixDataAccessConnection(String className, String content) {
+		int x = content.indexOf("package ");
+
+		int y = content.indexOf(CharPool.SEMICOLON, x);
+
+		if ((x == -1) || (y == -1)) {
+			return content;
+		}
+
+		String packageName = content.substring(x + 8, y);
+
+		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
+			!packageName.startsWith("com.liferay.portal.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.verify")) {
+
+			return content;
+		}
+
+		content = StringUtil.replace(
+			content, "DataAccess.getConnection",
+			"DataAccess.getUpgradeOptimizedConnection");
+
+		return content;
+	}
+
 	protected String fixIfClause(String ifClause, String line, int delta) {
 		String newLine = line;
 
@@ -456,12 +693,57 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String fixSystemExceptions(String content) {
+		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String match = matcher.group();
+		String replacement = null;
+
+		String afterException = matcher.group(3);
+		String beforeException = matcher.group(2);
+
+		if (Validator.isNull(beforeException) &&
+			Validator.isNull(afterException)) {
+
+			replacement = matcher.group(4);
+
+			String beforeThrows = matcher.group(1);
+
+			if (Validator.isNotNull(StringUtil.trim(beforeThrows))) {
+				replacement = beforeThrows + replacement;
+			}
+		}
+		else if (Validator.isNull(beforeException)) {
+			replacement = StringUtil.replaceFirst(
+				match, "SystemException, ", StringPool.BLANK);
+		}
+		else {
+			replacement = StringUtil.replaceFirst(
+				match, ", SystemException", StringPool.BLANK);
+		}
+
+		if (match.equals(replacement)) {
+			return content;
+		}
+
+		return fixSystemExceptions(
+			StringUtil.replaceFirst(content, match, replacement));
+	}
+
 	@Override
 	protected void format() throws Exception {
 		Collection<String> fileNames = null;
 
 		if (portalSource) {
 			fileNames = getPortalJavaFiles();
+
+			_checkUnprocessedExceptions = GetterUtil.getBoolean(
+				System.getProperty(
+					"source.formatter.check.unprocessed.exceptions"));
 		}
 		else {
 			fileNames = getPluginJavaFiles();
@@ -469,6 +751,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		_fitOnSingleLineExclusions = getExclusions(
 			"fit.on.single.line.exludes");
+		_hibernateSQLQueryExclusions = getExclusions(
+			"hibernate.sql.query.excludes");
 		_javaTermSortExclusions = getExclusions("javaterm.sort.excludes");
 		_lineLengthExclusions = getExclusions("line.length.excludes");
 		_proxyExclusions = getExclusions("proxy.excludes");
@@ -559,6 +843,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "UTF-8: " + fileName);
 		}
 
+		newContent = fixDataAccessConnection(className, newContent);
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 
 		newContent = StringUtil.replace(
@@ -584,11 +869,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent,
 			new String[] {
 				";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
-				"while(", "List <", "){\n", "]{\n"
+				"while(", "List <", "){\n", "]{\n", ";;\n"
 			},
 			new String[] {
 				";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (", "for (",
-				"while (", "List<", ") {\n", "] {\n"
+				"while (", "List<", ") {\n", "] {\n", ";\n"
 			});
 
 		while (true) {
@@ -724,6 +1009,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, StringPool.TAB + "for (;;) {",
 			StringPool.TAB + "while (true) {");
 
+		// LPS-36174
+
+		if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
+			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
+		}
+
 		// LPS-39508
 
 		if (!isExcluded(_secureRandomExclusions, fileName) &&
@@ -745,6 +1036,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLogLevel(newContent, fileName, "trace");
 		checkLogLevel(newContent, fileName, "warn");
 
+		// LPS-46632
+
+		checkSystemEventAnnotations(newContent, fileName);
+
 		// LPS-41205
 
 		if (fileName.contains("/upgrade/") &&
@@ -761,6 +1056,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent, " static interface ", " interface ");
 
+		// LPS-47055
+
+		newContent = fixSystemExceptions(newContent);
+
+		// LPS-47648
+
+		if (portalSource && fileName.contains("/test/integration/")) {
+			newContent = StringUtil.replace(
+				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
+		}
+
 		// LPS-47682
 
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
@@ -774,6 +1080,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"Never import javax.servlet.jsp.* from portal-service " +
 					fileName);
 		}
+
+		// LPS-48153
+
+		//newContent = applyDiamondOperator(newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -865,6 +1175,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						" " + lineCount);
 			}
 
+			// LPS-42599
+
+			if (!isExcluded(_hibernateSQLQueryExclusions, fileName) &&
+				line.contains("= session.createSQLQuery(") &&
+				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
+
+				line = StringUtil.replace(
+					line, "createSQLQuery", "createSynchronizedSQLQuery");
+			}
+
 			line = replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
 
@@ -881,9 +1201,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-45492
 
-			if (!portalSource &&
-				trimmedLine.contains("StopWatch stopWatch = null;")) {
-
+			if (trimmedLine.contains("StopWatch stopWatch = null;")) {
 				processErrorMessage(
 					fileName,
 					"Do not set stopwatch to null: " + fileName + " " +
@@ -1339,16 +1657,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							}
 						}
 
-						if (trimmedLine.startsWith("throws ")) {
-							int diff =
-								lineLeadingTabCount -
-									previousLineLeadingTabCount;
+						int diff =
+							lineLeadingTabCount - previousLineLeadingTabCount;
 
-							if ((diff == 0) || (diff > 1)) {
-								processErrorMessage(
-									fileName,
-									"tab: " + fileName + " " + lineCount);
-							}
+						if (trimmedLine.startsWith("throws ") &&
+							((diff == 0) || (diff > 1))) {
+
+							processErrorMessage(
+								fileName, "tab: " + fileName + " " + lineCount);
+						}
+
+						if ((diff == 2) && (previousLineLeadingTabCount > 0) &&
+							line.endsWith(StringPool.SEMICOLON)) {
+
+							line = StringUtil.replaceFirst(
+								line, StringPool.TAB, StringPool.BLANK);
 						}
 
 						if ((previousLine.contains(" class " ) ||
@@ -1550,7 +1873,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if ((line.startsWith("extends ") ||
 				 line.startsWith("implements ") ||
 				 line.startsWith("throws")) &&
-				line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+				 line.endsWith(StringPool.SEMICOLON)) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
 
 				return new Tuple(previousLine + StringPool.SPACE + line);
@@ -1738,6 +2062,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return null;
+	}
+
+	protected List<String> getImportedExceptionClassNames(
+		JavaDocBuilder javaDocBuilder) {
+
+		List<String> exceptionClassNames = new ArrayList<String>();
+
+		JavaSource javaSource = javaDocBuilder.getSources()[0];
+
+		for (String importClassName : javaSource.getImports()) {
+			if (importClassName.endsWith("Exception") &&
+				!exceptionClassNames.contains(importClassName)) {
+
+				exceptionClassNames.add(importClassName);
+			}
+		}
+
+		return exceptionClassNames;
 	}
 
 	protected int getLineLength(String line) {
@@ -1934,7 +2276,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
+	private Pattern _catchExceptionPattern = Pattern.compile(
+		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
+	private boolean _checkUnprocessedExceptions;
+	private Pattern _diamondOperatorPattern = Pattern.compile(
+		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
+			"\\(\n*\t*(.*)\\);\n");
 	private List<String> _fitOnSingleLineExclusions;
+	private List<String> _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(
@@ -1946,8 +2295,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\t*(.+)\\.class\\)");
 	private List<String> _proxyExclusions;
 	private List<String> _secureRandomExclusions;
+	private Pattern _stagedModelTypesPattern = Pattern.compile(
+		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusions;
 	private List<String> _testAnnotationsExclusions;
+	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
+		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExclusions;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -601,6 +603,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatPoshiXML(String fileName, String content)
 		throws IOException {
 
+		content = sortPoshiAttributes(fileName, content);
+
 		content = sortPoshiCommands(content);
 
 		content = sortPoshiVariables(content);
@@ -834,6 +838,58 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		return newContent.substring(0, x) + sb.toString() +
 			newContent.substring(y);
+	}
+
+	protected String sortPoshiAttributes(String fileName, String content)
+		throws IOException {
+
+		StringBundler sb = new StringBundler();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(content));
+
+		String line = null;
+
+		int lineCount = 0;
+
+		boolean sortAttributes = true;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			lineCount++;
+
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (sortAttributes) {
+				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
+					trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+					!trimmedLine.startsWith("<%") &&
+					!trimmedLine.startsWith("<!")) {
+
+					line = sortAttributes(fileName, line, lineCount, false);
+				}
+				else if (trimmedLine.startsWith("<![CDATA[") &&
+						 !trimmedLine.endsWith("]]>")) {
+
+					sortAttributes = false;
+				}
+			}
+			else if (trimmedLine.endsWith("]]>")) {
+				sortAttributes = true;
+			}
+
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		unsyncBufferedReader.close();
+
+		content = sb.toString();
+
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
+		}
+
+		return content;
 	}
 
 	protected String sortPoshiCommands(String content) {
