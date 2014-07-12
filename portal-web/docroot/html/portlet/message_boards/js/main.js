@@ -400,13 +400,16 @@ AUI.add(
 						}
 					).render();
 
-					colorPickerPopover.on('select', function(event) {
-						instance._fontColorInput.val(event.color);
+					colorPickerPopover.on(
+						'select',
+						function(event) {
+							instance._fontColorInput.val(event.color);
 
-						if (!event.newVal) {
-							instance._insertColor();
+							if (!event.newVal) {
+								instance._insertColor();
+							}
 						}
-					});
+					);
 				}
 			},
 
