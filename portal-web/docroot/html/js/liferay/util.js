@@ -1414,12 +1414,12 @@
 
 			ddmURL.setParameter('scopeTitle', config.title);
 
-			if ('showGlobalScope' in config) {
-				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
-			}
-
 			if ('showBackURL' in config) {
 				ddmURL.setParameter('showBackURL', config.showBackURL);
+			}
+
+			if ('showGlobalScope' in config) {
+				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 			}
 
 			if ('showHeader' in config) {
