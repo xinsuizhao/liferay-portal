@@ -142,6 +142,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkEmptyCollection(
 		String line, String fileName, int lineCount) {
 
+		if (portalSource) {
+			return;
+		}
+
 		// LPS-46028
 
 		Matcher matcher = emptyCollectionPattern.matcher(line);
@@ -660,6 +664,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
+		if (portalSource) {
+			return content;
+		}
+
 		JavaClass javaClass = new JavaClass(
 			fileName, javaClassContent, StringPool.TAB);
 
@@ -936,6 +944,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected boolean hasRedundantParentheses(
 		String s, String operator1, String operator2) {
 
+		if (portalSource) {
+			return false;
+		}
+
 		String[] parts = StringUtil.split(s, operator1);
 
 		if (parts.length < 3) {
@@ -1156,7 +1168,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			s = s.substring(y + 1);
 
-			if (s.startsWith(StringPool.GREATER_THAN)) {
+			if (!portalSource && s.startsWith(StringPool.GREATER_THAN)) {
 				x = s.indexOf(StringPool.SPACE);
 
 				if (x == -1) {
