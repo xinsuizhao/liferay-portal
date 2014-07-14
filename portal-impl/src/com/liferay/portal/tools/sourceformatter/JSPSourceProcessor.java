@@ -258,9 +258,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		_unusedVariablesExclusions = getExclusions(
-			"jsp.unused.variables.excludes");
-
 		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
 		String[] includes = new String[] {
 			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
@@ -428,9 +425,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, newContent, taglibSessionKeyPattern);
 
 		checkLanguageKeys(fileName, newContent, languageKeyPattern);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern1);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern2);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern3);
+		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
 
 		checkXSS(fileName, newContent);
 
@@ -519,15 +514,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (javaSource || trimmedLine.contains("<%= ")) {
 				checkInefficientStringMethods(
 					line, fileName, absolutePath, lineCount);
-			}
-
-			if (javaSource && portalSource &&
-				!isExcluded(_unusedVariablesExclusions, fileName, lineCount) &&
-				!_jspContents.isEmpty() &&
-				hasUnusedVariable(fileName, trimmedLine)) {
-
-				processErrorMessage(
-					fileName, "Unused variable: " + fileName + " " + lineCount);
 			}
 
 			// LPS-47179
@@ -935,30 +921,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
-	protected boolean hasUnusedVariable(String fileName, String line) {
-		if (line.contains(": ")) {
-			return false;
-		}
-
-		String variableName = getVariableName(line);
-
-		if (Validator.isNull(variableName) || variableName.equals("false") ||
-			variableName.equals("true")) {
-
-			return false;
-		}
-
-		Set<String> includeFileNames = new HashSet<String>();
-
-		includeFileNames.add(fileName);
-
-		Set<String> checkedFileNames = new HashSet<String>();
-
-		return !isClassOrVariableRequired(
-			fileName, variableName, "variable", includeFileNames,
-			checkedFileNames);
-	}
-
 	protected boolean isClassOrVariableRequired(
 		String fileName, String name, String type, Set<String> includeFileNames,
 		Set<String> checkedFileNames) {
@@ -1206,18 +1168,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _stripJSPImports = true;
-	private Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
+	private Pattern _taglibLanguageKeyPattern = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
-	private Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
-		"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").+(?:'|\").*" +
-			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*title=" +
-				"(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
-					"hidden\").*name=\"([^<=%\\[\\s]+)\"");
-	private Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
-		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
-			"(?:'|\").+(?:'|\"))");
-	private List<String> _unusedVariablesExclusions;
 	private Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 
