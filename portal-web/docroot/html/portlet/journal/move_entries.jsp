@@ -96,7 +96,7 @@ for (JournalArticle curArticle : articles) {
 
 					<li class="move-folder">
 						<span class="folder-title">
-							<%= folder.getName() %>
+							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
 					</li>
 
@@ -122,7 +122,7 @@ for (JournalArticle curArticle : articles) {
 
 					<li class="move-folder move-error">
 						<span class="folder-title">
-							<%= folder.getName() %>
+							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
 
 						<span class="error-message">
@@ -205,8 +205,6 @@ for (JournalArticle curArticle : articles) {
 
 		if (newFolderId > 0) {
 			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(newFolderId);
-
-			folder = folder.toEscapedModel();
 
 			folderName = folder.getName();
 		}

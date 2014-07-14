@@ -90,7 +90,7 @@ else {
 		<aui:nav cssClass="nav-list well">
 			<c:if test="<%= Validator.isNotNull(parentTitle) %>">
 				<li class="nav-header">
-					<%= parentTitle %>
+					<%= HtmlUtil.escape(parentTitle) %>
 				</li>
 			</c:if>
 
@@ -287,7 +287,7 @@ else {
 							<liferay-ui:app-view-navigation-entry
 								cssClass="folder structure"
 								dataView="<%= dataView %>"
-								entryTitle="<%= ddmStructure.getName(locale) %>"
+								entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 								iconImage="icon-tasks"
 								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
 								viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
@@ -351,7 +351,7 @@ else {
 						<liferay-ui:app-view-navigation-entry
 							actionJsp="/html/portlet/journal/folder_action.jsp"
 							dataView="<%= dataView %>"
-							entryTitle="<%= curFolder.getName() %>"
+							entryTitle="<%= HtmlUtil.escape(curFolder.getName()) %>"
 							iconImage='<%= (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
 							selected="<%= (curFolder.getFolderId() == folderId) %>"
 							viewURL="<%= viewURL.toString() %>"

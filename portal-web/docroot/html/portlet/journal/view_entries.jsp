@@ -339,7 +339,7 @@ for (int i = 0; i < results.size(); i++) {
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
-					data.put("title", curArticle.getTitle(locale));
+					data.put("title", HtmlUtil.escape(curArticle.getTitle(locale)));
 
 					row.setData(data);
 					%>
@@ -435,7 +435,7 @@ for (int i = 0; i < results.size(); i++) {
 					data.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
 					data.put("folder", true);
 					data.put("folder-id", curFolder.getFolderId());
-					data.put("title", curFolder.getName());
+					data.put("title", HtmlUtil.escape(curFolder.getName()));
 
 					row.setData(data);
 					%>
