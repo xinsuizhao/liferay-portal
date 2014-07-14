@@ -102,19 +102,6 @@ public class JournalArticleIndexVersionsTest {
 		Assert.assertEquals(article.getId(), searchArticle.getId());
 	}
 
-	protected long searchCount() throws Exception {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
-
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext.setGroupIds(new long[] {_group.getGroupId()});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
-	}
-
 	protected List<JournalArticle> search() throws Exception {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
@@ -126,6 +113,19 @@ public class JournalArticleIndexVersionsTest {
 		Hits results = indexer.search(searchContext);
 
 		return JournalUtil.getArticles(results);
+	}
+
+	protected long searchCount() throws Exception {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
 	}
 
 	Group _group;
