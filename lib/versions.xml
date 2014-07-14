@@ -3607,7 +3607,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/urlrewrite.jar</file-name>
+		<file-name>lib/portal/urlrewritefilter.jar</file-name>
 		<version>4.0.3</version>
 		<project-name>URL Rewrite Filter</project-name>
 		<project-url>http://tuckey.org/urlrewrite</project-url>
