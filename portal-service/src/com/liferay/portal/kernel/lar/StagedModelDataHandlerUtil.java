@@ -208,8 +208,8 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		boolean missing = GetterUtil.getBoolean(
-			referenceElement.attributeValue("missing"));
+		boolean missing = portletDataContext.isMissingReference(
+			referenceElement);
 
 		if (missing) {
 			StagedModelDataHandler<?> stagedModelDataHandler =
@@ -252,8 +252,8 @@ public class StagedModelDataHandlerUtil {
 				continue;
 			}
 
-			boolean missing = GetterUtil.getBoolean(
-				referenceElement.attributeValue("missing"));
+			boolean missing = portletDataContext.isMissingReference(
+				referenceElement);
 
 			if (missing) {
 				StagedModelDataHandler<?> stagedModelDataHandler =
