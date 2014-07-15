@@ -952,9 +952,28 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, entityStagedModel, DLFileEntry.class,
-				classPK);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
+					portletDataContext, entityStagedModel, DLFileEntry.class,
+					classPK);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Unable to process file entry ");
+					sb.append(classPK);
+					sb.append(" in ");
+					sb.append(entityStagedModel.getModelClassName());
+					sb.append(" - ");
+					sb.append(entityStagedModel.getPrimaryKeyObj());
+
+					_log.warn(sb.toString());
+				}
+			}
 
 			String uuid = referenceElement.attributeValue("uuid");
 
