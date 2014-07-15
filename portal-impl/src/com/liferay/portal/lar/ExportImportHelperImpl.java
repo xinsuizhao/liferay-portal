@@ -603,16 +603,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					_log.debug(e, e);
 				}
 				else if (_log.isWarnEnabled()) {
-					StringBundler errorMessage = new StringBundler(6);
+					StringBundler exceptionSB = new StringBundler(6);
 
-					errorMessage.append("Unable to process file entry ");
-					errorMessage.append(fileEntry.getFileEntryId());
-					errorMessage.append(" in ");
-					errorMessage.append(entityStagedModel.getModelClassName());
-					errorMessage.append(" - ");
-					errorMessage.append(entityStagedModel.getPrimaryKeyObj());
+					exceptionSB.append("Unable to process file entry ");
+					exceptionSB.append(fileEntry.getFileEntryId());
+					exceptionSB.append(" for ");
+					exceptionSB.append(entityStagedModel.getModelClassName());
+					exceptionSB.append(" with primary key ");
+					exceptionSB.append(entityStagedModel.getPrimaryKeyObj());
 
-					_log.warn(errorMessage.toString());
+					_log.warn(exceptionSB.toString());
 				}
 			}
 
@@ -975,9 +975,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 					sb.append("Unable to process file entry ");
 					sb.append(classPK);
-					sb.append(" in ");
+					sb.append(" for ");
 					sb.append(entityStagedModel.getModelClassName());
-					sb.append(" - ");
+					sb.append(" with primary key ");
 					sb.append(entityStagedModel.getPrimaryKeyObj());
 
 					_log.warn(sb.toString());
@@ -1157,7 +1157,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						sb.append(", friendly URL ");
 						sb.append(friendlyURL);
 						sb.append(", or ");
-						sb.append("layoutId ");
+						sb.append("layout ID ");
 						sb.append(oldLayoutId);
 						sb.append(" in group ");
 						sb.append(portletDataContext.getScopeGroupId());
