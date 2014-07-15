@@ -603,7 +603,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					_log.debug(e, e);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
+					StringBundler errorMessage = new StringBundler(6);
+
+					errorMessage.append("Unable to process file entry ");
+					errorMessage.append(fileEntry.getFileEntryId());
+					errorMessage.append(" in ");
+					errorMessage.append(entityStagedModel.getModelClassName());
+					errorMessage.append(" - ");
+					errorMessage.append(entityStagedModel.getPrimaryKeyObj());
+
+					_log.warn(errorMessage.toString());
 				}
 			}
 
