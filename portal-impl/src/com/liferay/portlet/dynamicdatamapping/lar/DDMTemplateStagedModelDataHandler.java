@@ -319,7 +319,7 @@ public class DDMTemplateStagedModelDataHandler
 		try {
 			Element templateElement =
 				portletDataContext.getImportDataStagedModelElement(template);
-			
+
 			if (template.isSmallImage()) {
 				String smallImagePath = templateElement.attributeValue(
 					"small-image-path");
