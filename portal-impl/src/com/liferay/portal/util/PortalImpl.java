@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -83,6 +84,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.AuditedModel;
@@ -199,6 +201,8 @@ import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.portlet.messageboards.action.EditDiscussionAction;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.sites.util.Sites;
+import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -4741,6 +4745,74 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public long[] getSharedContentSiteGroupIds(
+			long companyId, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = new UniqueList<Group>();
+
+		Group siteGroup = doGetCurrentSiteGroup(groupId);
+
+		if (siteGroup != null) {
+
+			// Current site
+
+			groups.add(siteGroup);
+
+			// Layout scopes
+
+			groups.addAll(
+				GroupLocalServiceUtil.getGroups(
+					siteGroup.getCompanyId(), Layout.class.getName(),
+					siteGroup.getGroupId()));
+		}
+
+		// Administered sites
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId,
+				PropsKeys.
+					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
+
+			LinkedHashMap<String, Object> groupParams =
+				new LinkedHashMap<String, Object>();
+
+			groupParams.put("site", Boolean.TRUE);
+			groupParams.put("usersGroups", userId);
+
+			groups.addAll(
+				GroupLocalServiceUtil.search(
+					companyId, null, null, groupParams, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null));
+		}
+
+		// Descendant sites
+
+		groups.addAll(siteGroup.getChildren(true));
+
+		// Ancestor sites and global site
+
+		int sitesContentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
+			companyId, PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
+
+		if (sitesContentSharingWithChildrenEnabled !=
+				Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
+
+			groups.addAll(doGetAncestorSiteGroups(groupId, true));
+		}
+
+		long[] groupIds = new long[groups.size()];
+
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+
+			groupIds[i] = group.getGroupId();
+		}
+
+		return groupIds;
+	}
+
+	@Override
 	public PortletURL getSiteAdministrationURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws SystemException {
@@ -7101,6 +7173,49 @@ public class PortalImpl implements Portal {
 		}
 
 		return StringPool.SLASH.concat(languageId);
+	}
+
+	protected List<Group> doGetAncestorSiteGroups(
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException, SystemException {
+
+		List<Group> groups = new UniqueList<Group>();
+
+		long siteGroupId = getSiteGroupId(groupId);
+
+		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+		for (Group group : siteGroup.getAncestors()) {
+			if (checkContentSharingWithChildrenEnabled &&
+				!SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+
+				continue;
+			}
+
+			groups.add(group);
+		}
+
+		if (!siteGroup.isCompany()) {
+			groups.add(
+				GroupLocalServiceUtil.getCompanyGroup(
+					siteGroup.getCompanyId()));
+		}
+
+		return groups;
+	}
+
+	protected Group doGetCurrentSiteGroup(long groupId)
+		throws PortalException, SystemException {
+
+		long siteGroupId = getSiteGroupId(groupId);
+
+		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+		if (!siteGroup.isLayoutPrototype()) {
+			return siteGroup;
+		}
+
+		return null;
 	}
 
 	protected long doGetPlidFromPortletId(
