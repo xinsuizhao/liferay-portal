@@ -510,8 +510,6 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isDataStrategyMirrorWithOverwriting();
 
-	public boolean isMissingReference(Element referenceElement);
-
 	public boolean isModelCounted(String className, long classPK);
 
 	public boolean isPathExportedInScope(String path);

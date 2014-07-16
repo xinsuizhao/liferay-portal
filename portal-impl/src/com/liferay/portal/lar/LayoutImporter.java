@@ -542,14 +542,6 @@ public class LayoutImporter {
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
 
-		Element missingReferencesElement = _rootElement.element(
-			"missing-references");
-
-		if (missingReferencesElement != null) {
-			portletDataContext.setMissingReferencesElement(
-				missingReferencesElement);
-		}
-
 		// Look and feel
 
 		if (importLogo) {
