@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//li[@class=' dropdown']/a[contains(.,'Manage')]</td>
+	<td>//li[@class=' dropdown']/a[contains(.,'Manage')] | //li[contains(@class,'dropdown')]/a[contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>
