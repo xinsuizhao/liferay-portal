@@ -224,8 +224,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		portletDataContext.setExportDataRootElement(rootElement);
 
-		missingReferencesElement = SAXReaderUtil.createElement(
-			"missing-references");
+		missingReferencesElement = rootElement.addElement("missing-references");
 
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
@@ -246,6 +245,17 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				getParameterMap(), userIdStrategy, zipReader);
 
 		portletDataContext.setImportDataRootElement(rootElement);
+
+		Element missingReferencesElement = rootElement.element(
+			"missing-references");
+
+		if (missingReferencesElement == null) {
+			missingReferencesElement = rootElement.addElement(
+				"missing-references");
+		}
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
 
 		Group sourceCompanyGroup = GroupLocalServiceUtil.getCompanyGroup(
 			stagingGroup.getCompanyId());
@@ -363,6 +373,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		for (Element stagedModelGroupElement : stagedModelGroupElements) {
 			String className = stagedModelGroupElement.getName();
+
+			if (className.equals("missing-references")) {
+				continue;
+			}
 
 			List<StagedModel> dependentStagedModels =
 				dependentStagedModelsMap.get(className);

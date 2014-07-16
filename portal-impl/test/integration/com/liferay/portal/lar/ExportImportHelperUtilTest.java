@@ -152,6 +152,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
+		Element missingReferencesElement = rootElement.addElement(
+			"missing-references");
+
+		_portletDataContextImport.setMissingReferencesElement(
+			missingReferencesElement);
+
 		_livePublicLayout = LayoutTestUtil.addLayout(
 			_liveGroup.getGroupId(), ServiceTestUtil.randomString(), false);
 
