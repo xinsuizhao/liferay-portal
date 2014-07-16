@@ -308,9 +308,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public BlogsEntry deleteEntry(BlogsEntry entry)
+	public void deleteEntry(BlogsEntry entry)
 		throws PortalException, SystemException {
 
 		// Entry
@@ -374,8 +373,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
-
-		return entry;
 	}
 
 	@Override
@@ -928,9 +925,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 *         counter could not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
+	public void restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
 		// Entry
@@ -952,7 +948,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
-		return entry;
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BlogsEntry.class);
+
+		indexer.reindex(entry);
 	}
 
 	@Override
