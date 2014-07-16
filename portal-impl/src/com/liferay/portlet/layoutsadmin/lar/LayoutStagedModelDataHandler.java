@@ -880,6 +880,10 @@ public class LayoutStagedModelDataHandler
 		String linkedToLayoutUuid = layoutElement.attributeValue(
 			"linked-to-layout-uuid");
 
+		if (Validator.isNull(linkedToLayoutUuid)) {
+			return;
+		}
+
 		if (linkToLayoutId <= 0) {
 			updateTypeSettings(portletDataContext, importedLayout, layout);
 
