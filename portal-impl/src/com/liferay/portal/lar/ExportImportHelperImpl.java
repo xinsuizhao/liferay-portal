@@ -603,7 +603,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					_log.debug(e, e);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
+					StringBundler exceptionSB = new StringBundler(6);
+
+					exceptionSB.append("Unable to process file entry ");
+					exceptionSB.append(fileEntry.getFileEntryId());
+					exceptionSB.append(" for ");
+					exceptionSB.append(entityStagedModel.getModelClassName());
+					exceptionSB.append(" with primary key ");
+					exceptionSB.append(entityStagedModel.getPrimaryKeyObj());
+
+					_log.warn(exceptionSB.toString());
 				}
 			}
 
@@ -952,9 +961,28 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, entityStagedModel, DLFileEntry.class,
-				classPK);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
+					portletDataContext, entityStagedModel, DLFileEntry.class,
+					classPK);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Unable to process file entry ");
+					sb.append(classPK);
+					sb.append(" for ");
+					sb.append(entityStagedModel.getModelClassName());
+					sb.append(" with primary key ");
+					sb.append(entityStagedModel.getPrimaryKeyObj());
+
+					_log.warn(sb.toString());
+				}
+			}
 
 			String uuid = referenceElement.attributeValue("uuid");
 
@@ -1129,7 +1157,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						sb.append(", friendly URL ");
 						sb.append(friendlyURL);
 						sb.append(", or ");
-						sb.append("layoutId ");
+						sb.append("layout ID ");
 						sb.append(oldLayoutId);
 						sb.append(" in group ");
 						sb.append(portletDataContext.getScopeGroupId());

@@ -208,8 +208,8 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		boolean missing = GetterUtil.getBoolean(
-			referenceElement.attributeValue("missing"));
+		boolean missing = portletDataContext.isMissingReference(
+			referenceElement);
 
 		if (missing) {
 			StagedModelDataHandler<?> stagedModelDataHandler =
@@ -226,7 +226,26 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext.getReferenceDataElement(
 				referrerStagedModel, stagedModelClass, classPK);
 
-		importStagedModel(portletDataContext, referenceDataElement);
+		if (referenceDataElement != null) {
+			importStagedModel(portletDataContext, referenceDataElement);
+
+			return;
+		}
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"),
+			portletDataContext.getSourceGroupId());
+
+		String stagedModelPath = ExportImportPathUtil.getModelPath(
+			groupId, stagedModelClass.getName(), classPK);
+
+		StagedModel stagedModel =
+			(StagedModel)portletDataContext.getZipEntryAsObject(
+				stagedModelPath);
+
+		if (stagedModel != null) {
+			importStagedModel(portletDataContext, stagedModel);
+		}
 	}
 
 	public static void importReferenceStagedModels(
@@ -252,8 +271,8 @@ public class StagedModelDataHandlerUtil {
 				continue;
 			}
 
-			boolean missing = GetterUtil.getBoolean(
-				referenceElement.attributeValue("missing"));
+			boolean missing = portletDataContext.isMissingReference(
+				referenceElement);
 
 			if (missing) {
 				StagedModelDataHandler<?> stagedModelDataHandler =
