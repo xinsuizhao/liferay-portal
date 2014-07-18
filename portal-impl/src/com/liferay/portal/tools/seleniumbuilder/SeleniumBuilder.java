@@ -269,6 +269,18 @@ public class SeleniumBuilder {
 					componentName);
 			}
 
+			String ignoreCommandsList = rootElement.attributeValue(
+				"ignore-commands");
+
+			String[] ignoreCommands = new String[] {ignoreCommandsList};
+
+			if (ignoreCommandsList != null) {
+				if (ignoreCommandsList.contains(",")) {
+					ignoreCommands = ignoreCommandsList.replaceAll(
+						"\\s+","").split(",");
+				}
+			}
+
 			String extendsTestCaseName = rootElement.attributeValue("extends");
 
 			if (extendsTestCaseName != null) {
@@ -281,6 +293,23 @@ public class SeleniumBuilder {
 						extendsRootElement, "command");
 
 				for (Element commandElement : commandElements) {
+					Boolean breakOut = false;
+
+					if (ignoreCommandsList != null) {
+						for (String ignoreCommand : ignoreCommands) {
+							if (commandElement.attributeValue(
+									"name").equals(ignoreCommand)) {
+
+								breakOut = true;
+								break;
+							}
+						}
+					}
+
+					if (breakOut) {
+						continue;
+					}
+
 					String testCaseMethodName =
 						testCaseName + "TestCase#test" +
 							commandElement.attributeValue("name");
