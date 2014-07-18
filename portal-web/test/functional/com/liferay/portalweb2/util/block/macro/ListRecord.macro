@@ -159,8 +159,7 @@
 			<then>
 				<var name="key_recordFieldData" value="${recordFieldData}" />
 
-				<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="LINK_TO_PAGE_SELECT" />
-				<execute action="CPDynamicdatalistsListAddrecord#doubleClick" locator-key1="LINK_TO_PAGE_SELECT_OPTION" />
+				<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="LINK_TO_PAGE_SELECT" value1="regexp:.*${recordFieldData}" />
 			</then>
 		</if>
 
