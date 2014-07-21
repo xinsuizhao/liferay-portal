@@ -215,42 +215,6 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 	}
 
-	@Override
-	public String processPortlet(
-			String portletId, Map<String, ?> defaultSettingsMap)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			themeDisplay.getLayout(), portletId);
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		for (Map.Entry<String, ?> entry : defaultSettingsMap.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-
-			if (value instanceof String) {
-				modifiableSettings.setValue(key, (String)value);
-			}
-			else if (value instanceof String[]) {
-				modifiableSettings.setValues(key, (String[])value);
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Key " + key + " has unsupported value of type " +
-						ClassUtil.getClassName(value.getClass()));
-			}
-		}
-
-		modifiableSettings.store();
-
-		return processPortlet(portletId);
-	}
-
 	private static RenderWeightComparator _renderWeightComparator =
 		new RenderWeightComparator();
 
