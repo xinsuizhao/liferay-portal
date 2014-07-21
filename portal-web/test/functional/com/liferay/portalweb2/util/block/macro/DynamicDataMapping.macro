@@ -6,7 +6,15 @@
 
 		<var name="key_field" value="${field}" />
 
-		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+		<if>
+			<condition action="Dynamicdatamapping#isElementPresent" locator-key1="FORM_FIELD_3" />
+			<then>
+				<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER_LOWEST_FIELD" value1="${field}" />
+			</then>
+			<else>
+				<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+			</else>
+		</if>
 
 		<var name="key_fieldFieldLabel" value="${field}" />
 
@@ -33,7 +41,15 @@
 
 		<var name="key_field" value="${field}" />
 
-		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+		<if>
+			<condition action="Dynamicdatamapping#isElementPresent" locator-key1="FORM_FIELD_3" />
+			<then>
+				<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER_LOWEST_FIELD" value1="${field}" />
+			</then>
+			<else>
+				<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+			</else>
+		</if>
 
 		<var name="key_fieldFieldLabel" value="${field}" />
 
@@ -47,17 +63,14 @@
 				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<elseif>
-				<equals arg1="${field}" arg2="Paragraph" />
-				<then>
-					<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
-				</then>
-			</elseif>
-			<elseif>
 				<equals arg1="${field}" arg2="Separator" />
 				<then>
 					<execute action="Dynamicdatamapping#click" locator-key1="FORM_SEPARATOR" />
 				</then>
 			</elseif>
+			<else>
+				<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+			</else>
 		</if>
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
