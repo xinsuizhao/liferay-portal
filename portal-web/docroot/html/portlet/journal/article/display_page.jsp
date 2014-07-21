@@ -117,7 +117,6 @@ Group parentGroup = themeDisplay.getSiteGroup();
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPublicPages">
 				<portlet:param name="struts_action" value="/journal/select_display_page" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
 				<c:if test="<%= selLayout != null && !selLayout.isPrivateLayout() %>">
 					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
@@ -134,7 +133,6 @@ Group parentGroup = themeDisplay.getSiteGroup();
 				<portlet:param name="struts_action" value="/journal/select_display_page" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
 				<portlet:param name="tabs1" value="private-pages" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
 				<c:if test="<%= selLayout != null && selLayout.isPrivateLayout() %>">
 					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
