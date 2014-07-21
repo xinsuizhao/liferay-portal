@@ -208,6 +208,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_BUILDER_LOWEST_FIELD</td>
+	<td>//div[contains(@class,'button-holder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')])[1]</td>
 	<td></td>
@@ -235,6 +240,11 @@
 <tr>
 	<td>FORM_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_3</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[3]</td>
 	<td></td>
 </tr>
 <tr>
