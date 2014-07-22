@@ -211,4 +211,6 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 			}
 		}
 	);
+
+	<%@ include file="/html/js/editor/ckeditor/ckconfig-ext.jsp" %>
 })();

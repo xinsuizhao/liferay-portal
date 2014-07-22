@@ -196,4 +196,6 @@ CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageD
 			}
 		}
 	);
+
+	<%@ include file="/html/js/editor/ckeditor/ckconfig_creole-ext.jsp" %>
 })();
