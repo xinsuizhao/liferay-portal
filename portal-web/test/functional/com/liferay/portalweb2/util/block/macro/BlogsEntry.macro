@@ -564,9 +564,19 @@
 
 		<execute action="PGBlogsEdit#type" locator-key1="TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute action="PGBlogsEdit#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<equals arg1="${saveAsDraft}" arg2="true" />
+			<then>
+				<execute action="PGBlogsEdit#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+				<execute action="PGBlogsEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+			<else>
+				<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+				<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="editTitleCP">
@@ -611,6 +621,20 @@
 				<execute action="PGBlogsAdd#check" locator-key1="PERMISSIONS_CHECKBOX" />
 			</then>
 		</if>
+	</command>
+
+	<command name="flagPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_FLAG" value1="Flag" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_HEADER" value1="Report Inappropriate Content" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_WARNING" value1="You are about to report a violation of our Terms of Use. All reports are strictly confidential." />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK" value1="Terms of Use" />
+		<execute action="PGBlogs#select" locator-key1="REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT" value1="${flagReason}" />
+		<execute action="PGBlogs#assertClick" locator-key1="REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON" value1="Save" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
+		<execute action="PGBlogs#click" locator-key1="REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
 	</command>
 
 	<command name="gotoDraftEditPG">
@@ -769,8 +793,18 @@
 		<execute action="PGBlogsSearch#type" locator-key1="SEARCH_FIELD" value1="${entrySearchTerm}" />
 		<execute action="PGBlogsSearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found that matched the keywords: ${entrySearchTerm}." />
-		<execute action="PGBlogsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute action="SOBlogs#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="SOBlogs#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+			</then>
+			<else>
+				<execute action="PGBlogsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="PGBlogsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="searchPG">
@@ -779,8 +813,18 @@
 
 		<execute action="PGBlogsSearch#type" locator-key1="SEARCH_FIELD" value1="${entrySearchTerm}" />
 		<execute action="PGBlogsSearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute action="SOBlogs#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="SOBlogs#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+			</then>
+			<else>
+				<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="subscribePG">
