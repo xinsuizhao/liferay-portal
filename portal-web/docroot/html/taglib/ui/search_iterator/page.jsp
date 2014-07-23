@@ -358,7 +358,9 @@ List<String> primaryKeys = new ArrayList<String>();
 				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
 				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>'
 			}
-		).render();
+		)
+
+		searchContainer.render();
 
 		<c:if test="<%= (rowChecker == null) %>">
 			searchContainer.updateDataStore('<%= StringUtil.merge(primaryKeys) %>');
