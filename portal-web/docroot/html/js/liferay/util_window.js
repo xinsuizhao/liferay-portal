@@ -8,6 +8,8 @@ AUI.add(
 		var Util = Liferay.Util;
 		var Window = Util.Window;
 
+		var useMediaQueryEvaluation = A.UA.ie == 9;
+
 		var LiferayModal = A.Component.create(
 			{
 				NAME: A.Modal.NAME,
@@ -127,6 +129,12 @@ AUI.add(
 					modal.after(
 						'destroy',
 						function(event) {
+							var openerInFrame = !!modal._opener.frameElement;
+
+							if (useMediaQueryEvaluation && openerInFrame) {
+								instance._syncWindowsUI();
+							}
+
 							instance._unregister(modal);
 
 							modal = null;
@@ -181,6 +189,78 @@ AUI.add(
 					if (!config.iframeId) {
 						config.iframeId = config.id + instance.IFRAME_SUFFIX;
 					}
+				},
+
+				_forceMediaQueryEvaluation: useMediaQueryEvaluation ? function(modal, width) {
+					var instance = this;
+
+					modal.set('width', width + 1);
+					modal.set('width', width);
+				} : function() {},
+
+				_getDialogIframeConfig: function(config) {
+					var instance = this;
+
+					var dialogIframeConfig;
+
+					var iframeId = config.iframeId;
+
+					var uri = config.uri;
+
+					if (uri) {
+						if (config.cache === false) {
+							uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
+						}
+
+						dialogIframeConfig = A.merge(
+							config.dialogIframe,
+							{
+								bindLoadHandler: function() {
+									var instance = this;
+
+									var modal = instance.get('host');
+
+									var popupReady = false;
+
+									var liferayHandles = modal._liferayHandles;
+
+									liferayHandles.push(
+										Liferay.on(
+											'popupReady',
+											function(event) {
+												instance.fire('load', event);
+
+												popupReady = true;
+											}
+										)
+									);
+
+									liferayHandles.push(
+										instance.node.on(
+											'load',
+											function(event) {
+												if (!popupReady) {
+													Liferay.fire(
+														'popupReady',
+														{
+															windowName: iframeId
+														}
+													);
+												}
+
+												popupReady = false;
+											}
+										)
+									);
+								},
+
+								iframeId: iframeId,
+								uri: uri
+							}
+						);
+					}
+
+					return dialogIframeConfig;
 				},
 
 				_getWindow: function(config) {
@@ -276,71 +356,6 @@ AUI.add(
 					return modalConfig;
 				},
 
-				_getDialogIframeConfig: function(config) {
-					var instance = this;
-
-					var dialogIframeConfig;
-
-					var iframeId = config.iframeId;
-
-					var uri = config.uri;
-
-					if (uri) {
-						if (config.cache === false) {
-							uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
-						}
-
-						dialogIframeConfig = A.merge(
-							config.dialogIframe,
-							{
-								bindLoadHandler: function() {
-									var instance = this;
-
-									var modal = instance.get('host');
-
-									var popupReady = false;
-
-									var liferayHandles = modal._liferayHandles;
-
-									liferayHandles.push(
-										Liferay.on(
-											'popupReady',
-											function(event) {
-												instance.fire('load', event);
-
-												popupReady = true;
-											}
-										)
-									);
-
-									liferayHandles.push(
-										instance.node.on(
-											'load',
-											function(event) {
-												if (!popupReady) {
-													Liferay.fire(
-														'popupReady',
-														{
-															windowName: iframeId
-														}
-													);
-												}
-
-												popupReady = false;
-											}
-										)
-									);
-								},
-
-								iframeId: iframeId,
-								uri: uri
-							}
-						);
-					}
-
-					return dialogIframeConfig;
-				},
-
 				_register: function(modal) {
 					var instance = this;
 
@@ -384,7 +399,23 @@ AUI.add(
 
 						width *= modal.get('autoWidthRatio');
 
-						modal.set('width', width);
+						var widthInitial = modal.get('width');
+
+						if (width != widthInitial) {
+							modal.set('width', width);
+						}
+						else {
+							instance._forceMediaQueryEvaluation(
+								modal,
+								widthInitial
+							);
+						}
+					}
+					else {
+						instance._forceMediaQueryEvaluation(
+							modal,
+							modal.get('width')
+						);
 					}
 				},
 
