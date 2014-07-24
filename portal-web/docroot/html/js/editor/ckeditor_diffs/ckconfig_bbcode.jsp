@@ -147,6 +147,4 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.smiley_path = '<%= HtmlUtil.escapeJS(emoticonsPath) %>' + '/';
 
 	config.smiley_symbols = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonSymbols(), "','") %>'];
-
-	<%@ include file="/html/js/editor/ckeditor/ckconfig_bbcode-ext.jsp" %>
 })();
