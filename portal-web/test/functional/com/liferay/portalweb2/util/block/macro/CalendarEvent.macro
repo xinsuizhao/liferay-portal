@@ -213,6 +213,7 @@
 					<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
 					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_ENDS_AFTER_CHECKBOX" />
 					<execute action="PGCalendarAddevent#type" locator-key1="REPEAT_ENDS_AFTER_FIELD" value1="1" />
+					<execute action="PGCalendarAddevent#pause" value1="1000" />
 					<execute action="PGCalendarAddevent#click" locator-key1="REPEAT_SUMMARY_2" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_2" value1="Daily, 1 Times" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_DONE_BUTTON" value1="Done" />
