@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -115,6 +116,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		String layoutType = getLayoutType();
 
+		if (Validator.isNull(layoutType)) {
+			return StringPool.BLANK;
+		}
+
 		boolean privateLayout = layoutType.startsWith("private");
 
 		try {
@@ -161,6 +166,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		StringBundler sb = new StringBundler(5);
 
 		String layoutType = getLayoutType();
+
+		if (Validator.isNull(layoutType)) {
+			return StringPool.BLANK;
+		}
 
 		if (layoutType.equals(_LAYOUT_TYPE_PRIVATE_GROUP)) {
 			sb.append(PortalUtil.getPathFriendlyURLPrivateGroup());
