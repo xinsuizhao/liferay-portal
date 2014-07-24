@@ -52,7 +52,6 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryValidator;
-import com.liferay.portlet.assetpublisher.util.AssetSearcher;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -434,12 +433,24 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		try {
 			SearchContext searchContext = new SearchContext();
 
+			Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+
+			assetEntriesFacet.setStatic(true);
+
+			searchContext.addFacet(assetEntriesFacet);
+
+			Facet scopeFacet = new ScopeFacet(searchContext);
+
+			scopeFacet.setStatic(true);
+
+			searchContext.addFacet(scopeFacet);
+
 			searchContext.setAttribute("paginationType", "regular");
 			searchContext.setAttribute("status", status);
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
-			searchContext.setClassTypeIds(
-				getClassNameIds(companyId, className));
+			searchContext.setEntryClassNames(
+				getClassNames(companyId, className));
 			searchContext.setGroupIds(groupIds);
 			searchContext.setKeywords(keywords);
 
@@ -448,9 +459,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			queryConfig.setHighlightEnabled(false);
 			queryConfig.setScoreEnabled(false);
 
-			Indexer searcher = AssetSearcher.getInstance();
+			searchContext.setQueryConfig(queryConfig);
 
-			return searcher.search(searchContext);
+			searchContext.setStart(start);
+			searchContext.setUserId(userId);
+
+			Indexer indexer = FacetedSearcher.getInstance();
+
+			return indexer.search(searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -485,12 +501,19 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-			assetEntryQuery.setClassNameIds(
-				getClassNameIds(companyId, className));
-
 			SearchContext searchContext = new SearchContext();
+
+			Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+
+			assetEntriesFacet.setStatic(true);
+
+			searchContext.addFacet(assetEntriesFacet);
+
+			Facet scopeFacet = new ScopeFacet(searchContext);
+
+			scopeFacet.setStatic(true);
+
+			searchContext.addFacet(scopeFacet);
 
 			searchContext.setAndSearch(andSearch);
 			searchContext.setAssetCategoryIds(
@@ -503,6 +526,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setAttribute("status", status);
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
+			searchContext.setEntryClassNames(
+				getClassNames(companyId, className));
 			searchContext.setGroupIds(groupIds);
 
 			QueryConfig queryConfig = new QueryConfig();
@@ -510,13 +535,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			queryConfig.setHighlightEnabled(false);
 			queryConfig.setScoreEnabled(false);
 
-			Indexer searcher = AssetSearcher.getInstance();
+			searchContext.setQueryConfig(queryConfig);
 
-			AssetSearcher assetSearcher = (AssetSearcher)searcher;
+			searchContext.setStart(start);
+			searchContext.setUserId(userId);
 
-			assetSearcher.setAssetEntryQuery(assetEntryQuery);
+			Indexer indexer = FacetedSearcher.getInstance();
 
-			return searcher.search(searchContext);
+			return indexer.search(searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -879,22 +905,21 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		validator.validate(groupId, className, categoryIds, tagNames);
 	}
 
-	protected long[] getClassNameIds(long companyId, String className) {
+	protected String[] getClassNames(long companyId, String className) {
 		if (Validator.isNotNull(className)) {
-			return new long[] {PortalUtil.getClassNameId(className)};
+			return new String[] {className};
 		}
 
 		List<AssetRendererFactory> rendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				companyId);
 
-		long[] classNames = new long[rendererFactories.size()];
+		String[] classNames = new String[rendererFactories.size()];
 
 		for (int i = 0; i < rendererFactories.size(); i++) {
 			AssetRendererFactory rendererFactory = rendererFactories.get(i);
 
-			classNames[i] = PortalUtil.getClassNameId(
-				rendererFactory.getClassName());
+			classNames[i] = rendererFactory.getClassName();
 		}
 
 		return classNames;
