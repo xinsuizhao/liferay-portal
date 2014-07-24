@@ -293,7 +293,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			serviceContext.setScopeGroupId(entry.getGroupId());
 
-			blogsEntryLocalService.updateStatus(
+			updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
