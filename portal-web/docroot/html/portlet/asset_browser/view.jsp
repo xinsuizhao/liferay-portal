@@ -85,8 +85,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, assetEntryId);
 
-				if ((assetEntry != null) && assetEntry.isVisible()) {
-					Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
+				if ((assetEntry == null) || !assetEntry.isVisible()) {
+					continue;
+				}
+
+				Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 				%>
 
 				<liferay-ui:search-container-column-text
@@ -130,10 +133,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
 					</c:if>
 				</liferay-ui:search-container-column-text>
-
-				<%
-				}
-				%>
 
 			</liferay-ui:search-container-row>
 
