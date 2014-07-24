@@ -55,8 +55,10 @@
 	</#if>
 </#macro>
 
-<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+<@aui["field-wrapper"] data=data>
 	<#assign selectedPlid = 0>
+
+	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
 	<#if (fieldRawValue?? && fieldRawValue != "")>
 		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
@@ -74,7 +76,7 @@
 		</#if>
 	</#if>
 
-	<select name="${namespacedFieldName}">
+	<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required>
 		<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
 			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
 				<@getLayoutOption
@@ -98,7 +100,7 @@
 			privateLayout = true
 			selectedPlid = selectedPlid
 		/>
-	</select>
+	</@aui.select>
 
 	${fieldStructure.children}
 </@>
