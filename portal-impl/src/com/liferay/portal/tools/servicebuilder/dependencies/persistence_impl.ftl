@@ -573,6 +573,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							List<Long> children${pkColumn.methodNames} = getChildrenTree${pkColumn.methodNames}(${entity.varName});
 
 							shrinkTree(${entity.varName});
+
+							if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+								CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+							}
+
+							EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+
 							expandTree(${entity.varName}, children${pkColumn.methodNames});
 						}
 					}
