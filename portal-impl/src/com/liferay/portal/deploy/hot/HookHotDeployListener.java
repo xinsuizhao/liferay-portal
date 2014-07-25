@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -141,6 +142,7 @@ import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.Toolkit;
 import com.liferay.portal.security.pwd.ToolkitWrapper;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -2218,6 +2220,15 @@ public class HookHotDeployListener
 			}
 		}
 
+		if (!(previousService instanceof ServiceWrapper)) {
+			ClassLoader portalClassLoader =
+				PortalClassLoaderUtil.getClassLoader();
+
+			previousService = ProxyUtil.newProxyInstance(
+				portalClassLoader, new Class<?>[] {serviceTypeClass},
+				new ClassLoaderBeanHandler(previousService, portalClassLoader));
+		}
+
 		Object nextService = serviceImplConstructor.newInstance(
 			previousService);
 
@@ -3503,6 +3514,20 @@ public class HookHotDeployListener
 					portletClassLoader, new Class<?>[] {serviceTypeClass},
 					new ClassLoaderBeanHandler(
 						customService, portletClassLoader));
+			}
+
+			if ((customService == _originalService) &&
+				ProxyUtil.isProxyClass(customService.getClass())) {
+
+				InvocationHandler invocationHandler =
+					ProxyUtil.getInvocationHandler(customService);
+
+				if (invocationHandler instanceof ClassLoaderBeanHandler) {
+					ClassLoaderBeanHandler classLoaderBeanHandler =
+						(ClassLoaderBeanHandler)invocationHandler;
+
+					customService = classLoaderBeanHandler.getBean();
+				}
 			}
 
 			return customService;
