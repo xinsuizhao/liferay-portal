@@ -179,18 +179,20 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							/>
 						</liferay-ui:custom-attributes-available>
 
-						<portlet:actionURL var="updateEntryContent">
-							<portlet:param name="struts_action" value="/blogs/edit_entry" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE_CONTENT %>" />
-							<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-						</portlet:actionURL>
+						<c:if test="<%= inlineEditEnabled %>">
+							<portlet:actionURL var="updateEntryContent">
+								<portlet:param name="struts_action" value="/blogs/edit_entry" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE_CONTENT %>" />
+								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+							</portlet:actionURL>
 
-						<liferay-ui:input-editor
-							editorImpl="ckeditor"
-							inlineEdit="<%= true %>"
-							inlineEditSaveURL="<%= updateEntryContent %>"
-							name="<%= entryContentId %>"
-						/>
+							<liferay-ui:input-editor
+								editorImpl="ckeditor"
+								inlineEdit="<%= true %>"
+								inlineEditSaveURL="<%= updateEntryContent %>"
+								name="<%= entryContentId %>"
+							/>
+						</c:if>
 					</c:when>
 					<c:when test='<%= displayStyle.equals(BlogsUtil.DISPLAY_STYLE_TITLE) && !strutsAction.equals("/blogs/view_entry") %>'>
 						<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" /> &raquo;</aui:a>
