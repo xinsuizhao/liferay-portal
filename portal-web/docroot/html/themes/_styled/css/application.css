@@ -557,6 +557,10 @@
 	.cke_dialog .cke_dialog_ui_input_text {
 		height: auto;
 	}
+
+	.cke_editable_inline a {
+		cursor: pointer;
+	}
 }
 
 /* ---------- Inline editing ---------- */
