@@ -228,6 +228,7 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 				},
 				'listViewConfig.useTransition': false,
 				mainUrl: '<%= mainURL %>',
+				rootFolderId: '<%= rootFolderId %>',
 				strutsAction: '/document_library/view'
 			},
 			trashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,
