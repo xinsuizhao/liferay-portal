@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>PGKnowledgebasesectionArticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasesectionArticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasesectionArticle</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//section[contains(.,'Knowledge Base (Display)')]//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION</td>
+	<td>//div[@class='kbarticle-navigation']/ul[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE-->
+<tr>
+	<td>ARTICLE_TITLE</td>
+	<td>//h1[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-article-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_VOTES</td>
+	<td>//div[contains(@class,'ratings')]//div[@class='rating-label']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_VOTE_UP</td>
+	<td>//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_VOTE_DOWN</td>
+	<td>//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_SUGGESTIONS</td>
+	<td>//div/a[contains(.,'Do you have any suggestions?')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_RSS</td>
+	<td>//div//a/span[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_SUBSCRIBE</td>
+	<td>//div//a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_UNSUBSCRIBE</td>
+	<td>//div//a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_HISTORY</td>
+	<td>//div//a/span[contains(.,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PRINT</td>
+	<td>//div//a/span[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_ACTIONS_BUTTON</td>
+	<td>//div//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PREVIOUS</td>
+	<td>//div/span[@class='kb-article-previous']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NEXT</td>
+	<td>//div/span[@class='kb-article-next']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
