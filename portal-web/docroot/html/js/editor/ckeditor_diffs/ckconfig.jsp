@@ -35,6 +35,7 @@ contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 boolean inlineEdit = ParamUtil.getBoolean(request, "inlineEdit");
+
 String languageId = ParamUtil.getString(request, "languageId");
 
 Locale locale = LocaleUtil.fromLanguageId(languageId);
