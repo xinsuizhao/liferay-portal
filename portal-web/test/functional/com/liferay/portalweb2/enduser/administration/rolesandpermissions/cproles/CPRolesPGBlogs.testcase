@@ -736,7 +736,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-48419" name="DeleteBlogsEntryOrgRole" priority="5">
+	<command name="DeleteBlogsEntryOrgRole" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="orgName" value="Organization Name" />
@@ -1092,7 +1092,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-48419" name="DeleteBlogsEntryRegRole" priority="5">
+	<command name="DeleteBlogsEntryRegRole" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1294,7 +1294,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-48419" name="DeleteBlogsEntrySiteRole" priority="5">
+	<command name="DeleteBlogsEntrySiteRole" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
