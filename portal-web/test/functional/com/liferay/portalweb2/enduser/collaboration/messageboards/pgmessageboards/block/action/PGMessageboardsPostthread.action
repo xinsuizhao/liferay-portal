@@ -6,6 +6,10 @@
 	</command>
 
 	<command name="click">
+		<case locator-key1="BLOCK_QUOTE_FIELD">
+			<execute function="Click#clickAt" />
+		</case>
+
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="Click#textClickAtAndWait" value1="Publish" />
 		</case>
