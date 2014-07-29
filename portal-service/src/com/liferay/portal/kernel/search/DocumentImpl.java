@@ -69,6 +69,32 @@ public class DocumentImpl implements Document {
 		return name.concat(StringPool.UNDERLINE).concat(_SORTABLE_FIELD_SUFFIX);
 	}
 
+	public static String getSortFieldName(Sort sort, String scoreFieldName) {
+		String fieldName = sort.getFieldName();
+
+		if (fieldName.endsWith(_SORTABLE_FIELD_SUFFIX)) {
+			return fieldName;
+		}
+
+		String sortFieldName = null;
+
+		if (DocumentImpl.isSortableTextField(fieldName) ||
+			(sort.getType() != Sort.STRING_TYPE)) {
+
+			sortFieldName = DocumentImpl.getSortableFieldName(fieldName);
+		}
+
+		if (Validator.isNull(sortFieldName)) {
+			sortFieldName = scoreFieldName;
+		}
+
+		return sortFieldName;
+	}
+
+	public static boolean isSortableFieldName(String name) {
+		return name.endsWith(_SORTABLE_FIELD_SUFFIX);
+	}
+
 	public static boolean isSortableTextField(String name) {
 		return _defaultSortableTextFields.contains(name);
 	}
@@ -354,6 +380,32 @@ public class DocumentImpl implements Document {
 		Field field = new Field(name, values);
 
 		_fields.put(name, field);
+	}
+
+	@Override
+	public void addLocalizedKeyword(
+		String name, Map<Locale, String> values, boolean lowerCase,
+		boolean sortable) {
+
+		if ((values == null) || values.isEmpty()) {
+			return;
+		}
+
+		if (lowerCase) {
+			Map<Locale, String> lowerCaseValues = new HashMap<Locale, String>(
+				values.size());
+
+			for (Map.Entry<Locale, String> entry : values.entrySet()) {
+				String value = GetterUtil.getString(entry.getValue());
+
+				lowerCaseValues.put(
+					entry.getKey(), StringUtil.toLowerCase(value));
+			}
+
+			values = lowerCaseValues;
+		}
+
+		createField(name, values, sortable);
 	}
 
 	@Override
