@@ -119,7 +119,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 						<aui:validator name="required" />
 					</aui:input>
 
-					<aui:input name="layoutIds" type="hidden" />
+					<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(liveGroupId, privateLayout, StringUtil.merge(selectedLayoutIds)) %>" />
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
