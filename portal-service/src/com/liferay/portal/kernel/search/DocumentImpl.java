@@ -405,7 +405,11 @@ public class DocumentImpl implements Document {
 			values = lowerCaseValues;
 		}
 
-		createField(name, values, sortable);
+		Field field = new Field(name, values);
+
+		field.setSortable(sortable);
+
+		_fields.put(name, field);
 	}
 
 	@Override
