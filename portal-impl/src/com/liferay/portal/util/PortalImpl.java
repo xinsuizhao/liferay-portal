@@ -7469,7 +7469,7 @@ public class PortalImpl implements Portal {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		if (useGroupVirtualHostName(
+		if (isUseGroupVirtualHostName(
 				group, privateLayoutSet, themeDisplay, canonicalURL)) {
 
 			String virtualHostname = layoutSet.getVirtualHostname();
@@ -7922,7 +7922,7 @@ public class PortalImpl implements Portal {
 		themeDisplay.setLocale(locale);
 	}
 
-	protected boolean useGroupVirtualHostName(
+	protected boolean isUseGroupVirtualHostName(
 		Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
 		boolean canonicalURL) throws SystemException {
 
