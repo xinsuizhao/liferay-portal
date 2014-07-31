@@ -32,7 +32,7 @@
 		<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Test" />
 	</command>
 
-	<command name="ViewExternalWebappsPG" priority="5">
+	<command known-issues="LPS-28957" name="ViewExternalWebappsPG" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="External Webapps Test Page" />
 		</execute>
