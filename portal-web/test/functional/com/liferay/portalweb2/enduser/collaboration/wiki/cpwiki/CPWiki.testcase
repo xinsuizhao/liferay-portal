@@ -50,20 +50,17 @@
 	</command>
 
 	<command name="CompareVersionsWikiPage" priority="5">
-		<var name="wikiNodeName" value="Main" />
-		<var name="wikiPageContent" value="Wiki Page Content" />
-		<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
-		<var name="wikiPageTitle" value="Wiki Page Title" />
-		<var name="wikiPageVersionDiff" value="Edit" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
+		<execute macro="WikiNode#gotoCP">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
 		<execute macro="WikiPage#addCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -71,8 +68,9 @@
 		</execute>
 
 		<execute macro="WikiPage#editPageCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -80,8 +78,9 @@
 		</execute>
 
 		<execute macro="WikiPage#compareVersionsCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageVersionDiff" value="${wikiPageVersionDiff}" />
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageVersionDiff" value="Edit" />
 			<var name="wikiPageVersionNew" value="1.1" />
 			<var name="wikiPageVersionOld" value="1.0" />
 		</execute>
