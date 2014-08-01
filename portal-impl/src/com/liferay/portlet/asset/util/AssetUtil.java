@@ -735,7 +735,7 @@ public class AssetUtil {
 			sortField.equals("ddm-date") ||
 			sortField.equals("modifiedDate")) {
 
-			sortType = Sort.STRING_TYPE;
+			sortType = Sort.LONG_TYPE;
 		}
 		else if (sortField.equals(Field.PRIORITY) ||
 				 sortField.equals(Field.RATINGS) ||
