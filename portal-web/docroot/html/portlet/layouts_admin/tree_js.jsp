@@ -194,12 +194,12 @@ if (!selectableTree) {
 						total = nodeChildren.total;
 					}
 
-					var expanded = (total > 0);
+					var expanded = (childLayouts.length > 0);
 
 					var type = 'task';
 
 					<c:if test="<%= !selectableTree %>">
-						type = (nodeChildren && expanded) ? 'node' : 'io';
+						type: (total > 0) ? 'io' : 'node';
 					</c:if>
 
 					var newNode = {
