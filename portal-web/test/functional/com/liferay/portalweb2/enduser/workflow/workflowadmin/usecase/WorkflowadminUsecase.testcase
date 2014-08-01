@@ -33,16 +33,14 @@
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
 		</execute>
 
+		<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
+
 		<var name="key_workflowDefinitionName" value="Uploaded Definition" />
 
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" value1="Actions" />
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DEACTIVATE" value1="Deactivate" />
-		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="No" />
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" value1="Actions" />
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_ACTIVATE" value1="Activate" />
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Workflow#reactivateInactiveWorkflowDefinition" />
+
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="Yes" />
 	</command>
 
@@ -61,7 +59,9 @@
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
 		</execute>
 
-		<execute macro="Workflow#tearDownUploadedWorkflowDefinition" />
+		<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
+
+		<execute macro="Workflow#deleteWorkflowDefinition" />
 	</command>
 
 	<command name="UploadDefinition" priority="5">
