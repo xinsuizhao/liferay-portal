@@ -724,7 +724,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
-			checkServiceXMLFinders(fileName, entityElement, entityName);
+			if (!portalSource) {
+				checkServiceXMLFinders(fileName, entityElement, entityName);
+			}
+
 			checkServiceXMLReferences(fileName, entityElement, entityName);
 
 			previousEntityName = entityName;
