@@ -311,12 +311,11 @@ public abstract class FindAction extends Action {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
-
 		if ((groupId == layout.getGroupId()) ||
-			(targetGroup.getParentGroupId() == layout.getGroupId()) ||
+			(group.getParentGroupId() == layout.getGroupId()) ||
 			(layout.isPrivateLayout() &&
 			 !SitesUtil.isUserGroupLayoutSetViewable(
 				permissionChecker, layout.getGroup()))) {
@@ -324,7 +323,7 @@ public abstract class FindAction extends Action {
 			return;
 		}
 
-		layout = new VirtualLayout(layout, targetGroup);
+		layout = new VirtualLayout(layout, group);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
 	}
