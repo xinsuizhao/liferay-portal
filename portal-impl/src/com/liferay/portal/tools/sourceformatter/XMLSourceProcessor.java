@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ComparableRoute;
 import com.liferay.util.ContentUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -516,7 +514,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatAntXML(String fileName, String content)
-		throws DocumentException, IOException {
+		throws Exception {
 
 		String newContent = trimContent(content, true);
 
@@ -550,9 +548,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String formatDDLStructuresXML(String content)
-		throws DocumentException, IOException {
-
+	protected String formatDDLStructuresXML(String content) throws Exception {
 		Document document = saxReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
@@ -584,7 +580,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
-		throws DocumentException {
+		throws Exception {
 
 		if (isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
 			return content;
@@ -717,9 +713,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
-	protected String formatPortletXML(String content)
-		throws DocumentException, IOException {
-
+	protected String formatPortletXML(String content) throws Exception {
 		Document document = saxReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
@@ -744,7 +738,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatPoshiXML(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		content = sortPoshiCommands(content);
 
@@ -794,7 +788,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)
-		throws DocumentException {
+		throws Exception {
 
 		Document document = saxReaderUtil.read(content);
 
@@ -822,7 +816,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)
-		throws DocumentException {
+		throws Exception {
 
 		Document document = saxReaderUtil.read(content);
 
@@ -847,7 +841,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatWebXML(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		if (!portalSource) {
 			String webXML = ContentUtil.get(
