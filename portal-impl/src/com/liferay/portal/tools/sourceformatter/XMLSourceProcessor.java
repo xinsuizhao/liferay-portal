@@ -101,12 +101,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkServiceXMLFinders(
-			String fileName, Element entityElement, String entityName,
-			String portalTablesContent)
+			String fileName, Element entityElement, String entityName)
 		throws Exception {
 
-		List<String> columnNames = getColumnNames(
-			entityName, portalTablesContent);
+		List<String> columnNames = getColumnNames(fileName, entityName);
 
 		List<Element> finderElements = entityElement.elements("finder");
 
@@ -443,12 +441,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_friendlyUrlRoutesSortExclusions = getExclusions(
 			"friendly.url.routes.sort.excludes");
 
-		String portalTablesContent = null;
-
-		if (portalSource) {
-			portalTablesContent = getContent("sql/portal-tables.sql", 4);
-		}
-
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -492,8 +484,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 				newContent = formatPoshiXML(fileName, newContent);
 			}
-			else if (portalSource && fileName.endsWith("/service.xml")) {
-				formatServiceXML(fileName, newContent, portalTablesContent);
+			else if (fileName.endsWith("/service.xml")) {
+				formatServiceXML(fileName, newContent);
 			}
 			else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 				formatStrutsConfigXML(fileName, newContent);
@@ -755,8 +747,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
-	protected void formatServiceXML(
-			String fileName, String content, String portalTablesContent)
+	protected void formatServiceXML(String fileName, String content)
 		throws Exception {
 
 		Document document = saxReaderUtil.read(content);
@@ -777,8 +768,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
-			checkServiceXMLFinders(
-				fileName, entityElement, entityName, portalTablesContent);
+			checkServiceXMLFinders(fileName, entityElement, entityName);
 			checkServiceXMLReferences(fileName, entityElement, entityName);
 
 			previousEntityName = entityName;
@@ -927,8 +917,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
-	protected List<String> getColumnNames(
-			String entityName, String portalTablesContent)
+	protected List<String> getColumnNames(String fileName, String entityName)
 		throws Exception {
 
 		List<String> columnNames = new ArrayList<String>();
@@ -936,7 +925,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Pattern pattern = Pattern.compile(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
 
-		Matcher matcher = pattern.matcher(portalTablesContent);
+		Matcher matcher = pattern.matcher(getTablesContent(fileName));
 
 		if (!matcher.find()) {
 			return columnNames;
@@ -962,6 +951,20 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return columnNames;
+	}
+
+	protected String getTablesContent(String fileName) throws Exception {
+		if (portalSource) {
+			if (_tablesContent == null) {
+				_tablesContent = getContent("sql/portal-tables.sql", 4);
+			}
+
+			return _tablesContent;
+		}
+
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		return getContent(fileName.substring(0, pos)  + "/sql/tables.sql", 1);
 	}
 
 	protected String sortPoshiCommands(String content) {
@@ -1131,5 +1134,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
+	private String _tablesContent;
 
 }
