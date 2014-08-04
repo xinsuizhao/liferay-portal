@@ -503,13 +503,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		content = ExportImportHelperUtil.replaceExportLayoutReferences(
-			portletDataContext, content, exportReferencedContent);
-		content = ExportImportHelperUtil.replaceExportLinksToLayouts(
+		content = ExportImportHelperUtil.replaceExportDLReferences(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 
-		content = ExportImportHelperUtil.replaceExportDLReferences(
+		content = ExportImportHelperUtil.replaceExportLayoutReferences(
+			portletDataContext, content, exportReferencedContent);
+		content = ExportImportHelperUtil.replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 
@@ -904,14 +904,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
+		content = ExportImportHelperUtil.replaceImportDLReferences(
+			portletDataContext, entityElement, content,
+			importReferencedContent);
+
 		content = ExportImportHelperUtil.replaceImportLayoutReferences(
 			portletDataContext, content, importReferencedContent);
 		content = ExportImportHelperUtil.replaceImportLinksToLayouts(
 			portletDataContext, content, importReferencedContent);
-
-		content = ExportImportHelperUtil.replaceImportDLReferences(
-			portletDataContext, entityElement, content,
-			importReferencedContent);
 
 		return content;
 	}
