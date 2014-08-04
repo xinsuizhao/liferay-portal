@@ -91,11 +91,6 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 	>
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-		%>
-
 		<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
 			<liferay-util:param name="redirect" value="<%= currentURL %>" />
 			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
