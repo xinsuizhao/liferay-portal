@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -276,8 +274,5 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		return true;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		BaseStagedModelDataHandler.class);
 
 }
