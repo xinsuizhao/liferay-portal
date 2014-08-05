@@ -323,9 +323,15 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
+		long scopeGroupId = 0;
+
+		if (serviceContext != null) {
+			scopeGroupId = serviceContext.getScopeGroupId();
+		}
+		
 		if (!trashHandler.hasTrashPermission(
-				permissionChecker, serviceContext.getScopeGroupId(),
-				destinationContainerModelId, TrashActionKeys.MOVE)) {
+				permissionChecker, scopeGroupId, destinationContainerModelId,
+				TrashActionKeys.MOVE)) {
 
 			throw new TrashPermissionException(TrashPermissionException.MOVE);
 		}

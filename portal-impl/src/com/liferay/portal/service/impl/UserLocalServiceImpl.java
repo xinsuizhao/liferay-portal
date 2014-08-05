@@ -817,14 +817,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 		user.setFacebookId(facebookId);
+		user.setLdapServerId(-1);
 
-		Long ldapServerId = (Long)serviceContext.getAttribute("ldapServerId");
+		if (serviceContext != null) {
+			Long ldapServerId = (Long)serviceContext.getAttribute(
+				"ldapServerId");
 
-		if (ldapServerId != null) {
-			user.setLdapServerId(ldapServerId);
-		}
-		else {
-			user.setLdapServerId(-1);
+			if (ldapServerId != null) {
+				user.setLdapServerId(ldapServerId);
+			}
 		}
 
 		user.setOpenId(openId);
@@ -4060,9 +4061,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, long[] newGroupIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		updateGroups(
-			userId, newGroupIds, serviceContext,
-			serviceContext.isIndexingEnabled());
+		boolean indexingEnabled = true;
+
+		if (serviceContext != null) {
+			indexingEnabled = serviceContext.isIndexingEnabled();
+		}
+
+		updateGroups(userId, newGroupIds, serviceContext, indexingEnabled);
 	}
 
 	/**
