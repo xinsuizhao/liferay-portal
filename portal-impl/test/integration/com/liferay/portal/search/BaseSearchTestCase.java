@@ -80,10 +80,10 @@ public abstract class BaseSearchTestCase {
 
 	@Test
 	public void testLocalizedSearch() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(

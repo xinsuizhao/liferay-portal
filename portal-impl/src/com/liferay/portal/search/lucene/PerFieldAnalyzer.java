@@ -149,6 +149,7 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 	private static Log _log = LogFactoryUtil.getLog(PerFieldAnalyzer.class);
 
 	private Analyzer _analyzer;
-	private Map<String, Analyzer> _analyzers = new LinkedHashMap<String, Analyzer>();
+	private Map<String, Analyzer> _analyzers =
+		new LinkedHashMap<String, Analyzer>();
 
 }
