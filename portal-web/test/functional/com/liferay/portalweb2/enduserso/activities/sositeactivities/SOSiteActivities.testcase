@@ -5718,8 +5718,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Home" />
+		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -5792,8 +5791,6 @@
 			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
-
-		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#click" locator-key1="NAVIGATION_FOLLOWING" />
 
