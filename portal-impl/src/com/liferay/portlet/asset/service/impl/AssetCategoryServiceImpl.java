@@ -491,6 +491,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(groupIds);
+		searchContext.setKeywords(title);
 
 		QueryConfig queryConfig = new QueryConfig();
 

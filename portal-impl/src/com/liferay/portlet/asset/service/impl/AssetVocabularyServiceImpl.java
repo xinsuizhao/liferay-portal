@@ -380,6 +380,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setKeywords(title);
 
 		QueryConfig queryConfig = new QueryConfig();
 
