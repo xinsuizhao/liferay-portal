@@ -45,6 +45,9 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
+import java.util.Locale;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -52,6 +55,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Juan Fernández
+ * @author Tibor Lipusz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -91,6 +95,16 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		return JournalTestUtil.addArticleWithXMLContent(
 			folder.getFolderId(), content, _ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), serviceContext);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, boolean approved,
+			Map<Locale, String> keywordsMap, ServiceContext serviceContext)
+		throws Exception {
+
+		return JournalTestUtil.addArticleWithWorkflow(
+			group.getGroupId(), keywordsMap, null, keywordsMap, approved);
 	}
 
 	@Override
@@ -194,6 +208,11 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected Locale getSearchLocale() {
+		return LocaleUtil.HUNGARY;
 	}
 
 	@Override
