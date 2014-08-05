@@ -211,11 +211,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
-	protected Locale getSearchLocale() {
-		return LocaleUtil.HUNGARY;
-	}
-
-	@Override
 	protected boolean isExpirableAllVersions() {
 		return PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS;
 	}
