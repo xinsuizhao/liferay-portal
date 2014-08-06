@@ -7469,41 +7469,9 @@ public class PortalImpl implements Portal {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		boolean useGroupVirtualHostName = false;
-
-		if (canonicalURL) {
-			useGroupVirtualHostName = true;
-		}
-
-		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
-			if (StringUtil.equalsIgnoreCase(
-					themeDisplay.getServerName(), virtualHost) ||
-				StringUtil.wildcardMatches(
-					themeDisplay.getServerName(), virtualHost,
-					CharPool.QUESTION, CharPool.STAR,
-					CharPool.PERCENT, false)) {
-
-				useGroupVirtualHostName = false;
-
-				break;
-			}
-		}
-
-		long refererPlid = themeDisplay.getRefererPlid();
-
-		if (refererPlid > 0) {
-			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
-				refererPlid);
-
-			if ((refererLayout != null) &&
-				((refererLayout.getGroupId() != group.getGroupId()) ||
-				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
-
-				useGroupVirtualHostName = false;
-			}
-		}
-
-		if (useGroupVirtualHostName) {
+		if (canonicalURL ||
+			!StringUtil.equalsIgnoreCase(
+				themeDisplay.getServerName(), _LOCALHOST)) {
 
 			String virtualHostname = layoutSet.getVirtualHostname();
 
