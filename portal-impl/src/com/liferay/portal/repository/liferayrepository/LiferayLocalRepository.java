@@ -376,8 +376,9 @@ public class LiferayLocalRepository
 	}
 
 	@Override
-	protected void initByFileEntryId(long fileEntryId) throws PrincipalException
-	{
+	protected void initByFileEntryId(long fileEntryId)
+		throws PrincipalException {
+
 		try {
 			DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 				fileEntryId);
