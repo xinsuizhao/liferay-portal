@@ -156,7 +156,6 @@ public class JournalConverterImpl implements JournalConverter {
 					"dynamic-element");
 
 				dynamicElementElement.addAttribute("name", fieldName);
-				dynamicElementElement.addAttribute("index", String.valueOf(i));
 
 				updateContentDynamicElement(
 					dynamicElementElement, ddmStructure, ddmFields,
@@ -698,17 +697,19 @@ public class JournalConverterImpl implements JournalConverter {
 
 		dynamicElementElement.addAttribute("index-type", indexType);
 
-		Field ddmField = ddmFields.get(fieldName);
+		int count = ddmFieldsCounter.get(fieldName);
+
+		dynamicElementElement.addAttribute("index", String.valueOf(count));
 
 		if (!ddmStructure.isFieldTransient(fieldName)) {
+			Field ddmField = ddmFields.get(fieldName);
+
 			for (Locale locale : ddmField.getAvailableLocales()) {
 				Element dynamicContentElement =
 					dynamicElementElement.addElement("dynamic-content");
 
 				dynamicContentElement.addAttribute(
 					"language-id", LocaleUtil.toLanguageId(locale));
-
-				int count = ddmFieldsCounter.get(fieldName);
 
 				Serializable fieldValue = ddmField.getValue(locale, count);
 
@@ -850,6 +851,16 @@ public class JournalConverterImpl implements JournalConverter {
 				false, true);
 
 			dynamicContentElement.addCDATA(fieldValue);
+		}
+		else if (DDMImpl.TYPE_DDM_IMAGE.equals(fieldType) &&
+				 Validator.isNotNull(fieldValue)) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fieldValue);
+
+			dynamicContentElement.addAttribute(
+				"alt", jsonObject.getString("alt"));
+			dynamicContentElement.addCDATA(jsonObject.getString("data"));
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&
 				 Validator.isNotNull(fieldValue)) {
