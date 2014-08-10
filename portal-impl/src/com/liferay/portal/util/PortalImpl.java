@@ -778,7 +778,7 @@ public class PortalImpl implements Portal {
 			domain = domain.substring(0, pos);
 		}
 
-		if (isValidVirtualHostname(domain) || isValidVirtualHost(domain)) {
+		if (isValidVirtualHost(domain) || isValidVirtualHostname(domain)) {
 			return url;
 		}
 
