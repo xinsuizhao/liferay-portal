@@ -618,7 +618,7 @@ public class DLStoreImpl implements DLStore {
 			throw new FileNameException(fileName);
 		}
 
-		if (validateFileExtension) {
+		if (validateFileExtension && _isFileExtensionValidationEnabled()) {
 			boolean validFileExtension = false;
 
 			String[] fileExtensions = PrefsPropsUtil.getStringArray(
@@ -809,6 +809,26 @@ public class DLStoreImpl implements DLStore {
 		}
 
 		validate(fileName, validateFileExtension, versionLabel);
+	}
+
+	private boolean _isFileExtensionValidationEnabled() {
+		StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+
+		for (StackTraceElement element : elements) {
+			String className = element.getClassName();
+
+			if (className.startsWith("com.liferay.") &&
+				(className.endsWith("EditLayoutSetAction") ||
+				 className.endsWith("EditUserPortraitAction") ||
+				 className.endsWith("LogoAction") ||
+				 className.endsWith("PortletFileRepositoryImpl")||
+				 className.endsWith("TempFileUtil"))) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@BeanReference(type = GroupLocalService.class)
