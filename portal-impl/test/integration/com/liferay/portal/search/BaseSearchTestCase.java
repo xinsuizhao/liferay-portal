@@ -95,7 +95,8 @@ public abstract class BaseSearchTestCase {
 		Map<Locale, String> keywordsMap = new HashMap<Locale, String>();
 
 		keywordsMap.put(LocaleUtil.getDefault(), "entity title");
-		keywordsMap.put(LocaleUtil.HUNGARY, "entitas neve");
+		keywordsMap.put(LocaleUtil.GERMANY, "Entity-Namen");
+		keywordsMap.put(LocaleUtil.SPAIN, "nombre de la entidad");
 
 		baseModel = addBaseModelWithWorkflow(
 			parentBaseModel, true, keywordsMap, serviceContext);
@@ -105,9 +106,9 @@ public abstract class BaseSearchTestCase {
 			searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId(), searchContext));
 
-		searchContext.setAttribute(Field.TITLE, "nev");
-		searchContext.setKeywords("nev");
-		searchContext.setLocale(LocaleUtil.HUNGARY);
+		searchContext.setAttribute(Field.TITLE, "Namen");
+		searchContext.setKeywords("Namen");
+		searchContext.setLocale(LocaleUtil.GERMANY);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
