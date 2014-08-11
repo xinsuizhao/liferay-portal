@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -93,7 +94,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		long[] vocabularyIds = (long[])searchContext.getAttribute(
 			Field.ASSET_VOCABULARY_IDS);
 
-		if (vocabularyIds.length != 0) {
+		if (!ArrayUtil.isEmpty(vocabularyIds)) {
 			BooleanQuery vocabularyQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
 
