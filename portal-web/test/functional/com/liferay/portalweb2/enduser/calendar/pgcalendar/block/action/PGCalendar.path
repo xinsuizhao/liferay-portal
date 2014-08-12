@@ -558,7 +558,6 @@
 	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_REPEAT</td>
 	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')]</td>
