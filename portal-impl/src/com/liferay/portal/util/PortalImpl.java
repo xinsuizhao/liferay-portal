@@ -7512,41 +7512,8 @@ public class PortalImpl implements Portal {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		boolean useGroupVirtualHostName = false;
-
-		if (canonicalURL) {
-			useGroupVirtualHostName = true;
-		}
-
-		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
-			if (StringUtil.equalsIgnoreCase(
-					themeDisplay.getServerName(), virtualHost) ||
-				StringUtil.wildcardMatches(
-					themeDisplay.getServerName(), virtualHost,
-					CharPool.QUESTION, CharPool.STAR,
-					CharPool.PERCENT, false)) {
-
-				useGroupVirtualHostName = false;
-
-				break;
-			}
-		}
-
-		long refererPlid = themeDisplay.getRefererPlid();
-
-		if (refererPlid > 0) {
-			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
-				refererPlid);
-
-			if ((refererLayout != null) &&
-				((refererLayout.getGroupId() != group.getGroupId()) ||
-				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
-
-				useGroupVirtualHostName = false;
-			}
-		}
-
-		if (useGroupVirtualHostName) {
+		if (isUseGroupVirtualHostName(
+				group, privateLayoutSet, themeDisplay, canonicalURL)) {
 
 			String virtualHostname = layoutSet.getVirtualHostname();
 
@@ -7861,6 +7828,32 @@ public class PortalImpl implements Portal {
 		}
 
 		return false;
+	}
+
+	protected boolean isUseGroupVirtualHostName(
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			boolean canonicalURL)
+		throws SystemException {
+
+		if (!canonicalURL || isValidVirtualHost(themeDisplay.getServerName())) {
+			return false;
+		}
+
+		long refererPlid = themeDisplay.getRefererPlid();
+
+		if (refererPlid > 0) {
+			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
+				refererPlid);
+
+			if ((refererLayout != null) &&
+				((refererLayout.getGroupId() != group.getGroupId()) ||
+				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected boolean isValidVirtualHost(String domain) {
