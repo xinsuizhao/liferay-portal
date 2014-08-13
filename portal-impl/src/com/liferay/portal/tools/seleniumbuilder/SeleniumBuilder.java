@@ -273,14 +273,6 @@ public class SeleniumBuilder {
 			String extendsTestCaseName = rootElement.attributeValue("extends");
 
 			if (extendsTestCaseName != null) {
-				Element extendsRootElement =
-					_seleniumBuilderContext.getTestCaseRootElement(
-						extendsTestCaseName);
-
-				List<Element> commandElements =
-					_seleniumBuilderFileUtil.getAllChildElements(
-						extendsRootElement, "command");
-
 				String[] ignoreCommandNames = new String[0];
 
 				String ignoreCommands = rootElement.attributeValue(
@@ -296,6 +288,14 @@ public class SeleniumBuilder {
 
 					ignoreCommandNames = StringUtil.split(ignoreCommands);
 				}
+
+				Element extendsRootElement =
+					_seleniumBuilderContext.getTestCaseRootElement(
+						extendsTestCaseName);
+
+				List<Element> commandElements =
+					_seleniumBuilderFileUtil.getAllChildElements(
+						extendsRootElement, "command");
 
 				for (Element commandElement : commandElements) {
 					String commmandName = commandElement.attributeValue("name");
