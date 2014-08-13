@@ -41,7 +41,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 String selectionStyle = GetterUtil.getString(portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
-long[] siteGroupIds = getSiteGroupIds(groupIds);
+long[] siteGroupIds = _getSiteGroupIds(groupIds);
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
@@ -274,6 +274,16 @@ private String _checkViewURL(AssetEntry assetEntry, boolean viewInContext, Strin
 	return viewURL;
 }
 
+private long[] _getSiteGroupIds(long[] groupIds) throws PortalException, SystemException {
+	Set<Long> siteGroupIds = new HashSet<Long>();
+
+	for (long groupId : groupIds) {
+		siteGroupIds.add(PortalUtil.getSiteGroupId(groupId));
+	}
+
+	return ArrayUtil.toLongArray(siteGroupIds);
+}
+
 private boolean _isEnablePermissions(String portletName, PortletPreferences portletPreferences) {
 	if (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) &&
 		!portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) &&
@@ -287,17 +297,5 @@ private boolean _isEnablePermissions(String portletName, PortletPreferences port
 	}
 
 	return GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
-}
-
-private long[] getSiteGroupIds(long[] groupIds)
-	throws PortalException, SystemException {
-
-	Set<Long> siteGroupIds = new HashSet<Long>();
-
-	for (long groupId : groupIds) {
-		siteGroupIds.add(PortalUtil.getSiteGroupId(groupId));
-	}
-
-	return ArrayUtil.toLongArray(siteGroupIds);
 }
 %>
