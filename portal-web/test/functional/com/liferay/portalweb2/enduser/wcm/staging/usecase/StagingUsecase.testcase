@@ -1,4 +1,4 @@
-<definition component-name="portal-staging" extends="PGStaging">
+<definition component-name="portal-staging" extends="PGStaging" ignore-errors="ActivateDeactivateRemoteStaging,ActivateDeactivateStagingLocalLiveDM,ActivateRemoteStaging,ActivateStaging,AddDMDocumentStagingLocalLive,AddEventRepeatDaily,AddPageVariation,AddSitePagesVariation,AssertEditWebContentStaging,AssertNoEditLink,BlogsOrganizationWorkflowStaging,DeactivateStaging,DeleteDMDocument,LayoutScope,PublishWCViaRemoteStaging,PublishWCWithPagesVariationViaRemoteStaging,StagingPublishPortlet">
 	<property name="testray.main.component.name" value="WCM" />
 
 	<var name="siteName" value="Site Name" />
@@ -35,62 +35,6 @@
 
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
-
-	<command name="ActivateDeactivateRemoteStaging" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="ActivateDeactivateStagingLocalLiveDM" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="ActivateRemoteStaging" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="ActivateStaging" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="AddDMDocumentStagingLocalLive" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="AddEventRepeatDaily" priority="4">
-		<echo message="override" />
-	</command>
-
-	<command name="AddPageVariation" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="AddSitePagesVariation" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="AssertEditWebContentStaging" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="AssertNoEditLink" priority="4">
-		<echo message="override" />
-	</command>
-
-	<command name="BlogsOrganizationWorkflowStaging" priority="4">
-		<echo message="override" />
-	</command>
-
-	<command name="DeactivateStaging" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="DeleteDMDocument" priority="4">
-		<echo message="override" />
-	</command>
-
-	<command name="LayoutScope" priority="5">
-		<echo message="override" />
-	</command>
 
 	<command known-issues="BPR-526" name="PublishCustomPortletTitle" priority="5">
 		<execute test-case="super#AddSitePagesVariation" />
@@ -179,14 +123,6 @@
 		<execute macro="SitesDirectory#viewPortletTitlePG">
 			<var name="portletName" value="${portletName} Custom" />
 		</execute>
-	</command>
-
-	<command name="PublishWCViaRemoteStaging" priority="5">
-		<echo message="override" />
-	</command>
-
-	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="5">
-		<echo message="override" />
 	</command>
 
 	<command name="StagingAssetPublisher" priority="4">
@@ -2394,10 +2330,6 @@
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Wiki" />
 		</execute>
-	</command>
-
-	<command name="StagingPublishPortlet" priority="5">
-		<echo message="override" />
 	</command>
 
 	<command name="StagingRemoteLiveWebContent" priority="5">
