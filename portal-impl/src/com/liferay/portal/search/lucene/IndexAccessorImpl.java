@@ -568,9 +568,9 @@ public class IndexAccessorImpl implements IndexAccessor {
 		new DumpIndexDeletionPolicy();
 	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
+	private String _path;
 	private Map<String, Directory> _ramDirectories =
 		new ConcurrentHashMap<String, Directory>();
-	private String _path;
 	private ScheduledExecutorService _scheduledExecutorService;
 
 	private static class InvalidateProcessCallable
