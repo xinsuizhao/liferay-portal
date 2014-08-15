@@ -132,7 +132,7 @@
 
 .portlet-document-library, .portlet-dynamic-data-mapping {
 	.lfr-ddm-small-image-preview {
-		@include box-shadow(0 1px 3px #ccc);
+		@include box-shadow(0 1px 3px #CCC);
 	}
 }
 
@@ -309,6 +309,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	from {
 		background-position: 40px 0;
 	}
+
 	to {
 		background-position: 0 0;
 	}
@@ -432,16 +433,19 @@ body:first-of-type {
 		background-color: #EBEBEB;
 		border-color: #DDD;
 	}
+
 	50% {
 		background-color: #DDEDDE;
 		border-color: #7D7;
 
 		@include scale(1.1);
 	}
+
 	75% {
 		background-color: #DDEDDE;
 		border-color: #7D7;
 	}
+
 	100% {
 		background-color: #EBEBEB;
 		border-color: #DDD;
