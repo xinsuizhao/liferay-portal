@@ -362,6 +362,7 @@ public class S3Store extends BaseStore {
 		File tempFile = null;
 		InputStream is = null;
 		S3Object newS3Object = null;
+
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
 				_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),
@@ -405,7 +406,6 @@ public class S3Store extends BaseStore {
 		catch (ServiceException se) {
 			throw new SystemException(se);
 		}
-
 		finally {
 			StreamUtil.cleanUp(is);
 
@@ -431,7 +431,6 @@ public class S3Store extends BaseStore {
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
 		}
-
 		finally {
 			StreamUtil.cleanUp(is);
 		}
