@@ -76,9 +76,7 @@ body.portlet {
 	@include ellipsis;
 
 	max-width: 95%;
-	overflow: hidden;
 	vertical-align: top;
-	white-space: nowrap;
 }
 
 .panel-page-content, .panel-page-body {
@@ -235,7 +233,7 @@ body.portlet {
 
 	.portlet-actions, .portlet-title-default {
 		background-color: #333;
-		min-height: 20px;
+		min-height: 21px;
 	}
 
 	.portlet-action-separator {
@@ -312,7 +310,6 @@ body.portlet {
 	height: 0;
 	line-height: 19px;
 	max-width: 50%;
-	overflow: hidden;
 	padding: 0 10px;
 	text-transform: uppercase;
 }
