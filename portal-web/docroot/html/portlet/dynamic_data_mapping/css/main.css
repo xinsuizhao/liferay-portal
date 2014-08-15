@@ -4,6 +4,10 @@
 .portlet-document-library, .portlet-dynamic-data-mapping {
 	.diagram-builder-drop-container {
 		overflow: auto;
+
+		.field-input-text, .field-textarea {
+			box-sizing: border-box;
+		}
 	}
 
 	.diagram-builder-field-icon {
