@@ -88,7 +88,7 @@
 <!--RECORD_TABLE-->
 <tr>
 	<td>RECORD_TABLE_ENTRY</td>
-	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td[contains(.,'${key_recordFieldData}')]</td>
+	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td[contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_PREVIEW</td>
-	<td>//div/div/div[contains(.,'${key_recordFieldData}')]</td>
+	<td>//div/div/div[contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>

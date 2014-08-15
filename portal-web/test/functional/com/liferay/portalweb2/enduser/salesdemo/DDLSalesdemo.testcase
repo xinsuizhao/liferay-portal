@@ -36,14 +36,14 @@
 			<var name="pageName" value="Company Picnic" />
 		</execute>
 
-		<execute macro="List#addPG">
-			<var name="listDescription" value="Sign up list for our company picnic." />
-			<var name="listName" value="Potluck Sign Up List" />
+		<execute macro="List#addViaDDLDisplayPG">
+			<var name="ddlListDescription" value="Sign up list for our company picnic." />
+			<var name="ddlListName" value="Potluck Sign Up List" />
 		</execute>
 
-		<execute macro="DataDefinition#addPG">
-			<var name="dataDefinitionDescription" value="List for Potlucks" />
-			<var name="dataDefinitionName" value="Potluck Items" />
+		<execute macro="DataDefinition#addViaDDLDisplayPG">
+			<var name="ddlDataDefinitionDescription" value="List for Potlucks" />
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -75,64 +75,64 @@
 		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="DataDefinition#selectCP">
-			<var name="dataDefinitionName" value="Potluck Items" />
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
-		<execute macro="List#savePG" />
+		<execute macro="List#saveViaDDLDisplayPG" />
 
-		<execute macro="ListRecord#addPG">
-			<var name="dataDefinitionName" value="Potluck Items" />
+		<execute macro="ListRecord#addViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="ListRecord#populateField">
+			<var name="ddlRecordFieldData" value="John" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="First Name" />
 			<var name="fieldName" value="First_Name" />
-			<var name="recordFieldData" value="John" />
 		</execute>
 
 		<execute macro="ListRecord#populateField">
+			<var name="ddlRecordFieldData" value="Doe" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Last Name" />
 			<var name="fieldName" value="Last_Name" />
-			<var name="recordFieldData" value="Doe" />
 		</execute>
 
 		<execute macro="ListRecord#populateField">
+			<var name="ddlRecordFieldData" value="Beef Jerky" />
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
 			<var name="fieldName" value="What_are_you_bringing" />
-			<var name="recordFieldData" value="Beef Jerky" />
 		</execute>
 
-		<execute macro="ListRecord#publishPG" />
+		<execute macro="ListRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="ListRecord#addPG">
-			<var name="dataDefinitionName" value="Potluck Items" />
+		<execute macro="ListRecord#addViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="ListRecord#populateField">
+			<var name="ddlRecordFieldData" value="Jane" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="First Name" />
 			<var name="fieldName" value="First_Name" />
-			<var name="recordFieldData" value="Jane" />
 		</execute>
 
 		<execute macro="ListRecord#populateField">
+			<var name="ddlRecordFieldData" value="Smith" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Last Name" />
 			<var name="fieldName" value="Last_Name" />
-			<var name="recordFieldData" value="Smith" />
 		</execute>
 
 		<execute macro="ListRecord#populateField">
+			<var name="ddlRecordFieldData" value="Carrots" />
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
 			<var name="fieldName" value="What_are_you_bringing" />
-			<var name="recordFieldData" value="Carrots" />
 		</execute>
 
-		<execute macro="ListRecord#publishPG" />
+		<execute macro="ListRecord#publishViaDDLDisplayPG" />
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="First Name" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Last Name" />
@@ -168,21 +168,21 @@
 		</execute>
 
 		<execute macro="ListRecord#populateFieldTextViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="Joe" />
+			<var name="ddlRecordRow" value="3" />
 			<var name="fieldName" value="First_Name" />
-			<var name="recordFieldData" value="Joe" />
-			<var name="recordRow" value="3" />
 		</execute>
 
 		<execute macro="ListRecord#populateFieldTextViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="Perkins" />
+			<var name="ddlRecordRow" value="3" />
 			<var name="fieldName" value="Last_Name" />
-			<var name="recordFieldData" value="Perkins" />
-			<var name="recordRow" value="3" />
 		</execute>
 
 		<execute macro="ListRecord#populateFieldSelectViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="Chips" />
+			<var name="ddlRecordRow" value="3" />
 			<var name="fieldName" value="What_are_you_bringing" />
-			<var name="recordFieldData" value="Chips" />
-			<var name="recordRow" value="3" />
 		</execute>
 	</command>
 </definition>

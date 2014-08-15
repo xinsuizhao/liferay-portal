@@ -13,11 +13,11 @@
 		<execute macro="DataDefinitionTemplate#tearDownTemplateCP" />
 
 		<execute macro="DataDefinitionTemplate#tearDownTemplateCP">
-			<var name="dataDefinitionName" value="To Do" />
+			<var name="ddlDataDefinitionName" value="To Do" />
 		</execute>
 
 		<execute macro="DataDefinitionTemplate#tearDownTemplateCP">
-			<var name="dataDefinitionName" value="Inventory" />
+			<var name="ddlDataDefinitionName" value="Inventory" />
 		</execute>
 
 		<execute macro="DataDefinition#tearDownCP" />
@@ -32,8 +32,8 @@
 	<command name="CompleteProcessAndViewNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -48,8 +48,8 @@
 		</execute>
 
 		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -74,7 +74,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -1073,8 +1073,8 @@
 		</execute>
 
 		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
-			<var name="dataDefinitionName" value="Inventory" />
-			<var name="dataDefinitionTemplateName" value="Task Form" />
+			<var name="ddlDataDefinitionName" value="Inventory" />
+			<var name="ddlTemplateName" value="Task Form" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1323,8 +1323,8 @@
 		</execute>
 
 		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
-			<var name="dataDefinitionName" value="Inventory" />
-			<var name="dataDefinitionTemplateName" value="Review" />
+			<var name="ddlDataDefinitionName" value="Inventory" />
+			<var name="ddlTemplateName" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1757,8 +1757,8 @@
 	</command>
 
 	<command name="RejectAndResubmitProcess" priority="5">
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -1773,8 +1773,8 @@
 		</execute>
 
 		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -1799,7 +1799,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -1888,8 +1888,8 @@
 	<command name="RejectAndResubmitProcessAndViewNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -1904,8 +1904,8 @@
 		</execute>
 
 		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -1930,7 +1930,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2049,8 +2049,8 @@
 	</command>
 
 	<command name="UpdateDueDate" priority="5">
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -2065,8 +2065,8 @@
 		</execute>
 
 		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2091,7 +2091,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2688,8 +2688,8 @@
 
 	<command name="ViewProcessWithComments" priority="4">
 		<var name="commentList" value="Assigned initial task.,Updating the due date on a process assigned to my roles.,Assign process to Test Test.,Updating the due date on a process assigned to me.,Please make changes and resubmit.,Assigned initial task.,Resubmitting.,Assigned initial task.,Assign process to Test Test again.,Process is approved." />
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -2704,8 +2704,8 @@
 		</execute>
 
 		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2730,7 +2730,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3068,8 +3068,8 @@
 	</command>
 
 	<command name="WithdrawProcess" priority="5">
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -3084,8 +3084,8 @@
 		</execute>
 
 		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -3110,7 +3110,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
