@@ -8,9 +8,9 @@
 	<tear-down>
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="List#tearDownCP" />
+		<execute macro="DDLList#tearDownCP" />
 
-		<execute macro="DataDefinition#tearDownCP" />
+		<execute macro="DDLDataDefinition#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -36,12 +36,12 @@
 			<var name="pageName" value="Company Picnic" />
 		</execute>
 
-		<execute macro="List#addViaDDLDisplayPG">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListDescription" value="Sign up list for our company picnic." />
 			<var name="ddlListName" value="Potluck Sign Up List" />
 		</execute>
 
-		<execute macro="DataDefinition#addViaDDLDisplayPG">
+		<execute macro="DDLDataDefinition#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionDescription" value="List for Potlucks" />
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
@@ -72,67 +72,67 @@
 			<var name="fieldOptionsValues" value="Carrots,Beef Jerky,Chips" />
 		</execute>
 
-		<execute macro="DataDefinition#saveCP" />
+		<execute macro="DDLDataDefinition#saveCP" />
 
-		<execute macro="DataDefinition#selectCP">
+		<execute macro="DDLDataDefinition#selectCP">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
-		<execute macro="List#saveViaDDLDisplayPG" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute macro="ListRecord#addViaDDLDisplayPG">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="John" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="First Name" />
 			<var name="fieldName" value="First_Name" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="Doe" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Last Name" />
 			<var name="fieldName" value="Last_Name" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="Beef Jerky" />
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
 			<var name="fieldName" value="What_are_you_bringing" />
 		</execute>
 
-		<execute macro="ListRecord#publishViaDDLDisplayPG" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="ListRecord#addViaDDLDisplayPG">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="Jane" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="First Name" />
 			<var name="fieldName" value="First_Name" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="Smith" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Last Name" />
 			<var name="fieldName" value="Last_Name" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="Carrots" />
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="What are you bringing?" />
 			<var name="fieldName" value="What_are_you_bringing" />
 		</execute>
 
-		<execute macro="ListRecord#publishViaDDLDisplayPG" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="First Name" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Last Name" />
@@ -167,19 +167,19 @@
 			<var name="pageName" value="Company Picnic" />
 		</execute>
 
-		<execute macro="ListRecord#populateFieldTextViaSpreadsheetView">
+		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetView">
 			<var name="ddlRecordFieldData" value="Joe" />
 			<var name="ddlRecordRow" value="3" />
 			<var name="fieldName" value="First_Name" />
 		</execute>
 
-		<execute macro="ListRecord#populateFieldTextViaSpreadsheetView">
+		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetView">
 			<var name="ddlRecordFieldData" value="Perkins" />
 			<var name="ddlRecordRow" value="3" />
 			<var name="fieldName" value="Last_Name" />
 		</execute>
 
-		<execute macro="ListRecord#populateFieldSelectViaSpreadsheetView">
+		<execute macro="DDLRecord#populateFieldSelectViaSpreadsheetView">
 			<var name="ddlRecordFieldData" value="Chips" />
 			<var name="ddlRecordRow" value="3" />
 			<var name="fieldName" value="What_are_you_bringing" />

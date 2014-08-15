@@ -88,13 +88,13 @@
 	</command>
 
 	<command name="saveCP">
-		<execute macro="List#saveCmd" />
+		<execute macro="DDLList#saveCmd" />
 
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
-		<execute macro="List#saveCmd" />
+		<execute macro="DDLList#saveCmd" />
 	</command>
 
 	<command name="selectViaDDLDisplayPG">
