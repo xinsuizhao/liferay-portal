@@ -347,15 +347,6 @@ public class S3Store extends BaseStore {
 			throw new SystemException(se);
 		}
 		finally {
-			try {
-				if (newS3Object != null) {
-					newS3Object.closeDataInputStream();
-				}
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-
 			StreamUtil.cleanUp(is);
 
 			FileUtil.delete(tempFile);
@@ -416,15 +407,6 @@ public class S3Store extends BaseStore {
 		}
 
 		finally {
-			try {
-				if (newS3Object != null) {
-					newS3Object.closeDataInputStream();
-				}
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-
 			StreamUtil.cleanUp(is);
 
 			FileUtil.delete(tempFile);
