@@ -169,6 +169,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
+	.dockbar .navbar-inner .nav > li:last-child > a {
+		margin-right: 0;
+	}
+
 	.dockbar-split .dockbar {
 		.info-button {
 			top: 9px;
