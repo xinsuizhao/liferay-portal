@@ -812,10 +812,12 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	private boolean _isFileExtensionValidationEnabled() {
-		StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+		Thread currentThread = Thread.currentThread();
 
-		for (StackTraceElement element : elements) {
-			String className = element.getClassName();
+		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
+
+		for (StackTraceElement stackTraceElement : stackTraceElements) {
+			String className = stackTraceElement.getClassName();
 
 			if (className.startsWith("com.liferay.") &&
 				(className.endsWith("EditLayoutSetAction") ||
