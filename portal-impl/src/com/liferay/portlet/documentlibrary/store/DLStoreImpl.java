@@ -618,25 +618,45 @@ public class DLStoreImpl implements DLStore {
 			throw new FileNameException(fileName);
 		}
 
-		if (validateFileExtension && _isFileExtensionValidationEnabled()) {
-			boolean validFileExtension = false;
+		if (!validateFileExtension) {
+			return;
+		}
 
-			String[] fileExtensions = PrefsPropsUtil.getStringArray(
-				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+		Thread currentThread = Thread.currentThread();
 
-			for (String fileExtension : fileExtensions) {
-				if (StringPool.STAR.equals(fileExtension) ||
-					StringUtil.endsWith(fileName, fileExtension)) {
+		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
 
-					validFileExtension = true;
+		for (StackTraceElement stackTraceElement : stackTraceElements) {
+			String className = stackTraceElement.getClassName();
 
-					break;
-				}
+			if (className.startsWith("com.liferay.") &&
+				(className.endsWith("EditLayoutSetAction") ||
+				 className.endsWith("EditUserPortraitAction") ||
+				 className.endsWith("LogoAction") ||
+				 className.endsWith("PortletFileRepositoryImpl")||
+				 className.endsWith("TempFileUtil"))) {
+
+				return;
 			}
+		}
 
-			if (!validFileExtension) {
-				throw new FileExtensionException(fileName);
+		boolean validFileExtension = false;
+
+		String[] fileExtensions = PrefsPropsUtil.getStringArray(
+			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+
+		for (String fileExtension : fileExtensions) {
+			if (StringPool.STAR.equals(fileExtension) ||
+				StringUtil.endsWith(fileName, fileExtension)) {
+
+				validFileExtension = true;
+
+				break;
 			}
+		}
+
+		if (!validFileExtension) {
+			throw new FileExtensionException(fileName);
 		}
 	}
 
@@ -809,28 +829,6 @@ public class DLStoreImpl implements DLStore {
 		}
 
 		validate(fileName, validateFileExtension, versionLabel);
-	}
-
-	private boolean _isFileExtensionValidationEnabled() {
-		Thread currentThread = Thread.currentThread();
-
-		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
-
-		for (StackTraceElement stackTraceElement : stackTraceElements) {
-			String className = stackTraceElement.getClassName();
-
-			if (className.startsWith("com.liferay.") &&
-				(className.endsWith("EditLayoutSetAction") ||
-				 className.endsWith("EditUserPortraitAction") ||
-				 className.endsWith("LogoAction") ||
-				 className.endsWith("PortletFileRepositoryImpl")||
-				 className.endsWith("TempFileUtil"))) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	@BeanReference(type = GroupLocalService.class)
