@@ -647,22 +647,22 @@
 	</command>
 
 	<command known-issues="LPS-48682" name="ViewListRecordAndAssertAnchorLink"  priority="3">
-		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		<var name="ddlListDescription" value="List Description" />
+		<var name="ddlListName" value="List Name" />
+		<var name="ddlRecordFieldData" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="listDescription" value="List Description" />
-		<var name="listName" value="List Name" />
-		<var name="recordFieldData" value="Text" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinition#addCP">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -671,43 +671,43 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DataDefinition#saveCP" />
+		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="List#addPG">
-			<var name="listDescription" value="${listDescription}" />
-			<var name="listName" value="${listName}" />
+		<execute macro="DDLList#addViaDDLDisplayPG">
+			<var name="ddlListDescription" value="${ddlListDescription}" />
+			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="List#selectDataDefinitionPG">
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="List#savePG" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ListRecord#addPG">
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="listName" value="${listName}" />
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="ListRecord#populateField">
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
-			<var name="recordFieldData" value="${recordFieldData}" />
 		</execute>
 
-		<execute macro="ListRecord#publishPG" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute action="PGDynamicdatalists#assertClick" locator1="//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a" value1="${recordFieldData}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="Text ${recordFieldData}" />
+		<execute action="PGDynamicdatalists#assertClick" locator1="//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="Text ${ddlRecordFieldData}" />
 	</command>
 
 	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
