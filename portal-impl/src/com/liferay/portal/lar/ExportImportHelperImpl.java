@@ -1574,7 +1574,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	protected boolean createLayoutsJSON(
-			Layout layout, JSONArray layoutsJSONArray, long[] layoutIds)
+			Layout layout, JSONArray layoutsJSONArray, long[] selectedLayoutIds)
 		throws SystemException {
 
 		List<Layout> childLayouts = layout.getChildren();
@@ -1587,14 +1587,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			for (Layout childLayout : childLayouts) {
 				if (!createLayoutsJSON(
-						childLayout, childLayoutsJSONArray, layoutIds)) {
+						childLayout, childLayoutsJSONArray,
+						selectedLayoutIds)) {
 
 					includeChildren = false;
 				}
 			}
 		}
 
-		boolean checked = ArrayUtil.contains(layoutIds, layout.getLayoutId());
+		boolean checked = ArrayUtil.contains(
+			selectedLayoutIds, layout.getLayoutId());
 
 		if (checked) {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
