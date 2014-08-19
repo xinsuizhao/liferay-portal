@@ -1900,7 +1900,8 @@ public class SeleniumBuilderFileUtil {
 		if (attributeMap.containsKey("method")) {
 			String methodValue = attributeMap.get("method");
 
-			if (!methodValue.startsWith("selenium") &&
+			if (!methodValue.startsWith("MathUtil") &&
+				!methodValue.startsWith("selenium") &&
 				!methodValue.startsWith("StringUtil")) {
 
 				throwValidationException(1005, fileName, element, "method");
