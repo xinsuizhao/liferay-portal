@@ -848,7 +848,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public List<Layout> getLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			boolean incomplete, int start, int end)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return layoutPersistence.filterFindByG_P_P(
 			groupId, privateLayout, parentLayoutId, start, end);
@@ -857,7 +857,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public int getLayoutsCount(
 			long groupId, boolean privateLayout, long parentLayoutId)
-		throws PortalException {
+		throws SystemException {
 
 		return layoutPersistence.filterCountByG_P_P(
 			groupId, privateLayout, parentLayoutId);
