@@ -486,14 +486,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long groupId, boolean privateLayout, String selectedNodes)
 		throws SystemException {
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		for (Layout layout : layouts) {
-			createLayoutsJSON(
-				layout, jsonArray, StringUtil.split(selectedNodes, 0L));
+			populateLayoutsJSON(
+				jsonArray, layout, StringUtil.split(selectedNodes, 0L));
 		}
 
 		return jsonArray.toString();
@@ -1573,21 +1573,20 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 	}
 
-	protected boolean createLayoutsJSON(
-			Layout layout, JSONArray layoutsJSONArray, long[] selectedLayoutIds)
+	protected boolean populateLayoutsJSON(
+			JSONArray layoutsJSONArray, Layout layout, long[] selectedLayoutIds)
 		throws SystemException {
 
 		List<Layout> childLayouts = layout.getChildren();
 		JSONArray childLayoutsJSONArray = null;
-
 		boolean includeChildren = true;
 
 		if (!childLayouts.isEmpty()) {
 			childLayoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (Layout childLayout : childLayouts) {
-				if (!createLayoutsJSON(
-						childLayout, childLayoutsJSONArray,
+				if (!populateLayoutsJSON(
+						childLayoutsJSONArray, childLayout,
 						selectedLayoutIds)) {
 
 					includeChildren = false;
@@ -1613,7 +1612,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (childLayoutsJSONArray != null) {
 
-			// Iterating over because need 1 level array not array of arrays
+			// We want a 1 level array and not an array of arrays
 
 			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
 				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
