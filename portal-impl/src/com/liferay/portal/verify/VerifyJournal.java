@@ -168,6 +168,8 @@ public class VerifyJournal extends VerifyProcess {
 	protected void updateURLTitle(
 			long groupId, String articleId, String urlTitle)
 		throws Exception {
+		
+		urlTitle = GetterUtil.getString(urlTitle);
 
 		String normalizedURLTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle, _friendlyURLPattern);
