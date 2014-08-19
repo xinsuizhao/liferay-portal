@@ -1722,10 +1722,7 @@ public class SitesImpl implements Sites {
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
 			});
 
-		boolean layoutSetPrototypePropateLogo =
-						PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO;
-
-		if (layoutSetPrototypePropateLogo) {
+		if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
 			parameterMap.put(
 				PortletDataHandlerKeys.LOGO,
 				new String[] {Boolean.TRUE.toString()});
@@ -1758,7 +1755,7 @@ public class SitesImpl implements Sites {
 				PortletDataHandlerKeys.DATA_STRATEGY,
 				new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR});
 
-			if (!layoutSetPrototypePropateLogo) {
+			if (!PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
 				parameterMap.put(
 					PortletDataHandlerKeys.LOGO,
 					new String[] {Boolean.TRUE.toString()});
@@ -1772,7 +1769,7 @@ public class SitesImpl implements Sites {
 				new String[] {Boolean.TRUE.toString()});
 		}
 		else {
-			if (!layoutSetPrototypePropateLogo) {
+			if (!PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
 				parameterMap.put(
 					PortletDataHandlerKeys.LOGO,
 					new String[] {Boolean.FALSE.toString()});
