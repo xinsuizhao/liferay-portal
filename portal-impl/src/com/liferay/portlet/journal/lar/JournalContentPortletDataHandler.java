@@ -235,6 +235,8 @@ public class JournalContentPortletDataHandler
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, DDMTemplate.class);
 
+		// Journal Article
+
 		JournalArticle journalArticle = null;
 
 		Element importDataRootElement =
