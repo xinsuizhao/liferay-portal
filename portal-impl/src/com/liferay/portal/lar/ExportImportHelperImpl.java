@@ -1612,6 +1612,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		if (childLayoutsJSONArray != null) {
+
+			// Iterating over because need 1 level array not array of arrays
+
 			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
 				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
 			}
