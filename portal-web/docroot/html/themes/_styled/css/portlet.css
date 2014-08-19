@@ -320,7 +320,7 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: url(../images/portlet/draggable_borderless.png) no-repeat 0 50% #333;
+		background: #333 url(../images/portlet/draggable_borderless.png) no-repeat 0 50%;
 		cursor: move;
 		padding-left: 20px;
 	}
