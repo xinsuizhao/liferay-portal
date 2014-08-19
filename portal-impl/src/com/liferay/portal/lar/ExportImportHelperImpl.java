@@ -1573,55 +1573,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 	}
 
-	protected boolean populateLayoutsJSON(
-			JSONArray layoutsJSONArray, Layout layout, long[] selectedLayoutIds)
-		throws SystemException {
-
-		List<Layout> childLayouts = layout.getChildren();
-		JSONArray childLayoutsJSONArray = null;
-		boolean includeChildren = true;
-
-		if (!childLayouts.isEmpty()) {
-			childLayoutsJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (Layout childLayout : childLayouts) {
-				if (!populateLayoutsJSON(
-						childLayoutsJSONArray, childLayout,
-						selectedLayoutIds)) {
-
-					includeChildren = false;
-				}
-			}
-		}
-
-		boolean checked = ArrayUtil.contains(
-			selectedLayoutIds, layout.getLayoutId());
-
-		if (checked) {
-			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
-
-			layoutJSONObject.put("includeChildren", includeChildren);
-			layoutJSONObject.put("plid", layout.getPlid());
-
-			layoutsJSONArray.put(layoutJSONObject);
-		}
-
-		if (checked && includeChildren) {
-			return true;
-		}
-
-		if (childLayoutsJSONArray != null) {
-
-			// We want a 1 level array and not an array of arrays
-
-			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
-				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
-			}
-		}
-
-		return false;
-	}
-
 	protected void deleteTimestampParameters(StringBuilder sb, int beginPos) {
 		beginPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
 
@@ -1789,6 +1740,55 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return new CurrentUserIdStrategy(user);
+	}
+
+	protected boolean populateLayoutsJSON(
+			JSONArray layoutsJSONArray, Layout layout, long[] selectedLayoutIds)
+		throws SystemException {
+
+		List<Layout> childLayouts = layout.getChildren();
+		JSONArray childLayoutsJSONArray = null;
+		boolean includeChildren = true;
+
+		if (!childLayouts.isEmpty()) {
+			childLayoutsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (Layout childLayout : childLayouts) {
+				if (!populateLayoutsJSON(
+						childLayoutsJSONArray, childLayout,
+						selectedLayoutIds)) {
+
+					includeChildren = false;
+				}
+			}
+		}
+
+		boolean checked = ArrayUtil.contains(
+			selectedLayoutIds, layout.getLayoutId());
+
+		if (checked) {
+			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
+
+			layoutJSONObject.put("includeChildren", includeChildren);
+			layoutJSONObject.put("plid", layout.getPlid());
+
+			layoutsJSONArray.put(layoutJSONObject);
+		}
+
+		if (checked && includeChildren) {
+			return true;
+		}
+
+		if (childLayoutsJSONArray != null) {
+
+			// We want a 1 level array and not an array of arrays
+
+			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
+				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
+			}
+		}
+
+		return false;
 	}
 
 	protected String replaceExportHostname(
