@@ -193,6 +193,9 @@ public interface LiferaySelenium extends Selenium {
 
 	public void saveScreenshot() throws Exception;
 
+	public void saveScreenshotBeforeAction(boolean actionFailed)
+		throws Exception;
+
 	public void saveScreenshotAndSource() throws Exception;
 
 	public void scrollWebElementIntoView(String locator) throws Exception;
@@ -261,8 +264,6 @@ public interface LiferaySelenium extends Selenium {
 	public void startLogger();
 
 	public void stopLogger();
-
-	public void takeScreenshot(Boolean fail) throws Exception;
 
 	public void typeAceEditor(String locator, String value);
 
