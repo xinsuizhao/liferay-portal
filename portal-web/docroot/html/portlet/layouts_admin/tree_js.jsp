@@ -199,7 +199,7 @@ if (!selectableTree) {
 					var type = 'task';
 
 					<c:if test="<%= !selectableTree %>">
-						type: (total > 0) ? 'io' : 'node';
+						type = (total > 0) ? 'io' : 'node';
 					</c:if>
 
 					var newNode = {
