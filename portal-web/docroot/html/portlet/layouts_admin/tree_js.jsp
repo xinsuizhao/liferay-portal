@@ -250,6 +250,10 @@ if (!selectableTree) {
 							checked: true,
 						</c:if>
 
+						<c:if test="<%= saveState && selectableTree %>">
+							checked: (AArray.indexOf(TreeUtil.CHECKED_NODES, String(node.plid)) > -1) ? true : false,
+						</c:if>
+
 						cssClasses: {
 							pages: A.merge(TREE_CSS_CLASSES, cssIcons)
 						},
