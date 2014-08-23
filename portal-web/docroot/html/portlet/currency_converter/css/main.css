@@ -21,20 +21,16 @@
 			width: auto;
 		}
 
-		.control-label {
-			display: inline-block;
-		}
-
 		.control-group {
 			margin-bottom: 0;
 		}
 
 		.field-wrapper {
 			margin-bottom: 10px;
-		}
 
-		select {
-			width: auto;
+			select {
+				width: auto;
+			}
 		}
 
 		@include respond-to(phone) {

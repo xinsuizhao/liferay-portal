@@ -80,9 +80,9 @@ decimalFormat.setMinimumFractionDigits(2);
 			<c:choose>
 				<c:when test="<%= (symbols.length > 0) %>">
 					<table class="table table-bordered table-hover table-striped">
-					<thead class="table-columns">
+					<thead>
 					<tr>
-						<th class="table-header">
+						<th>
 							<liferay-ui:message key="currency" />
 						</th>
 
@@ -91,7 +91,7 @@ decimalFormat.setMinimumFractionDigits(2);
 							String symbol = symbols[i];
 						%>
 
-							<th class="table-header">
+							<th>
 								<liferay-ui:message key='<%= "currency." + symbol %>' /><br />
 								(<%= symbol %>)
 							</th>
@@ -103,7 +103,7 @@ decimalFormat.setMinimumFractionDigits(2);
 					</tr>
 					</thead>
 
-					<tbody class="table-data">
+					<tbody>
 
 						<%
 						for (int i = 0; i < symbols.length; i++) {
@@ -111,7 +111,7 @@ decimalFormat.setMinimumFractionDigits(2);
 						%>
 
 							<tr>
-								<td class="table-cell">
+								<td>
 									<%= symbol %>
 								</td>
 
@@ -124,7 +124,7 @@ decimalFormat.setMinimumFractionDigits(2);
 									if (currency != null) {
 								%>
 
-								<td class="table-cell">
+								<td>
 									<c:if test="<%= i != j %>">
 										<%= currency.getRate() %>
 									</c:if>
@@ -157,7 +157,7 @@ decimalFormat.setMinimumFractionDigits(2);
 		</c:when>
 		<c:otherwise>
 			<table class="conversion-data table table-bordered">
-			<tbody class="table-data">
+			<tbody>
 				<tr>
 					<td class="currency-data span4">
 						<span class="currency-header"><%= currency.getFromSymbol() %></span>
