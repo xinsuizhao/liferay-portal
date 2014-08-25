@@ -452,6 +452,14 @@ public class AssetSearcher extends BaseIndexer {
 	}
 
 	@Override
+	protected void postProcessFullQuery(
+			BooleanQuery fullQuery, SearchContext searchContext)
+		throws Exception {
+
+		fullQuery.addRequiredTerm("visible", true);
+	}
+
+	@Override
 	protected void doDelete(Object obj) throws Exception {
 		throw new UnsupportedOperationException();
 	}
