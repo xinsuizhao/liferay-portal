@@ -26,9 +26,9 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Miguel Angelo Caldas Gallindo
  */
 @RunWith(Suite.class)
-@SuiteClasses( {
-	DDMStructureImplTest.class, DDMXMLImplTest.class, DDMXSDImplTest.class
-})
+@SuiteClasses(
+	{
+		DDMStructureImplTest.class, DDMXMLImplTest.class, DDMXSDImplTest.class
+	})
 public class DDMTestSuite {
-
 }
