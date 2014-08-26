@@ -5346,7 +5346,7 @@ public class PortalImpl implements Portal {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(url.substring(0, x));
-			sb.append(_JSESSIONID);
+			sb.append(JSESSIONID);
 			sb.append(sessionId);
 			sb.append(url.substring(x));
 
@@ -5370,7 +5370,7 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		sb.append(_JSESSIONID);
+		sb.append(JSESSIONID);
 		sb.append(sessionId);
 
 		return sb.toString();
@@ -7974,8 +7974,6 @@ public class PortalImpl implements Portal {
 	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
-
-	private static final String _JSESSIONID = ";jsessionid=";
 
 	private static final String _LOCALHOST = "localhost";
 
