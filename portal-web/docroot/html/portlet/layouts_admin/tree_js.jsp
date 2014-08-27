@@ -246,13 +246,14 @@ if (!selectableTree) {
 
 						alwaysShowHitArea: hasChildren,
 
-						<c:if test="<%= !saveState && defaultStateChecked %>">
-							checked: true,
-						</c:if>
-
-						<c:if test="<%= saveState && selectableTree %>">
-							checked: (AArray.indexOf(TreeUtil.CHECKED_NODES, String(node.plid)) > -1) ? true : false,
-						</c:if>
+						<c:choose>
+							<c:when test="<%= !saveState && defaultStateChecked %>">
+								checked: true,
+							</c:when>
+							<c:when test="<%= saveState && selectableTree %>">
+								checked: (AArray.indexOf(TreeUtil.CHECKED_NODES, String(node.plid)) > -1) ? true : false,
+							</c:when>
+						</c:choose>
 
 						cssClasses: {
 							pages: A.merge(TREE_CSS_CLASSES, cssIcons)
