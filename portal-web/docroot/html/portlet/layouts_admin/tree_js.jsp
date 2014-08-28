@@ -150,6 +150,20 @@ if (!selectableTree) {
 			return '<a class="' + className + '" data-uuid="' + Util.escapeHTML(data.uuid) + '" href="' + href + '" id="' + Util.escapeHTML(data.id) + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
+		displayNotice: function(message, type, timeout, useAnimation) {
+			new Liferay.Notice(
+				{
+					closeText: false,
+					content: message + '<button type="button" class="close">&times;</button>',
+					noticeClass: 'hide',
+					timeout: timeout || 10000,
+					toggleText: false,
+					type: type || 'warning',
+					useAnimation: Lang.isValue(useAnimation) ? useAnimation : true
+				}
+			).show();
+		},
+
 		extractGroupId: function(node) {
 			return node.get('id').match(/groupId_(\d+)/)[1];
 		},
@@ -396,6 +410,46 @@ if (!selectableTree) {
 			AArray.each(node.get(STR_CHILDREN), TreeUtil.restoreCheckedNode);
 		},
 
+		restoreNodePosition: function(response) {
+			TreeUtil.displayNotice(response.message, 'warning', 10000, true);
+
+			var nodeId = TreeUtil.createListItemId(response.groupId, response.layoutId, response.plid);
+			var parentNodeId = TreeUtil.createListItemId(response.groupId, response.originalParentLayoutId, response.originalParentPlid);
+
+			var action = 'append';
+
+			var index = response.originalPriority;
+
+			var node = treeview.getNodeById(nodeId);
+			var parentNode = treeview.getNodeById(parentNodeId);
+
+			var sibling;
+
+			if (index > 0) {
+				if (index === parentNode.childrenLength) {
+					action = 'append';
+				}
+				else {
+					var siblingIndex = index;
+
+					if (node.get('parentNode').get('id') !== parentNodeId) {
+						siblingIndex -= 1;
+					}
+
+					sibling = parentNode.item(siblingIndex);
+
+					action = 'after';
+				}
+			}
+
+			if (sibling) {
+				treeview.insert(node, sibling, action);
+			}
+			else {
+				parentNode.appendChild(node);
+			}
+		},
+
 		restoreSelectedNode: function(node) {
 			var plid = TreeUtil.extractPlid(node);
 
@@ -420,7 +474,23 @@ if (!selectableTree) {
 							p_l_id: themeDisplay.getPlid(),
 							p_p_id: '88'
 						}
-					)
+					),
+					dataType: 'JSON',
+					on: {
+						success: function(event, id, xhr) {
+							var response;
+
+							try {
+								response = A.JSON.parse(xhr.responseText);
+
+								if (response.status === Liferay.STATUS_CODE.BAD_REQUEST) {
+									TreeUtil.restoreNodePosition(response);
+								}
+							}
+							catch (e) {
+							}
+						}
+					}
 				}
 			);
 		},
