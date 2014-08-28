@@ -2737,6 +2737,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layout;
 	}
 
+	@Override
+	public Layout updateParentLayoutIdAndPriority(
+			long plid, long parentPlid, int priority)
+		throws PortalException, SystemException {
+
+		Layout layout = updateParentLayoutId(plid, parentPlid);
+
+		return updatePriority(layout, priority);
+	}
+
 	/**
 	 * Updates the priorities of the layouts.
 	 *
