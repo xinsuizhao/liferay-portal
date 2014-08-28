@@ -19,43 +19,55 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.util.transport.MulticastTransport;
 
 import java.lang.reflect.Field;
+
+/**
+ * @author Daniel Sanz
+ */
 public class LicenseValidationTransportUtil {
 
 	public static void stopMulticastTransportThread() {
 		try {
-			Class licenseManagerClass =
-				PortalClassLoaderUtil.getClassLoader().loadClass(
-					"com.liferay.portal.license.LicenseManager");
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			Class licenseManagerClass = classLoader.loadClass(
+				"com.liferay.portal.license.LicenseManager");
 
 			Field[] fields = licenseManagerClass.getDeclaredFields();
 
 			for (Field field : fields) {
-				if ("com.liferay.util.transport.MulticastTransport".equals(
-						field.getType().getName())) {
+				Class<?> type = field.getType();
 
-					field.setAccessible(true);
+				String typeName = type.getName();
 
-					try {
-						Object value = field.get(null);
-						MulticastTransport multicastTransport =
-							(MulticastTransport)value;
+				if (!typeName.equals(
+						"com.liferay.util.transport.MulticastTransport")) {
 
-						if (multicastTransport != null) {
-							multicastTransport.disconnect();
-						}
+					continue;
+				}
+
+				field.setAccessible(true);
+
+				try {
+					Object value = field.get(null);
+
+					MulticastTransport multicastTransport =
+						(MulticastTransport)value;
+
+					if (multicastTransport != null) {
+						multicastTransport.disconnect();
 					}
-					catch (IllegalAccessException iae) {
-						iae.printStackTrace();
-					}
-					finally {
-						field.setAccessible(false);
-					}
+				}
+				catch (IllegalAccessException iae) {
+					iae.printStackTrace();
+				}
+				finally {
+					field.setAccessible(false);
 				}
 			}
 		}
-		catch (ClassNotFoundException e) {
+		catch (ClassNotFoundException cnfe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e);
+				_log.debug(cnfe);
 			}
 		}
 	}
