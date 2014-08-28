@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2010 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,10 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.util.transport.MulticastTransport;
 
+import java.lang.reflect.Field;
 public class LicenseValidationTransportUtil {
+
 	public static void stopMulticastTransportThread() {
 		try {
 			Class licenseManagerClass =
@@ -28,7 +31,7 @@ public class LicenseValidationTransportUtil {
 
 			for (Field field : fields) {
 				if ("com.liferay.util.transport.MulticastTransport".equals(
-					field.getType().getName())) {
+						field.getType().getName())) {
 
 					field.setAccessible(true);
 
@@ -49,8 +52,15 @@ public class LicenseValidationTransportUtil {
 					}
 				}
 			}
-		}		catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e);
+			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LicenseValidationTransportUtil.class);
+
 }
