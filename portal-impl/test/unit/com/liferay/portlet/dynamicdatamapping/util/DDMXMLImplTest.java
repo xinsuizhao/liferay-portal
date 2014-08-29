@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
+import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,13 +31,39 @@ import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
- * @author Miguel Angelo Caldas Gallindo
  */
-public class DDMXMLImplTest extends BaseDDMTest {
+@PrepareForTest({DDMXMLUtil.class, SAXReaderUtil.class})
+@RunWith(PowerMockRunner.class)
+public class DDMXMLImplTest extends PowerMockito {
+
+	@Before
+	public void setUp() {
+		spy(SAXReaderUtil.class);
+
+		when(
+			SAXReaderUtil.getSAXReader()
+		).thenReturn(
+			_saxReader
+		);
+
+		spy(DDMXMLUtil.class);
+
+		when(
+			DDMXMLUtil.getDDMXML()
+		).thenReturn(
+			_ddmXML
+		);
+	}
 
 	@After
 	public void tearDown() {
@@ -145,5 +171,8 @@ public class DDMXMLImplTest extends BaseDDMTest {
 
 		Assert.assertFalse(expectedResult);
 	}
+
+	private DDMXMLImpl _ddmXML = new DDMXMLImpl();
+	private SAXReaderImpl _saxReader = new SAXReaderImpl();
 
 }
