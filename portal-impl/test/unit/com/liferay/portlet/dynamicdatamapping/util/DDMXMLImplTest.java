@@ -29,8 +29,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -39,10 +39,9 @@ import org.junit.Test;
  */
 public class DDMXMLImplTest extends BaseDDMTest {
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	@After
+	public void tearDown() {
+		verifyStatic();
 	}
 
 	@Test
@@ -127,7 +126,7 @@ public class DDMXMLImplTest extends BaseDDMTest {
 
 			String rootXML = rootElement.asXML();
 
-			structureXML = _ddmXML.updateXMLDefaultLocale(
+			structureXML = DDMXMLUtil.updateXMLDefaultLocale(
 				rootXML, contentDefaultLocale, availableDefaultLocale);
 
 			Document updatedXMLDocument = SAXReaderUtil.read(structureXML);
@@ -146,7 +145,5 @@ public class DDMXMLImplTest extends BaseDDMTest {
 
 		Assert.assertFalse(expectedResult);
 	}
-
-	private DDMXML _ddmXML = new DDMXMLImpl();
 
 }
