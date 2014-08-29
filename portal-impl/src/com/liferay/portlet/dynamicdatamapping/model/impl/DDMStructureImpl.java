@@ -466,7 +466,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		boolean hasField = fieldsMap.containsKey(fieldName);
 
-		if (!hasField && (getParentStructureId() > 0)) {
+		while (!hasField && (getParentStructureId() > 0)) {
 			DDMStructure parentStructure =
 				DDMStructureLocalServiceUtil.getStructure(
 					getParentStructureId());
