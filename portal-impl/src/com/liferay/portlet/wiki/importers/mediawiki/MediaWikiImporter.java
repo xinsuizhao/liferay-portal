@@ -526,7 +526,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 				try {
 					assetTag = AssetTagLocalServiceUtil.getTag(
-						node.getCompanyId(), categoryName);
+						node.getGroupId(), categoryName);
 				}
 				catch (NoSuchTagException nste) {
 					ServiceContext serviceContext = new ServiceContext();
