@@ -5,8 +5,9 @@
 	.diagram-builder-drop-container {
 		overflow: auto;
 
-		.field-input-text, .field-textarea {
+		.field-input-text, .field-textarea, .lfr-ddm-text-html {
 			box-sizing: border-box;
+			display: block;
 		}
 	}
 
