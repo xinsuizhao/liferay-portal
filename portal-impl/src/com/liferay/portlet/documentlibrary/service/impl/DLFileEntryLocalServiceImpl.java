@@ -2428,7 +2428,8 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersion;
 	}
 
-	protected void validateFile(
+	@Override
+	public void validateFile(
 			long groupId, long folderId, long fileEntryId, String title,
 			String extension)
 		throws PortalException, SystemException {
