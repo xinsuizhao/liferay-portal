@@ -102,7 +102,7 @@
 			<elseif>
 				<equals arg1="${kfProcessFieldData}" arg2="false" />
 				<then>
-					<execute action="PGKaleoformsSubmitnew#check" locator-key1="NEW_PROCESS_FIELDS_BOOLEAN" />
+					<execute action="PGKaleoformsSubmitnew#uncheck" locator-key1="NEW_PROCESS_FIELDS_BOOLEAN" />
 				</then>
 			</elseif>
 		</if>
