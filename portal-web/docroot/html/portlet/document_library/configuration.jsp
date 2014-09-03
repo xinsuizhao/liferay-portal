@@ -220,7 +220,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 			<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
-				<portlet:param name="ignoreRootFolder" value="true" />
+				<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 			</liferay-portlet:renderURL>
 
 			<aui:script use="aui-base">
