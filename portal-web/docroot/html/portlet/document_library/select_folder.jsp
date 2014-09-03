@@ -70,6 +70,7 @@ if (folder != null) {
 
 	portletURL.setParameter("struts_action", "/document_library/select_folder");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
+	portletURL.setParameter("ignoreRootFolder", StringPool.TRUE);
 	%>
 
 	<liferay-ui:search-container
