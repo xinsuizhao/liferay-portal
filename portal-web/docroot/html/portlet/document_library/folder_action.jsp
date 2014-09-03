@@ -218,9 +218,9 @@ String iconMenuId = null;
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="struts_action" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="ignoreRootFolder" value="true" />
-							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon
@@ -272,9 +272,9 @@ String iconMenuId = null;
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="struts_action" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon
