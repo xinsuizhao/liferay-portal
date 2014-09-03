@@ -206,7 +206,14 @@ public class DLImpl implements DL {
 			Folder folder, HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
 
-		long defaultFolderId = getDefaultFolderId(request);
+		long defaultFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		boolean ignoreRootFolder = ParamUtil.getBoolean(
+			request, "ignoreRootFolder");
+
+		if (!ignoreRootFolder) {
+			defaultFolderId = getDefaultFolderId(request);
+		}
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
@@ -277,6 +284,9 @@ public class DLImpl implements DL {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 
+		boolean ignoreRootFolder = ParamUtil.getBoolean(
+			request, "ignoreRootFolder");
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (strutsAction.equals("/document_library/select_file_entry") ||
@@ -291,6 +301,8 @@ public class DLImpl implements DL {
 
 			portletURL.setParameter("struts_action", strutsAction);
 			portletURL.setParameter("groupId", String.valueOf(groupId));
+			portletURL.setParameter(
+				"ignoreRootFolder", String.valueOf(ignoreRootFolder));
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
