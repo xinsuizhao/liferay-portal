@@ -779,7 +779,19 @@ public class PortalImpl implements Portal {
 			domain = domain.substring(0, pos);
 		}
 
-		if (isValidVirtualHost(domain) || isValidVirtualHostname(domain)) {
+		boolean isValidVirtualHost = false;
+
+		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
+				StringUtil.wildcardMatches(
+					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, false)) {
+
+				isValidVirtualHost = true;
+			}
+		}
+
+		if (isValidVirtualHost || isValidVirtualHostname(domain)) {
 			return url;
 		}
 
