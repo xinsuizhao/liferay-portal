@@ -32,6 +32,35 @@
 		</if>
 	</command>
 
+	<command name="logoutAndLogin">
+		<execute action="Home#open" locator1="http://www.gmail.com" />
+		<execute action="Home#pause" locator1="3000" />
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_SIGN_OUT" />
+
+		<if>
+			<condition action="Gmail#isElementPresent" locator-key1="SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
+			<then>
+				<execute action="Gmail#assertClick" locator-key1="SIGN_IN_WITH_DIFFERENT_ACCOUNT" value1="Sign in with a different account" />
+				<execute action="Gmail#assertClick" locator-key1="ADD_ACCOUNT_BUTTON" value1="Add account" />
+			</then>
+			<elseif>
+				<condition action="Gmail#isElementPresent" locator-key1="ADD_ACCOUNT_BUTTON" />
+				<then>
+					<execute action="Gmail#assertClick" locator-key1="ADD_ACCOUNT_BUTTON" value1="Add account" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="Gmail#type" locator-key1="LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+		<execute action="Gmail#type" locator-key1="LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+		<execute action="Gmail#check" locator-key1="LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+		<execute action="Gmail#click" locator-key1="LOGIN_SIGN_IN_BUTTON" />
+		<execute action="Gmail#pause" locator1="5000" />
+	</command>
+
 	<command name="tearDown">
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
