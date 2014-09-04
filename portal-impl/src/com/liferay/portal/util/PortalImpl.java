@@ -7527,31 +7527,32 @@ public class PortalImpl implements Portal {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		if (useGroupVirtualHostName(
-				group, privateLayoutSet, themeDisplay, canonicalURL)) {
+		boolean useGroupVirtualHostName = false;
 
-			String virtualHostname = layoutSet.getVirtualHostname();
+		if (canonicalURL) {
+			useGroupVirtualHostName = true;
+		}
 
-			if (Validator.isNull(virtualHostname) &&
-				Validator.isNotNull(
-					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
-				!layoutSet.isPrivateLayout()) {
+		if (isValidVirtualHost(themeDisplay.getServerName())) {
+			useGroupVirtualHostName = false;
+		}
 
-				try {
-					Group defaultGroup = GroupLocalServiceUtil.getGroup(
-						themeDisplay.getCompanyId(),
-						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+		long refererPlid = themeDisplay.getRefererPlid();
 
-					if (layoutSet.getGroupId() == defaultGroup.getGroupId()) {
-						Company company = themeDisplay.getCompany();
+		if (refererPlid > 0) {
+			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
+				refererPlid);
 
-						virtualHostname = company.getVirtualHostname();
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+			if ((refererLayout != null) &&
+				((refererLayout.getGroupId() != group.getGroupId()) ||
+				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
+
+				useGroupVirtualHostName = false;
 			}
+		}
+
+		if (useGroupVirtualHostName) {
+			String virtualHostname = layoutSet.getVirtualHostname();
 
 			String portalDomain = HttpUtil.getDomain(portalURL);
 
@@ -7937,31 +7938,6 @@ public class PortalImpl implements Portal {
 		themeDisplay.setI18nLanguageId(i18nLanguageId);
 		themeDisplay.setI18nPath(i18nPath);
 		themeDisplay.setLocale(locale);
-	}
-
-	protected boolean useGroupVirtualHostName(
-		Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
-		boolean canonicalURL) {
-
-		if (!canonicalURL || isValidVirtualHost(themeDisplay.getServerName())) {
-			return false;
-		}
-
-		long refererPlid = themeDisplay.getRefererPlid();
-
-		if (refererPlid > 0) {
-			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
-				refererPlid);
-
-			if ((refererLayout != null) &&
-				((refererLayout.getGroupId() != group.getGroupId()) ||
-				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
