@@ -134,7 +134,7 @@
 			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
-				<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+				<execute action="CPSitepages#assertClickNoError" locator-key1="TOOLBAR_DELETE" value1="Delete" />
 
 				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete the selected page?" />
 
@@ -150,7 +150,7 @@
 			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
 			<then>
 				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
-				<execute action="Home#click" locator-key1="PAGE_DELETE" />
+				<execute action="Home#clickNoError" locator-key1="PAGE_DELETE" />
 				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
 				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE" />
 			</then>

@@ -48,13 +48,13 @@
 			<elseif>
 				<equals arg1="${remoteStaging}" arg2="true" />
 				<then>
-					<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
+					<execute action="CPSitesEdit#assertClickNoError" locator-key1="MENU_SAVE" value1="Save" />
 					<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate remote staging for ${siteName}?" />
 					<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				</then>
 			</elseif>
 			<else>
-				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
+				<execute action="CPSitesEdit#assertClickNoError" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate local staging for ${siteName}?" />
 				<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
@@ -177,7 +177,7 @@
 			<then>
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 				<execute action="CPSitesEdit#check" locator-key1="STAGING_NONE" />
-				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
+				<execute action="CPSitesEdit#assertClickNoError" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate staging for ${siteName}?" />
 				<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
@@ -263,7 +263,7 @@
 		<var name="key_sitePagesVariationMergeName" value="${sitePagesVariationMergeName}" />
 
 		<execute action="PGStagingManagesitepagesvariations#assertTextEquals" locator-key1="MERGE_SITE_PAGES_VARIATION_TABLE_BRANCH" value1="${sitePagesVariationMergeName}" />
-		<execute action="PGStagingManagesitepagesvariations#assertClick" locator-key1="MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK" value1="Select" />
+		<execute action="PGStagingManagesitepagesvariations#assertClickNoError" locator-key1="MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK" value1="Select" />
 		<execute action="PGStagingManagesitepagesvariations#confirm" locator-key1="MERGE_SITE_PAGES_VARIATION_TABLE_CONFIRMATION" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
 		<execute action="PGStagingManagesitepagesvariations#selectFrameTop" value1="relative=top" />
 		<execute action="PGStagingManagesitepagesvariations#selectFrame" locator-key1="MANAGE_SITE_PAGES_VARIATIONS_IFRAME" />
@@ -371,7 +371,7 @@
 			</then>
 		</if>
 
-		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGStagingPublishtolivenow#assertClickNoError" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGStagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
 		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
@@ -388,7 +388,7 @@
 			</then>
 		</if>
 
-		<execute action="PGStaging#click" locator-key1="STAGING_MENU_REDO_BUTTON" />
+		<execute action="PGStaging#clickNoError" locator-key1="STAGING_MENU_REDO_BUTTON" />
 		<execute action="PGStaging#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to redo your last changes?" />
 	</command>
 
@@ -553,7 +553,7 @@
 			</then>
 		</if>
 
-		<execute action="PGStaging#click" locator-key1="STAGING_MENU_UNDO_BUTTON" />
+		<execute action="PGStaging#clickNoError" locator-key1="STAGING_MENU_UNDO_BUTTON" />
 		<execute action="PGStaging#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to undo your last changes?" />
 	</command>
 
