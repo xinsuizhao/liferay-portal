@@ -19,6 +19,12 @@
 		</case>
 	</command>
 
+	<command name="selectNoError">
+		<case locator-key1="FORMAT_DROPDOWN">
+			<execute function="SelectNoError#pauseSelect" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="BODY_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />
