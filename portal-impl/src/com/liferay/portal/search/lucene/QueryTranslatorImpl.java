@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.QueryTranslator;
 import com.liferay.portal.kernel.search.StringQueryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
@@ -114,6 +115,10 @@ public class QueryTranslatorImpl implements QueryTranslator {
 
 			try {
 				String text = term.text();
+
+				if (Validator.equals(term.field(), "treePath")) {
+					text = text.replaceAll("/", "\\\\/");
+				}
 
 				if (text.matches("^\\s*\\*.*(?m)")) {
 					text = text.replaceFirst("\\*", StringPool.BLANK);
