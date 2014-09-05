@@ -82,6 +82,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 				if (fields.contains(name)) {
 					Field field = fields.get(name);
 
+					if (field.isPrivate()) {
+						continue;
+					}
+
 					value = field.getRenderedValue(getLocale());
 				}
 
