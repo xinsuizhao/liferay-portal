@@ -5,6 +5,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="click" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAt">
@@ -13,6 +17,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAtAndWait">
@@ -21,12 +29,20 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAtAndWaitCPNavigation">
 		<execute argument1="//script[contains(@src,'/html/js/liferay/message.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAtClickDockbar">
@@ -37,12 +53,20 @@
 		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAtNavigation">
 		<execute function="Click#clickAtNonLiferayNavigation" />
 
 		<execute argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" selenium="waitForElementPresent" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAtNonLiferayNavigation">
@@ -64,6 +88,10 @@
 		<execute function="Click#clickAt" />
 
 		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickAtSidebarClickAt">
@@ -76,6 +104,10 @@
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickWaitForInlineCKEditor">
@@ -87,6 +119,10 @@
 		</if>
 
 		<execute function="Click#click" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="clickWaitForInlineCKEditorNoMouseOver">
@@ -108,6 +144,10 @@
 		<execute selenium="makeVisible" />
 
 		<execute selenium="clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="partialTextClickAt">
@@ -116,6 +156,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="partialTextClickAtAndWait">
@@ -124,6 +168,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="pauseClickAt">
@@ -132,24 +180,40 @@
 		<execute selenium="mouseOver" />
 
 		<execute function="Click#clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="pauseMakeVisibleClickAt">
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#makeVisibleClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="pauseTextClickAt">
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#textClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="pauseTextClickAtAndWait">
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#textClickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="textClick">
@@ -158,6 +222,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="click" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="textClickAndWait">
@@ -166,6 +234,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="textClickAt">
@@ -174,6 +246,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="textClickAtAndWait">
@@ -182,12 +258,20 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="textClickAtAndWaitCKEditor">
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="Click#textClickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="textClickAtClickDockbar">
@@ -196,6 +280,10 @@
 		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#textClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="valueClickAt">
@@ -204,6 +292,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="valueClickAtAndWait">
@@ -212,11 +304,19 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="valueClickAtAndWaitCKEditor">
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="Click#valueClickAtAndWait" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 </definition>
