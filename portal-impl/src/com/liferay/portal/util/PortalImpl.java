@@ -779,7 +779,9 @@ public class PortalImpl implements Portal {
 			domain = domain.substring(0, pos);
 		}
 
-		boolean isValidVirtualHost = false;
+		if (isValidVirtualHostname(domain)) {
+			return url;
+		}
 
 		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
 			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
@@ -787,12 +789,8 @@ public class PortalImpl implements Portal {
 					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
 					CharPool.PERCENT, false)) {
 
-				isValidVirtualHost = true;
+				return url;
 			}
-		}
-
-		if (isValidVirtualHost || isValidVirtualHostname(domain)) {
-			return url;
 		}
 
 		try {
