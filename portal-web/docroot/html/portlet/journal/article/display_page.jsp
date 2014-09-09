@@ -281,7 +281,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 					tabView.render();
 
 					tabView.after(
-						'activeTabChange',
+						'selectionChange',
 						function() {
 							displayPageMessage('');
 
