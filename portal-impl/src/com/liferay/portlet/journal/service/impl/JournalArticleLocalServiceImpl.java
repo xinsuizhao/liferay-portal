@@ -6133,51 +6133,6 @@ public class JournalArticleLocalServiceImpl
 		return classTypeId;
 	}
 
-	protected Date[] getDateInterval(
-			long groupId, String articleId, Date earliestDisplayDate,
-			Date latestExpirationDate)
-		throws SystemException {
-
-		Date[] dateInterval = new Date[2];
-
-		List<JournalArticle> articles = journalArticlePersistence.findByG_A_ST(
-			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
-
-		boolean expiringArticle = true;
-
-		if (latestExpirationDate == null) {
-			expiringArticle = false;
-		}
-
-		for (JournalArticle article : articles) {
-			if ((earliestDisplayDate == null) ||
-				((article.getDisplayDate() != null) &&
-				 earliestDisplayDate.after(article.getDisplayDate()))) {
-
-				earliestDisplayDate = article.getDisplayDate();
-			}
-
-			if (expiringArticle &&
-				((latestExpirationDate == null) ||
-				 ((article.getExpirationDate() != null) &&
-				  latestExpirationDate.before(article.getExpirationDate())))) {
-
-				latestExpirationDate = article.getExpirationDate();
-			}
-
-			if (expiringArticle && (article.getExpirationDate() == null) &&
-				(latestExpirationDate != null)) {
-
-				expiringArticle = false;
-			}
-		}
-
-		dateInterval[0] = earliestDisplayDate;
-		dateInterval[1] = latestExpirationDate;
-
-		return dateInterval;
-	}
-
 	protected JournalArticle getFirstArticle(
 			long groupId, String articleId, int status,
 			OrderByComparator orderByComparator)
