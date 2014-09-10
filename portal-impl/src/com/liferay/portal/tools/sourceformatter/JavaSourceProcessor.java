@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -471,6 +472,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
+		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
+			getProperty("add.missing.deprecation.release.version"));
+		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
+			getProperty("allow.use.service.util.in.service.impl"));
 		_fitOnSingleLineExclusions = getPropertyList(
 			"fit.on.single.line.exludes");
 		_javaTermSortExclusions = getPropertyList("javaterm.sort.excludes");
@@ -638,7 +643,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource &&
-			mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
+			!_allowUseServiceUtilInServiceImpl &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
 			newContent.contains("ServiceUtil.")) {
@@ -908,7 +913,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkEmptyCollection(trimmedLine, fileName, lineCount);
 
 			if (trimmedLine.startsWith("* @deprecated") &&
-				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION)) {
+				_addMissingDeprecationReleaseVersion) {
 
 				if (!trimmedLine.startsWith("* @deprecated As of ")) {
 					line = StringUtil.replace(
@@ -1950,6 +1955,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
+	private boolean _addMissingDeprecationReleaseVersion;
+	private boolean _allowUseServiceUtilInServiceImpl;
 	private List<String> _fitOnSingleLineExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
