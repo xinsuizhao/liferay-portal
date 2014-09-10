@@ -586,6 +586,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Collections.sort(comparableRoutes);
 
+		String mainReleaseVersion = getMainReleaseVersion();
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("<?xml version=\"1.0\"?>\n");
