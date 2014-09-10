@@ -775,7 +775,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected List<String> getExclusions(String key) {
+	protected List<String> getPropertyList(String key) {
 		return ListUtil.fromString(
 			GetterUtil.getString(_properties.getProperty(key)),
 			StringPool.COMMA);
@@ -986,7 +986,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected boolean isRunsOutsidePortal(String absolutePath) {
 		if (_runOutsidePortalExclusions == null) {
-			_runOutsidePortalExclusions = getExclusions(
+			_runOutsidePortalExclusions = getPropertyList(
 				"run.outside.portal.excludes");
 		}
 
@@ -1403,7 +1403,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		excludesList.addAll(getExclusions("source.formatter.excludes"));
+		excludesList.addAll(getPropertyList("source.formatter.excludes"));
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
