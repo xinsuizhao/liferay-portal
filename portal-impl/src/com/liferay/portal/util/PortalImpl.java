@@ -995,9 +995,8 @@ public class PortalImpl implements Portal {
 			Layout layout)
 		throws PortalException, SystemException {
 
-		LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-		String virtualHostname = layoutSet.getVirtualHostname();
+		String virtualHostname = getVirtualHostname(
+			themeDisplay.getLayoutSet());
 
 		if (Validator.isNull(virtualHostname)) {
 			Company company = themeDisplay.getCompany();
@@ -3051,7 +3050,7 @@ public class PortalImpl implements Portal {
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		String virtualHostname = layoutSet.getVirtualHostname();
+		String virtualHostname = getVirtualHostname(layoutSet);
 
 		if (Validator.isNull(virtualHostname) &&
 			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
@@ -5657,38 +5656,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getValidPortalDomain(long companyId, String domain) {
-		if (Validator.isHostName(domain)) {
-			for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
-				if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
-					StringUtil.wildcardMatches(
-						domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
-						CharPool.PERCENT, false)) {
-
-					return domain;
-				}
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					domain, PropsValues.WEB_SERVER_HOST)) {
-
-				return PropsValues.WEB_SERVER_HOST;
-			}
-
-			if (isValidVirtualHostname(domain)) {
-				return domain;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					domain, getCDNHostHttp(companyId))) {
-
-				return domain;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					domain, getCDNHostHttps(companyId))) {
-
-				return domain;
-			}
+		if (isValidPortalDomain(companyId, domain)) {
+			return domain;
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -7567,7 +7536,7 @@ public class PortalImpl implements Portal {
 		}
 
 		if (useGroupVirtualHostName) {
-			String virtualHostname = layoutSet.getVirtualHostname();
+			String virtualHostname = getVirtualHostname(layoutSet);
 
 			String portalDomain = HttpUtil.getDomain(portalURL);
 
@@ -7781,6 +7750,33 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
+	public String getVirtualHostname(LayoutSet layoutSet) {
+		String virtualHostname = layoutSet.getVirtualHostname();
+
+		if (Validator.isNull(virtualHostname) &&
+			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
+			!layoutSet.isPrivateLayout()) {
+
+			try {
+				Group group = GroupLocalServiceUtil.getGroup(
+					layoutSet.getCompanyId(),
+					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+				if (layoutSet.getGroupId() == group.getGroupId()) {
+					Company company = CompanyLocalServiceUtil.getCompany(
+						layoutSet.getCompanyId());
+
+					virtualHostname = company.getVirtualHostname();
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return virtualHostname;
+	}
+
 	protected boolean isAlwaysAllowDoAsUser(HttpServletRequest request)
 		throws Exception {
 
@@ -7858,6 +7854,40 @@ public class PortalImpl implements Portal {
 				panelSelectedPortlets);
 
 			return ArrayUtil.contains(panelSelectedPortletsArray, portletId);
+		}
+
+		return false;
+	}
+
+	protected boolean isValidPortalDomain(long companyId, String domain) {
+		if (!Validator.isHostName(domain)) {
+			return false;
+		}
+
+		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
+				StringUtil.wildcardMatches(
+					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, false)) {
+
+				return true;
+			}
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
+			return true;
+		}
+
+		if (isValidVirtualHostname(domain)) {
+			return true;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId))) {
+			return true;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
+			return true;
 		}
 
 		return false;
