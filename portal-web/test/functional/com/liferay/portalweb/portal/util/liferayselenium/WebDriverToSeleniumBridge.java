@@ -1172,10 +1172,6 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseOver(String locator) {
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
-			return;
-		}
-
 		WebElement webElement = getWebElement(locator);
 
 		if (!webElement.isDisplayed()) {
