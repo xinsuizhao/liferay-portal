@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -553,6 +554,12 @@ public class EditArticleAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Updating article " +
+					MapUtil.toString(uploadPortletRequest.getParameterMap()));
+		}
+
 		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
@@ -647,14 +654,6 @@ public class EditArticleAction extends PortletAction {
 			uploadPortletRequest, "templateId");
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Updating Article");
-			_log.debug("Command: " + cmd);
-			_log.debug("ArticleId: " + articleId);
-			_log.debug("Version: " + version);
-			_log.debug("Content: " + content);
-		}
 
 		// The target page and the article must belong to the same group
 
