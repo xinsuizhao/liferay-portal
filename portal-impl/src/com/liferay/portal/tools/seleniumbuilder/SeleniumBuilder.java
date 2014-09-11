@@ -243,6 +243,24 @@ public class SeleniumBuilder {
 		return ArrayUtil.contains(ignoreCommandNames, commandName);
 	}
 
+	private boolean _isExtendedCommandName(
+		Element rootElement, String commandName) {
+
+		List<Element> commandRootElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "command");
+
+		for (Element commandRootElement : commandRootElements) {
+			String commandRootName = commandRootElement.attributeValue("name");
+
+			if (commandName.equals(commandRootName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * Gets the list of all test case method names, sorts them according to
 	 * <code>component-name</code>, and then writes these lists to
@@ -305,6 +323,10 @@ public class SeleniumBuilder {
 					String commandName = commandElement.attributeValue("name");
 
 					if (_isIgnoreCommandName(rootElement, commandName)) {
+						continue;
+					}
+
+					if (_isExtendedCommandName(rootElement, commandName)) {
 						continue;
 					}
 
