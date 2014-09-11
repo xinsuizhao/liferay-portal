@@ -1166,6 +1166,14 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry getFileEntryByTitle(
+			long groupId, long folderId, String title)
+		throws PortalException, SystemException {
+
+		return dlFileEntryPersistence.findByG_F_T(groupId, folderId, title);
+	}
+
+	@Override
 	public DLFileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException, SystemException {
 
