@@ -82,10 +82,10 @@ else {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-String webDavUrl = StringPool.BLANK;
+String webDavURL = StringPool.BLANK;
 
 if (portletDisplay.isWebDAVEnabled()) {
-	webDavUrl = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
+	webDavURL = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
 }
 
 boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
@@ -522,7 +522,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								}
 								%>
 
-								<aui:input helpMessage="<%= webDavHelpMessage %>" name="webdavUrl"  type="resource" value="<%= webDavUrl %>" />
+								<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
 							</div>
 						</c:if>
 					</div>
