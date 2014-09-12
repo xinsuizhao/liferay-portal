@@ -346,9 +346,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 			<table class="lfr-table">
 			<tr>
 				<td>
-					<aui:field-wrapper label="default-language">
-						<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-					</aui:field-wrapper>
+					<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 				</td>
 				<td>
 					<aui:select label="localized-language" name="languageId" onClick='<%= renderResponse.getNamespace() + "updateLanguage();" %>' showEmptyOption="<%= true %>">
@@ -602,9 +600,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<table class="lfr-table">
 				<tr>
 					<td class="lfr-label">
-						<aui:field-wrapper label="default-language">
-							<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-						</aui:field-wrapper>
+						<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 					</td>
 					<td class="lfr-label">
 						<aui:select label="localized-language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage();" %>' showEmptyOption="<%= true %>">

@@ -139,7 +139,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<aui:input label="trackbacks-to-send" name="trackbacks" />
 
 			<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
-				<aui:field-wrapper name="trackbacks-already-sent">
+				<aui:fieldset label="trackbacks-already-sent">
 
 					<%
 					for (String trackback : StringUtil.split(entry.getTrackbacks())) {
@@ -151,7 +151,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					}
 					%>
 
-				</aui:field-wrapper>
+				</aui:fieldset>
 			</c:if>
 		</c:if>
 

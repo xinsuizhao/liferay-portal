@@ -505,12 +505,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</span>
 
 						<div class="lfr-asset-field url-file-container hide">
-							<aui:field-wrapper name="url">
-								<liferay-ui:input-resource
-									id="url"
-									url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
-								/>
-							</aui:field-wrapper>
+							<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
 						</div>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
@@ -527,12 +522,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								}
 								%>
 
-								<aui:field-wrapper helpMessage="<%= webDavHelpMessage %>" name="webdavUrl">
-									<liferay-ui:input-resource
-										id="webdavUrl"
-										url="<%= webDavUrl %>"
-									/>
-								</aui:field-wrapper>
+								<aui:input helpMessage="<%= webDavHelpMessage %>" name="webdavUrl"  type="resource" value="<%= webDavUrl %>" />
 							</div>
 						</c:if>
 					</div>
