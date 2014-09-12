@@ -78,7 +78,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY + "--" %>' type="hidden" value="<%= adminEmailUserAddedNoPasswordBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-user-add definition-of-terms">
+			<div class="definition-of-terms email-user-add terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 			</div>
 		</aui:fieldset>
@@ -97,7 +97,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY + "--" %>' type="hidden" value="<%= adminEmailPasswordResetBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-verification definition-of-terms">
+			<div class="definition-of-terms email-verification terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 			</div>
 		</aui:fieldset>
@@ -116,7 +116,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY + "--" %>' type="hidden" value="<%= adminEmailPasswordSentBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-password-sent definition-of-terms">
+			<div class="definition-of-terms email-password-sent terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 			</div>
 		</aui:fieldset>
@@ -135,7 +135,7 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY + "--" %>' type="hidden" value="<%= adminEmailPasswordResetBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-password-sent definition-of-terms">
+			<div class="definition-of-terms email-password-sent terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 			</div>
 		</aui:fieldset>
@@ -144,23 +144,23 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 
 <aui:script>
 	function <portlet:namespace />initEmailUserAddedBodyEditor() {
-		return "<%= UnicodeFormatter.toString(adminEmailUserAddedBody) %>";
+		return '<%= UnicodeFormatter.toString(adminEmailUserAddedBody) %>';
 	}
 
 	function <portlet:namespace />initEmailUserAddedNoPasswordBodyEditor() {
-		return "<%= UnicodeFormatter.toString(adminEmailUserAddedNoPasswordBody) %>";
+		return '<%= UnicodeFormatter.toString(adminEmailUserAddedNoPasswordBody) %>';
 	}
 
 	function <portlet:namespace />initEmailPasswordSentBodyEditor() {
-		return "<%= UnicodeFormatter.toString(adminEmailPasswordSentBody) %>";
+		return '<%= UnicodeFormatter.toString(adminEmailPasswordSentBody) %>';
 	}
 
 	function <portlet:namespace />initEmailPasswordResetBodyEditor() {
-		return "<%= UnicodeFormatter.toString(adminEmailPasswordResetBody) %>";
+		return '<%= UnicodeFormatter.toString(adminEmailPasswordResetBody) %>';
 	}
 
 	function <portlet:namespace />initEmailVerificationBodyEditor() {
-		return "<%= UnicodeFormatter.toString(adminEmailVerificationBody) %>";
+		return '<%= UnicodeFormatter.toString(adminEmailVerificationBody) %>';
 	}
 </aui:script>
 
