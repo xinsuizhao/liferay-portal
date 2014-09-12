@@ -416,13 +416,13 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 
 						<tr>
 							<td>
-								<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" value="<%= name %>" />
+								<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" title="priority-name" value="<%= name %>" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" value="<%= image %>" />
+								<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" title="priority-image" value="<%= image %>" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" value="<%= value %>" />
+								<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" title="priority-value" value="<%= value %>" />
 							</td>
 						</tr>
 
@@ -452,13 +452,13 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 
 						<tr>
 							<td>
-								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="15" />
+								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="15" title="priority-name" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="40" />
+								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="40" title="priority-image" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="4" />
+								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="4" title="priority-value" />
 							</td>
 						</tr>
 
@@ -627,7 +627,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				</tr>
 				<tr>
 					<td>
-						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value='<%= StringUtil.merge(LocalizationUtil.getPreferencesValues(portletPreferences, "ranks", defaultLanguageId), StringPool.NEW_LINE) %>' />
+						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' title="ranks" type="textarea" value='<%= StringUtil.merge(LocalizationUtil.getPreferencesValues(portletPreferences, "ranks", defaultLanguageId), StringPool.NEW_LINE) %>' />
 					</td>
 					<td>
 
@@ -644,7 +644,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						}
 						%>
 
-						<aui:input cssClass="lfr-textarea-container" label="" name="ranks_temp" onChange='<%= renderResponse.getNamespace() + "onRanksChanged();" %>' type="textarea" />
+						<aui:input cssClass="lfr-textarea-container" label="" name="ranks_temp" onChange='<%= renderResponse.getNamespace() + "onRanksChanged();" %>' title="ranks" type="textarea" />
 					</td>
 				</tr>
 				</table>
