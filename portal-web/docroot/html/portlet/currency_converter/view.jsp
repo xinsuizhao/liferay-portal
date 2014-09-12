@@ -226,7 +226,7 @@ decimalFormat.setMinimumFractionDigits(2);
 			</table>
 
 			<div class="conversion-graph">
-				<img class="currency-graph" height="288" src="http://ichart.yahoo.com/z?s=<%= currency.getSymbol() %>=X&t=<%= HtmlUtil.escape(chartId) %>?" width="512" />
+				<img alt="" class="currency-graph" height="288" src="http://ichart.yahoo.com/z?s=<%= currency.getSymbol() %>=X&t=<%= HtmlUtil.escape(chartId) %>?" width="512" />
 			</div>
 		</c:otherwise>
 	</c:choose>
