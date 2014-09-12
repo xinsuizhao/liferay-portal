@@ -117,9 +117,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						</c:choose>
 					</div>
 
-					<label><liferay-ui:message key="callback-url" /></label>
-
-					<liferay-ui:input-resource url="<%= callbackURL %>" />
+					<aui:field-wrapper label="callback-url" name="callbackUrl">
+						<liferay-ui:input-resource id="callbackUrl" url="<%= callbackURL %>" />
+					</aui:field-wrapper>
 
 					<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-facebook", HtmlUtil.escape(portletDisplay.getTitle())) %>' name="facebookShowAddAppLink" type="checkbox" value="<%= facebookShowAddAppLink %>" />
 				</c:if>
@@ -134,9 +134,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 				</div>
 
-				<label><liferay-ui:message key="opensocial-gadget-url" /></label>
-
-				<liferay-ui:input-resource url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
+				<aui:field-wrapper label="opensocial-gadget-url" name="opensocialGadgetUrl">
+					<liferay-ui:input-resource id="opensocialGadgetUrl" url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
+				</aui:field-wrapper>
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-igoogle", HtmlUtil.escape(portletDisplay.getTitle())) %>' name="iGoogleShowAddAppLink" type="checkbox" value="<%= iGoogleShowAddAppLink %>" />
 			</c:when>
@@ -150,9 +150,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-netvibes-widget-url-to-create-a-netvibes-widget" />
 				</div>
 
-				<label><liferay-ui:message key="netvibes-widget-url" /></label>
-
-				<liferay-ui:input-resource url="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
+				<aui:field-wrapper label="netvibes-widget-url" name="netvibesWidgetUrl">
+					<liferay-ui:input-resource id="netvibesWidgetUrl" url="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
+				</aui:field-wrapper>
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-netvibes-pages", HtmlUtil.escape(portletDisplay.getTitle())) %>' name="netvibesShowAddAppLink" type="checkbox" value="<%= netvibesShowAddAppLink %>" />
 			</c:when>
