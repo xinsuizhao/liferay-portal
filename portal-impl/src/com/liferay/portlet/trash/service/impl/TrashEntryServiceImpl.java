@@ -320,15 +320,15 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
-
 		long scopeGroupId = 0;
 
 		if (serviceContext != null) {
 			scopeGroupId = serviceContext.getScopeGroupId();
 		}
-		
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
 		if (!trashHandler.hasTrashPermission(
 				permissionChecker, scopeGroupId, destinationContainerModelId,
 				TrashActionKeys.MOVE)) {
