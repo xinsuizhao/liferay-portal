@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -63,7 +64,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			sb.append(CharPool.COMMA);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		sb.append(LanguageUtil.get(getLocale(), "status"));
 		sb.append(StringPool.NEW_LINE);
 
 		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
@@ -93,7 +94,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 				sb.append(CharPool.COMMA);
 			}
 
-			sb.setIndex(sb.index() - 1);
+			sb.append(getStatusMessage(recordVersion.getStatus()));
 			sb.append(StringPool.NEW_LINE);
 		}
 

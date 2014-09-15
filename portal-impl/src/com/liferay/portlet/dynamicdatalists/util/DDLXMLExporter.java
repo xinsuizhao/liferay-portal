@@ -43,7 +43,7 @@ import java.util.Map;
 public class DDLXMLExporter extends BaseDDLExporter {
 
 	protected void addFieldElement(
-		Element fieldsElement, String label, Serializable value) {
+		Element fieldsElement, String label, Serializable value, int status) {
 
 		Element fieldElement = fieldsElement.addElement("field");
 
@@ -54,6 +54,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		Element valueElement = fieldElement.addElement("value");
 
 		valueElement.addText(String.valueOf(value));
+
+		Element statusElement = fieldElement.addElement("status");
+
+		statusElement.addText(getStatusMessage(status));
 	}
 
 	@Override
@@ -101,7 +105,8 @@ public class DDLXMLExporter extends BaseDDLExporter {
 					value = field.getRenderedValue(getLocale());
 				}
 
-				addFieldElement(fieldsElement, label, value);
+				addFieldElement(
+					fieldsElement, label, value, recordVersion.getStatus());
 			}
 		}
 
