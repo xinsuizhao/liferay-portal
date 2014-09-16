@@ -245,7 +245,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent1 Content" />
@@ -256,7 +256,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent2 Content" />
@@ -267,7 +267,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent3 Content" />
@@ -278,7 +278,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent4 Content" />
@@ -289,7 +289,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent5 Content" />
