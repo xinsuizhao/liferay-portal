@@ -50,6 +50,8 @@ public class PropsValues {
 
 	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
 
+	public static final String[] ADMIN_OBFUSCATED_PROPERTIES = PropsUtil.getArray(PropsKeys.ADMIN_OBFUSCATED_PROPERTIES);
+
 	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES));
 
 	public static final String[] ADMIN_RESERVED_SCREEN_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));

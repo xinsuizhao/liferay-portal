@@ -160,9 +160,7 @@ for (SearchResult searchResult : searchResults) {
 		</td>
 		<%@ include file="/html/portlet/portal_settings/test_ldap_users_user_name_entry.jspf" %>
 		<td>
-			<c:if test="<%= Validator.isNotNull(password) %>">
-				********
-			</c:if>
+			<%= Validator.isNotNull(password) ? "********" : StringPool.BLANK %>
 		</td>
 		<td>
 			<%= jobTitle %>

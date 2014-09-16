@@ -252,7 +252,14 @@ serverURL.setParameter("tabs3", tabs3);
 
 				for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 					String property = (String)entry.getKey();
-					String value = (String)entry.getValue();
+					String value = StringPool.BLANK;
+
+					if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
+						value = "********";
+					}
+					else {
+						value = (String)entry.getValue();
+					}
 
 					if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
 						filteredProperties.put(property, value);
