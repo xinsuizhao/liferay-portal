@@ -144,7 +144,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		long companyId = portlet.getCompanyId();
-		String name = portlet.getPortletId();
+		String name = portlet.getRootPortletId();
 
 		int resourcePermissionsCount =
 			resourcePermissionLocalService.getResourcePermissionsCount(
