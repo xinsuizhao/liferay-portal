@@ -83,7 +83,12 @@
 <!--FOLDER_WINDOW-->
 <tr>
 	<td>FOLDER_WINDOW_ID</td>
-	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
+	<td>//iframe[contains(@id,'selectFolder_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_BREADCRUMB_HOME</td>
+	<td>//ul[contains(@class,'breadcrumb')]/li/a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>
