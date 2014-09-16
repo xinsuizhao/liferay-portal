@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -1243,11 +1242,10 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
+		long controlPanelPlid = PortalUtil.getControlPanelPlid(
+			themeDisplay.getCompanyId());
 
-		Group group = layout.getGroup();
-
-		if (group.isControlPanel()) {
+		if (themeDisplay.getPlid() == controlPanelPlid) {
 			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
