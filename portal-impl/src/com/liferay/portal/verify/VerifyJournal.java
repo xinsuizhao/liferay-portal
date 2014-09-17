@@ -150,7 +150,8 @@ public class VerifyJournal extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select id_ from JournalArticle where structureId != ''");
+				"select id_ from JournalArticle where structureId != '' and " +
+					"content like '%document_library%'");
 
 			rs = ps.executeQuery();
 
