@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_SEGMENT_DETAIL_TITLE</td>
+	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -208,6 +213,11 @@
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
 	<td>//a[@id='_15_customFieldsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_DETAIL_TITLE</td>
+	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>
