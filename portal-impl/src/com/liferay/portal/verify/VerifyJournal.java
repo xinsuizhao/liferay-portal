@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -189,6 +190,22 @@ public class VerifyJournal extends VerifyProcess {
 					long folderId = GetterUtil.getLong(pathArray[3]);
 					String title = HttpUtil.decodeURL(
 						HtmlUtil.escape(pathArray[4]));
+
+					if (title.contains(StringPool.SLASH)) {
+						title = StringUtil.replace(
+							title, StringPool.SLASH, StringPool.BLANK);
+
+						StringBundler sb = new StringBundler(9);
+
+						for (int i = 0; i < 4; i++) {
+							sb.append(pathArray[i]);
+							sb.append(StringPool.SLASH);
+						}
+
+						sb.append(title);
+
+						path = sb.toString();
+					}
 
 					DLFileEntry dlFileEntry =
 						DLFileEntryLocalServiceUtil.fetchFileEntry(
