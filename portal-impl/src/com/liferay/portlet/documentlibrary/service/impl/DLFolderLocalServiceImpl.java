@@ -50,6 +50,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -84,7 +85,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Folder
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		parentFolderId = getParentFolderId(groupId, parentFolderId);
+		parentFolderId = getParentFolderId(
+			groupId, repositoryId, parentFolderId);
 		Date now = new Date();
 
 		validateFolder(groupId, parentFolderId, name);
@@ -1153,18 +1155,30 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return parentFolderId;
 	}
 
-	protected long getParentFolderId(long groupId, long parentFolderId)
-		throws SystemException {
+	protected long getParentFolderId(
+			long groupId, long repositoryId, long parentFolderId)
+		throws NoSuchFolderException, SystemException {
 
 		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
+			DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
 				parentFolderId);
 
-			if ((parentDLFolder == null) ||
-				(groupId != parentDLFolder.getGroupId())) {
-
-				parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			if (parentDLFolder.getGroupId() != groupId) {
+				throw new NoSuchFolderException(
+					String.format(
+						"No DLFolder exists with primary key %s in group %s",
+						parentFolderId, groupId));
 			}
+
+			if (parentDLFolder.getRepositoryId() != repositoryId) {
+				throw new NoSuchFolderException(
+					String.format(
+						"No DLFolder exists with primary key %s in " +
+							"repository %s",
+						parentFolderId, repositoryId));
+			}
+
+			return parentDLFolder.getFolderId();
 		}
 
 		return parentFolderId;
