@@ -217,21 +217,6 @@ public class InputTag extends BaseInputTag {
 			}
 		}
 
-		String forLabel = id;
-
-		if (Validator.equals(type,"assetTags")) {
-			forLabel = forLabel.concat("assetTagNames");
-		}
-		else if (Validator.equals(type, "checkbox")) {
-			forLabel = forLabel.concat("Checkbox");
-		}
-
-		String languageId = getLanguageId();
-
-		if (Validator.isNotNull(languageId)) {
-			forLabel = LocalizationUtil.getLocalizedName(forLabel, languageId);
-		}
-
 		String label = getLabel();
 
 		if (label == null) {
@@ -246,12 +231,21 @@ public class InputTag extends BaseInputTag {
 			title = TextFormatter.format(name, TextFormatter.K);
 		}
 
+		String forLabel = id;
+
+		if (Validator.equals(type,"assetTags")) {
+			forLabel = forLabel.concat("assetTagNames");
+		}
+		else if (Validator.equals(type, "checkbox")) {
+			forLabel = forLabel.concat("Checkbox");
+		}
+
 		_inputName = getName();
 
 		String languageId = getLanguageId();
 
 		if (Validator.isNotNull(languageId)) {
-			_forLabel = _forLabel + StringPool.UNDERLINE + languageId;
+			forLabel = forLabel + StringPool.UNDERLINE + languageId;
 		}
 
 		String baseType = null;
