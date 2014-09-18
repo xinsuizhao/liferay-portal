@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
@@ -68,7 +69,7 @@ public class UpgradeProcessUtil {
 				return languageId;
 			}
 			else {
-				return StringPool.BLANK;
+				return LocaleUtil.toLanguageId(LocaleUtil.US);
 			}
 		}
 		finally {
