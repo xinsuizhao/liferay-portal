@@ -285,8 +285,6 @@ public class SeleniumBuilder {
 		Map<String, Set<String>> testCaseMethodNameMap =
 			new TreeMap<String, Set<String>>();
 
-		Set<String> testCaseMethodNames = new TreeSet<String>();
-
 		Set<String> testCaseNames = _seleniumBuilderContext.getTestCaseNames();
 
 		for (String testCaseName : testCaseNames) {
@@ -332,8 +330,6 @@ public class SeleniumBuilder {
 						testCaseName + "TestCase#test" + commandName;
 
 					compontentTestCaseMethodNames.add(testCaseMethodName);
-
-					testCaseMethodNames.add(testCaseMethodName);
 				}
 			}
 
@@ -377,8 +373,6 @@ public class SeleniumBuilder {
 				else {
 					compontentTestCaseMethodNames.add(testCaseMethodName);
 				}
-
-				testCaseMethodNames.add(testCaseMethodName);
 			}
 
 			if (!compontentTestCaseMethodNames.isEmpty()) {
