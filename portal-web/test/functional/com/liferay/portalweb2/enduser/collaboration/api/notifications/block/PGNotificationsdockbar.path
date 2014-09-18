@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_CONTENT_GENERIC</td>
-	<td>//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body']</td>
+	<td>//li[contains(@class,'user-notification')]//div[@class='body-container']</td>
 	<td></td>
 </tr>
 </tbody>
