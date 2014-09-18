@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD</td>
-	<td>//div[@class='control-group' and contains(.,'Key Password')]/input[@type='password']</td>
+	<td>//div[@class='control-group' and contains(.,'Key Password')]/input[@type='password'] | //input[@id='_2_WAR_samlportlet_saml.keystore.credential.password[samlsp]']</td>
 	<td></td>
 </tr>
 <tr>
