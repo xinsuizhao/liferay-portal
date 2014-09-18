@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER</td>
-	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body with Password')]</td>
+	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body with Password')] | //div[@id='_130_emailNotifications']/div[2]//span[contains(.,'Body with Password')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER</td>
-	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body without Password')]</td>
+	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body without Password')] | //div[@id='_130_emailNotifications']/div[2]//span[contains(.,'Body without Password')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,7 +149,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER</td>
-	<td>xPath=(//div[@class='control-group field-wrapper']/label[contains(.,'Body')])[4]</td>
+	<td>xPath=(//div[@class='control-group field-wrapper']/label[contains(.,'Body')])[4] | //div[@id='_130_emailNotifications']/div[4]//span[contains(.,'Body')]</td>
 	<td></td>
 </tr>
 <tr>
