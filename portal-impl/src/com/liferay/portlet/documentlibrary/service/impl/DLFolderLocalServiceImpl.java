@@ -45,6 +45,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -1188,7 +1189,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		if ((parentDLFolder.getRepositoryId() != repositoryId) &&
 			(parentDLFolder.getRepositoryId() != groupId)) {
 
-			Repository repository = repositoryLocalService.getRepository(
+			Repository repository = RepositoryLocalServiceUtil.getRepository(
 				repositoryId);
 
 			if (repository.getGroupId() != parentDLFolder.getGroupId()) {
