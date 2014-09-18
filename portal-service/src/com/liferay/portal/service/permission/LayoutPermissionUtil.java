@@ -29,7 +29,7 @@ public class LayoutPermissionUtil {
 	public static void check(
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		getLayoutPermission().check(
 			permissionChecker, layout, checkViewableGroup, actionId);

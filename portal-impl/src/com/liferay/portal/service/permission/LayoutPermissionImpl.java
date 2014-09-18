@@ -51,7 +51,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 	public void check(
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (!contains(
 				permissionChecker, layout, checkViewableGroup, actionId)) {
