@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -1133,7 +1134,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId)
-		throws InvalidFolderException, NoSuchFolderException, SystemException {
+		throws PortalException, SystemException {
+
+		long groupId = dlFolder.getGroupId();
+		long repositoryId = dlFolder.getRepositoryId();
 
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
@@ -1148,18 +1152,26 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
 			parentFolderId);
 
-		if (dlFolder.getGroupId() != parentDLFolder.getGroupId()) {
+		if (parentDLFolder.getGroupId() != groupId) {
 			throw new NoSuchFolderException(
 				String.format(
 					"No DLFolder with primary key %s found on group %s",
 					parentFolderId, dlFolder.getGroupId()));
 		}
 
-		if (dlFolder.getRepositoryId() != parentDLFolder.getRepositoryId()) {
-			throw new NoSuchFolderException(
-				String.format(
-					"No DLFolder with primary key %s found on repository %s",
-					parentFolderId, dlFolder.getGroupId()));
+		if ((parentDLFolder.getRepositoryId() != repositoryId) &&
+			(parentDLFolder.getRepositoryId() != groupId)) {
+
+			Repository repository = repositoryLocalService.getRepository(
+				repositoryId);
+
+			if (repository.getGroupId() != parentDLFolder.getGroupId()) {
+				throw new NoSuchFolderException(
+					String.format(
+						"No DLFolder exists with primary key %s in " +
+							"repository %s",
+						parentFolderId, repositoryId));
+			}
 		}
 
 		List<Long> subfolderIds = new ArrayList<Long>();
@@ -1179,7 +1191,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	protected long getParentFolderId(
 			long groupId, long repositoryId, long parentFolderId)
-		throws NoSuchFolderException, SystemException {
+		throws PortalException, SystemException {
 
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
@@ -1195,12 +1207,19 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					parentFolderId, groupId));
 		}
 
-		if (parentDLFolder.getRepositoryId() != repositoryId) {
-			throw new NoSuchFolderException(
-				String.format(
-					"No DLFolder exists with primary key %s in " +
-						"repository %s",
-					parentFolderId, repositoryId));
+		if ((parentDLFolder.getRepositoryId() != repositoryId) &&
+			(parentDLFolder.getRepositoryId() != groupId)) {
+
+			Repository repository = repositoryLocalService.getRepository(
+				repositoryId);
+
+			if (repository.getGroupId() != parentDLFolder.getGroupId()) {
+				throw new NoSuchFolderException(
+					String.format(
+						"No DLFolder exists with primary key %s in " +
+							"repository %s",
+						parentFolderId, repositoryId));
+			}
 		}
 
 		return parentDLFolder.getFolderId();
