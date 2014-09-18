@@ -191,6 +191,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 
+		_repositoriesByRepositoryId.remove(repositoryId);
+		_localRepositoriesByRepositoryId.remove(repositoryId);
+
 		return repository;
 	}
 
