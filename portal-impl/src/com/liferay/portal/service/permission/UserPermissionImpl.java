@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 
 /**
@@ -102,7 +103,7 @@ public class UserPermissionImpl implements UserPermission {
 					 actionId.equals(ActionKeys.PERMISSIONS) ||
 					 actionId.equals(ActionKeys.UPDATE)) &&
 					!permissionChecker.isOmniadmin() &&
-					(PortalUtil.isOmniadmin(user) ||
+					(PortalImpl.isOmniadmin(user) ||
 					 (!permissionChecker.isCompanyAdmin() &&
 					  PortalUtil.isCompanyAdmin(user)))) {
 
