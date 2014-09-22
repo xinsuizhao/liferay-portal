@@ -285,7 +285,7 @@ public class MediaWikiImporter implements WikiImporter {
 		description = description.replaceAll(
 			_categoriesPattern.pattern(), StringPool.BLANK);
 
-		return normalize(description, 300);
+		return normalize(description, 255);
 	}
 
 	protected String normalizeTitle(String title) {
