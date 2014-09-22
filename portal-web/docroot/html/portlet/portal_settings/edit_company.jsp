@@ -67,8 +67,8 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 <aui:script>
 	function <portlet:namespace />saveCompany() {
-		document.<portlet:namespace />fm.method = "post";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
 
 		if (typeof saveEmails === 'function') {
 			<portlet:namespace />saveEmails();
