@@ -77,38 +77,6 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/portal_settings/edit_company" /></portlet:actionURL>");
 	}
 
-	function <portlet:namespace />saveEmails() {
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_USER_ADDED_BODY %>--'].value = window['<portlet:namespace />emailUserAddedBody'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY %>--'].value = window['<portlet:namespace />emailUserAddedNoPasswordBody'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY %>--'].value = window['<portlet:namespace />emailPasswordSentBody'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY %>--'].value = window['<portlet:namespace />emailPasswordResetBody'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY %>--'].value = window['<portlet:namespace />emailVerificationBody'].getHTML();
-		}
-		catch (e) {
-		}
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveLdap',
@@ -144,6 +112,38 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		},
 		['liferay-util-list-fields']
 	);
+
+	function <portlet:namespace />saveEmails() {
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_USER_ADDED_BODY %>--'].value = window['<portlet:namespace />emailUserAddedBody'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY %>--'].value = window['<portlet:namespace />emailUserAddedNoPasswordBody'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY %>--'].value = window['<portlet:namespace />emailPasswordSentBody'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY %>--'].value = window['<portlet:namespace />emailPasswordResetBody'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY %>--'].value = window['<portlet:namespace />emailVerificationBody'].getHTML();
+		}
+		catch (e) {
+		}
+	}
 </aui:script>
 
 <%!
