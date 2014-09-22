@@ -70,7 +70,9 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		document.<portlet:namespace />fm.method = "post";
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
 
-		<portlet:namespace />saveEmails();
+		if (typeof saveEmails === 'function') {
+			<portlet:namespace />saveEmails();
+		}
 
 		if (typeof saveLdap === 'function') {
 			<portlet:namespace />saveLdap();
