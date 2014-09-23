@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
@@ -43,8 +42,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
@@ -298,6 +295,7 @@ public class EditArticleAction extends PortletAction {
 					 e instanceof ArticleTypeException ||
 					 e instanceof ArticleVersionException ||
 					 e instanceof DuplicateArticleIdException ||
+					 e instanceof FileSizeException ||
 					 e instanceof LiferayFileItemException ||
 					 e instanceof StorageFieldRequiredException) {
 
@@ -308,26 +306,6 @@ public class EditArticleAction extends PortletAction {
 					 e instanceof LocaleException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else if (e instanceof FileSizeException) {
-				long fileMaxSize = PrefsPropsUtil.getLong(
-					PropsKeys.DL_FILE_MAX_SIZE);
-
-				if (fileMaxSize == 0) {
-					fileMaxSize = PrefsPropsUtil.getLong(
-						PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-				}
-
-				ThemeDisplay themeDisplay = (ThemeDisplay)
-					actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-				String errorMessage = themeDisplay.translate(
-						"please-enter-a-file-with-a-valid-file-size" +
-							"-no-larger-than-x",
-						TextFormatter.formatStorageSize(
-								fileMaxSize, themeDisplay.getLocale()));
-
-				SessionErrors.add(actionRequest, e.getClass(), errorMessage);
 			}
 			else {
 				throw e;
