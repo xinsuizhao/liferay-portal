@@ -223,7 +223,7 @@
 		'<portlet:namespace />saveLocales',
 		function() {
 			var locales = document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>;
-			
+
 			if (locales) {
 				locales.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
 			}
