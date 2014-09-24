@@ -1,6 +1,9 @@
 <definition>
 	<command name="viewNotification">
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+
+		<var name="key_notificationContent" value="${notificationContent}" />
+
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
 	</command>
 </definition>
