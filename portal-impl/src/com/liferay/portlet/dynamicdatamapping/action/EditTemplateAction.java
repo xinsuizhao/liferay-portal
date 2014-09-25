@@ -208,6 +208,8 @@ public class EditTemplateAction extends PortletAction {
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		String portletResourceNamespace = ParamUtil.getString(
+			actionRequest, "portletResourceNamespace");
 		String structureAvailableFields = ParamUtil.getString(
 			actionRequest, "structureAvailableFields");
 
@@ -227,6 +229,8 @@ public class EditTemplateAction extends PortletAction {
 			"classNameId", String.valueOf(classNameId), false);
 		portletURL.setParameter("classPK", String.valueOf(classPK), false);
 		portletURL.setParameter("type", template.getType(), false);
+		portletURL.setParameter(
+			"portletResourceNamespace", portletResourceNamespace, false);
 		portletURL.setParameter(
 			"structureAvailableFields", structureAvailableFields, false);
 		portletURL.setWindowState(actionRequest.getWindowState());
