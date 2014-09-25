@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>CURRENT_TITLE_FIELD</td>
-	<td>//div[@class='control-group field-wrapper']//input[@value='(None)']</td>
+	<td>//div[@class='control-group field-wrapper']//input[@value='(None)'] | //input[contains(@id,'currentTitle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>NEW_TITLE_FIELD</td>
-	<td>//div[@class='control-group']//input[@name='_36_newTitle']</td>
+	<td>//div[@class='control-group']//input[@name='_36_newTitle'] | //input[contains(@id,'newTitle')]</td>
 	<td></td>
 </tr>
 <tr>
