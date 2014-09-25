@@ -108,7 +108,7 @@
 				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 				<execute action="PGCalendar#assertClickNoError" locator-key1="MY_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
 				<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="PGCalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGCalendar#assertTextEquals" locator-key1="DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -120,7 +120,7 @@
 					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 					<execute action="PGCalendar#assertClickNoError" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
 					<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-					<execute action="PGCalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute action="PGCalendar#assertTextEquals" locator-key1="DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
 				</then>
 			</elseif>
 		</if>
@@ -405,7 +405,7 @@
 				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
 				<execute action="PGCalendar#assertClickNoError" locator-key1="MY_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
 				<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="PGCalendar#assertTextEquals" locator-key1="DELETED_CALENDAR_SUCCESS_MESSAGE" value1="├ù The calendar was deleted successfully." />
+				<execute action="PGCalendar#assertTextEquals" locator-key1="DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
 			</then>
 		</while>
 
@@ -415,7 +415,7 @@
 				<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
 				<execute action="PGCalendar#assertClickNoError" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
 				<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="PGCalendar#assertTextEquals" locator-key1="DELETED_CALENDAR_SUCCESS_MESSAGE" value1="├ù The calendar was deleted successfully." />
+				<execute action="PGCalendar#assertTextEquals" locator-key1="DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
 			</then>
 		</while>
 
