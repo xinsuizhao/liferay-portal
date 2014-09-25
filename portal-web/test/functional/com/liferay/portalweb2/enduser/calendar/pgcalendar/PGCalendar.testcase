@@ -1173,7 +1173,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45783" name="DeleteCalendarMyCalendars" priority="5">
+	<command name="DeleteCalendarMyCalendars" priority="5">
 		<var name="calendarName" value="Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
@@ -1231,7 +1231,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45783" name="EditCalendarCurrentSiteCalendars" priority="5">
+	<command name="EditCalendarCurrentSiteCalendars" priority="5">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarNameEdit" value="Site Calendar Name Edit" />
 		<var name="calendarType" value="Current Site Calendars" />
@@ -1482,7 +1482,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45783" name="EditCalendarMyCalendars" priority="5">
+	<command name="EditCalendarMyCalendars" priority="5">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarNameEdit" value="My Calendar Name Edit" />
 		<var name="calendarType" value="My Calendars" />
