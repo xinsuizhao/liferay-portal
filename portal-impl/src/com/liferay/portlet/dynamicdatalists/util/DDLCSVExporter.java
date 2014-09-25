@@ -58,6 +58,12 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		StringBundler sb = new StringBundler();
 
 		for (Map<String, String> fieldMap : fieldsMap.values()) {
+			String name = fieldMap.get(FieldConstants.NAME);
+
+			if (ddmStructure.isFieldPrivate(name)) {
+				continue;
+			}
+
 			String label = fieldMap.get(FieldConstants.LABEL);
 
 			sb.append(label);
