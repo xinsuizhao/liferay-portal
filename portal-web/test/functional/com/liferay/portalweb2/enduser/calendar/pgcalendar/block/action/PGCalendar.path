@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>DELETED_CALENDAR_SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]//span[@class='message-placeholder']</td>
 	<td></td>
 </tr>
 <tr>
