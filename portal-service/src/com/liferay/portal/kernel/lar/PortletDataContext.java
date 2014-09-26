@@ -124,6 +124,8 @@ public interface PortletDataContext extends Serializable {
 			String namespace)
 		throws PortalException, SystemException;
 
+	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps();
+
 	public void addComments(Class<?> clazz, long classPK)
 		throws SystemException;
 
