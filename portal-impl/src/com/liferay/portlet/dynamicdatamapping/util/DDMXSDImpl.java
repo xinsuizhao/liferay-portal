@@ -686,7 +686,6 @@ public class DDMXSDImpl implements DDMXSD {
 		return fieldContext;
 	}
 
-
 	protected int getFieldOffset(
 		String[] fieldsDisplayValues, String name, int index) {
 
