@@ -286,4 +286,14 @@ public class LDAPUtil {
 		}
 	}
 
+	public static void validateFilter(String filter, String filterPropertyName)
+		throws PortalException {
+
+		if (!isValidFilter(filter)) {
+			throw new LDAPFilterException(
+				"Invalid filter " + filter + " defined by " +
+					filterPropertyName);
+		}
+	}
+
 }
