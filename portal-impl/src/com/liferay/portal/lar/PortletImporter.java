@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -204,11 +205,16 @@ public class PortletImporter {
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
+		boolean indexReadOnly = SearchEngineUtil.isIndexReadOnly();
+
 		try {
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
+			SearchEngineUtil.setIndexReadOnly(true);
+
 			doImportPortletInfo(
-				userId, plid, groupId, portletId, parameterMap, file);
+				userId, plid, groupId, portletId, parameterMap, file,
+				indexReadOnly);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
@@ -216,6 +222,8 @@ public class PortletImporter {
 			CacheUtil.clearCache();
 			JournalContentUtil.clearCache();
 			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
 		}
 	}
 
@@ -340,7 +348,8 @@ public class PortletImporter {
 
 	protected void doImportPortletInfo(
 			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			Map<String, String[]> parameterMap, File file,
+			boolean indexReadOnly)
 		throws Exception {
 
 		boolean deletePortletData = MapUtil.getBoolean(
@@ -562,6 +571,10 @@ public class PortletImporter {
 		}
 
 		zipReader.close();
+
+		if (!indexReadOnly) {
+			ExportImportHelperUtil.reindex(portletDataContext, userId);
+		}
 	}
 
 	protected String getAssetCategoryName(

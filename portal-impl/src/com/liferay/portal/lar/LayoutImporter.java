@@ -41,8 +41,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -244,10 +243,16 @@ public class LayoutImporter {
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
+		boolean indexReadOnly = SearchEngineUtil.isIndexReadOnly();
+
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
-			doImportLayouts(userId, groupId, privateLayout, parameterMap, file);
+			SearchEngineUtil.setIndexReadOnly(true);
+
+			doImportLayouts(
+				userId, groupId, privateLayout, parameterMap, file,
+				indexReadOnly);
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
@@ -255,6 +260,8 @@ public class LayoutImporter {
 			CacheUtil.clearCache();
 			JournalContentUtil.clearCache();
 			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
 		}
 	}
 
@@ -319,7 +326,8 @@ public class LayoutImporter {
 
 	protected void doImportLayouts(
 			long userId, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+			Map<String, String[]> parameterMap, File file,
+			boolean indexReadOnly)
 		throws Exception {
 
 		boolean deleteMissingLayouts = MapUtil.getBoolean(
@@ -393,7 +401,7 @@ public class LayoutImporter {
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext =
+		final PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				companyId, groupId, parameterMap, strategy, zipReader);
 
@@ -821,15 +829,6 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 		}
 
-		if (importPermissions) {
-			if (userId > 0) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					User.class);
-
-				indexer.reindex(userId);
-			}
-		}
-
 		// Asset links
 
 		_portletImporter.readAssetLinks(portletDataContext);
@@ -931,6 +930,10 @@ public class LayoutImporter {
 		}
 
 		zipReader.close();
+
+		if (!indexReadOnly) {
+			ExportImportHelperUtil.reindex(portletDataContext, userId);
+		}
 	}
 
 	protected void importLayout(
