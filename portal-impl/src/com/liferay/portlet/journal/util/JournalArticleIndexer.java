@@ -15,9 +15,6 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -41,6 +38,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
@@ -59,7 +57,6 @@ import com.liferay.portlet.journal.service.persistence.JournalArticleActionableD
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -379,11 +376,19 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addDate("displayDate", article.getDisplayDate());
 
 		JournalArticle latestIndexableArticle =
-			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-				article.getResourcePrimKey());
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+					article.getResourcePrimKey(),
+					new int[] {
+						WorkflowConstants.STATUS_IN_TRASH,
+						WorkflowConstants.STATUS_APPROVED});
 
 		if ((latestIndexableArticle != null) &&
-			(article.getId() == latestIndexableArticle.getId())) {
+			(!latestIndexableArticle.isIndexable())) {
+
+			document.addKeyword("head", false);
+		}
+		else if ((latestIndexableArticle != null) &&
+				 (article.getId() == latestIndexableArticle.getId())) {
 
 			document.addKeyword("head", true);
 		}
@@ -459,9 +464,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		if (!article.isIndexable() ||
-			(PortalUtil.getClassNameId(DDMStructure.class) ==
-				article.getClassNameId())) {
+		if (PortalUtil.getClassNameId(DDMStructure.class) ==
+				article.getClassNameId()) {
 
 			Document document = getDocument(article);
 
@@ -684,14 +688,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property indexableProperty = PropertyFactoryUtil.forName(
-					"indexable");
-
-				dynamicQuery.add(indexableProperty.eq(true));
-			}
 
 			@Override
 			protected void performAction(Object object) throws PortalException {
