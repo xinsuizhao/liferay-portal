@@ -2598,14 +2598,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<String, List<ExpandoColumn>>();
-	private Element _exportDataRootElement;
+	private transient Element _exportDataRootElement;
 	private long _groupId;
-	private Element _importDataRootElement;
-	private Map<String, Lock> _locksMap = new HashMap<String, Lock>();
-	private ManifestSummary _manifestSummary = new ManifestSummary();
-	private Set<String> _missingReferences = new HashSet<String>();
-	private Element _missingReferencesElement;
-	private List<Layout> _newLayouts;
+	private transient Element _importDataRootElement;
+	private transient Map<String, Lock> _locksMap = new HashMap<String, Lock>();
+	private transient ManifestSummary _manifestSummary = new ManifestSummary();
+	private transient Set<String> _missingReferences = new HashSet<String>();
+	private transient Element _missingReferencesElement;
+	private transient List<Layout> _newLayouts;
 	private Map<String, Map<?, ?>> _newPrimaryKeysMaps =
 		new HashMap<String, Map<?, ?>>();
 	private Set<String> _notUniquePerLayout = new HashSet<String>();
@@ -2614,10 +2614,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Map<String, List<KeyValuePair>> _permissionsMap =
 		new HashMap<String, List<KeyValuePair>>();
 	private long _plid;
-	private PortletDataContextListener _portletDataContextListener;
+	private transient PortletDataContextListener _portletDataContextListener;
 	private Set<String> _primaryKeys = new HashSet<String>();
 	private boolean _privateLayout;
-	private Map<String, List<RatingsEntry>> _ratingsEntriesMap =
+	private transient Map<String, List<RatingsEntry>> _ratingsEntriesMap =
 		new HashMap<String, List<RatingsEntry>>();
 	private Set<String> _references = new HashSet<String>();
 	private Set<String> _scopedPrimaryKeys = new HashSet<String>();
@@ -2629,10 +2629,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _sourceGroupId;
 	private long _sourceUserPersonalSiteGroupId;
 	private Date _startDate;
-	private UserIdStrategy _userIdStrategy;
+	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
-	private XStream _xStream;
-	private ZipReader _zipReader;
-	private ZipWriter _zipWriter;
+	private transient XStream _xStream;
+	private transient ZipReader _zipReader;
+	private transient ZipWriter _zipWriter;
 
 }
