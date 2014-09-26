@@ -243,7 +243,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	@AdviseWith(
 		adviceClasses = {
 			EnableClusterLinkAdvice.class, InetAddressUtilExceptionAdvice.class,
-			JChannelExceptionAdvice.class
+			JChannelExceptionAdvice.class, EnableAutoDetectAdvice.class
 		}
 	)
 	@Test

@@ -76,6 +76,22 @@ public abstract class BaseClusterExecutorImplTestCase
 		"This is test method return value";
 
 	@Aspect
+	public static class EnableAutoDetectAdvice {
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues." +
+				"CLUSTER_LINK_AUTODETECT_ADDRESS)")
+		public Object enableAutoDetectAdvice(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(
+				new Object[] {"www.google.com:80"});
+		}
+
+	}
+
+	@Aspect
 	public static class EnableClusterExecutorDebugAdvice {
 
 		@Around(
