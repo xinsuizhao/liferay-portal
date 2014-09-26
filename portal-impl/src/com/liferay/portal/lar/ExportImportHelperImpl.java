@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.lar.backgroundtask.StagingIndexingBackgroundTaskExecutor;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -83,6 +84,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
@@ -91,6 +93,7 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.service.persistence.SystemEventActionableDynamicQuery;
@@ -121,6 +124,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.StringReader;
 
 import java.util.ArrayList;
@@ -148,6 +152,22 @@ import org.xml.sax.InputSource;
  * @author Julio Camarero
  */
 public class ExportImportHelperImpl implements ExportImportHelper {
+
+	@Override
+	public void reindex(PortletDataContext portletDataContext, long userId)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put("portletDataContext", portletDataContext);
+		taskContextMap.put("userId", userId);
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, portletDataContext.getGroupId(), StringPool.BLANK, null,
+			StagingIndexingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
+	}
 
 	@Override
 	public Calendar getCalendar(
