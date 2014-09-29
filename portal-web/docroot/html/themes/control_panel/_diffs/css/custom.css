@@ -966,7 +966,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			margin-right: 0;
 		}
 
-		.tabbable-content.taglib-form-navigator {
+		.taglib-form-navigator .tabbable-content {
 			position: relative;
 		}
 

@@ -76,7 +76,7 @@ if (Validator.isNotNull(historyKey)) {
 		<c:otherwise>
 
 			<%
-			String wrapperCssClass = "row-fluid taglib-form-navigator";
+			String wrapperCssClass = "row-fluid";
 
 			if (displayStyle.equals("steps")) {
 				wrapperCssClass = wrapperCssClass.concat(" form-steps");
