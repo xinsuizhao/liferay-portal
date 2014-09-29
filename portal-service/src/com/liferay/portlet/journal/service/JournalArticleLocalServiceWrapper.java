@@ -925,6 +925,14 @@ public class JournalArticleLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey,
+			statuses);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
 		long resourcePrimKey, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey,

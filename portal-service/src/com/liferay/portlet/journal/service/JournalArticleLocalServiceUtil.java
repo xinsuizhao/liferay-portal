@@ -889,6 +889,12 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLatestArticle(resourcePrimKey, statuses);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
 		long resourcePrimKey, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()

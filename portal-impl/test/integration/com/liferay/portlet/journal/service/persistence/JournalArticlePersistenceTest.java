@@ -263,6 +263,17 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_STArrayable() {
+		try {
+			_persistence.countByR_ST(RandomTestUtil.nextLong(),
+				new int[] { RandomTestUtil.nextInt(), 0 });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
 
