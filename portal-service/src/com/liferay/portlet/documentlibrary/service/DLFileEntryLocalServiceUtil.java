@@ -505,6 +505,12 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
+		long groupId, long[] ddmStructureIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDDMStructureFileEntries(groupId, ddmStructureIds);
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
 		long[] ddmStructureIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getDDMStructureFileEntries(ddmStructureIds);
