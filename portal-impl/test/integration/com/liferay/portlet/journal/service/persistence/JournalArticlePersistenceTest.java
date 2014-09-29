@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,22 +37,19 @@ import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
-
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
@@ -265,8 +263,8 @@ public class JournalArticlePersistenceTest {
 	@Test
 	public void testCountByR_STArrayable() {
 		try {
-			_persistence.countByR_ST(RandomTestUtil.nextLong(),
-				new int[] { RandomTestUtil.nextInt(), 0 });
+			_persistence.countByR_ST(CounterLocalServiceUtil.increment(),
+				new int[] {(int) CounterLocalServiceUtil.increment(), 0 });
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
