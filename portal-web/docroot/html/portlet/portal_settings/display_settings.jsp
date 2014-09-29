@@ -217,7 +217,7 @@
 	</aui:select>
 </aui:fieldset>
 
-<aui:script use="liferay-util-list-fields">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveLocales',
