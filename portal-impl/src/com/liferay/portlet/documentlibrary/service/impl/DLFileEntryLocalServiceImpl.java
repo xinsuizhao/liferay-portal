@@ -912,6 +912,15 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileEntry> getDDMStructureFileEntries(
+			long groupId, long[] ddmStructureIds)
+		throws SystemException {
+
+		return dlFileEntryFinder.findByG_DDMStructureIds(
+			groupId, ddmStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
 	public List<DLFileEntry> getDDMStructureFileEntries(long[] ddmStructureIds)
 		throws SystemException {
 
