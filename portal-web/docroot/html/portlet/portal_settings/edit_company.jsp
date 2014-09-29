@@ -70,15 +70,15 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		document.<portlet:namespace />fm.method = 'post';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
 
-		if (typeof(saveEmails) == 'function') {
+		if (typeof(<portlet:namespace />saveEmails) == 'function') {
 			<portlet:namespace />saveEmails();
 		}
 
-		if (typeof(saveLdap) == 'function') {
+		if (typeof(<portlet:namespace />saveLdap) == 'function') {
 			<portlet:namespace />saveLdap();
 		}
 
-		if (typeof(saveLocales) == 'function') {
+		if (typeof(<portlet:namespace />saveLocales) == 'function') {
 			<portlet:namespace />saveLocales();
 		}
 
