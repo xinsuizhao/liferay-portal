@@ -14,8 +14,10 @@
 
 package com.liferay.portal.spring.hibernate;
 
+import com.liferay.portal.dao.shard.ShardSpringSessionContext;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,6 +49,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 /**
@@ -55,7 +59,7 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
  * @author Shuyang Zhou
  * @author Tomas Polesovsky
  */
-public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
+public class PortalHibernateConfiguration extends LocalSessionFactoryBean implements BeanFactoryAware {
 
 	@Override
 	public SessionFactory buildSessionFactory() throws Exception {
@@ -69,6 +73,11 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		setBeanClassLoader(null);
 
 		super.destroy();
+	}
+
+	@Override
+	public void setBeanFactory(BeanFactory beanFactory) {
+		_beanFactory = beanFactory;
 	}
 
 	public void setHibernateConfigurationConverter(
@@ -166,15 +175,17 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 		Properties hibernateProperties = getHibernateProperties();
 
-		if (hibernateProperties != null) {
-			for (Map.Entry<Object, Object> entry :
-					hibernateProperties.entrySet()) {
+		if (_beanFactory.containsBean(ShardUtil.class.getName())) {
+			hibernateProperties.setProperty(
+				Environment.CURRENT_SESSION_CONTEXT_CLASS,
+				ShardSpringSessionContext.class.getName());
+		}
 
-				String key = (String)entry.getKey();
-				String value = (String)entry.getValue();
+		for (Map.Entry<Object, Object> entry : hibernateProperties.entrySet()) {
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
 
-				configuration.setProperty(key, value);
-			}
+			configuration.setProperty(key, value);
 		}
 
 		return configuration;
@@ -297,6 +308,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			};
 	}
 
+	private BeanFactory _beanFactory;
 	private Converter<String> _hibernateConfigurationConverter;
 
 }
