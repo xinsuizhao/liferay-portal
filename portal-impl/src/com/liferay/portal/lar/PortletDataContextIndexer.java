@@ -134,10 +134,12 @@ public class PortletDataContextIndexer extends BaseIndexer {
 			JournalArticleLocalServiceUtil.dynamicQuery();
 
 		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		journalArticleDynamicQuery.add(groupIdProperty.eq(_groupId));
+
 		Property structureIdProperty = PropertyFactoryUtil.forName(
 			"structureId");
 
-		journalArticleDynamicQuery.add(groupIdProperty.eq(_groupId));
 		journalArticleDynamicQuery.add(
 			structureIdProperty.in(ddmStructureKeys));
 
@@ -189,9 +191,7 @@ public class PortletDataContextIndexer extends BaseIndexer {
 		}
 
 		for (Object object : map.values()) {
-			long longObj = GetterUtil.getLong(object);
-
-			if (longObj == value) {
+			if (GetterUtil.getLong(object) == value) {
 				return true;
 			}
 		}
