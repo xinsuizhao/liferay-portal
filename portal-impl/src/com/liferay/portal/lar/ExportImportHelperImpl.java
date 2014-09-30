@@ -161,21 +161,25 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
 
+		PortletDataContext clonedPortletDataContext =
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext);
+
 		// Clear before serializing
 
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
-			portletDataContext.getNewPrimaryKeysMaps();
+			clonedPortletDataContext.getNewPrimaryKeysMaps();
 
 		for (String removingMapKey : _REMOVING_PRIMARY_KEYS_MAP_KEYS) {
 			newPrimaryKeysMaps.remove(removingMapKey);
 		}
 
-		taskContextMap.put("portletDataContext", portletDataContext);
+		taskContextMap.put("portletDataContext", clonedPortletDataContext);
 		taskContextMap.put("userId", userId);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTask(
-			userId, portletDataContext.getGroupId(), StringPool.BLANK, null,
-			StagingIndexingBackgroundTaskExecutor.class, taskContextMap,
+			userId, clonedPortletDataContext.getGroupId(), StringPool.BLANK,
+			null, StagingIndexingBackgroundTaskExecutor.class, taskContextMap,
 			new ServiceContext());
 	}
 

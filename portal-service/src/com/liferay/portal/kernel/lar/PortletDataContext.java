@@ -556,6 +556,9 @@ public interface PortletDataContext extends Serializable {
 
 	public void setNewLayouts(List<Layout> newLayouts);
 
+	public void setNewPrimaryKeysMaps(
+		Map<String, Map<?, ?>> newPrimaryKeysMaps);
+
 	public void setOldPlid(long oldPlid);
 
 	public void setParameterMap(Map<String, String[]> parameterMap);

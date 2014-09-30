@@ -31,6 +31,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,6 +63,15 @@ public class PortletDataContextFactoryImpl
 
 		clonePortletDataContext.setNewLayouts(
 			portletDataContext.getNewLayouts());
+
+		Map<String, Map<?, ?>> newPrimaryKeysMaps =
+			portletDataContext.getNewPrimaryKeysMaps();
+
+		if ((newPrimaryKeysMaps != null) && !newPrimaryKeysMaps.isEmpty()) {
+			clonePortletDataContext.setNewPrimaryKeysMaps(
+				new HashMap<String, Map<?, ?>>(newPrimaryKeysMaps));
+		}
+
 		clonePortletDataContext.setParameterMap(
 			portletDataContext.getParameterMap());
 		clonePortletDataContext.setScopeGroupId(

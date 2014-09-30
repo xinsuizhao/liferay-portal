@@ -1983,6 +1983,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void setNewPrimaryKeysMaps(
+		Map<String, Map<?, ?>> newPrimaryKeysMaps) {
+
+		_newPrimaryKeysMaps = newPrimaryKeysMaps;
+	}
+
+	@Override
 	public void setOldPlid(long oldPlid) {
 		_oldPlid = oldPlid;
 	}
