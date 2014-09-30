@@ -933,6 +933,8 @@ public interface PropsKeys {
 
 	public static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
 
+	public static final String STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY = "staging.hibernate.cache.flush.frequency";
+
 	public static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
 
 	public static final String HIBERNATE_CONFIGS = "hibernate.configs";
