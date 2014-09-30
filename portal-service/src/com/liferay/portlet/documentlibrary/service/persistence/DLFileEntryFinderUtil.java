@@ -107,17 +107,17 @@ public class DLFileEntryFinderUtil {
 		return getFinder().findByCompanyId(companyId, queryDefinition);
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_DDMStructureIds(
-		long groupId, long[] ddmStructureIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .findByG_DDMStructureIds(groupId, ddmStructureIds, start, end);
-	}
-
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
 		long[] ddmStructureIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByDDMStructureIds(ddmStructureIds, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
+		long groupId, long[] ddmStructureIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByDDMStructureIds(groupId, ddmStructureIds, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByExtraSettings(

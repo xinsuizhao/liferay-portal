@@ -74,12 +74,12 @@ public interface DLFileEntryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_DDMStructureIds(
-		long groupId, long[] ddmStructureIds, int start, int end)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
+		long[] ddmStructureIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
-		long[] ddmStructureIds, int start, int end)
+		long groupId, long[] ddmStructureIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByExtraSettings(
