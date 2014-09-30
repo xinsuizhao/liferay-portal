@@ -378,10 +378,10 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		JournalArticle latestArticle =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
-					article.getResourcePrimKey(),
-					new int[] {
-						WorkflowConstants.STATUS_IN_TRASH,
-						WorkflowConstants.STATUS_APPROVED});
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_IN_TRASH,
+					WorkflowConstants.STATUS_APPROVED});
 
 		if ((latestArticle != null) && !latestArticle.isIndexable()) {
 			document.addKeyword("head", false);
