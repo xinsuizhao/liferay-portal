@@ -332,48 +332,16 @@ public class DLFileEntryFinderImpl
 	}
 
 	@Override
-	public List<DLFileEntry> findByG_DDMStructureIds(
-			long groupId, long[] ddmStructureIds, int start, int end)
+	public List<DLFileEntry> findByDDMStructureIds(
+			long[] ddmStructureIds, int start, int end)
 		throws SystemException {
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_G_DDM_STRUCTURE_IDS);
-
-			if ((ddmStructureIds == null) || (ddmStructureIds.length <= 0)) {
-				return Collections.emptyList();
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$DDM_STRUCTURE_ID$]",
-				getDDMStructureIds(ddmStructureIds));
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(ddmStructureIds);
-
-			return (List<DLFileEntry>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return findByDDMStructureIds(0, ddmStructureIds, start, end);
 	}
 
 	@Override
 	public List<DLFileEntry> findByDDMStructureIds(
-			long[] ddmStructureIds, int start, int end)
+			long groupId, long[] ddmStructureIds, int start, int end)
 		throws SystemException {
 
 		Session session = null;
@@ -387,6 +355,11 @@ public class DLFileEntryFinderImpl
 				return Collections.emptyList();
 			}
 
+			if (groupId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(DLFileEntry.groupId = ?) AND", StringPool.BLANK);
+			}
+
 			sql = StringUtil.replace(
 				sql, "[$DDM_STRUCTURE_ID$]",
 				getDDMStructureIds(ddmStructureIds));
@@ -396,6 +369,10 @@ public class DLFileEntryFinderImpl
 			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (groupId > 0) {
+				qPos.add(groupId);
+			}
 
 			qPos.add(ddmStructureIds);
 

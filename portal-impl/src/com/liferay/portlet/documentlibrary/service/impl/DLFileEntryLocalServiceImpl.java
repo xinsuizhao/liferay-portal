@@ -916,7 +916,7 @@ public class DLFileEntryLocalServiceImpl
 			long groupId, long[] ddmStructureIds)
 		throws SystemException {
 
-		return dlFileEntryFinder.findByG_DDMStructureIds(
+		return dlFileEntryFinder.findByDDMStructureIds(
 			groupId, ddmStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
