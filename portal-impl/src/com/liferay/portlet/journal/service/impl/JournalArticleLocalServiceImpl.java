@@ -1371,7 +1371,7 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestArticle(
-			long resourcePrimKey, int[] statuses) 
+			long resourcePrimKey, int[] statuses)
 		throws SystemException {
 
 		OrderByComparator orderByComparator = new ArticleVersionComparator();

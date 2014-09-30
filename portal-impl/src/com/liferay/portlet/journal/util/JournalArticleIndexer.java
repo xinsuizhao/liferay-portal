@@ -57,6 +57,7 @@ import com.liferay.portlet.journal.service.persistence.JournalArticleActionableD
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
