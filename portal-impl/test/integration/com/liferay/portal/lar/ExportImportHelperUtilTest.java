@@ -836,6 +836,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			return _binaryEntries;
 		}
 
+		@Override
 		public List<String> getEntries() {
 			return new ArrayList<String>(_entries.keySet());
 		}
