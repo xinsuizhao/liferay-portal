@@ -165,13 +165,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			PortletDataContextFactoryUtil.clonePortletDataContext(
 				portletDataContext);
 
-		// Clear before serializing
-
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
 			clonedPortletDataContext.getNewPrimaryKeysMaps();
 
-		for (String removingMapKey : _REMOVING_PRIMARY_KEYS_MAP_KEYS) {
-			newPrimaryKeysMaps.remove(removingMapKey);
+		for (String key : _EXTRANEOUS_REINDEX_PRIMARY_KEYS_MAPS_KEYS) {
+			newPrimaryKeysMaps.remove(key);
 		}
 
 		taskContextMap.put("portletDataContext", clonedPortletDataContext);
@@ -1949,6 +1947,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
 	};
 
+	private static final String[] _EXTRANEOUS_REINDEX_PRIMARY_KEYS_MAPS_KEYS = {
+		AssetCategory.class + ".uuid", DDMStructure.class + ".ddmStructureKey",
+		DDMTemplate.class + ".ddmTemplateKey", Layout.class + ".layout"};
+
 	private static final char[] _LAYOUT_REFERENCE_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
 		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
@@ -1966,10 +1968,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 			StringPool.SLASH;
-
-	private static final String[] _REMOVING_PRIMARY_KEYS_MAP_KEYS = {
-		AssetCategory.class + ".uuid", DDMStructure.class + ".ddmStructureKey",
-		DDMTemplate.class + ".ddmTemplateKey", Layout.class + ".layout"};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ExportImportHelperImpl.class);
