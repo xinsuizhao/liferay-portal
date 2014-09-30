@@ -15,10 +15,15 @@
 package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
@@ -158,6 +163,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
+
+			maintainSessionCache(portletDataContext);
 		}
 		catch (PortletDataException pde) {
 			throw pde;
@@ -165,6 +172,25 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
+	}
+
+	protected void maintainSessionCache(PortletDataContext portletDataContext) {
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		int hibernateCacheFlushFrequency = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY));
+
+		if ((manifestSummary.getModelAdditionCount() %
+				hibernateCacheFlushFrequency) != 0) {
+
+			return;
+		}
+
+		Session session = sessionFactory.getCurrentSession();
+
+		session.flush();
+		session.clear();
 	}
 
 	@Override
@@ -274,5 +300,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		return true;
 	}
+
+	protected final SessionFactory sessionFactory =
+		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
 
 }
