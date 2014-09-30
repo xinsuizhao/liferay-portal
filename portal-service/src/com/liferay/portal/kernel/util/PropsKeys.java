@@ -933,8 +933,6 @@ public interface PropsKeys {
 
 	public static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
 
-	public static final String STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY = "staging.hibernate.cache.flush.frequency";
-
 	public static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
 
 	public static final String HIBERNATE_CONFIGS = "hibernate.configs";
@@ -2404,6 +2402,8 @@ public interface PropsKeys {
 	public static final String SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID = "sql.data.com.liferay.portal.model.Region.region.id";
 
 	public static final String SQL_DATA_MAX_PARAMETERS = "sql.data.max.parameters";
+
+	public static final String STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY = "staging.hibernate.cache.flush.frequency";
 
 	public static final String STAGING_LOCK_ENABLED = "staging.lock.enabled";
 

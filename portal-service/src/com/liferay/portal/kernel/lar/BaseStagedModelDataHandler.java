@@ -190,6 +190,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		Session session = sessionFactory.getCurrentSession();
 
 		session.flush();
+
 		session.clear();
 	}
 
