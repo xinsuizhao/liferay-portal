@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -85,6 +87,12 @@ public class JournalExpiredVersionExportImportTest
 
 		exportImportPortlet(PortletKeys.JOURNAL);
 
+		Indexer journalArticleIndexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class);
+
+		journalArticleIndexer.reindex(
+			new String[] {String.valueOf(importedGroup.getCompanyId())});
+
 		Assert.assertEquals(
 			initialArticlesCount + 2,
 			JournalArticleLocalServiceUtil.getArticlesCount(
@@ -104,6 +112,9 @@ public class JournalExpiredVersionExportImportTest
 				group.getCompanyId(), group.getGroupId()));
 
 		exportImportPortlet(PortletKeys.JOURNAL);
+
+		journalArticleIndexer.reindex(
+			new String[] {String.valueOf(importedGroup.getCompanyId())});
 
 		Assert.assertEquals(
 			initialSearchArticlesCount,
