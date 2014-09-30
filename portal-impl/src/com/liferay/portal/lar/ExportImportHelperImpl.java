@@ -118,6 +118,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -159,6 +160,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
+
+		// Clear before serializing
+
+		Map<String, Map<?, ?>> newPrimaryKeysMaps =
+			portletDataContext.getNewPrimaryKeysMaps();
+
+		for (String removingMapKey : _REMOVING_PRIMARY_KEYS_MAP_KEYS) {
+			newPrimaryKeysMaps.remove(removingMapKey);
+		}
 
 		taskContextMap.put("portletDataContext", portletDataContext);
 		taskContextMap.put("userId", userId);
@@ -1952,6 +1962,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 			StringPool.SLASH;
+
+	private static final String[] _REMOVING_PRIMARY_KEYS_MAP_KEYS = {
+		AssetCategory.class + ".uuid", DDMStructure.class + ".ddmStructureKey",
+		DDMTemplate.class + ".ddmTemplateKey", Layout.class + ".layout"};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ExportImportHelperImpl.class);
