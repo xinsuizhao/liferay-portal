@@ -328,10 +328,13 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 			if (indexContent) {
 				if (is != null) {
+					int dlFileIndexingMaxSize = GetterUtil.getInteger(
+						PropsValues.DL_FILE_INDEXING_MAX_SIZE);
+
 					try {
 						document.addFile(
 							Field.CONTENT, is, dlFileEntry.getTitle(),
-							PropsValues.DL_FILE_INDEXING_MAX_SIZE);
+							dlFileIndexingMaxSize);
 					}
 					catch (IOException ioe) {
 						throw new SearchException(
