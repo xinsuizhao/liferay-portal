@@ -297,9 +297,9 @@ public class PortletRequestUtil {
 			StringUtil.equalsIgnoreCase(name, "LAYOUTS") ||
 			StringUtil.equalsIgnoreCase(name, "PORTLET_RENDER_PARAMETERS") ||
 			StringUtil.equalsIgnoreCase(name, "USER_PASSWORD") ||
+			name.startsWith(WebKeys.AUTHENTICATION_TOKEN) ||
 			name.startsWith("javax.") ||
-			name.startsWith("liferay-ui:") ||
-			name.startsWith(WebKeys.AUTHENTICATION_TOKEN)) {
+			name.startsWith("liferay-ui:")) {
 
 			return false;
 		}
