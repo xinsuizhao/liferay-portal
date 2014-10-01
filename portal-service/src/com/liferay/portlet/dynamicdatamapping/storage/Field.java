@@ -181,9 +181,7 @@ public class Field implements Serializable {
 				return values.get(0);
 			}
 
-			boolean repeatable = isRepeatable();
-
-			if (repeatable) {
+			if (values.size() > 1) {
 				return FieldConstants.getSerializable(getDataType(), values);
 			}
 
