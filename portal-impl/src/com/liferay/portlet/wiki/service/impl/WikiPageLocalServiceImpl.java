@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -2114,8 +2115,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 						userId, assetEntry.getEntryId(), assetLinkEntryIds,
 						AssetLinkConstants.TYPE_RELATED);
 
-					assetEntryLocalService.deleteEntry(
-						draftAssetEntry.getEntryId());
+					SystemEventHierarchyEntryThreadLocal.push(WikiPage.class);
+
+					try {
+						assetEntryLocalService.deleteEntry(
+							draftAssetEntry.getEntryId());
+					}
+					finally {
+						SystemEventHierarchyEntryThreadLocal.pop(
+							WikiPage.class);
+					}
 				}
 			}
 

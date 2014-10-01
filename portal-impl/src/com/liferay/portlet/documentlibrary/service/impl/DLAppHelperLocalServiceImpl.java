@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1464,7 +1465,16 @@ public class DLAppHelperLocalServiceImpl
 							userId, assetEntry.getEntryId(), assetLinkEntryIds,
 							AssetLinkConstants.TYPE_RELATED);
 
-						assetEntryLocalService.deleteEntry(draftAssetEntry);
+						SystemEventHierarchyEntryThreadLocal.push(
+							DLFileEntryConstants.getClassName());
+
+						try {
+							assetEntryLocalService.deleteEntry(draftAssetEntry);
+						}
+						finally {
+							SystemEventHierarchyEntryThreadLocal.pop(
+								DLFileEntryConstants.getClassName());
+						}
 					}
 				}
 
