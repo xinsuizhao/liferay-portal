@@ -82,8 +82,7 @@ public class VerifyJournal extends VerifyProcess {
 		verifyURLTitle();
 	}
 
-	protected void updateElements(
-			List<Element> elements, JournalArticle article, Document document)
+	protected void updateElements(List<Element> elements)
 		throws Exception {
 
 		for (Element element : elements) {
@@ -96,7 +95,7 @@ public class VerifyJournal extends VerifyProcess {
 			List<Element> nestedElements = element.elements("dynamic-element");
 
 			if (!nestedElements.isEmpty()) {
-				updateElements(nestedElements, article, document);
+				updateElements(nestedElements);
 			}
 
 			Element dynamicContentElement = element.element("dynamic-content");
@@ -140,10 +139,6 @@ public class VerifyJournal extends VerifyProcess {
 			dynamicContentElement.setText(
 				path + StringPool.SLASH + dlFileEntry.getUuid());
 		}
-
-		article.setContent(document.asXML());
-
-		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -233,7 +228,11 @@ public class VerifyJournal extends VerifyProcess {
 
 				List<Element> elements = rootElement.elements();
 
-				updateElements(elements, article, document);
+				updateElements(elements);
+
+				article.setContent(document.asXML());
+
+				JournalArticleLocalServiceUtil.updateJournalArticle(article);
 			}
 		}
 		finally {
