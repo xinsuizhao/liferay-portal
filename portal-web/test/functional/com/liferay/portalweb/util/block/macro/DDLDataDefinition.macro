@@ -174,7 +174,7 @@
 
 		<if>
 			<not>
-				<isset var="dataDefinitionName" />
+				<isset var="ddldataDefinitionName" />
 			</not>
 			<then>
 				<var name="ddlDataDefinitionName" value="Data Definition" />
