@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -132,8 +133,8 @@ public class VerifyJournal extends VerifyProcess {
 				continue;
 			}
 
-			dynamicContentElement.setText(
-				path + StringPool.SLASH + dlFileEntry.getUuid());
+			Node node = dynamicContentElement.node(0);
+			node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
 		}
 	}
 
