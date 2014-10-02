@@ -377,7 +377,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -392,17 +392,17 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/input[contains(@id,'_20_rowIdsFileEntryCheckbox')] | //div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/input[contains(@id,'Checkbox')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/input[contains(@id,'_20_rowIdsFileEntryCheckbox')] | //div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/input[contains(@id,'Checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/span/div/a</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/span/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_TITLE</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/a/span/span</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/a/span/span</td>
 	<td></td>
 </tr>
 <tr>
