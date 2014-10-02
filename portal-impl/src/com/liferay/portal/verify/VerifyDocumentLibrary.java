@@ -160,9 +160,9 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 							dlFileEntry.getFileEntryId(),
 							dlFileEntry.getTitle(), dlFileEntry.getExtension());
 					}
-					catch (Exception pe) {
-						if (!(pe instanceof DuplicateFileException) &&
-							!(pe instanceof DuplicateFolderNameException)) {
+					catch (Exception e1) {
+						if (!(e1 instanceof DuplicateFileException) &&
+							!(e1 instanceof DuplicateFolderNameException)) {
 
 							return;
 						}
@@ -170,14 +170,14 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						try {
 							renameDuplicateTitle(dlFileEntry);
 						}
-						catch (Exception e) {
+						catch (Exception e2) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
 									"Unable to rename duplicate title for " +
 										"file entry " +
 											dlFileEntry.getFileEntryId() +
-												": " + e.getMessage(),
-									e);
+												": " + e2.getMessage(),
+									e2);
 							}
 						}
 					}
@@ -522,11 +522,11 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				return;
 			}
-			catch (PortalException e) {
-				if (!(e instanceof DuplicateFolderNameException) &&
-					 !(e instanceof DuplicateFileException)) {
+			catch (PortalException pe) {
+				if (!(pe instanceof DuplicateFolderNameException) &&
+					 !(pe instanceof DuplicateFileException)) {
 
-					throw e;
+					throw pe;
 				}
 
 				i++;
