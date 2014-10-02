@@ -1395,7 +1395,7 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		hits.setDocs(docs.toArray(new Document[docs.size()]));
-		hits.setScores(scores.toArray(new Float[scores.size()]));
+		hits.setScores(ArrayUtil.toFloatArray(scores));
 
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - hits.getStart()) /
