@@ -221,17 +221,9 @@
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderDescription" value="Description of Folder2" />
 			<var name="dmFolderName" value="Folder2" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMFolder#gotoCP">
@@ -244,12 +236,8 @@
 			<var name="nullFile" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#gotoCP">
-			<var name="dmFolderName" value="Folder1" />
+		<execute macro="DMDocument#gotoCP">
+			<var name="dmDocumentTitle" value="Zero Document File" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
