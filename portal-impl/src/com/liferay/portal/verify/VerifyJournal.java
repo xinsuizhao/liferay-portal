@@ -83,9 +83,7 @@ public class VerifyJournal extends VerifyProcess {
 		verifyURLTitle();
 	}
 
-	protected void updateElements(List<Element> elements)
-		throws Exception {
-
+	protected void updateElements(List<Element> elements) throws Exception {
 		for (Element element : elements) {
 			String type = element.attributeValue("type");
 
