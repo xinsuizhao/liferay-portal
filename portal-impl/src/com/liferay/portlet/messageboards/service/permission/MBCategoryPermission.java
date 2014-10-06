@@ -69,6 +69,12 @@ public class MBCategoryPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				groupId, permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
 			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
