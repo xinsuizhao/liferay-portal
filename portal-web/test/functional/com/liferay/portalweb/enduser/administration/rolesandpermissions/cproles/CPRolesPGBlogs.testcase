@@ -1966,24 +1966,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
-
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
 		<execute macro="BlogsEntry#subscribePG" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
@@ -2038,35 +2020,6 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoBlogsPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURLTemp" value="${siteURLTemp}" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
