@@ -182,6 +182,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						}
 					}
 				}
+
 			};
 
 		actionableDynamicQuery.performActions();
