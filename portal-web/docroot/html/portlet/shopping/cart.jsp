@@ -57,7 +57,6 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		var itemIds = "";
 		var count = 0;
 		var invalidSKUs = "";
-		var shoppingSettingsMinOrder = <%= shoppingPrefs.getMinOrder() %>;
 		var subtotal = 0;
 
 		<%
@@ -95,6 +94,8 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		%>
 
 		if (document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value == '<%= Constants.CHECKOUT %>') {
+			var shoppingSettingsMinOrder = <%= shoppingPrefs.getMinOrder() %>;
+		
 			if (subtotal < shoppingSettingsMinOrder) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>'
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= currentURL %>';
