@@ -17,11 +17,13 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -36,6 +38,21 @@ import java.util.Locale;
  * @author Manuel de la Peña
  */
 public class UserTestUtil {
+
+	public static User addCompanyAdmin(Company company) throws Exception {
+		User user = addUser();
+
+		user.setCompanyId(company.getCompanyId());
+
+		UserLocalServiceUtil.updateUser(user);
+
+		Role administratorRole = RoleLocalServiceUtil.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		UserLocalServiceUtil.addRoleUser(administratorRole.getRoleId(), user);
+
+		return user;
+	}
 
 	public static User addGroupAdminUser(Group group) throws Exception {
 		return UserTestUtil.addGroupUser(
@@ -64,19 +81,10 @@ public class UserTestUtil {
 	}
 
 	public static User addOmniAdmin() throws Exception {
-		User user = addUser();
+		Company defaultCompany = CompanyLocalServiceUtil.getCompanyByMx(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-		user.setCompanyId(PortalInstances.getDefaultCompanyId());
-
-		UserLocalServiceUtil.updateUser(user);
-
-		Role administratorRole = RoleLocalServiceUtil.getRole(
-			PortalInstances.getDefaultCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		UserLocalServiceUtil.setRoleUsers(
-			administratorRole.getRoleId(), new long[] {user.getUserId()});
-
-		return user;
+		return addCompanyAdmin(defaultCompany);
 	}
 
 	public static User addOrganizationAdminUser(Organization organization)
