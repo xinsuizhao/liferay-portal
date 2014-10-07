@@ -204,7 +204,7 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testIsOmniAdminWithAdministratorRoleUser() throws Exception {
-		User user = UserTestUtil.addOmniAdmin();
+		User user = UserTestUtil.addOmniAdminUser();
 
 		PermissionChecker permissionChecker = _getPermissionChecker(user);
 
@@ -215,7 +215,7 @@ public class PermissionCheckerTest {
 	public void testIsOmniAdminWithCompanyAdmin() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User adminUser = UserTestUtil.addCompanyAdmin(company);
+		User adminUser = UserTestUtil.addCompanyAdminUser(company);
 
 		PermissionChecker permissionChecker = _getPermissionChecker(adminUser);
 

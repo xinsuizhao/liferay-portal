@@ -39,17 +39,17 @@ import java.util.Locale;
  */
 public class UserTestUtil {
 
-	public static User addCompanyAdmin(Company company) throws Exception {
+	public static User addCompanyAdminUser(Company company) throws Exception {
 		User user = addUser();
 
 		user.setCompanyId(company.getCompanyId());
 
 		UserLocalServiceUtil.updateUser(user);
 
-		Role administratorRole = RoleLocalServiceUtil.getRole(
+		Role role = RoleLocalServiceUtil.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		UserLocalServiceUtil.addRoleUser(administratorRole.getRoleId(), user);
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
 
 		return user;
 	}
@@ -80,11 +80,11 @@ public class UserTestUtil {
 		return groupUser;
 	}
 
-	public static User addOmniAdmin() throws Exception {
+	public static User addOmniAdminUser() throws Exception {
 		Company defaultCompany = CompanyLocalServiceUtil.getCompanyByMx(
 			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-		return addCompanyAdmin(defaultCompany);
+		return addCompanyAdminUser(defaultCompany);
 	}
 
 	public static User addOrganizationAdminUser(Organization organization)
