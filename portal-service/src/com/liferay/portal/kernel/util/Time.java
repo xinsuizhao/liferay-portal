@@ -175,7 +175,8 @@ public class Time {
 	}
 
 	public static String getRelativeTimeDescription(
-		long milliseconds, Locale locale, TimeZone timeZone) {
+		long milliseconds, Format dateTimeFormat, Locale locale,
+		TimeZone timeZone) {
 
 		Format timeFormat = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 
@@ -205,10 +206,18 @@ public class Time {
 				locale, "yesterday-at-x", timeFormat.format(milliseconds));
 		}
 
-		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"EEEE, MMMMM dd, yyyy", locale, timeZone);
+		if (dateTimeFormat == null) {
+			dateTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"EEEE, MMMMM dd, yyyy", locale, timeZone);
+		}
 
-		return dateFormat.format(milliseconds);
+		return dateTimeFormat.format(milliseconds);
+	}
+
+	public static String getRelativeTimeDescription(
+		long milliseconds, Locale locale, TimeZone timeZone) {
+
+		return getRelativeTimeDescription(milliseconds, null, locale, timeZone);
 	}
 
 	public static String getRFC822() {
