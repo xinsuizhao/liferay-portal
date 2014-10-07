@@ -229,16 +229,21 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 									trigger: instance.get('templateNode'),
 									calendar: {
 										firstDayOfWeek: <%= firstDayOfWeek %>,
-										locale: '<%= locale %>',
-										strings: {
-											next: '<liferay-ui:message key="next" />',
-											none: '<liferay-ui:message key="none" />',
-											previous: '<liferay-ui:message key="previous" />',
-											today: '<liferay-ui:message key="today" />'
-										}
-									}
+										locale: '<%= locale %>'
+									},
+									trigger: instance.get('templateNode')
 								}
 							).render();
+
+							instance.datePicker.calendar.set(
+								'strings',
+								{
+									next: '<liferay-ui:message key="next" />',
+									none: '<liferay-ui:message key="none" />',
+									previous: '<liferay-ui:message key="previous" />',
+									today: '<liferay-ui:message key="today" />'
+								}
+							);
 						}
 					}
 				}
