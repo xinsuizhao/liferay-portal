@@ -1038,6 +1038,7 @@ public interface UserService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
 	ServiceContext)}
 	*/
+	@java.lang.Deprecated
 	public com.liferay.portal.model.User updateStatus(long userId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
