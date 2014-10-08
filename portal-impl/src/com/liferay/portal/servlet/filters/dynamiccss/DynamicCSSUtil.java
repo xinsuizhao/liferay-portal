@@ -123,26 +123,31 @@ public class DynamicCSSUtil {
 
 		boolean themeCssFastLoad = _isThemeCssFastLoad(request, themeDisplay);
 
-		URLConnection resourceURLConnection = null;
-
-		URL resourceURL = servletContext.getResource(resourcePath);
-
-		if (resourceURL != null) {
-			resourceURLConnection = resourceURL.openConnection();
-		}
-
 		URLConnection cacheResourceURLConnection = null;
 
 		URL cacheResourceURL = _getCacheResource(servletContext, resourcePath);
 
 		if (cacheResourceURL != null) {
 			cacheResourceURLConnection = cacheResourceURL.openConnection();
+
+			if (!themeCssFastLoad) {
+				URL resourceURL = servletContext.getResource(resourcePath);
+
+				if (resourceURL != null) {
+					URLConnection resourceURLConnection =
+						resourceURL.openConnection();
+
+					if (cacheResourceURLConnection.getLastModified() <
+							resourceURLConnection.getLastModified()) {
+
+						cacheResourceURLConnection = null;
+					}
+				}
+			}
 		}
 
-		if (themeCssFastLoad && (cacheResourceURLConnection != null) &&
-			(resourceURLConnection != null) &&
-			(cacheResourceURLConnection.getLastModified() >=
-				resourceURLConnection.getLastModified())) {
+		if ((themeCssFastLoad || !content.contains(_CSS_IMPORT_BEGIN)) &&
+			(cacheResourceURLConnection != null)) {
 
 			parsedContent = StringUtil.read(
 				cacheResourceURLConnection.getInputStream());
