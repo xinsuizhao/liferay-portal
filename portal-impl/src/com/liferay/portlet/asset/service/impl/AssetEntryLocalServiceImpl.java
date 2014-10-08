@@ -489,6 +489,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			queryConfig.setHighlightEnabled(false);
 			queryConfig.setScoreEnabled(false);
 
+			searchContext.setQueryConfig(queryConfig);
+
+			searchContext.setStart(start);
+			searchContext.setUserId(userId);
+
 			assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
 			return assetSearcher.search(searchContext);
