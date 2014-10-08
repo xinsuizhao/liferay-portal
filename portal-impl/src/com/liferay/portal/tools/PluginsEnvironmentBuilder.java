@@ -555,7 +555,8 @@ public class PluginsEnvironmentBuilder {
 			portalJars.add("commons-logging.jar");
 			portalJars.add("log4j.jar");
 
-			portalJars = ListUtil.unique(portalJars);
+			portalJars = new ArrayList<String>(
+				new LinkedHashSet<String>(portalJars));
 
 			Collections.sort(portalJars);
 		}
@@ -642,7 +643,8 @@ public class PluginsEnvironmentBuilder {
 			addClasspathEntry(sb, "/portal/lib/global/" + jar, attributes);
 		}
 
-		portalJars = ListUtil.unique(portalJars);
+		portalJars = new ArrayList<String>(
+			new LinkedHashSet<String>(portalJars));
 
 		Collections.sort(portalJars);
 
