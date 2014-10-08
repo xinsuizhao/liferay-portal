@@ -675,6 +675,19 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return content;
 	}
 
+	protected String[] getLanguageIds(
+		String defaultLanguageId, String content) {
+
+		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
+			content);
+
+		if (languageIds.length == 0) {
+			languageIds = new String[] {defaultLanguageId};
+		}
+
+		return languageIds;
+	}
+
 	protected boolean isHead(JournalArticle article) {
 		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 			return true;
@@ -697,19 +710,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return false;
-	}
-
-	protected String[] getLanguageIds(
-		String defaultLanguageId, String content) {
-
-		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			content);
-
-		if (languageIds.length == 0) {
-			languageIds = new String[] {defaultLanguageId};
-		}
-
-		return languageIds;
 	}
 
 	@Override
