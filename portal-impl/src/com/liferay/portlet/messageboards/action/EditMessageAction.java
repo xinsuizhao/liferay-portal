@@ -60,6 +60,7 @@ import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.InputStream;
 
@@ -356,6 +357,10 @@ public class EditMessageAction extends PortletAction {
 		String format = GetterUtil.getString(
 			portletPreferences.getValue("messageFormat", null),
 			MBMessageConstants.DEFAULT_FORMAT);
+
+		if (!MBUtil.isValidMessageFormat(format)) {
+			format = "html";
+		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>(5);
