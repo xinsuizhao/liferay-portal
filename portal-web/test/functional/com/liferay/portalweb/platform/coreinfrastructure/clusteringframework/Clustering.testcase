@@ -46,17 +46,17 @@
 		</execute>
 
 		<execute macro="User#loginPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#assertNodePortPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
@@ -66,12 +66,12 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
@@ -80,7 +80,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
@@ -90,7 +90,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
@@ -100,7 +100,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
@@ -108,11 +108,11 @@
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="portletName" value="Recycle Bin" />
 		</execute>
 
@@ -121,7 +121,7 @@
 		<execute macro="RecycleBin#emptyCP" />
 
 		<execute macro="User#logoutPG">
-			<var name="nodePort" value="1080" />
+			<var name="nodePort" value="9080" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
