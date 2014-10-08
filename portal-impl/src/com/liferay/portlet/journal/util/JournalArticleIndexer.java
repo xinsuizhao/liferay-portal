@@ -688,7 +688,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return languageIds;
 	}
 
-	protected boolean isHead(JournalArticle article) {
+	protected boolean isHead(JournalArticle article) throws SystemException {
 		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 			return true;
 		}
