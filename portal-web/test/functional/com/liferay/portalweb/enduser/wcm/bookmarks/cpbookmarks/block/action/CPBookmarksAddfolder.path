@@ -13,7 +13,11 @@
 	<td></td>
 	<td>CPBookmarksAddFolder</td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@id='_28_name']</td>
