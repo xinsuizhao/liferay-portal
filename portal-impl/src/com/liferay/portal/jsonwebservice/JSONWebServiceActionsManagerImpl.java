@@ -285,38 +285,13 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public int registerServletContext(ServletContext servletContext) {
-		BeanLocator beanLocator = null;
-
-		String contextName = servletContext.getServletContextName();
 		String contextPath = ContextPathUtil.getContextPath(servletContext);
 
-		if (contextPath.equals(
-				PortalContextLoaderListener.getPortalServletContextPath()) ||
-			contextPath.isEmpty()) {
+		int count = registerServletContext(contextPath);
 
-			beanLocator = PortalBeanLocatorUtil.getBeanLocator();
-		}
-		else {
-			beanLocator = PortletBeanLocatorUtil.getBeanLocator(contextName);
-		}
-
-		if (beanLocator == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Bean locator not available for " + contextPath);
-			}
-
-			return -1;
-		}
-
-		JSONWebServiceRegistrator jsonWebServiceRegistrator =
-			new JSONWebServiceRegistrator();
-
-		jsonWebServiceRegistrator.processAllBeans(contextPath, beanLocator);
-
-		int count = getJSONWebServiceActionsCount(contextPath);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Configured " + count + " actions for " + contextPath);
+		if (count < 0) {
+			count = registerServletContext(
+				servletContext.getServletContextName());
 		}
 
 		return count;
