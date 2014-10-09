@@ -19,7 +19,7 @@
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
 		</execute>
 
-		<execute macro="Workflow#tearDownWorkflowDefinitions" />
+		<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
 	</tear-down>
 
 	<command name="DeactivateAndActivateUploadedDefinition" priority="3">
