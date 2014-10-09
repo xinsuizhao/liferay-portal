@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -25,15 +26,15 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.GroupTestUtil;
-import com.liferay.portal.util.test.SearchContextTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class JournalArticleIndexVersionsTest {
 	}
 
 	@After
-	public void tearDown() throws PortalException {
+	public void tearDown() throws PortalException, SystemException {
 		PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS));
 
@@ -74,9 +75,11 @@ public class JournalArticleIndexVersionsTest {
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test-title",
+			"test-content");
 
-		JournalArticle expiredArticle = JournalTestUtil.updateArticle(article);
+		JournalArticle expiredArticle = JournalTestUtil.updateArticle(
+			article, "test-title");
 
 		expiredArticle = JournalTestUtil.expireArticle(
 			_group.getGroupId(), article, expiredArticle.getVersion());
@@ -89,7 +92,7 @@ public class JournalArticleIndexVersionsTest {
 
 		Assert.assertEquals(article.getId(), searchArticle.getId());
 
-		article = JournalTestUtil.updateArticle(expiredArticle);
+		article = JournalTestUtil.updateArticle(expiredArticle, "test-title");
 
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
 
@@ -105,20 +108,21 @@ public class JournalArticleIndexVersionsTest {
 	protected List<JournalArticle> search() throws Exception {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
 
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 
 		Hits results = indexer.search(searchContext);
 
-		return JournalUtil.getArticles(results);
+		return (List<JournalArticle>)
+			JournalUtil.getArticles(results).getObject(0);
 	}
 
 	protected long searchCount() throws Exception {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			_group.getGroupId());
 
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});
