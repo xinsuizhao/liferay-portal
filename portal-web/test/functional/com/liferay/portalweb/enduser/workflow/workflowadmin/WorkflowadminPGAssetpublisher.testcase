@@ -54,7 +54,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LIFERAYQA-6795" name="ApproveBlogsEntryPG" priority="5">
+	<command name="ApproveBlogsEntryPG" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowAssetType" value="Blogs Entry" />
@@ -158,7 +158,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="ApproveWebContentPG" priority="5">
+	<command name="ApproveWebContentPG" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />
@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="RejectBlogsEntryPG" priority="5">
+	<command name="RejectBlogsEntryPG" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowAssetType" value="Blogs Entry" />
@@ -330,7 +330,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="RejectWebContentPG" priority="5">
+	<command name="RejectWebContentPG" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />
