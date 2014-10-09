@@ -908,6 +908,10 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		<#if entity.hasPrimitivePK(false)>
@@ -978,10 +982,6 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#list>
 
 	private BaseModel<?> _${entity.varName}RemoteModel;
-
 	private Class<?> _clpSerializerClass = ${packagePath}.service.ClpSerializer.class;
-	
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
+
 }
