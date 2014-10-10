@@ -117,7 +117,15 @@ public class DiffHtmlImpl implements DiffHtml {
 
 		unsyncStringWriter.flush();
 
-		return unsyncStringWriter.toString();
+		String diff = unsyncStringWriter.toString();
+
+		if (diff.startsWith("<?xml")) {
+			int i = diff.indexOf("?>", 2);
+
+			diff = diff.substring(i + 2);
+		}
+
+		return diff;
 	}
 
 	private static final String _DIFF = "diff";
