@@ -620,6 +620,8 @@
 	</command>
 
 	<command name="EditBlogsEntryInline" priority="5">
+		<property name="custom.properties" value="editor.inline.editing.enabled=true" />
+
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
