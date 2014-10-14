@@ -483,7 +483,6 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
-
 	/**
 	 * Returns the template matching the group and template key.
 	 *
