@@ -501,9 +501,17 @@ public class DDMStructureLocalServiceImpl
 		List<DDMStructure> structures = ddmStructurePersistence.findByGroupId(
 			groupId);
 
-		for (DDMStructure structure : structures) {
-			ddmStructureLocalService.deleteStructure(structure);
-		}
+		deleteStructures(structures);
+	}
+
+	@Override
+	public void deleteStructures(long groupId, long classNameId)
+		throws PortalException, SystemException {
+
+		List<DDMStructure> structures = ddmStructurePersistence.findByG_C(
+			groupId, classNameId);
+
+		deleteStructures(structures);
 	}
 
 	/**
@@ -1452,6 +1460,33 @@ public class DDMStructureLocalServiceImpl
 				templateElement.add(element.createCopy());
 			}
 		}
+	}
+
+	protected Set<Long> deleteStructures(List<DDMStructure> structures)
+		throws PortalException, SystemException {
+
+		Set<Long> deletedStructureIds = new HashSet<Long>();
+
+		for (DDMStructure structure : structures) {
+			if (deletedStructureIds.contains(structure.getStructureId())) {
+				continue;
+			}
+
+			if (!GroupThreadLocal.isDeleteInProcess()) {
+				List<DDMStructure> childDDMStructures =
+					ddmStructurePersistence.findByParentStructureId(
+						structure.getStructureId());
+
+				deletedStructureIds.addAll(
+					deleteStructures(childDDMStructures));
+			}
+
+			ddmStructureLocalService.deleteStructure(structure);
+
+			deletedStructureIds.add(structure.getStructureId());
+		}
+
+		return deletedStructureIds;
 	}
 
 	protected DDMStructure doUpdateStructure(
