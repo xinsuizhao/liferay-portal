@@ -972,7 +972,9 @@ public class EditLayoutsAction extends PortletAction {
 
 				Layout copyLayout = null;
 
-				String layoutTemplateId = null;
+				String layoutTemplateId = ParamUtil.getString(
+					uploadPortletRequest, "layoutTemplateId",
+					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);;
 
 				if (copyLayoutId > 0) {
 					try {
@@ -1002,12 +1004,6 @@ public class EditLayoutsAction extends PortletAction {
 
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
-
-				if (Validator.isNull(layoutTemplateId)) {
-					layoutTemplateId = ParamUtil.getString(
-						uploadPortletRequest, "layoutTemplateId",
-						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-				}
 
 				layoutTypePortlet.setLayoutTemplateId(
 					themeDisplay.getUserId(), layoutTemplateId);
