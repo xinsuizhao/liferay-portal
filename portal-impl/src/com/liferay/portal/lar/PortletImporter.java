@@ -766,7 +766,7 @@ public class PortletImporter {
 		if (existingAssetCategory == null) {
 			String name = getAssetCategoryName(
 				null, groupId, parentAssetCategoryId, assetCategory.getName(),
-				assetCategory.getVocabularyId(), 2);
+				assetVocabularyId, 2);
 
 			serviceContext.setUuid(assetCategory.getUuid());
 
@@ -785,7 +785,7 @@ public class PortletImporter {
 		else {
 			String name = getAssetCategoryName(
 				assetCategory.getUuid(), groupId, parentAssetCategoryId,
-				assetCategory.getName(), assetCategory.getVocabularyId(), 2);
+				assetCategory.getName(), assetVocabularyId, 2);
 
 			importedAssetCategory =
 				AssetCategoryLocalServiceUtil.updateCategory(
