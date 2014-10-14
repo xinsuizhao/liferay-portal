@@ -145,9 +145,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			userId, groupId, recordSetId, displayIndex, fields, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DDLRecord deleteRecord(DDLRecord record)
+	public void deleteRecord(DDLRecord record)
 		throws PortalException, SystemException {
 
 		// Record
@@ -173,7 +172,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
 		}
 
-		return record;
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		indexer.delete(record);
 	}
 
 	@Override
