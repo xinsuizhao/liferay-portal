@@ -431,18 +431,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				fileVersionDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("fileEntryId"));
 
-				Property statusProperty = PropertyFactoryUtil.forName(
-					"status");
-
-				StagedModelDataHandler<?> stagedModelDataHandler =
-					StagedModelDataHandlerRegistryUtil.
-						getStagedModelDataHandler(
-							DLFileEntry.class.getName());
-
-				fileVersionDynamicQuery.add(
-					statusProperty.in(
-						stagedModelDataHandler.getExportableStatuses()));
-
 				fileVersionDynamicQuery.add(
 					RestrictionsFactoryUtil.eqProperty(
 						"dlFileVersion.version", "version"));
@@ -450,6 +438,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				fileVersionDynamicQuery.add(
 					RestrictionsFactoryUtil.eqProperty(
 						"dlFileVersion.fileEntryId", "fileEntryId"));
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				StagedModelDataHandler<?> stagedModelDataHandler =
+					StagedModelDataHandlerRegistryUtil.
+						getStagedModelDataHandler(DLFileEntry.class.getName());
+
+				fileVersionDynamicQuery.add(
+					statusProperty.in(
+						stagedModelDataHandler.getExportableStatuses()));
 
 				Property fileEntryIdProperty = PropertyFactoryUtil.forName(
 					"fileEntryId");
@@ -463,7 +461,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				dynamicQuery.add(
 					repositoryIdProperty.eq(
 						portletDataContext.getScopeGroupId()));
-
 			}
 
 			@Override
