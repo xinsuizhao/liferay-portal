@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -37,13 +36,10 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -245,59 +241,16 @@ public class JournalContentPortletDataHandler
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, DDMTemplate.class);
 
-		JournalArticle journalArticle = null;
-
-		Element importDataRootElement =
-			portletDataContext.getImportDataRootElement();
-
-		Element referencesElement = importDataRootElement.element("references");
-
-		if (referencesElement != null) {
-			List<Element> referenceElements = referencesElement.elements();
-
-			for (Element referenceElement : referenceElements) {
-				String className = referenceElement.attributeValue(
-					"class-name");
-
-				if (!JournalArticle.class.getName().equals(className)) {
-					continue;
-				}
-
-				String articleResourceUuid = referenceElement.attributeValue(
-					"article-resource-uuid");
-
-				JournalArticleResource journalArticleResource =
-					JournalArticleResourceLocalServiceUtil.
-						fetchJournalArticleResourceByUuidAndGroupId(
-							articleResourceUuid,
-							portletDataContext.getScopeGroupId());
-
-				if (journalArticleResource != null) {
-					journalArticle =
-						JournalArticleLocalServiceUtil.fetchLatestArticle(
-							journalArticleResource.getResourcePrimKey(),
-							WorkflowConstants.STATUS_ANY, false);
-				}
-
-				break;
-			}
-		}
-
-		Map<String, String> articleIds =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class + ".articleId");
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, JournalArticle.class);
 
 		String articleId = portletPreferences.getValue("articleId", null);
 
-		if (journalArticle == null) {
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, JournalArticle.class);
-		}
-		else {
-			articleIds.put(articleId, journalArticle.getArticleId());
-		}
-
 		if (Validator.isNotNull(articleId)) {
+			Map<String, String> articleIds =
+				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+					JournalArticle.class + ".articleId");
+
 			articleId = MapUtil.getString(articleIds, articleId, articleId);
 
 			portletPreferences.setValue("articleId", articleId);

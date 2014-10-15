@@ -180,6 +180,12 @@ public class JournalArticleStagedModelDataHandler
 			existingArticle = fetchExistingArticle(
 				articleResourceUuid, portletDataContext.getCompanyGroupId(),
 				articleArticleId, null, 0.0, preloaded);
+
+			if (existingArticle == null) {
+				existingArticle = fetchExistingArticle(
+					articleResourceUuid, portletDataContext.getScopeGroupId(),
+					articleArticleId, null, 0.0, preloaded);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof SystemException) {
