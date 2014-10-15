@@ -92,7 +92,7 @@ public class URLCodecTest {
 
 		Assert.assertEquals(
 			animalsString,
-			URLCodec.decodeURL(escapedAnimalsString, false));
+			URLCodec.decodeURL(escapedAnimalsString, StringPool.UTF8, false));
 		Assert.assertEquals(
 			StringUtil.toLowerCase(escapedAnimalsString),
 			StringUtil.toLowerCase(
@@ -101,7 +101,7 @@ public class URLCodecTest {
 
 	protected void testDecodeURL(String encodedURLString) {
 		try {
-			URLCodec.decodeURL(encodedURLString, false);
+			URLCodec.decodeURL(encodedURLString, StringPool.UTF8, false);
 
 			Assert.fail(encodedURLString);
 		}
