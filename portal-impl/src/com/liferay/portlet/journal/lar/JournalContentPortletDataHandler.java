@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -168,6 +169,15 @@ public class JournalContentPortletDataHandler
 
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "selected-web-content")) {
+
+			Map<String, String[]> parameterMap =
+				portletDataContext.getParameterMap();
+
+			parameterMap.put(
+				PortletDataHandlerControl.getNamespacedControlName(
+					JournalContentPortletDataHandler.NAMESPACE,
+					"referenced-content"),
+				new String[] {String.valueOf(true)});
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, article);
