@@ -1398,6 +1398,7 @@
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Day" />
 		</execute>
+
 		<execute action="PGCalendarDayView#refresh" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
