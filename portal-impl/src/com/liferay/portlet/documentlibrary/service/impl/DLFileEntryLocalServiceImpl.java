@@ -884,6 +884,10 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		if (latestVersion) {
+			dlAppHelperLocalService.registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE,
+				new LiferayFileEntry(dlFileEntry));
+
 			return dlFileEntry;
 		}
 
