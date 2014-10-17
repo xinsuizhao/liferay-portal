@@ -71,7 +71,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		if (fileMaxSize == 0) {
 			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 
-            fileMaxSize /= 1024;
+			fileMaxSize /= 1024;
 		}
 		%>
 
