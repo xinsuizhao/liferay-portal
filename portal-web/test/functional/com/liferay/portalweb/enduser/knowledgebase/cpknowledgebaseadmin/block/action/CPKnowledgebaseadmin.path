@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_BUTTON</td>
+	<td>//a[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIONS_BUTTON</td>
 	<td>//li[contains(@id,'knowledgebaseportlet_actionsButton')]/a</td>
 	<td></td>
@@ -46,6 +51,58 @@
 <tr>
 	<td>CONFIRMATION</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_ARTICLES</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Articles')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TEMPLATES</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Templates')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_FEEDBACK</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Feedback')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_MENULIST-->
+<tr>
+	<td>ADD_MENULIST_ADD_ARTICLE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Add Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_FOLDER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_IMPORT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_ARTICLE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Basic Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_TEMPLATE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Template')]</td>
 	<td></td>
 </tr>
 <tr>
