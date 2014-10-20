@@ -663,22 +663,20 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			return;
 		}
 
+		fieldsMap = new LinkedHashMap<String, Map<String, String>>();
+		persistentFieldsMap = new LinkedHashMap<String, Map<String, String>>();
+		transientFieldsMap = new LinkedHashMap<String, Map<String, String>>();
+
 		if (getParentStructureId() > 0) {
 			DDMStructure parentStructure =
 				DDMStructureLocalServiceUtil.getStructure(
 					getParentStructureId());
 
-			fieldsMap = parentStructure.getFieldsMap(locale, true);
-			persistentFieldsMap = parentStructure.getPersistentFieldsMap(
-				locale);
-			transientFieldsMap = parentStructure.getTransientFieldsMap(locale);
-		}
-		else {
-			fieldsMap = new LinkedHashMap<String, Map<String, String>>();
-			persistentFieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
-			transientFieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
+			fieldsMap.putAll(parentStructure.getFieldsMap(locale, true));
+			persistentFieldsMap.putAll(
+				parentStructure.getPersistentFieldsMap(locale));
+			transientFieldsMap.putAll(
+				parentStructure.getTransientFieldsMap(locale));
 		}
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
