@@ -1132,7 +1132,8 @@ public class UserFinderImpl
 				join = sb.toString();
 			}
 			else {
-				join = "WHERE (Organization_.treePath LIKE '%/ /%')";			}
+				join = "WHERE (Organization_.treePath LIKE '%/ /%')";
+			}
 		}
 		else if (key.equals("usersPasswordPolicies")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_PASSWORD_POLICIES);
