@@ -102,7 +102,7 @@ public class UserPermissionImpl implements UserPermission {
 					 actionId.equals(ActionKeys.PERMISSIONS) ||
 					 actionId.equals(ActionKeys.UPDATE)) &&
 					!permissionChecker.isOmniadmin() &&
-					(PortalUtil.isOmniadmin(user) ||
+					(PortalUtil.isOmniadmin(userId) ||
 					 (!permissionChecker.isCompanyAdmin() &&
 					  PortalUtil.isCompanyAdmin(user)))) {
 
