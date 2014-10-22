@@ -114,7 +114,6 @@ public class Transformer {
 			return null;
 		}
 
-		long classNameId = 0;
 		long companyId = 0;
 		long companyGroupId = 0;
 		long scopeGroupId = 0;
@@ -138,6 +137,8 @@ public class Transformer {
 
 		try {
 			prepareTemplate(themeDisplay, template);
+
+			long classNameId = 0;
 
 			if (contextObjects != null) {
 				for (String key : contextObjects.keySet()) {
@@ -272,19 +273,19 @@ public class Transformer {
 			output = LocalizationUtil.getLocalization(xml, languageId);
 		}
 		else {
-			long articleGroupId = 0;
-			long classNameId = 0;
 			long companyId = 0;
 			long companyGroupId = 0;
+			long articleGroupId = 0;
+			long classNameId = 0;
 
 			if (tokens != null) {
+				companyId = GetterUtil.getLong(tokens.get("company_id"));
+				companyGroupId = GetterUtil.getLong(
+					tokens.get("company_group_id"));
 				articleGroupId = GetterUtil.getLong(
 					tokens.get("article_group_id"));
 				classNameId = GetterUtil.getLong(
 					tokens.get(TemplateConstants.TEMPLATE_CLASS_NAME_ID));
-				companyId = GetterUtil.getLong(tokens.get("company_id"));
-				companyGroupId = GetterUtil.getLong(
-					tokens.get("company_group_id"));
 			}
 
 			long scopeGroupId = 0;
