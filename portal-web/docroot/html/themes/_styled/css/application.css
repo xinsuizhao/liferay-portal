@@ -688,8 +688,8 @@
 
 .ie8 {
 	.row-fluid {
-		INPUT[class*='span'].search-query {
-			line-height: 20px; 
+		input[class*=span].search-query {
+			line-height: 20px;
 			min-height: 20px;
 		}
 	}
