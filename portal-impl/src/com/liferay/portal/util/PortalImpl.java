@@ -6421,7 +6421,8 @@ public class PortalImpl implements Portal {
 		return OmniadminUtil.isOmniadmin(userId);
 	}
 
-	public static boolean isOmniadmin(User user) {
+	@Override
+	public boolean isOmniadmin(User user) {
 		return OmniadminUtil.isOmniadmin(user);
 	}
 
