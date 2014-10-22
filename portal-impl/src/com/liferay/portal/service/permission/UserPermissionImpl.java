@@ -107,17 +107,6 @@ public class UserPermissionImpl implements UserPermission {
 			if (userId != ResourceConstants.PRIMKEY_DNE) {
 				user = UserLocalServiceUtil.getUserById(userId);
 
-				if ((actionId.equals(ActionKeys.DELETE) ||
-						 actionId.equals(ActionKeys.IMPERSONATE) ||
-						 actionId.equals(ActionKeys.PERMISSIONS) ||
-						 actionId.equals(ActionKeys.UPDATE)) &&
-						 PortalUtil.isCompanyAdmin(user) &&
-						 !(permissionChecker.isOmniadmin() ||
-						 permissionChecker.isCompanyAdmin())) {
-
-						return false;
-					}
-
 				Contact contact = user.getContact();
 
 				if (permissionChecker.hasOwnerPermission(
