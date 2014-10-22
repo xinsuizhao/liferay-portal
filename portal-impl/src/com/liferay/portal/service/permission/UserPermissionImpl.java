@@ -91,6 +91,16 @@ public class UserPermissionImpl implements UserPermission {
 		PermissionChecker permissionChecker, long userId,
 		long[] organizationIds, String actionId) {
 
+		if ((actionId.equals(ActionKeys.DELETE) ||
+			 actionId.equals(ActionKeys.IMPERSONATE) ||
+			 actionId.equals(ActionKeys.PERMISSIONS) ||
+			 actionId.equals(ActionKeys.UPDATE)) &&
+			PortalUtil.isOmniadmin(userId) &&
+			!permissionChecker.isOmniadmin()) {
+
+			return false;
+		}
+
 		try {
 			User user = null;
 
@@ -101,10 +111,9 @@ public class UserPermissionImpl implements UserPermission {
 					 actionId.equals(ActionKeys.IMPERSONATE) ||
 					 actionId.equals(ActionKeys.PERMISSIONS) ||
 					 actionId.equals(ActionKeys.UPDATE)) &&
+					PortalUtil.isCompanyAdmin(user) &&
 					!permissionChecker.isOmniadmin() &&
-					(PortalUtil.isOmniadmin(userId) ||
-					 (!permissionChecker.isCompanyAdmin() &&
-					  PortalUtil.isCompanyAdmin(user)))) {
+					!permissionChecker.isCompanyAdmin()) {
 
 					return false;
 				}
