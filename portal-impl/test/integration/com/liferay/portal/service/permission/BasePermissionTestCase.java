@@ -94,9 +94,8 @@ public abstract class BasePermissionTestCase {
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
 			ActionKeys.VIEW);
 
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, getResourceName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
+		RoleTestUtil.removeResourcePermission(RoleConstants.GUEST,
+			getResourceName(), ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
 	}
 
