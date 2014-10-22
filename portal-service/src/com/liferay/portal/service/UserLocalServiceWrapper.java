@@ -1465,7 +1465,7 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @param login either the user's email address, screen name, or primary
 	key depending on the value of <code>authType</code>
 	* @param password the user's password
-	* @return  the user's primary key if authentication is successful;
+	* @return the user's primary key if authentication is successful;
 	<code>0</code> otherwise
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
