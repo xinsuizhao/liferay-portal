@@ -28,6 +28,8 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -242,16 +244,55 @@ public class JournalTransformerTest {
 	public void testVMTransformation() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", "Joe Bloggs");
+		DDMStructure ddmStructure = null;
+		DDMTemplate ddmTemplate = null;
 
-		String script = "$name.getData()";
+		try {
+			ddmStructure = DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), "name");
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			String xsl = "$name.getData()";
 
-		Assert.assertEquals("Joe Bloggs", content);
+			ddmTemplate = DDMTemplateTestUtil.addTemplate(
+				ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
+				xsl);
+
+			String xml = DDMStructureTestUtil.getSampleStructuredContent(
+				"name", "Joe Bloggs");
+
+			String script =
+				"#parse(\"$templatesPath/" +
+					ddmTemplate.getTemplateKey() + "\")";
+
+			String content = JournalUtil.transform(
+				null, tokens, Constants.VIEW, "en_US", xml, script,
+				TemplateConstants.LANG_TYPE_VM);
+
+			Assert.assertEquals("Joe Bloggs", content);
+
+			//journalTemplatePath is deprecated but need to still test
+			//until removed
+			String legacyScript =
+				"#parse(\"$journalTemplatesPath/" +
+					ddmTemplate.getTemplateKey() + "\")";
+
+			content = JournalUtil.transform(
+				null, tokens, Constants.VIEW, "en_US", xml, legacyScript,
+				TemplateConstants.LANG_TYPE_VM);
+
+			Assert.assertEquals("Joe Bloggs", content);
+		}
+		finally {
+			if (ddmTemplate != null) {
+				DDMTemplateLocalServiceUtil.deleteDDMTemplate(
+					ddmTemplate.getTemplateId());
+			}
+
+			if (ddmStructure != null) {
+				DDMStructureLocalServiceUtil.deleteStructure(
+					ddmStructure.getStructureId());
+			}
+		}
 	}
 
 	protected Map<String, String> getTokens() throws Exception {
