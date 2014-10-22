@@ -686,6 +686,15 @@
 	}
 }
 
+.ie8 {
+	.row-fluid {
+		INPUT[class*='span'].search-query {
+			line-height: 20px; 
+			min-height: 20px;
+		}
+	}
+}
+
 .ios.mobile {
 	.modal-content .dialog-iframe-bd {
 		overflow: auto;
