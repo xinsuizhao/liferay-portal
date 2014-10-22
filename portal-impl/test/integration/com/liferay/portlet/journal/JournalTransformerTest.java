@@ -260,24 +260,18 @@ public class JournalTransformerTest {
 			String xml = DDMStructureTestUtil.getSampleStructuredContent(
 				"name", "Joe Bloggs");
 
-			String script =
-				"#parse(\"$templatesPath/" +
-					ddmTemplate.getTemplateKey() + "\")";
-
 			String content = JournalUtil.transform(
-				null, tokens, Constants.VIEW, "en_US", xml, script,
+				null, tokens, Constants.VIEW, "en_US", xml,
+				"#parse(\"$templatesPath/" +
+					ddmTemplate.getTemplateKey() + "\")",
 				TemplateConstants.LANG_TYPE_VM);
 
 			Assert.assertEquals("Joe Bloggs", content);
 
-			//journalTemplatePath is deprecated but need to still test
-			//until removed
-			String legacyScript =
-				"#parse(\"$journalTemplatesPath/" +
-					ddmTemplate.getTemplateKey() + "\")";
-
 			content = JournalUtil.transform(
-				null, tokens, Constants.VIEW, "en_US", xml, legacyScript,
+				null, tokens, Constants.VIEW, "en_US", xml,
+				"#parse(\"$journalTemplatesPath/" +
+								ddmTemplate.getTemplateKey() + "\")",
 				TemplateConstants.LANG_TYPE_VM);
 
 			Assert.assertEquals("Joe Bloggs", content);
