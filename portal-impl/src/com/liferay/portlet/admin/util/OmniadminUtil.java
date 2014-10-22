@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -56,6 +57,12 @@ public class OmniadminUtil {
 	}
 
 	public static boolean isOmniadmin(User user) {
+		if (CompanyThreadLocal.getCompanyId() !=
+				PortalInstances.getDefaultCompanyId()) {
+
+			return false;
+		}
+
 		long userId = user.getUserId();
 
 		if (userId <= 0) {
