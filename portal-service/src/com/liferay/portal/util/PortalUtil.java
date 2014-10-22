@@ -1779,10 +1779,6 @@ public class PortalUtil {
 		return getPortal().isOmniadmin(userId);
 	}
 
-	public static boolean isOmniadmin(User user) {
-		return getPortal().isOmniadmin(user);
-	}
-
 	public static boolean isReservedParameter(String name) {
 		return getPortal().isReservedParameter(name);
 	}

@@ -1269,8 +1269,6 @@ public interface Portal {
 
 	public boolean isOmniadmin(long userId);
 
-	public boolean isOmniadmin(User user);
-
 	public boolean isReservedParameter(String name);
 
 	public boolean isRSSFeedsEnabled();
