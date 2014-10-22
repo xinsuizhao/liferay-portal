@@ -206,7 +206,7 @@ public class PermissionCheckerTest {
 
 		PermissionChecker permissionChecker = _getPermissionChecker(user);
 
-		Assert.assertTrue(permissionChecker.isOmniadmin());
+		Assert.assertFalse(permissionChecker.isOmniadmin());
 	}
 
 	@Test
@@ -214,7 +214,7 @@ public class PermissionCheckerTest {
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			TestPropsValues.getUser());
 
-		Assert.assertTrue(permissionChecker.isOmniadmin());
+		Assert.assertFalse(permissionChecker.isOmniadmin());
 	}
 
 	@Test
