@@ -428,8 +428,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		return search(
-			companyId, groupIds, userId, className, null, null, null, null,
-			null, status, false, start, end);
+			companyId, groupIds, userId, className, keywords, keywords,
+			keywords, null, null, status, false, start, end);
 	}
 
 	/**
