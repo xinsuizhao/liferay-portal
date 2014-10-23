@@ -1,62 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="ACTION_MENULIST_EXPIRE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_MENULIST_FOLDER">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_MENULIST_SUBFOLDER">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ENTRY_DESCRIPTIVE_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ENTRY_MENULIST_MOVE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="MANAGE_MENULIST_STRUCTURES">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="MANAGE_MENULIST_TEMPLATES">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="TOOLBAR_ACTIONS">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="TOOLBAR_ADD">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="TOOLBAR_MANAGE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="assertElementPresent">
 		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL">
 			<execute function="AssertElementPresent#pauseAssertVisible" />
@@ -81,21 +23,7 @@
 		</case>
 	</command>
 
-	<command name="click">
-		<case locator-key1="DROPDOWN_TOGGLE">
-			<execute function="Click#click" />
-		</case>
-
-		<case locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX">
-			<execute function="Click#click" />
-		</case>
-	</command>
-
 	<command name="isElementPresent">
-		<case locator-key1="DROPDOWN_TOGGLE">
-			<execute function="IsElementPresent#pauseIsElementPresent" />
-		</case>
-
 		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL">
 			<execute function="IsElementPresent#pauseIsElementPresent" />
 		</case>

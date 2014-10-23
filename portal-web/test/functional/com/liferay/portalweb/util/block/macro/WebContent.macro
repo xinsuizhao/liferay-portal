@@ -529,19 +529,8 @@
 	</command>
 
 	<command name="expireCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<if>
-			<condition action="CPWebcontent#isElementPresent" locator-key1="DROPDOWN_TOGGLE" />
-			<then>
-				<execute action="CPWebcontent#click" locator-key1="DROPDOWN_TOGGLE" />
-			</then>
-			<else>
-				<execute action="CPWebcontent#click" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
-				<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-			</else>
-		</if>
-
+		<execute action="CPWebcontent#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ACTION_MENULIST_EXPIRE" value1="Expire" />
 	</command>
 
