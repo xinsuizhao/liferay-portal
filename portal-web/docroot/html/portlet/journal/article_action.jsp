@@ -71,6 +71,7 @@ else {
 			<liferay-security:permissionsURL
 				modelResource="<%= JournalArticle.class.getName() %>"
 				modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
+				resourceGroupId="<%= String.valueOf(article.getGroupId()) %>"
 				resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
