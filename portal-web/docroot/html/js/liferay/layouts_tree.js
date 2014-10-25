@@ -9,14 +9,6 @@ AUI.add(
 
 		var NODE_LINK_TPL = '<a class="{cssClass}" data-url="{url}" data-uuid="{uuid}" href="{href}" id="{id}" title="{title}">{label}</a>';
 
-		var STR_BOUNDING_BOX = 'boundingBox';
-
-		var STR_EMPTY = '';
-
-		var STR_ID = 'id';
-
-		var STR_PARENT_NODE = 'parentNode';
-
 		var TREE_CSS_CLASSES = {
 			iconCheck: 'tree-icon icon-check',
 			iconCollapsed: 'icon-file',
@@ -73,7 +65,7 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var boundingBox = instance.get(STR_BOUNDING_BOX);
+				var boundingBox = instance.get('boundingBox');
 
 				instance._treeLoadingElement = boundingBox.ancestor().insertBefore(
 					A.Node.create(TREE_LOADING_EL_TPL),
@@ -82,7 +74,7 @@ AUI.add(
 
 				instance.set('lazyLoad', false);
 
-				instance._treeId = instance.get(STR_BOUNDING_BOX).attr('data-treeid');
+				instance._treeId = instance.get('boundingBox').attr('data-treeid');
 
 				instance._bindUILTBase();
 			},
@@ -96,15 +88,15 @@ AUI.add(
 			},
 
 			extractGroupId: function(node) {
-				return node.get(STR_ID).match(/groupId_(\d+)/)[1];
+				return node.get('id').match(/groupId_(\d+)/)[1];
 			},
 
 			extractLayoutId: function(node) {
-				return node.get(STR_ID).match(/layoutId_(\d+)/)[1];
+				return node.get('id').match(/layoutId_(\d+)/)[1];
 			},
 
 			extractPlid: function(node) {
-				return node.get(STR_ID).match(/plid_(\d+)/)[1];
+				return node.get('id').match(/plid_(\d+)/)[1];
 			},
 
 			restoreSelectedNode: function(node) {
@@ -124,6 +116,8 @@ AUI.add(
 				var instance = this;
 
 				instance._treeLoadingElement.hide();
+
+				var selPlid = instance.get('selPlid');
 
 				var rootNode = instance.getChildren()[0];
 
@@ -168,13 +162,13 @@ AUI.add(
 					}
 				);
 
-				data.id = data.url ? Util.escapeHTML(instance._treeId + '_layout_' + data.url.substring(1)) : STR_EMPTY;
+				data.id = data.url ? Util.escapeHTML(instance._treeId + '_layout_' + data.url.substring(1)) : '';
 
-				data.title = data.title ? data.title : STR_EMPTY;
+				data.title = data.title ? data.title : '';
 
-				data.url = data.url ? Util.escapeHTML(data.url) : STR_EMPTY;
+				data.url = data.url ? Util.escapeHTML(data.url) : '';
 
-				data.uuid = data.uuid ? Util.escapeHTML(data.uuid) : STR_EMPTY;
+				data.uuid = data.uuid ? Util.escapeHTML(data.uuid) : '';
 
 				return A.Lang.sub(NODE_LINK_TPL, data);
 			},
@@ -250,8 +244,8 @@ AUI.add(
 					newNode.children = instance._formatJSONResults(nodeChildren);
 				}
 
-				var cssClass = STR_EMPTY;
-				var title = STR_EMPTY;
+				var cssClass = '';
+				var title = '';
 				var name = Util.escapeHTML(node.name);
 
 				if (node.layoutRevisionId) {
@@ -280,13 +274,13 @@ AUI.add(
 				return newNode;
 			},
 
-			_formatNodeLabel: function(node, cssClass, name, title) {
+			_formatNodeLabel: function(node, cssClass, label, title) {
 				var instance = this;
 
 				var label = instance._createNodeLink(
 					{
 						cssClass: cssClass,
-						label: name,
+						label: label,
 						plid: node.plid,
 						title: title,
 						url: node.friendlyURL,
@@ -386,7 +380,7 @@ AUI.add(
 
 				var tree = event.tree;
 
-				var index = tree.dragNode.get(STR_PARENT_NODE).getChildrenLength() - 1;
+				var index = tree.dragNode.get('parentNode').getChildrenLength() - 1;
 
 				instance._updateLayoutParent(
 					instance.extractPlid(tree.dragNode),
@@ -400,11 +394,11 @@ AUI.add(
 
 				var tree = event.tree;
 
-				var index = tree.dragNode.get(STR_PARENT_NODE).indexOf(tree.dragNode);
+				var index = tree.dragNode.get('parentNode').indexOf(tree.dragNode);
 
 				instance._updateLayoutParent(
 					instance.extractPlid(tree.dragNode),
-					instance.extractPlid(tree.dropNode.get(STR_PARENT_NODE)),
+					instance.extractPlid(tree.dropNode.get('parentNode')),
 					index
 				);
 			},
@@ -422,12 +416,14 @@ AUI.add(
 
 				instance.set('children', children);
 
-				instance.getChildren()[0].get('contentBox').addClass('lfr-root-node');
+				instance.getChildren()[0].get('contentBox').addClass('lfr-root-node')
 
 				return value;
 			},
 
 			_updateLayout: function(data) {
+				var instance = this;
+
 				A.io.request(
 					themeDisplay.getPathMain() + '/layouts_admin/update_page',
 					{
