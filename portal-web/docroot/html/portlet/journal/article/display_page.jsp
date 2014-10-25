@@ -403,7 +403,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 
 					var processTreeTask = A.debounce(
 						function() {
-							treeViewInstance = treeContainer.getData('tree-view');
+							treeViewInstance = treeContainer.getData('treeInstance');
 
 							if (treeViewInstance) {
 								if (publicPages) {
