@@ -223,7 +223,7 @@ AUI.add(
 					total = nodeChildren.total;
 				}
 
-				var expanded = (childLayouts.length > 0);;
+				var expanded = (total > 0);
 
 				var maxChildren = instance.get('maxChildren');
 
@@ -243,7 +243,7 @@ AUI.add(
 						start: Math.max(childLayouts.length - maxChildren, 0),
 						total: total
 					},
-					type: (total > 0) ? 'io' : 'node'
+					type: (nodeChildren && expanded) ? 'node' : 'io'
 				};
 
 				if (nodeChildren && expanded) {
