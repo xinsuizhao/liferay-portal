@@ -497,6 +497,10 @@ public class LuceneHelperImplTest {
 	@Aspect
 	public static class LuceneClusterUtilAdvice {
 
+		public static void reset() {
+			_COMPANY_ID = Long.MAX_VALUE;
+		}
+
 		@Around(
 			"execution(* com.liferay.portal.search.lucene.cluster." +
 				"LuceneClusterUtil.loadIndexesFromCluster(long))")
@@ -776,6 +780,13 @@ public class LuceneHelperImplTest {
 			_clusterEventListeners.remove(clusterEventListener);
 		}
 
+		public void reset() {
+			_addresses.clear();
+			_autoResponse = true;
+			_invokeMethodThrowException = false;
+			_port = -1;
+		}
+
 		public void setAutoResponse(boolean autoResponse) {
 			_autoResponse = autoResponse;
 		}
@@ -819,11 +830,11 @@ public class LuceneHelperImplTest {
 
 		private List<Address> _addresses = new ArrayList<Address>();
 		private boolean _autoResponse = true;
-		private List<ClusterEventListener> _clusterEventListeners =
+		private final List<ClusterEventListener> _clusterEventListeners =
 			new ArrayList<ClusterEventListener>();
-		private MethodKey _createTokenMethodKey = new MethodKey(
+		private final MethodKey _createTokenMethodKey = new MethodKey(
 			TransientTokenUtil.class, "createToken", long.class);
-		private MethodKey _getLastGenerationMethodKey = new MethodKey(
+		private final MethodKey _getLastGenerationMethodKey = new MethodKey(
 			LuceneHelperUtil.class, "getLastGeneration", long.class);
 		private boolean _invokeMethodThrowException = false;
 		private int _port = 0;
