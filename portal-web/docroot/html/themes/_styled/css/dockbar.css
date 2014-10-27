@@ -763,6 +763,15 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
+		.dockbar-split .dockbar {
+			height: auto;
+			position: relative;
+
+			.navbar-inner {
+				width: auto;
+			}
+		}
+
 		.user-avatar-image {
 			width: 18px;
 		}
