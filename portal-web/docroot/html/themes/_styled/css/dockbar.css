@@ -753,4 +753,10 @@ $editLayoutPanelWidth: 460px;
 			width: 515px;
 		}
 	}
+
+	@include respond-to(phone, tablet) {
+		.user-avatar-image {
+			width: 18px;
+		}
+	}
 }
