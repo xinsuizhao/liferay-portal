@@ -755,6 +755,14 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	@include respond-to(phone, tablet) {
+		#navigation {
+			display: none;
+
+			&.open {
+				display: block;
+			}
+		}
+
 		.user-avatar-image {
 			width: 18px;
 		}
