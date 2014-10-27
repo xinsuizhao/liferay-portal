@@ -283,7 +283,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="ConfigureAPPortletEnableRatings" priority="4">
+	<command name="ConfigureAPPortletEnableRatings" priority="4">
 		<var name="assetTitle" value="WC WebContent Title" />
 		<var name="enableRatings" value="true" />
 		<var name="webContentContent" value="WC WebContent Content" />

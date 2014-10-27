@@ -346,7 +346,7 @@
 		<execute macro="PortalSettings#viewAuthenticationSiteMinderCP" />
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="ViewContentSharingDisabledAcrossSitesViaAP" priority="5">
+	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="5">
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
+	<command name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="liferaySiteName" value="Liferay" />
