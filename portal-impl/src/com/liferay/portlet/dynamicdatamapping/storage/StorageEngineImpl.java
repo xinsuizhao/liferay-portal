@@ -259,6 +259,10 @@ public class StorageEngineImpl implements StorageEngine {
 		}
 	}
 
+	private StorageAdapter _defaultStorageAdapter;
+	private Map<String, StorageAdapter> _storageAdapters =
+		new HashMap<String, StorageAdapter>();
+
 	protected void sanitizeHTMLFields(
 			Fields fields, ServiceContext serviceContext)
 		throws StorageException {
@@ -278,8 +282,8 @@ public class StorageEngineImpl implements StorageEngine {
 						continue;
 					}
 
-					List<Serializable> sanitizedValues =
-						new ArrayList<Serializable>(values.size());
+					List<Serializable> sanitizedValues = new ArrayList<>(
+						values.size());
 
 					for (Serializable value : values) {
 						String sanitizedValue = SanitizerUtil.sanitize(
@@ -300,9 +304,5 @@ public class StorageEngineImpl implements StorageEngine {
 			throw new StorageException("Unable to sanitize DDM Field", e);
 		}
 	}
-
-	private StorageAdapter _defaultStorageAdapter;
-	private Map<String, StorageAdapter> _storageAdapters =
-		new HashMap<String, StorageAdapter>();
 
 }
