@@ -97,11 +97,6 @@ public class HtmlImpl implements Html {
 
 					break;
 
-				case '\u2019':
-					replacement = "&rsquo;";
-
-					break;
-
 				case '"':
 					replacement = "&#034;";
 
