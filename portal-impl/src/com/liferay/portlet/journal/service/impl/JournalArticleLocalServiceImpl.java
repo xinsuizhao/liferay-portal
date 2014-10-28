@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -1818,7 +1819,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			tokens.put(
-				"class_name_id",
+				TemplateConstants.CLASS_NAME_ID,
 				String.valueOf(
 					ClassNameLocalServiceUtil.getClassNameId(
 						DDMStructure.class)));
