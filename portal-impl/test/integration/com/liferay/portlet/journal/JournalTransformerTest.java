@@ -251,11 +251,9 @@ public class JournalTransformerTest {
 			ddmStructure = DDMStructureTestUtil.addStructure(
 				TestPropsValues.getGroupId(), "name");
 
-			String xsl = "$name.getData()";
-
 			ddmTemplate = DDMTemplateTestUtil.addTemplate(
 				ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
-				xsl);
+				"$name.getData()");
 
 			String xml = DDMStructureTestUtil.getSampleStructuredContent(
 				"name", "Joe Bloggs");
