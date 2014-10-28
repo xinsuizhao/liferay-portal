@@ -78,7 +78,6 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -1820,9 +1819,7 @@ public class JournalArticleLocalServiceImpl
 
 			tokens.put(
 				TemplateConstants.CLASS_NAME_ID,
-				String.valueOf(
-					ClassNameLocalServiceUtil.getClassNameId(
-						DDMStructure.class)));
+				String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
 			tokens.put("structure_id", article.getStructureId());
 			tokens.put("template_id", ddmTemplateKey);
 		}
