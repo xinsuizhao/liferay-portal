@@ -6,8 +6,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
 	>
-	<tlib-version>1.0</tlib-version>
 	<description>Provides the Liferay UI component tags, prefixed with <![CDATA[<code>liferay-ui:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
@@ -635,7 +635,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Set<![CDATA[<Integer>]]></type>
+			<type>java.util.Set</type>
 		</attribute>
 		<attribute>
 			<description>Sets the day of the month to highlight in the calendar.</description>
@@ -1271,11 +1271,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Stores miscellaneous data. This data is not shared with the browser.</description>
+			<description>Stores miscellaneous data. This data is not shared with the browser. The Map holds key, value pairs of <![CDATA[<String, Object>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Map<![CDATA[<String, Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description>Sets the icon from a Bootstrap icon CSS Class. Note that any image for the <![CDATA[<code>image</code>]]> attribute takes precedence. Icon CSS classes to specify for this attribute can be found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
@@ -2030,7 +2030,7 @@
 			<name>leftList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.List<![CDATA[<KeyValuePair>]]></type>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<description>Sets a function to be called on a change in selection in the left list.</description>
@@ -2062,7 +2062,7 @@
 			<name>rightList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.List<![CDATA[<KeyValuePair>]]></type>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<description>Sets a function to be called on a change in selection in the right list.</description>
