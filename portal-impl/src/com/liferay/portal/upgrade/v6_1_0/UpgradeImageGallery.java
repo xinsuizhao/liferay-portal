@@ -20,6 +20,7 @@ import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -558,15 +559,14 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected byte[] getHookImageAsBytes(Image image)
-		throws IOException, PortalException, SQLException {
-
+		throws IOException, PortalException, SQLException, SystemException {
 		InputStream is = getHookImageAsStream(image);
 
 		return FileUtil.getBytes(is);
 	}
 
 	protected InputStream getHookImageAsStream(Image image)
-		throws PortalException, SQLException {
+		throws PortalException, SQLException, SystemException {
 
 		InputStream is = null;
 
