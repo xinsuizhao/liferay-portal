@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -291,6 +292,11 @@ public class JournalTransformerTest {
 		Map<String, String> tokens = JournalUtil.getTokens(
 			TestPropsValues.getGroupId(), null, null);
 
+		tokens.put(
+			TemplateConstants.CLASS_NAME_ID,
+			String.valueOf(
+				ClassNameLocalServiceUtil.getClassNameId(
+					DDMStructure.class.getName())));
 		tokens.put(
 			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));
 		tokens.put(
