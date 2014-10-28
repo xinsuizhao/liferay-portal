@@ -47,7 +47,7 @@
 	}
 	%>
 
-	<div class="nav-menu sites-directory-taglib">
+	<div class="sites-directory-taglib nav-menu">
 		<c:choose>
 			<c:when test="<%= hidden %>">
 				<div class="alert alert-info">
