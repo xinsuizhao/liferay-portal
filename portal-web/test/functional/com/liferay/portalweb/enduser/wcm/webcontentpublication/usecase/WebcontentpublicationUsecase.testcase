@@ -296,6 +296,28 @@
 			<var name="webContentTitle" value="WC WebContent5 Title" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="webContentContent" value="WC WebContent6 Content" />
+			<var name="webContentTitle" value="WC WebContent6 Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="webContentContent" value="WC WebContent7 Content" />
+			<var name="webContentTitle" value="WC WebContent7 Title" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -305,7 +327,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configurePaginationPG">
-			<var name="paginationNumber" value="3" />
+			<var name="paginationNumber" value="5" />
 			<var name="paginationType" value="Regular" />
 			<var name="portletName" value="Asset Publisher Portlet" />
 		</execute>
@@ -316,16 +338,16 @@
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
 			<var name="nextPageClick" value="true" />
-			<var name="pageMod" value="1 - 3 of 5" />
+			<var name="pageMod" value="1 - 5 of 7" />
 			<var name="pageNumber" value="1 of 2" />
-			<var name="paginationNumber" value="3" />
+			<var name="paginationNumber" value="5" />
 			<var name="paginationType" value="Regular" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="pageMod" value="4 - 5 of 5" />
+			<var name="pageMod" value="6 - 7 of 7" />
 			<var name="pageNumber" value="2 of 2" />
-			<var name="paginationNumber" value="3" />
+			<var name="paginationNumber" value="5" />
 			<var name="paginationType" value="Regular" />
 		</execute>
 
@@ -348,13 +370,13 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent4 Content" />
-			<var name="assetTitle" value="WC WebContent4 Title" />
+			<var name="assetContent" value="WC WebContent6 Content" />
+			<var name="assetTitle" value="WC WebContent6 Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent5 Content" />
-			<var name="assetTitle" value="WC WebContent5 Title" />
+			<var name="assetContent" value="WC WebContent7 Content" />
+			<var name="assetTitle" value="WC WebContent7 Title" />
 		</execute>
 
 		<execute macro="Category#viewRemoveFilterViaCategoriesNavigationPG">
@@ -364,16 +386,16 @@
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
 			<var name="nextPageClick" value="true" />
-			<var name="pageMod" value="1 - 3 of 5" />
+			<var name="pageMod" value="1 - 5 of 7" />
 			<var name="pageNumber" value="1 of 2" />
-			<var name="paginationNumber" value="3" />
+			<var name="paginationNumber" value="5" />
 			<var name="paginationType" value="Regular" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
-			<var name="pageMod" value="4 - 5 of 5" />
+			<var name="pageMod" value="6 - 7 of 7" />
 			<var name="pageNumber" value="2 of 2" />
-			<var name="paginationNumber" value="3" />
+			<var name="paginationNumber" value="5" />
 			<var name="paginationType" value="Regular" />
 		</execute>
 	</command>
@@ -381,10 +403,10 @@
 	<command name="AssetPublisherFilterAndOrderByFieldType" priority="5">
 		<var name="localizedLanguage" value="German (Germany)" />
 		<var name="structureDescription" value="WC Structure Description" />
-		<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+		<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Select,Text,Text Box" />
 		<var name="structureName" value="WC Structure Name" />
 		<var name="templateDescription" value="WC Template Description" />
-		<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+		<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Select,Text,Text Box" />
 		<var name="templateFile" value="simple_all_fields_template.txt" />
 		<var name="templateName" value="WC Template Name" />
 		<var name="webContent1Title" value="Web Content1 Title" />
