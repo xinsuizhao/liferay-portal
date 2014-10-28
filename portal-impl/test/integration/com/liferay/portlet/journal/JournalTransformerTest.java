@@ -271,7 +271,7 @@ public class JournalTransformerTest {
 			content = JournalUtil.transform(
 				null, tokens, Constants.VIEW, "en_US", xml,
 				"#parse(\"$journalTemplatesPath/" +
-								ddmTemplate.getTemplateKey() + "\")",
+					ddmTemplate.getTemplateKey() + "\")",
 				TemplateConstants.LANG_TYPE_VM);
 
 			Assert.assertEquals("Joe Bloggs", content);
