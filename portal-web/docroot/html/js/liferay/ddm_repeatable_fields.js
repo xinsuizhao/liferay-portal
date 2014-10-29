@@ -74,8 +74,10 @@ AUI.add(
 							function(event) {
 								var fieldInputName = instance.getFieldInputName(event.fieldNode);
 
-								if (instance.liferayForm) {
-									var validatorRules = instance.liferayForm.formValidator.get('rules');
+								var liferayForm = instance.liferayForm;
+
+								if (liferayForm) {
+									var validatorRules = liferayForm.formValidator.get('rules');
 
 									if (event.type === 'liferay-ddm-repeatable-fields:repeat') {
 										validatorRules[fieldInputName] = validatorRules[instance.getFieldInputName(event.originalFieldNode)];
@@ -83,12 +85,12 @@ AUI.add(
 									else if (event.type === 'liferay-ddm-repeatable-fields:remove') {
 										delete validatorRules[fieldInputName];
 
-										var validatorField = instance.liferayForm.formValidator.getField(fieldInputName);
+										var validatorField = liferayForm.formValidator.getField(fieldInputName);
 
-										instance.liferayForm.formValidator.resetField(validatorField);
+										liferayForm.formValidator.resetField(validatorField);
 									}
 
-									instance.liferayForm.formValidator.set('rules', validatorRules);
+									liferayForm.formValidator.set('rules', validatorRules);
 								}
 							}
 						);
@@ -162,7 +164,7 @@ AUI.add(
 						return prefix.concat(
 							[
 								fieldNode.getData('fieldName'),
-								fieldNode.getData('fieldNamespace'),
+								fieldNode.getData('fieldNamespace')
 							]
 						).join('');
 					},
