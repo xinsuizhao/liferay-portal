@@ -1,4 +1,75 @@
 <definition>
+	<command name="downloadAndInstallApp">
+		<var name="key_appName" value="${appName}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Store" />
+		</execute>
+
+		<execute macro="Marketplace#signIn" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Store" />
+		</execute>
+
+		<execute macro="Marketplace#downloadApp">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Purchased" />
+		</execute>
+
+		<execute macro="Marketplace#installApp">
+			<var name="appName" value="${appName}" />
+		</execute>
+	</command>
+
+	<command name="downloadApp">
+		<execute action="CPStore#selectFrame" locator-key1="MARKETPLACE_IFRAME" />
+		<execute action="CPStore#type" locator-key1="SEARCH_FIELD" value1="${appName}" />
+		<execute action="CPStore#click" locator-key1="SEARCH_BUTTON" />
+
+		<var name="key_appName" value="${appName}" />
+
+		<execute action="CPStore#click" locator-key1="APP_TITLE" />
+		<execute action="CPStore#click" locator-key1="DETAILS_PURCHASE_BUTTON" />
+		<execute action="CPStore#click" locator-key1="PURCHASE_SELECT_BUTTON" />
+		<execute action="CPStore#check" locator-key1="PURCHASE_AGREE_CHECKBOX" />
+		<execute action="CPStore#click" locator-key1="PURCHASE_BUTTON" />
+		<execute action="CPStore#assertTextEquals" locator-key1="RECEIPT_TITLE" value1="Receipt" />
+		<execute action="CPStore#assertTextEquals" locator-key1="RECEIPT_COMPLETED_THANK_YOU_MESSAGE" value1="Thank You!" />
+		<execute action="CPStore#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="installApp">
+		<execute action="CPStore#selectFrame" locator-key1="MARKETPLACE_IFRAME" />
+		<execute action="CPStore#type" locator-key1="PURCHASED_SEARCH_TITLE_FIELD" value1="${appName}" />
+		<execute action="CPStore#click" locator-key1="PURCHASED_SEARCH_BUTTON" />
+		<execute action="CPStore#click" locator-key1="PURCHASED_INSTALL_BUTTON" />
+		<execute action="CPStore#selectFrame" value1="relative=top" />
+		<execute action="CPStore#pause" locator1="5000" />
+	</command>
+
+	<command name="signIn">
+		<execute action="CPStore#selectFrame" locator-key1="MARKETPLACE_IFRAME" />
+
+		<execute action="CPStore#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="CPStore#type" locator-key1="PASSWORD_FIELD" value1="${userEmailPassword}" />
+		<execute action="CPStore#click" locator-key1="SIGN_IN_BUTTON" />
+
+		<if>
+			<condition action="CPStore#isElementPresent" locator-key1="UPDATE_BUTTON" />
+			<then>
+				<execute action="CPStore#click" locator-key1="UPDATE_BUTTON" />
+			</then>
+		</if>
+	</command>
+
 	<command name="smoke">
 		<var name="bookmarkDescription1" value="Test Folder Entry 1 Description" />
 		<var name="bookmarkDescription2" value="Test Folder Entry 2 Description" />
