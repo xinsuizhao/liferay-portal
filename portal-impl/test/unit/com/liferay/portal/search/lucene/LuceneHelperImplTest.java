@@ -254,9 +254,6 @@ public class LuceneHelperImplTest {
 	)
 	@Test
 	public void testLoadIndexFromCluster() throws Exception {
-
-		// Test 1, load index without exception
-
 		MockServer mockServer = new MockServer();
 
 		mockServer.start();
@@ -282,142 +279,6 @@ public class LuceneHelperImplTest {
 			_RESPONSE_MESSAGE, _mockIndexAccessor.getResponseMessage());
 
 		mockServer.join();
-
-		// Test 2, unable to get response from cluster with debug enabled
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(3);
-		_mockClusterExecutor.setAutoResponse(false);
-
-		logRecords = _captureHandler.resetLogLevel(Level.FINE);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertEquals(2, logRecords.size());
-
-		_assertLogger(
-			logRecords.get(0),
-			"Unable to get cluster node response in 10000" +
-				TimeUnit.MILLISECONDS,
-			null);
-
-		_assertLogger(
-			logRecords.get(1),
-			"Unable to get cluster node response in 10000" +
-				TimeUnit.MILLISECONDS,
-			null);
-
-		// Test 3, unable to get response from cluster with debug disabled
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(3);
-		_mockClusterExecutor.setAutoResponse(false);
-
-		logRecords = _captureHandler.resetLogLevel(Level.INFO);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertTrue(logRecords.isEmpty());
-
-		// Test 4, unable to get address with debug enabled
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(2);
-
-		logRecords = _captureHandler.resetLogLevel(Level.FINE);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertEquals(1, logRecords.size());
-
-		_assertLogger(logRecords.get(0), "invalid port", null);
-
-		// Test 5, unable to get address with debug disabled
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(2);
-
-		logRecords = _captureHandler.resetLogLevel(Level.INFO);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertTrue(logRecords.isEmpty());
-
-		// Test 6, unable to load index
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(2);
-		_mockClusterExecutor.setPort(1024);
-
-		logRecords = _captureHandler.resetLogLevel(Level.FINE);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertEquals(2, logRecords.size());
-
-		_assertLogger(
-			logRecords.get(0),
-			"Start loading lucene index files from cluster node", null);
-		_assertLogger(
-			logRecords.get(1),
-			"Unable to load index for company " + _COMPANY_ID,
-			SystemException.class);
-
-		// Test 7, unable to invoke method on other nodes with debug enabled
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(2);
-		_mockClusterExecutor.setInvokeMethodThrowException(true);
-		_mockClusterExecutor.setPort(1024);
-
-		logRecords = _captureHandler.resetLogLevel(Level.FINE);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertEquals(1, logRecords.size());
-
-		_assertLogger(
-			logRecords.get(0),
-			"Suppress exception caused by remote method invocation",
-			Exception.class);
-
-		// Test 8, unable to invoke method on other nodes with debug disabled
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(2);
-		_mockClusterExecutor.setInvokeMethodThrowException(true);
-		_mockClusterExecutor.setPort(1024);
-
-		logRecords = _captureHandler.resetLogLevel(Level.INFO);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertTrue(logRecords.isEmpty());
-
-		// Test 9, no need to load from cluster
-
-		_mockClusterExecutor.reset();
-
-		_mockClusterExecutor.setNodeNumber(1);
-
-		logRecords = _captureHandler.resetLogLevel(Level.FINE);
-
-		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
-
-		Assert.assertEquals(1, logRecords.size());
-
-		_assertLogger(
-			logRecords.get(0),
-			"Do not load indexes because there is either one portal " +
-				"instance or no portal instances in the cluster",
-			null);
 	}
 
 	@AdviseWith(
@@ -438,6 +299,152 @@ public class LuceneHelperImplTest {
 
 		_assertLogger(
 			logRecords.get(0), "Load index from cluster is not enabled", null);
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class
+		}
+	)
+	@Test
+	public void testLoadIndexFromClusterWithException() throws Exception {
+
+		// Test 1, unable to get response from cluster with debug enabled
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(3);
+		_mockClusterExecutor.setAutoResponse(false);
+
+		List<LogRecord> logRecords = _captureHandler.resetLogLevel(Level.FINE);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertEquals(2, logRecords.size());
+
+		_assertLogger(
+			logRecords.get(0),
+			"Unable to get cluster node response in 10000" +
+				TimeUnit.MILLISECONDS,
+			null);
+
+		_assertLogger(
+			logRecords.get(1),
+			"Unable to get cluster node response in 10000" +
+				TimeUnit.MILLISECONDS,
+			null);
+
+		// Test 2, unable to get response from cluster with debug disabled
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(3);
+		_mockClusterExecutor.setAutoResponse(false);
+
+		logRecords = _captureHandler.resetLogLevel(Level.INFO);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertTrue(logRecords.isEmpty());
+
+		// Test 3, unable to get address with debug enabled
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(2);
+
+		logRecords = _captureHandler.resetLogLevel(Level.FINE);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertEquals(1, logRecords.size());
+
+		_assertLogger(logRecords.get(0), "invalid port", null);
+
+		// Test 4, unable to get address with debug disabled
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(2);
+
+		logRecords = _captureHandler.resetLogLevel(Level.INFO);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertTrue(logRecords.isEmpty());
+
+		// Test 5, unable to load index
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(2);
+		_mockClusterExecutor.setPort(1024);
+
+		logRecords = _captureHandler.resetLogLevel(Level.FINE);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertEquals(2, logRecords.size());
+
+		_assertLogger(
+			logRecords.get(0),
+			"Start loading lucene index files from cluster node", null);
+		_assertLogger(
+			logRecords.get(1),
+			"Unable to load index for company " + _COMPANY_ID,
+			SystemException.class);
+
+		// Test 6, unable to invoke method on other nodes with debug enabled
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(2);
+		_mockClusterExecutor.setInvokeMethodThrowException(true);
+		_mockClusterExecutor.setPort(1024);
+
+		logRecords = _captureHandler.resetLogLevel(Level.FINE);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertEquals(1, logRecords.size());
+
+		_assertLogger(
+			logRecords.get(0),
+			"Suppress exception caused by remote method invocation",
+			Exception.class);
+
+		// Test 7, unable to invoke method on other nodes with debug disabled
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(2);
+		_mockClusterExecutor.setInvokeMethodThrowException(true);
+		_mockClusterExecutor.setPort(1024);
+
+		logRecords = _captureHandler.resetLogLevel(Level.INFO);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertTrue(logRecords.isEmpty());
+
+		// Test 8, no need to load from cluster
+
+		_mockClusterExecutor.reset();
+
+		_mockClusterExecutor.setNodeNumber(1);
+
+		logRecords = _captureHandler.resetLogLevel(Level.FINE);
+
+		_luceneHelperImpl.loadIndexesFromCluster(_COMPANY_ID);
+
+		Assert.assertEquals(1, logRecords.size());
+
+		_assertLogger(
+			logRecords.get(0),
+			"Do not load indexes because there is either one portal " +
+				"instance or no portal instances in the cluster",
+			null);
 	}
 
 	@Aspect
