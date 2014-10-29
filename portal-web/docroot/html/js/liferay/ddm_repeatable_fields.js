@@ -66,6 +66,32 @@ AUI.add(
 						var hoverHandler = instance._onHoverRepeatableButton;
 
 						container.delegate('hover', hoverHandler, hoverHandler, SELECTOR_REPEAT_BUTTONS, instance);
+
+						Liferay.after('form:registered', instance._afterFormRegistered, instance);
+
+						instance.on(
+							['repeat', 'remove'],
+							function(event) {
+								var fieldInputName = instance.getFieldInputName(event.fieldNode);
+
+								if (instance.liferayForm) {
+									var validatorRules = instance.liferayForm.formValidator.get('rules');
+
+									if (event.type === 'liferay-ddm-repeatable-fields:repeat') {
+										validatorRules[fieldInputName] = validatorRules[instance.getFieldInputName(event.originalFieldNode)];
+									}
+									else if (event.type === 'liferay-ddm-repeatable-fields:remove') {
+										delete validatorRules[fieldInputName];
+
+										var validatorField = instance.liferayForm.formValidator.getField(fieldInputName);
+
+										instance.liferayForm.formValidator.resetField(validatorField);
+									}
+
+									instance.liferayForm.formValidator.set('rules', validatorRules);
+								}
+							}
+						);
 					},
 
 					syncUI: function() {
@@ -121,6 +147,26 @@ AUI.add(
 						);
 					},
 
+					getFieldInputName: function(fieldNode) {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+						var namespace = instance.get('namespace');
+
+						var prefix = [portletNamespace];
+
+						if (namespace) {
+							prefix.push(namespace);
+						}
+
+						return prefix.concat(
+							[
+								fieldNode.getData('fieldName'),
+								fieldNode.getData('fieldNamespace'),
+							]
+						).join('');
+					},
+
 					getFieldsList: function(fieldName, parentNode) {
 						var instance = this;
 
@@ -159,12 +205,18 @@ AUI.add(
 					insertField: function(fieldNode) {
 						var instance = this;
 
-						var fieldName = fieldNode.getData('fieldName');
-
 						instance.getField(
-							fieldName,
+							fieldNode.getData('fieldName'),
 							function(newFieldHTML) {
 								fieldNode.insert(newFieldHTML, 'after');
+
+								instance.fire(
+									'repeat',
+									{
+										fieldNode: fieldNode.next(),
+										originalFieldNode: fieldNode
+									}
+								);
 
 								instance.syncFieldsTreeUI();
 							}
@@ -173,6 +225,13 @@ AUI.add(
 
 					removeField: function(fieldNode) {
 						var instance = this;
+
+						instance.fire(
+							'remove',
+							{
+								fieldNode: fieldNode
+							}
+						);
 
 						fieldNode.remove();
 
@@ -229,6 +288,18 @@ AUI.add(
 						);
 
 						fieldsDisplayInput.val(fieldsDisplay.join());
+					},
+
+					_afterFormRegistered: function(event) {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var formNode = container.ancestor('form', true);
+
+						if (formNode && (event.formName === formNode.attr('name'))) {
+							instance.liferayForm = event.form;
+						}
 					},
 
 					_onClickRepeatableButton: function(event) {
