@@ -331,11 +331,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			protected void addCriteria(DynamicQuery dynamicQuery) {
 				super.addCriteria(dynamicQuery);
 
-				if (portletDataContext.getBooleanParameter(
-						NAMESPACE, "version-history")) {
-
-					dynamicQuery.addOrder(OrderFactoryUtil.asc("id"));
-				}
+				dynamicQuery.addOrder(OrderFactoryUtil.asc("id"));
 			}
 
 			@Override
