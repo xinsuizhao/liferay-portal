@@ -1996,7 +1996,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         the contact ID could not be found
 	 */
 	@Override
-	public User fetchUserByContactId(long contactId) {
+	public User fetchUserByContactId(long contactId) throws SystemException {
 		return userPersistence.fetchByContactId(contactId);
 	}
 
