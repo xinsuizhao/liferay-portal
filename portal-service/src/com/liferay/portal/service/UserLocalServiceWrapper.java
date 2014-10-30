@@ -1694,6 +1694,19 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
+	* Returns the user with the contact ID.
+	*
+	* @param contactId the user's contact ID
+	* @return the user with the contact ID, or <code>null</code> if a user with
+	the contact ID could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.User fetchUserByContactId(long contactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.fetchUserByContactId(contactId);
+	}
+
+	/**
 	* Returns the user with the email address.
 	*
 	* @param companyId the primary key of the user's company
