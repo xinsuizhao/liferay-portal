@@ -16,7 +16,6 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -326,13 +325,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		return new JournalArticleExportActionableDynamicQuery(
 			portletDataContext) {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
-
-				dynamicQuery.addOrder(OrderFactoryUtil.asc("id"));
-			}
 
 			@Override
 			protected void performAction(Object object) throws PortalException {
