@@ -81,10 +81,8 @@ public class PortalHibernateConfiguration
 		_beanFactory = beanFactory;
 	}
 
-	public void setCustomContextSessionEnabled(
-		boolean customContextSessionEnabled) {
-
-		_customContextSessionEnabled = customContextSessionEnabled;
+	public void setShardEnabled(boolean shardEnabled) {
+		_shardEnabled = shardEnabled;
 	}
 
 	public void setHibernateConfigurationConverter(
@@ -182,8 +180,8 @@ public class PortalHibernateConfiguration
 
 		Properties hibernateProperties = getHibernateProperties();
 
-		if (_beanFactory.containsBean(ShardUtil.class.getName()) &&
-			_customContextSessionEnabled) {
+		if (_shardEnabled &&
+			_beanFactory.containsBean(ShardUtil.class.getName())) {
 
 			hibernateProperties.setProperty(
 				Environment.CURRENT_SESSION_CONTEXT_CLASS,
@@ -318,7 +316,7 @@ public class PortalHibernateConfiguration
 	}
 
 	private BeanFactory _beanFactory;
-	private boolean _customContextSessionEnabled = true;
 	private Converter<String> _hibernateConfigurationConverter;
+	private boolean _shardEnabled = true;
 
 }
