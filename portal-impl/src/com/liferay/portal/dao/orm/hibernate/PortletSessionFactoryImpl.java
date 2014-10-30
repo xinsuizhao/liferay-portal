@@ -27,19 +27,22 @@ import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 
 /**
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
-public class PortletSessionFactoryImpl extends SessionFactoryImpl {
+public class PortletSessionFactoryImpl extends SessionFactoryImpl
+	implements BeanFactoryAware {
 
 	public void afterPropertiesSet() {
 		if (_dataSource == InfrastructureUtil.getDataSource()) {
@@ -65,6 +68,10 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	@Override
 	public void destroy() {
 		portletSessionFactories.remove(this);
+	}
+
+	public BeanFactory getBeanFactory() {
+		return _beanFactory;
 	}
 
 	public DataSource getDataSource() {
@@ -113,6 +120,13 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		return wrapSession(session);
 	}
 
+	@Override
+	public void setBeanFactory(BeanFactory beanFactory)
+		throws BeansException {
+
+		_beanFactory = beanFactory;
+	}
+
 	public void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
 	}
@@ -143,6 +157,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 			PortletHibernateConfiguration portletHibernateConfiguration =
 				new PortletHibernateConfiguration();
 
+			portletHibernateConfiguration.setBeanFactory(_beanFactory);
 			portletHibernateConfiguration.setDataSource(dataSource);
 
 			try {
@@ -172,6 +187,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletSessionFactoryImpl.class);
 
+	private BeanFactory _beanFactory;
 	private DataSource _dataSource;
 	private Map<DataSource, SessionFactory> _sessionFactories =
 		new HashMap<DataSource, SessionFactory>();
