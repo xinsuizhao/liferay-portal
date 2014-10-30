@@ -128,7 +128,6 @@
 				var writer = new CKEDITOR.htmlParser.basicWriter();
 
 				config.filter.applyTo(fragment);
-
 				fragment.writeHtml(writer);
 
 				data = writer.getHtml();
