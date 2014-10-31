@@ -1,5 +1,4 @@
 <definition component-name="portal-collaboration">
-	<property name="portlet.plugins.includes" value="notifications-portlet" />
 	<property name="testray.main.component.name" value="Collaboration" />
 
 	<set-up>
@@ -7,7 +6,7 @@
 	</set-up>
 
 	<command name="ViewDefaultNotificationsPortletDeliveryOptionsWithContactsPortletDeployed" priority="5">
-		<property name="portlet.plugins.includes" value="contacts-portlet,microblogs-portlet,private-messaging-portlet,so-portlet" />
+		<property name="portlet.plugins.includes" value="contacts-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-portlet" />
 
 		<execute macro="Notifications#gotoDockbar" />
 
