@@ -714,17 +714,14 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		return new JSONWebServiceInvokerAction(mockHttpServletRequest);
 	}
 
-	protected Object runAction(Map<String, Object> jsonMap) throws Exception {
+	protected Object runAction(Map<String, Object> map) throws Exception {
+		String json = toJSON(map);
 
-		String jsonString = toJSON(jsonMap);
-
-		return runAction(jsonString);
+		return runAction(json);
 	}
 
-	protected Object runAction(String jsonString) throws Exception {
-
-		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
-			jsonString);
+	protected Object runAction(String json) throws Exception {
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 
 		Object result = jsonWebServiceAction.invoke();
 
