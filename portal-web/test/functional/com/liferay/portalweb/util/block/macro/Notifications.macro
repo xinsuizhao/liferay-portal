@@ -3,8 +3,8 @@
 		<execute action="PGNotificationsdockbar#click" locator-key1="DOCKBAR" />
 	</command>
 
-	<command name="markAllAsRead">
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
+	<command name="markAsRead">
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_MARK_AS_READ" value1="Mark as Read" />
 	</command>
 
 	<command name="navigateToContent">
@@ -33,7 +33,7 @@
 		<if>
 			<condition action="PGNotificationsdockbar#isElementPresent" locator-key1="NOTIFICATIONS_CONTENT_GENERIC" />
 			<then>
-				<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
+				<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATIONS_MARK_AS_READ" value1="Mark as Read" />
 			</then>
 		</if>
 	</command>
@@ -62,7 +62,7 @@
 		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType}" />
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 

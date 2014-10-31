@@ -788,6 +788,10 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="gotoAllPagesPG">
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+	</command>
+
 	<command name="gotoCP">
 		<if>
 			<equals arg1="${isOrphanPage}" arg2="true" />

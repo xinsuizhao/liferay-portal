@@ -322,6 +322,12 @@
 		<execute action="PGMessageboardsThread#click" locator-key1="REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
 	</command>
 
+	<command name="gotoPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+	</command>
+
 	<command name="lockPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 

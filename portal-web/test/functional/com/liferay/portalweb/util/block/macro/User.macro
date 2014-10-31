@@ -1351,6 +1351,7 @@
 			<condition action="Dockbar#isTextNotEqual" locator-key1="USER_NAME" value1="${userLoginFullName}" />
 			<then>
 				<execute macro="User#logoutPG" />
+
 				<execute macro="User#loginPG">
 					<var name="userEmailAddress" value="${userLoginEmailAddress}" />
 				</execute>

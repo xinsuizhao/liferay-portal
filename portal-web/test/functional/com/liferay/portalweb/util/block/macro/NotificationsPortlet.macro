@@ -32,6 +32,8 @@
 		<var name="actionList" value="adds,updates" />
 		<var name="contentList" value="Wiki,Message Boards,Documents and Media,Bookmarks,Web Content,Blogs" />
 
+		<execute macro="Page#openURL" />
+
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
 		<for list="${actionList}" param="actionType" >

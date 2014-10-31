@@ -146,6 +146,11 @@
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_COMMENT" value1="${entryComment}" />
 	</command>
 
+	<command name="subscribePG">
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_SUBSCRIBE_COMMENTS" value1="Subscribe to Comments" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
