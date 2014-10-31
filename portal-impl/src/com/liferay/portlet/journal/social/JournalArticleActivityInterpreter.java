@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -50,9 +51,17 @@ public class JournalArticleActivityInterpreter
 			JournalArticleLocalServiceUtil.getLatestArticle(
 				activity.getClassPK());
 
-		Layout layout = article.getLayout();
+		String layoutUuid = article.getLayoutUuid();
 
-		if (layout != null) {
+		if (Validator.isNotNull(layoutUuid)) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, article.getGroupId(), false);
+
+			if (layout == null) {
+				layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layoutUuid, article.getGroupId(), true);
+			}
+
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 				layout.getGroup(), layout.isPrivateLayout(),
 				serviceContext.getThemeDisplay());
