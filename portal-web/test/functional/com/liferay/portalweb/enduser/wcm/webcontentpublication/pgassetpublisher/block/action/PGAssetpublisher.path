@@ -309,7 +309,7 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_4</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingStar')]//a[4][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingStar')]//a[4][contains(@class,'rating-element')]</td>
 	<td></td>
 </tr>
 <tr>
