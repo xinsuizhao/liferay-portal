@@ -80,7 +80,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_MARK_ALL_AS_READ</td>
+	<td>NOTIFICATIONS_MARK_AS_READ</td>
 	<td>//div[@class='user-notifications-header']/span[@class='mark-all-as-read']/a</td>
 	<td></td>
 </tr>

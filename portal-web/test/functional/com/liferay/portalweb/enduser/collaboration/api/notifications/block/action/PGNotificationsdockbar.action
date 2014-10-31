@@ -5,6 +5,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="NOTIFICATIONS_CONTENT_TITLE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS">
 			<execute function="Click#clickAtAndWait" />
