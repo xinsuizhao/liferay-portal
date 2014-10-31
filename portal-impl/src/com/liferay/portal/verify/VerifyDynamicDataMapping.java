@@ -506,6 +506,8 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		for (Node node : nodes) {
 			Element dynamicElementElement = (Element)node;
 
+			updateStructure(structure, updateXSD(structure.getXsd()));
+
 			if (createDefaultMetadataElement(
 					dynamicElementElement, defaultLanguageId)) {
 
