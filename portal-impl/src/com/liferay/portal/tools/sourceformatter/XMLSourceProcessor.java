@@ -534,7 +534,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
 		throws Exception {
 
-		if (isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
+		if (portalSource ||
+			isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
+
 			return content;
 		}
 
