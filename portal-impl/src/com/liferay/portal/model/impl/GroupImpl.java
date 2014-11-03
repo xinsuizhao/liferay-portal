@@ -179,8 +179,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		if ((privateLayout && (getPrivateLayoutsPageCount() > 0)) ||
-			(!privateLayout && (getPublicLayoutsPageCount() > 0))) {
+		if ((privateLayout && (group.getPrivateLayoutsPageCount() > 0)) ||
+			(!privateLayout && (group.getPublicLayoutsPageCount() > 0))) {
 
 			StringBundler sb = new StringBundler(5);
 

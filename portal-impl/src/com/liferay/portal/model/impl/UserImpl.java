@@ -386,7 +386,7 @@ public class UserImpl extends UserBaseImpl {
 
 		Group group = getGroup();
 
-		return group.getDisplayURL(themeDisplay, privateLayout);
+		return GroupImpl.getDisplayURL(group, themeDisplay, privateLayout);
 	}
 
 	/**
