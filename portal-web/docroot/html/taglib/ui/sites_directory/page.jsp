@@ -115,14 +115,6 @@
 										else {
 											layoutSet = childGroup.getPrivateLayoutSet();
 										}
-
-										String url = null;
-
-										if (childGroup.getGroupId() != scopeGroupId) {
-											url = PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay);
-
-											url = PortalUtil.addPreservedParameters(themeDisplay, url);
-										}
 										%>
 
 										<liferay-ui:app-view-entry
@@ -135,7 +127,7 @@
 											showCheckbox="<%= false %>"
 											thumbnailSrc='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>'
 											title="<%= HtmlUtil.escape(childGroup.getDescriptiveName(locale)) %>"
-											url="<%= url %>"
+											url="<%= (childGroup.getGroupId() != scopeGroupId) ? GroupImpl.getDisplayURL(childGroup, themeDisplay) : null %>"
 										/>
 									</liferay-ui:search-container-row>
 
@@ -252,10 +244,8 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 		}
 
 		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
-			String url = PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay);
-
 			sb.append("href=\"");
-			sb.append(HtmlUtil.escapeHREF(PortalUtil.addPreservedParameters(themeDisplay, url)));
+			sb.append(HtmlUtil.escapeHREF(GroupImpl.getDisplayURL(childGroup, themeDisplay, childGroup.hasPublicLayouts())));
 			sb.append("\"");
 		}
 
