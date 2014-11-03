@@ -360,7 +360,7 @@ if (Validator.isNotNull(content)) {
 					String[] translations = article.getAvailableLanguageIds();
 					%>
 
-					<div class='<%= (Validator.isNull(toLanguageId) && (translations.length > 1)) ? "contains-translations" :"" %>' id="<portlet:namespace />availableTranslationContainer">
+					<div class='<%= (Validator.isNull(toLanguageId) && ((translations.length > 1) || (translations.length == 1 && !translations[0].equals(defaultLanguageId)))) ? "contains-translations" :"" %>' id="<portlet:namespace />availableTranslationContainer">
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(toLanguageId) %>">
 								<liferay-util:buffer var="languageLabel">
@@ -374,7 +374,7 @@ if (Validator.isNotNull(content)) {
 								<aui:input name="toLanguageId" type="hidden" value="<%= toLanguageId %>" />
 							</c:when>
 							<c:otherwise>
-								<span class='available-translations<%= (translations.length > 1) ? "" : " hide" %>' id="<portlet:namespace />availableTranslationsLinks">
+								<span class='available-translations<%= ((translations.length > 1) || (translations.length == 1 && !translations[0].equals(defaultLanguageId))) ? "" : " hide" %>' id="<portlet:namespace />availableTranslationsLinks">
 									<label><liferay-ui:message key="available-translations" /></label>
 
 										<%
