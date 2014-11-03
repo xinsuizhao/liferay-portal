@@ -336,7 +336,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43482" name="HideAnnouncementsEntry" priority="5">
+	<command name="HideAnnouncementsEntry" priority="5">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -404,7 +404,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43482" name="ShowAnnouncementsEntry" priority="5">
+	<command name="ShowAnnouncementsEntry" priority="5">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />

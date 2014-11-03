@@ -1300,7 +1300,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-7917" name="ViewBlogsEntryViewCount" priority="5">
+	<command name="ViewBlogsEntryViewCount" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
