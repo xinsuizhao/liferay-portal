@@ -53,25 +53,25 @@ public class JournalArticleActivityInterpreter
 
 		String layoutUuid = article.getLayoutUuid();
 
-		if (Validator.isNotNull(layoutUuid)) {
-			Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutUuid, article.getGroupId(), false);
-
-			if (layout == null) {
-				layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					layoutUuid, article.getGroupId(), true);
-			}
-
-			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				layout.getGroup(), layout.isPrivateLayout(),
-				serviceContext.getThemeDisplay());
-
-			return groupFriendlyURL.concat(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-					article.getUrlTitle());
+		if (Validator.isNull(layoutUuid)) {
+			return null;
 		}
 
-		return null;
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layoutUuid, article.getGroupId(), false);
+
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, article.getGroupId(), true);
+		}
+
+		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+			layout.getGroup(), layout.isPrivateLayout(),
+			serviceContext.getThemeDisplay());
+
+		return groupFriendlyURL.concat(
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
+				article.getUrlTitle());
 	}
 
 	@Override
