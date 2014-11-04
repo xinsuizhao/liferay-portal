@@ -167,42 +167,6 @@ public class GroupImpl extends GroupBaseImpl {
 		return GroupLocalServiceUtil.getGroupDescriptiveName(this, locale);
 	}
 
-	public static String getDisplayURL(Group group, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return getDisplayURL(group, themeDisplay, false);
-	}
-
-	public static String getDisplayURL(
-			Group group, ThemeDisplay themeDisplay, boolean privateLayout)
-		throws PortalException {
-
-		String portalURL = themeDisplay.getPortalURL();
-
-		if ((privateLayout && (group.getPrivateLayoutsPageCount() > 0)) ||
-			(!privateLayout && (group.getPublicLayoutsPageCount() > 0))) {
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(portalURL);
-			sb.append(themeDisplay.getPathMain());
-			sb.append("/my_sites/view?groupId=");
-			sb.append(group.getGroupId());
-
-			if (privateLayout) {
-				sb.append("&privateLayout=1");
-			}
-			else {
-				sb.append("&privateLayout=0");
-			}
-
-			return PortalUtil.addPreservedParameters(
-				themeDisplay, sb.toString());
-		}
-
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String getIconURL(ThemeDisplay themeDisplay) {
 		String iconURL = themeDisplay.getPathThemeImages() + "/common/";

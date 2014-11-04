@@ -127,7 +127,7 @@
 											showCheckbox="<%= false %>"
 											thumbnailSrc='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>'
 											title="<%= HtmlUtil.escape(childGroup.getDescriptiveName(locale)) %>"
-											url="<%= (childGroup.getGroupId() != scopeGroupId) ? GroupImpl.getDisplayURL(childGroup, themeDisplay) : null %>"
+											url="<%= (childGroup.getGroupId() != scopeGroupId) ? PortalImpl.getDisplayURL(childGroup, themeDisplay) : null %>"
 										/>
 									</liferay-ui:search-container-row>
 
@@ -245,7 +245,7 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 
 		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
 			sb.append("href=\"");
-			sb.append(HtmlUtil.escapeHREF(GroupImpl.getDisplayURL(childGroup, themeDisplay, childGroup.hasPublicLayouts())));
+			sb.append(HtmlUtil.escapeHREF(PortalImpl.getDisplayURL(childGroup, themeDisplay, childGroup.hasPublicLayouts())));
 			sb.append("\"");
 		}
 
