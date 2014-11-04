@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>URL_FIELD_REQUIRED</td>
-	<td>//div[@class='control-group error'] | //div[@class='control-group input-String-wrapper error']</td>
+	<td>//div[contains(@class,'control-group') and contains(@class,'error')]</td>
 	<td></td>
 </tr>
 <tr>
