@@ -68,7 +68,6 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -387,7 +386,7 @@ public class UserImpl extends UserBaseImpl {
 
 		Group group = getGroup();
 
-		return PortalImpl.getDisplayURL(group, themeDisplay, privateLayout);
+		return PortalUtil.getDisplayURL(group, themeDisplay, privateLayout);
 	}
 
 	/**

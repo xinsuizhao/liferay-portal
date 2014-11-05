@@ -52,7 +52,7 @@ if (layout != null) {
 			liveFriendlyURL = PortalUtil.getLayoutFriendlyURL(liveLayout, themeDisplay);
 		}
 		else if ((layout.isPrivateLayout() && (liveGroup.getPrivateLayoutsPageCount() > 0)) || (layout.isPublicLayout() && (liveGroup.getPublicLayoutsPageCount() > 0))) {
-			liveFriendlyURL = PortalImpl.getDisplayURL(liveGroup, themeDisplay, layout.isPrivateLayout());
+			liveFriendlyURL = PortalUtil.getDisplayURL(liveGroup, themeDisplay, layout.isPrivateLayout());
 		}
 	}
 
@@ -65,7 +65,7 @@ if (layout != null) {
 			stagingFriendlyURL = PortalUtil.getLayoutFriendlyURL(stagingLayout, themeDisplay);
 		}
 		else {
-			stagingFriendlyURL = PortalImpl.getDisplayURL(stagingGroup, themeDisplay, layout.isPrivateLayout());
+			stagingFriendlyURL = PortalUtil.getDisplayURL(stagingGroup, themeDisplay, layout.isPrivateLayout());
 		}
 	}
 
