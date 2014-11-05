@@ -521,6 +521,19 @@ public class PortalUtil {
 		return getPortal().getDigestAuthUserId(request);
 	}
 
+	public static String getDisplayURL(Group group, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return getPortal().getDisplayURL(group, themeDisplay);
+	}
+
+	public static String getDisplayURL(
+			Group group, ThemeDisplay themeDisplay, boolean privateLayout)
+		throws PortalException {
+
+		return getPortal().getDisplayURL(group, themeDisplay, privateLayout);
+	}
+
 	public static String getEmailFromAddress(
 			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException {

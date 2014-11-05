@@ -642,6 +642,13 @@ public interface Portal {
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException;
 
+	public String getDisplayURL(Group group, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	public String getDisplayURL(
+			Group group, ThemeDisplay themeDisplay, boolean privateLayout)
+		throws PortalException;
+
 	public String getEmailFromAddress(
 			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException;

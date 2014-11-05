@@ -1960,13 +1960,15 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
-	public static String getDisplayURL(Group group, ThemeDisplay themeDisplay)
+	@Override
+	public String getDisplayURL(Group group, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return getDisplayURL(group, themeDisplay, false);
 	}
 
-	public static String getDisplayURL(
+	@Override
+	public String getDisplayURL(
 			Group group, ThemeDisplay themeDisplay, boolean privateLayout)
 		throws PortalException {
 
