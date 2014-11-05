@@ -284,7 +284,9 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#rate4StarsPG" />
+		<execute macro="AssetPublisherPortlet#rate4StarsPG">
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
