@@ -414,8 +414,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="4" />
 			<var name="webContentNumber" value="123" />
 			<var name="webContentTitle" value="Web Content1 Title" />
@@ -436,8 +436,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="5" />
 			<var name="webContentNumber" value="345" />
 			<var name="webContentTitle" value="Web Content2 Title" />
@@ -458,8 +458,8 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="1" />
 			<var name="webContentNumber" value="567" />
 			<var name="webContentTitle" value="Web Content3 Title" />
