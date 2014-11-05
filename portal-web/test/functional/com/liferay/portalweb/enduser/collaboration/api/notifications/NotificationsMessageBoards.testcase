@@ -188,7 +188,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 	</command>
