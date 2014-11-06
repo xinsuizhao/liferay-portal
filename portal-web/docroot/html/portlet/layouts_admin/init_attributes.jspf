@@ -15,17 +15,7 @@
 --%>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
-if (Validator.isNull(tabs1)) {
-	tabs1 = "public-pages";
-
-	LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-	if (layoutSet.isPrivateLayout()) {
-		tabs1 = "private-pages";
-	}
-}
+String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
 String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
