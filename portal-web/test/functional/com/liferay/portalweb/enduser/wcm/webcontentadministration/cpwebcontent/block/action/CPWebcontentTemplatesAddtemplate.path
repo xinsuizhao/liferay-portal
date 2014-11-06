@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//div[contains(@class,'control-group') and contains(@class,'field-wrapper')]/input | //input[@id='_166_structure']</td>
+	<td>//input[contains(@class,'form-text') and contains(@value,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
