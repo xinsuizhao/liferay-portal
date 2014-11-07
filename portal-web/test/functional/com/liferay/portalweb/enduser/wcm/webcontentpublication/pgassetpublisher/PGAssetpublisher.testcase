@@ -196,6 +196,7 @@
 		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateTableBookmarksPG">
 			<var name="assetTitle" value="Test Bookmark Name" />
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
+			<var name="bookmarkName" value="Test Bookmark Name" />
 		</execute>
 	</command>
 
@@ -247,6 +248,7 @@
 		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateTitleListBookmarksPG">
 			<var name="assetTitle" value="Test Bookmark Name" />
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
+			<var name="bookmarkName" value="Test Bookmark Name" />
 		</execute>
 	</command>
 
@@ -292,7 +294,9 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewRate4StarsPG" />
+		<execute macro="AssetPublisherPortlet#viewRate4StarsPG">
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
 	</command>
 
 	<command name="ConfigureAPPortletSelectedBlogsEntry" priority="4">
