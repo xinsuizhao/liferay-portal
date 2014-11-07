@@ -333,6 +333,7 @@
 	<command name="rate4StarsPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
+		<execute action="PGAssetpublisher#mouseOver" locator-key1="YOUR_RATING" />
 		<execute action="PGAssetpublisher#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
 	</command>
 
@@ -651,6 +652,7 @@
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
+		<execute action="PGAssetpublisher#mouseOver" locator-key1="YOUR_RATING" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
