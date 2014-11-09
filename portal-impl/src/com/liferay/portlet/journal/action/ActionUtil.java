@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,11 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -292,11 +286,11 @@ public class ActionUtil {
 		Fields fields = DDMUtil.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
-		String content = JournalConverterUtil.getContent(ddmStructure, fields);
+		Map<String, byte[]> images = getImages(fields, locale);
 
-		Map<String, byte[]> images = getImages(content, fields, locale);
-
-		return new Object[] {content, images};
+		return new Object[] {
+			JournalConverterUtil.getContent(ddmStructure, fields), images
+		};
 	}
 
 	public static void getFeed(HttpServletRequest request) throws Exception {
@@ -441,30 +435,7 @@ public class ActionUtil {
 		JournalUtil.addRecentDDMTemplate(portletRequest, ddmTemplate);
 	}
 
-	protected static String getElementInstanceId(
-		String content, String fieldName, int index) throws Exception {
-
-		String xpathExpression =
-			"//dynamic-element[@name = " +
-				HtmlUtil.escapeXPathAttribute(fieldName) + "]";
-
-		XPath xpath = SAXReaderUtil.createXPath(xpathExpression);
-
-		Document document = SAXReaderUtil.read(content);
-
-		List<Node> nodes = xpath.selectNodes(document);
-
-		if (index > nodes.size()) {
-			return StringPool.BLANK;
-		}
-
-		Element dynamicElementElement = (Element)nodes.get(index);
-
-		return dynamicElementElement.attributeValue("instance-id");
-	}
-
-	protected static Map<String, byte[]> getImages(
-			String content, Fields fields, Locale locale)
+	protected static Map<String, byte[]> getImages(Fields fields, Locale locale)
 		throws Exception {
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
@@ -481,7 +452,6 @@ public class ActionUtil {
 			for (int i = 0; i < values.size(); i++) {
 				StringBundler sb = new StringBundler(6);
 
-				sb.append(getElementInstanceId(content, field.getName(), i));
 				sb.append(StringPool.UNDERLINE);
 				sb.append(field.getName());
 				sb.append(StringPool.UNDERLINE);
@@ -492,9 +462,9 @@ public class ActionUtil {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					(String)values.get(i));
 
-				String data = jsonObject.getString("data");
+				String content = jsonObject.getString("data");
 
-				images.put(sb.toString(), UnicodeFormatter.hexToBytes(data));
+				images.put(sb.toString(), UnicodeFormatter.hexToBytes(content));
 			}
 		}
 
