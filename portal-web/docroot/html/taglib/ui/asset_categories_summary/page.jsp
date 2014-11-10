@@ -36,7 +36,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<span class="taglib-asset-categories-summary">
-			<%= vocabularyTitle %>:
+			<%= HtmlUtil.escape(vocabularyTitle) %>:
 
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">
