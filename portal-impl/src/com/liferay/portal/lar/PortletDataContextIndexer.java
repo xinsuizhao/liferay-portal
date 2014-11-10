@@ -26,12 +26,15 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,9 +167,32 @@ public class PortletDataContextIndexer extends BaseIndexer {
 			journalArticleIndexer.reindex(article);
 		}
 
-		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
-				_groupId, ArrayUtil.toLongArray(ddmStructureIds));
+		List<DLFileEntry> dlFileEntries = new ArrayList<DLFileEntry>();
+
+		try {
+			Method method = ReflectionUtil.getDeclaredMethod(
+				DLFileEntryLocalServiceUtil.class, "getDDMStructureFileEntries",
+				long.class, long[].class);
+
+			Object object = method.invoke(
+				DLFileEntryLocalServiceUtil.class, _groupId,
+				ArrayUtil.toLongArray(ddmStructureIds));
+
+			if (object != null) {
+				dlFileEntries = (List<DLFileEntry>)object;
+			}
+		}
+		catch (Exception e) {
+			List<DLFileEntry> allDlFileEntries =
+				DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
+					ArrayUtil.toLongArray(ddmStructureIds));
+
+			for (DLFileEntry dlFileEntry : allDlFileEntries) {
+				if (_groupId == dlFileEntry.getGroupId()) {
+					dlFileEntries.add(dlFileEntry);
+				}
+			}
+		}
 
 		Map<?, ?> dlFileEntryPrimaryKeysMap = _newPrimaryKeysMaps.get(
 			DLFileEntry.class.getName());
