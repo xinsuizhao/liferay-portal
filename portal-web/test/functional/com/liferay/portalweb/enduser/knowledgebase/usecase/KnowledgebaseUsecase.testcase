@@ -1,5 +1,6 @@
 <definition component-name="portal-util-misc">
-	<property name="testray.main.component.name" value="Util" />
+	<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -12,8 +13,6 @@
 	</tear-down>
 
 	<command known-issues="LIFERAYQA-10442" name="Demo" priority="5">
-		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
-
 		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
 
 		<execute macro="Page#gotoContentCP">
@@ -283,7 +282,7 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-				<var name="searchAssetSummary" value="Knowledge Base Article Content" />
+			<var name="searchAssetSummary" value="Knowledge Base Article Content" />
 			<var name="searchAssetTitle" value="Knowledge Base Article Title" />
 			<var name="searchAssetType" value="Knowledge Base Article" />
 			<var name="searchTerm" value="Knowledge" />
