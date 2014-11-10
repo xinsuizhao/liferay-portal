@@ -85,11 +85,6 @@ public class StagingIndexingBackgroundTaskExecutor
 
 		// Indexing
 
-		Indexer portletDataContextIndexer = IndexerRegistryUtil.getIndexer(
-			PortletDataContext.class);
-
-		portletDataContextIndexer.reindex(portletDataContext);
-
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
 			portletDataContext.getNewPrimaryKeysMaps();
 
