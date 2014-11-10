@@ -60,16 +60,6 @@
 		<path refid="lib.classpath" />
 	</path>
 
-	<path id="test.classpath">
-		<pathelement path="test-classes/${test.type}" />
-		<pathelement path="${classpath}" />
-		<pathelement path="${test.additional.classpath}" />
-		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
-		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
-		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
-		<fileset dir="${project.dir}/osgi/lib/common/core" includes="*.jar" />
-	</path>
-
 	<path id="web.classpath">
 		<pathelement location="${project.dir}/portal-service/classes" />
 		<fileset dir="${project.dir}/lib/development" includes="jsp-api.jar,mail.jar,servlet-api.jar" />
@@ -838,6 +828,22 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-test-classpath">
+		<attribute name="test.type" />
+
+		<sequential>
+			<path id="test.classpath">
+				<pathelement path="test-classes/@{test.type}" />
+				<pathelement path="${classpath}" />
+				<pathelement path="${test.additional.classpath}" />
+				<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
+				<fileset dir="${project.dir}/lib/global" includes="*.jar" />
+				<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
+				<fileset dir="${project.dir}/osgi/lib/common/core" includes="*.jar" />
+			</path>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-test-type">
 		<sequential>
 			<if>
@@ -1038,6 +1044,10 @@ rerun your task.
 		<if>
 			<available file="test/${test.type}" type="dir" />
 			<then>
+				<setup-test-classpath
+					test.type="${test.type}"
+				/>
+
 				<mkdir dir="test-classes/${test.type}" />
 				<mkdir dir="test-results/${test.type}" />
 
@@ -1047,7 +1057,7 @@ rerun your task.
 				</copy>
 
 				<javac
-					classpathref="project.classpath"
+					classpathref="test.classpath"
 					compiler="${javac.compiler}"
 					debug="${javac.debug}"
 					deprecation="${javac.deprecation}"
@@ -1249,6 +1259,10 @@ rerun your task.
 			setonempty="false"
 		/>
 
+		<setup-test-classpath
+			test.type="${test.type}"
+		/>
+
 		<if>
 			<not>
 				<isset property="test.suite.classes.available" />
@@ -1341,6 +1355,10 @@ rerun your task.
 				<var name="test.dir" value="${test.type}" />
 			</then>
 		</if>
+
+		<setup-test-classpath
+			test.type="${test.type}"
+		/>
 
 		<if>
 			<available file="test/${test.dir}" type="dir" />
@@ -1525,6 +1543,10 @@ rerun your task.
 			property="test.class.name"
 			regexp=".*\.com\."
 			replace="com."
+		/>
+
+		<setup-test-classpath
+			test.type="${test.type}"
 		/>
 
 		<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
