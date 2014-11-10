@@ -9,6 +9,7 @@
 				JournalArticle
 			LEFT JOIN
 				JournalArticle tempJournalArticle ON
+					[$STATUS_JOIN$] AND
 					(JournalArticle.groupId = tempJournalArticle.groupId) AND
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
@@ -39,6 +40,7 @@
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
@@ -58,6 +60,7 @@
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
@@ -128,6 +131,7 @@
 				JournalArticle
 			LEFT JOIN
 				JournalArticle tempJournalArticle ON
+					[$STATUS_JOIN$] AND
 					(JournalArticle.groupId = tempJournalArticle.groupId) AND
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
@@ -147,6 +151,7 @@
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
@@ -167,6 +172,7 @@
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
@@ -188,6 +194,7 @@
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
