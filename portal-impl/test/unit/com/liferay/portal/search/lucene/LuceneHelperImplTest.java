@@ -211,7 +211,7 @@ public class LuceneHelperImplTest {
 					return mockURLConnection;
 				}
 
-		});
+			});
 
 		SkipGetBootupClusterNodeObjectValuePairAdvice.setURL(url);
 
