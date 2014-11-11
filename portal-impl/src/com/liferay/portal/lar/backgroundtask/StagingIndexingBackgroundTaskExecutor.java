@@ -83,8 +83,6 @@ public class StagingIndexingBackgroundTaskExecutor
 			}
 		}
 
-		// Indexing
-
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
 			portletDataContext.getNewPrimaryKeysMaps();
 
