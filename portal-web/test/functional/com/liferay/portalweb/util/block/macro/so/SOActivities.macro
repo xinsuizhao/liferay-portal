@@ -502,6 +502,42 @@
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
+	<command name="viewActivityEntryUser">
+		<if>
+			<not>
+				<contains string="${numberOfOtherCommenters}" substring="{numberOfOtherCommenters}" />
+			</not>
+			<then>
+				<if>
+					<or>
+						<equals arg1="${dashboardView}" arg2="true" />
+						<equals arg1="${profileView}" arg2="true" />
+					</or>
+					<then>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} and ${numberOfOtherCommenters} others in ${siteName}." />
+					</then>
+					<else>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} and ${numberOfOtherCommenters} others." />
+					</else>
+				</if>
+			</then>
+			<else>
+				<if>
+					<or>
+						<equals arg1="${dashboardView}" arg2="true" />
+						<equals arg1="${profileView}" arg2="true" />
+					</or>
+					<then>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+					</else>
+				</if>
+			</else>
+		</if>
+	</command>
+
 	<command name="viewBlogsActivityEntry">
 		<if>
 			<isset var="row" />
@@ -518,18 +554,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
@@ -573,18 +604,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
@@ -628,18 +654,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
@@ -682,18 +703,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
@@ -739,18 +755,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
@@ -1327,18 +1338,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${documentsAction}" />
@@ -1480,18 +1486,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
@@ -1551,18 +1552,13 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
-		<if>
-			<or>
-				<equals arg1="${dashboardView}" arg2="true" />
-				<equals arg1="${profileView}" arg2="true" />
-			</or>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
-			</then>
-			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
-			</else>
-		</if>
+		<execute macro="SOActivities#viewActivityEntryUser">
+			<var name="dashboardView" value="${dashboardView}" />
+			<var name="numberOfOtherCommenters" value="${numberOfOtherCommenters}" />
+			<var name="profileView" value="${profileView}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
