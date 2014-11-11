@@ -1055,7 +1055,10 @@ rerun your task.
 			</or>
 			<then>
 				<antcall target="compile-test-integration" inheritall="false" />
-				<antcall target="compile-test-unit" inheritall="false" />
+
+				<compile-test-cmd
+					test.type="unit"
+				/>
 			</then>
 			<else>
 				<antcall target="compile-test-functional" inheritall="false" />
@@ -1076,12 +1079,6 @@ rerun your task.
 	<target name="compile-test-integration">
 		<compile-test-cmd
 			test.type="integration"
-		/>
-	</target>
-
-	<target name="compile-test-unit">
-		<compile-test-cmd
-			test.type="unit"
 		/>
 	</target>
 
@@ -1692,7 +1689,11 @@ rerun your task.
 		</for>
 	</target>
 
-	<target name="test-unit" depends="compile,compile-test-unit">
+	<target name="test-unit" depends="compile">
+		<compile-test-cmd
+			test.type="unit"
+		/>
+
 		<property name="test.class" value="*Test" />
 
 		<ant target="test-cmd">
