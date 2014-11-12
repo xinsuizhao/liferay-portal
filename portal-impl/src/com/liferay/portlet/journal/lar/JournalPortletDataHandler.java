@@ -16,8 +16,11 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
@@ -27,7 +30,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -326,29 +329,41 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		return new JournalArticleExportActionableDynamicQuery(
 			portletDataContext) {
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				JournalArticle article = (JournalArticle)object;
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					super.addCriteria(dynamicQuery);
 
-				boolean latestVersion = false;
+					if (portletDataContext.getBooleanParameter(
+							NAMESPACE, "version-history")) {
 
-				try {
-					latestVersion =
-						JournalArticleLocalServiceUtil.isLatestVersion(
-							article.getGroupId(), article.getArticleId(),
-							article.getVersion(),
-							WorkflowConstants.STATUS_APPROVED);
+						return;
+					}
+
+					DynamicQuery articleVersionDynamicQuery =
+						DynamicQueryFactoryUtil.forClass(
+							JournalArticle.class, "articleVersion",
+							PortalClassLoaderUtil.getClassLoader());
+
+					articleVersionDynamicQuery.setProjection(
+						ProjectionFactoryUtil.alias(
+							ProjectionFactoryUtil.max("articleVersion.version"),
+							"articleVersion.version"));
+
+					// We need to use the "this" default alias to make sure the
+					// database engine handles this subquery as a correlated
+					// subquery
+
+					articleVersionDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"this.resourcePrimKey",
+							"articleVersion.resourcePrimKey"));
+
+					Property versionProperty = PropertyFactoryUtil.forName(
+						"version");
+
+					dynamicQuery.add(
+						versionProperty.eq(articleVersionDynamicQuery));
 				}
-				catch (Exception e) {
-				}
-
-				if (portletDataContext.getBooleanParameter(
-						NAMESPACE, "version-history") || latestVersion) {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, article);
-				}
-			}
 
 		};
 	}
