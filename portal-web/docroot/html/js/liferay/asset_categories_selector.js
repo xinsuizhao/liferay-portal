@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var LString = Lang.String;
+
 		var AObject = A.Object;
 
 		var BOUNDING_BOX = 'boundingBox';
