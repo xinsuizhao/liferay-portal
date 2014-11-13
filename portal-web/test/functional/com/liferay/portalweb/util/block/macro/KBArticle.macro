@@ -80,7 +80,31 @@
 		</if>
 
 		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<if>
+			<equals arg1="${kbArticleInvalidTitle}" arg2="true" />
+			<then>
+				<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid title." />
+			</then>
+			<elseif>
+				<equals arg1="${kbArticleInvalidContent}" arg2="true" />
+				<then>
+					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${kbArticleDuplicateFriendlyURL}" arg2="true" />
+				<then>
+					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a unique friendly URL." />
+				</then>
+			</elseif>
+			<else>
+				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="configureKBArticle">
