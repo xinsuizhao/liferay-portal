@@ -25,6 +25,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
+long folderId = BeanParamUtil.getLong(article, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 long classNameId = ParamUtil.getLong(request, "classNameId");
 String classPK = ParamUtil.getString(request, "classPK");
 
@@ -70,8 +71,6 @@ else if (!ddmTemplates.isEmpty()) {
 
 	templateId = ddmTemplate.getTemplateKey();
 }
-
-long folderId = BeanParamUtil.getLong(article, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
@@ -151,13 +150,13 @@ if (Validator.isNotNull(content)) {
 	<portlet:param name="struts_action" value="/journal/edit_article" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<portlet:param name="classPK" value="<%= classPK %>" />
 	<portlet:param name="structureId" value="<%= structureId %>" />
 	<portlet:param name="templateId" value="<%= templateId %>" />
-	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 </portlet:renderURL>
 
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
