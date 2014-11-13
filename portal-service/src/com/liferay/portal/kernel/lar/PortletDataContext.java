@@ -334,6 +334,10 @@ public interface PortletDataContext extends Serializable {
 
 	public long getPlid();
 
+	public String getRootPortletId();
+
+	public void setRootPortletId(String rootPortletId);
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,

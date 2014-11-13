@@ -944,6 +944,10 @@ public class PortletExporter {
 			return;
 		}
 
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		portletDataContext.setRootPortletId(rootPortletId);
+
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			PortletDataContext clonedPortletDataContext =
 				PortletDataContextFactoryUtil.clonePortletDataContext(
@@ -968,8 +972,7 @@ public class PortletExporter {
 		Element portletElement = document.addElement("portlet");
 
 		portletElement.addAttribute("portlet-id", portletId);
-		portletElement.addAttribute(
-			"root-portlet-id", PortletConstants.getRootPortletId(portletId));
+		portletElement.addAttribute("root-portlet-id", rootPortletId);
 		portletElement.addAttribute("old-plid", String.valueOf(plid));
 		portletElement.addAttribute(
 			"scope-layout-type", portletDataContext.getScopeType());
@@ -1083,8 +1086,6 @@ public class PortletExporter {
 		// Archived setups
 
 		if (exportPortletArchivedSetups) {
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
 			List<PortletItem> portletItems =
 				PortletItemLocalServiceUtil.getPortletItems(
 					portletDataContext.getGroupId(), rootPortletId,
@@ -1162,6 +1163,8 @@ public class PortletExporter {
 
 			portletDataContext.addPrimaryKey(String.class, path);
 		}
+
+		portletDataContext.setRootPortletId(StringPool.BLANK);
 	}
 
 	protected void exportPortletPreference(

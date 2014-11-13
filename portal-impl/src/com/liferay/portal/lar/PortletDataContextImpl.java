@@ -1115,6 +1115,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public String getRootPortletId() {
+		return _rootPortletId;
+	}
+
+	@Override
+	public void setRootPortletId(String rootPortletId) {
+		_rootPortletId = rootPortletId;
+	}
+
+	@Override
 	public String getPortletPath(String portletId) {
 		return ExportImportPathUtil.getPortletPath(this, portletId);
 	}
@@ -2622,6 +2632,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		new HashMap<String, List<KeyValuePair>>();
 	private long _plid;
 	private transient PortletDataContextListener _portletDataContextListener;
+	private String _rootPortletId;
 	private Set<String> _primaryKeys = new HashSet<String>();
 	private boolean _privateLayout;
 	private transient Map<String, List<RatingsEntry>> _ratingsEntriesMap =
