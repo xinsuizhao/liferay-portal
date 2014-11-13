@@ -66,6 +66,7 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -772,6 +773,9 @@ public class LayoutImporter {
 					manifestSummary);
 
 			try {
+				portletDataContext.setRootPortletId(
+					PortletConstants.getRootPortletId(portletId));
+
 				if (layout != null) {
 					portletPreferencesGroupId = layout.getGroupId();
 				}
@@ -802,6 +806,8 @@ public class LayoutImporter {
 				}
 			}
 			finally {
+				portletDataContext.setRootPortletId(StringPool.BLANK);
+
 				_portletImporter.resetPortletScope(
 					portletDataContext, portletPreferencesGroupId);
 			}
