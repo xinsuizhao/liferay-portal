@@ -333,16 +333,10 @@ public class JournalArticleStagedModelDataHandler
 
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
 
-		boolean exportReferencedContent =
-			portletDataContext.getBooleanParameter(
-				JournalPortletDataHandler.NAMESPACE, "referenced-content") ||
-			portletDataContext.getBooleanParameter(
-				JournalContentPortletDataHandler.NAMESPACE,
-				"referenced-content");
-
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, article, articleElement, article.getContent(),
-			exportReferencedContent);
+			portletDataContext.getBooleanParameter(
+				JournalPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		article.setContent(content);
 

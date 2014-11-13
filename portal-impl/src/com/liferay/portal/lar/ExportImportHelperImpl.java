@@ -121,6 +121,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
+import com.liferay.portlet.journal.lar.JournalContentPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
@@ -632,15 +633,52 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			endPos = MapUtil.getInteger(dlReferenceParameters, "endPos");
 
 			try {
-				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, entityStagedModel, fileEntry,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+				String rootPortletId = portletDataContext.getRootPortletId();
+
+				if ((rootPortletId != null) &&
+					rootPortletId.equals(PortletKeys.JOURNAL_CONTENT)) {
+
+					Map<String, String[]> parameterMap =
+						portletDataContext.getParameterMap();
+
+					String[] referencedContentBehaviorArray = parameterMap.get(
+						PortletDataHandlerControl.getNamespacedControlName(
+							"journal-content", "referenced-content-behavior"));
+
+					String referencedContentBehavior = "include-always";
+
+					if (!ArrayUtil.isEmpty(referencedContentBehaviorArray)) {
+						referencedContentBehavior =
+							referencedContentBehaviorArray[0];
+					}
+
+					if (referencedContentBehavior.equals("include-always") ||
+						(referencedContentBehavior.equals(
+							"include-if-modified") &&
+						 portletDataContext.isWithinDateRange(
+							fileEntry.getModifiedDate()))) {
+
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, entityStagedModel, fileEntry,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+					}
+					else {
+						portletDataContext.addReferenceElement(
+							entityStagedModel, entityElement, fileEntry,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					}
 				}
 				else {
-					portletDataContext.addReferenceElement(
-						entityStagedModel, entityElement, fileEntry,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					if (exportReferencedContent) {
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, entityStagedModel, fileEntry,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+					}
+					else {
+						portletDataContext.addReferenceElement(
+							entityStagedModel, entityElement, fileEntry,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					}
 				}
 
 				String path = ExportImportPathUtil.getModelPath(fileEntry);

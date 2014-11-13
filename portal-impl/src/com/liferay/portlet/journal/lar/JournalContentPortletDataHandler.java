@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerChoice;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -74,12 +75,19 @@ import javax.portlet.PortletPreferences;
 public class JournalContentPortletDataHandler
 	extends JournalPortletDataHandler {
 
+	public static final String NAMESPACE = "journal-content";
+
 	public JournalContentPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-web-content", true, false, null,
+				NAMESPACE, "selected-web-content", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerChoice(
+						NAMESPACE, "referenced-content-behavior", 0,
+						new String[] {"include-if-modified", "include-always"})
+				},
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.JOURNAL_CONTENT_PUBLISH_TO_LIVE_BY_DEFAULT);
@@ -165,15 +173,6 @@ public class JournalContentPortletDataHandler
 
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "selected-web-content")) {
-
-			Map<String, String[]> parameterMap =
-				portletDataContext.getParameterMap();
-
-			parameterMap.put(
-				PortletDataHandlerControl.getNamespacedControlName(
-					JournalContentPortletDataHandler.NAMESPACE,
-					"referenced-content"),
-				new String[] {String.valueOf(true)});
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, article);
