@@ -1120,11 +1120,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public void setRootPortletId(String rootPortletId) {
-		_rootPortletId = rootPortletId;
-	}
-
-	@Override
 	public String getPortletPath(String portletId) {
 		return ExportImportPathUtil.getPortletPath(this, portletId);
 	}
@@ -2024,6 +2019,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		_privateLayout = privateLayout;
+	}
+
+	@Override
+	public void setRootPortletId(String rootPortletId) {
+		_rootPortletId = rootPortletId;
 	}
 
 	@Override
