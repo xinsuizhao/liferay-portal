@@ -78,6 +78,7 @@ boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.ge
 if (selectionStyle.equals("dynamic")) {
 	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, siteGroupIds);
 
+	allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(portletPreferences);
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(portletPreferences, scopeGroupId);
 
 	assetEntryQuery.setClassTypeIds(classTypeIds);
