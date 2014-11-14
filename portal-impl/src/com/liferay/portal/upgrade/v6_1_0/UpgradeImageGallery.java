@@ -560,6 +560,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	protected byte[] getHookImageAsBytes(Image image)
 		throws IOException, PortalException, SQLException, SystemException {
+
 		InputStream is = getHookImageAsStream(image);
 
 		return FileUtil.getBytes(is);
