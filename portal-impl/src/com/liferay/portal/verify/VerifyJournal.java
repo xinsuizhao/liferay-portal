@@ -116,43 +116,44 @@ public class VerifyJournal extends VerifyProcess {
 		node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
 	}
 
-	protected void updateDynamicContent(
-			List<Element> elements, String name, int index)
+	protected void updateImageElement(
+			Element imageElement, String name, int index)
 		throws PortalException {
 
-		for (Element element : elements) {
-			String imageId = element.attributeValue("id");
+		Element dynamicContentElement = imageElement.element("dynamic-content");
 
-			JournalArticleImage image =
-					JournalArticleImageLocalServiceUtil.getArticleImage(
-						Long.valueOf(imageId));
+		String imageId = dynamicContentElement.attributeValue("id");
 
-			image.setElName(name + "_" + index);
+		JournalArticleImage image =
+			JournalArticleImageLocalServiceUtil.getArticleImage(
+				Long.valueOf(imageId));
 
-			JournalArticleImageLocalServiceUtil.updateJournalArticleImage(
-				image);
-		}
+		image.setElName(name + "_" + index);
+
+		JournalArticleImageLocalServiceUtil.updateJournalArticleImage(
+			image);
+
 	}
 
-	protected void updateDynamicElements(List<Element> elements)
+	protected void updateDynamicElements(List<Element> dynamicElements)
 		throws PortalException {
 
 		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 
-		for (Element element : elements) {
-			String name = element.attributeValue("name");
-			String type = element.attributeValue("type");
+		for (Element dynamicElement : dynamicElements) {
+			updateDynamicElements(dynamicElement.elements("dynamic-element"));
+
+			String name = dynamicElement.attributeValue("name");
+			String type = dynamicElement.attributeValue("type");
 
 			int index = ddmFieldsCounter.get(name);
 
-			element.addAttribute("index", String.valueOf(index));
+			dynamicElement.addAttribute("index", String.valueOf(index));
 
 			if (type.equals("image")) {
-				updateDynamicContent(
-					element.elements("dynamic-content"), name, index);
+				updateImageElement(
+						dynamicElement, name, index);
 			}
-
-			updateDynamicElements(element.elements("dynamic-element"));
 
 			ddmFieldsCounter.incrementKey(name);
 		}
@@ -390,20 +391,43 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void verifyDynamicElement() throws Exception {
-		List<JournalArticle> journalArticles =
-			JournalArticleLocalServiceUtil.getArticles();
+		ActionableDynamicQuery actionableDynamicQuery =
+				JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
-		for (JournalArticle article : journalArticles) {
-			Document document = SAXReaderUtil.read(article.getContent());
+		actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod() {
 
-			Element rootElement = document.getRootElement();
+					@Override
+					public void performAction(Object object)
+							throws PortalException {
 
-			updateDynamicElements(rootElement.elements("dynamic-element"));
+						JournalArticle article = (JournalArticle)object;
 
-			article.setContent(document.asXML());
+						try {
+							verifyDynamicElement(article);
+						}
+						catch (Exception e) {
+							_log.error(
+								"Unable to get content for article"
+									+ article.getId(), e);
+						}
+					}
 
-			JournalArticleLocalServiceUtil.updateJournalArticle(article);
-		}
+				});
+
+		actionableDynamicQuery.performActions();
+	}
+
+	protected void verifyDynamicElement(JournalArticle article) throws Exception {
+		Document document = SAXReaderUtil.read(article.getContent());
+
+		Element rootElement = document.getRootElement();
+
+		updateDynamicElements(rootElement.elements("dynamic-element"));
+
+		article.setContent(document.asXML());
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 	}
 
 	protected void verifyModifiedDate(JournalArticleResource articleResource) {
