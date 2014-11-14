@@ -121,7 +121,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
-import com.liferay.portlet.journal.lar.JournalContentPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
