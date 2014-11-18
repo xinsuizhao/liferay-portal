@@ -102,8 +102,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 									PasswordEncryptorUtil.encrypt(
 										PasswordEncryptorUtil.TYPE_SHA,
 											portletId, null
-									),
-									"/", "."
+									), "/", "."
 								)
 					);
 
@@ -114,8 +113,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 										PasswordEncryptorUtil.encrypt(
 												PasswordEncryptorUtil.TYPE_SHA,
 												portletId, null
-										),
-										"/", "."
+										), "/", "."
 								)
 					);
 				}
@@ -132,8 +130,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 										PasswordEncryptorUtil.encrypt(
 												PasswordEncryptorUtil.TYPE_SHA,
 												portletId, null
-										),
-										"/", "."
+										), "/", "."
 								)
 					);
 				}
@@ -154,8 +151,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 										PasswordEncryptorUtil.encrypt(
 												PasswordEncryptorUtil.TYPE_SHA,
 												portletId, null
-										),
-										"/", "."
+										), "/", "."
 								)
 					);
 
@@ -187,8 +183,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 									PasswordEncryptorUtil.encrypt(
 											PasswordEncryptorUtil.TYPE_SHA,
 											portletId, null
-									),
-									"/", "."
+									), "/", "."
 							),
 					e);
 			}
