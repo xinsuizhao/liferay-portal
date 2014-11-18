@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
@@ -85,6 +87,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		String portletId = portlet.getPortletId();
+
 		try {
 			if (Validator.isNotNull(cmd)) {
 				String redirect = ParamUtil.getString(
@@ -94,12 +98,26 @@ public class ExportImportAction extends ImportLayoutsAction {
 					addTempFileEntry(
 						actionRequest, actionResponse,
 						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
+								StringUtil.replace(
+									PasswordEncryptorUtil.encrypt(
+										PasswordEncryptorUtil.TYPE_SHA,
+											portletId, null
+									),
+									"/", "."
+								)
+					);
 
 					validateFile(
 						actionRequest, actionResponse,
 						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
+								StringUtil.replace(
+										PasswordEncryptorUtil.encrypt(
+												PasswordEncryptorUtil.TYPE_SHA,
+												portletId, null
+										),
+										"/", "."
+								)
+					);
 				}
 				else if (cmd.equals("copy_from_live")) {
 					StagingUtil.copyFromLive(actionRequest, portlet);
@@ -110,7 +128,14 @@ public class ExportImportAction extends ImportLayoutsAction {
 					deleteTempFileEntry(
 						actionRequest, actionResponse,
 						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
+								StringUtil.replace(
+										PasswordEncryptorUtil.encrypt(
+												PasswordEncryptorUtil.TYPE_SHA,
+												portletId, null
+										),
+										"/", "."
+								)
+					);
 				}
 				else if (cmd.equals(Constants.EXPORT)) {
 					hideDefaultSuccessMessage(actionRequest);
@@ -125,7 +150,14 @@ public class ExportImportAction extends ImportLayoutsAction {
 					importData(
 						actionRequest, actionResponse,
 						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
+								StringUtil.replace(
+										PasswordEncryptorUtil.encrypt(
+												PasswordEncryptorUtil.TYPE_SHA,
+												portletId, null
+										),
+										"/", "."
+								)
+					);
 
 					SessionMessages.add(
 						actionRequest,
@@ -151,7 +183,13 @@ public class ExportImportAction extends ImportLayoutsAction {
 				handleUploadException(
 					portletConfig, actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
-						portlet.getPortletId(),
+							StringUtil.replace(
+									PasswordEncryptorUtil.encrypt(
+											PasswordEncryptorUtil.TYPE_SHA,
+											portletId, null
+									),
+									"/", "."
+							),
 					e);
 			}
 			else {

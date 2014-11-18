@@ -47,6 +47,7 @@ page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureK
 page import="com.liferay.portlet.portletconfiguration.action.ActionUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.action.ExportImportAction" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %>
+<%@ page import="com.liferay.portal.security.pwd.PasswordEncryptorUtil" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
@@ -54,6 +55,14 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
+
+String portletIdHash = StringUtil.replace(
+		PasswordEncryptorUtil.encrypt(
+				PasswordEncryptorUtil.TYPE_SHA,
+				selPortlet.getPortletId(), null
+		),
+		"/", "."
+);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

@@ -19,7 +19,15 @@
 <%
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
-String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, ExportImportHelper.TEMP_FOLDER_NAME + portletDisplay.getId());
+String portletDisplayIdHash = StringUtil.replace(
+		PasswordEncryptorUtil.encrypt(
+				PasswordEncryptorUtil.TYPE_SHA,
+				portletDisplay.getId(), null
+		),
+		"/", "."
+);
+
+String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, ExportImportHelper.TEMP_FOLDER_NAME + portletDisplayIdHash);
 %>
 
 <liferay-ui:tabs
